@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner" customClass="WordsTabController" customModule="Burmese_Test_V3" customModuleProvider="target">
+            <connections>
+                <outlet property="view" destination="JN3-1Q-WBa" id="b5s-gI-eoC"/>
+                <outlet property="wordsTabViewController" destination="C6e-Dv-eBu" id="DB7-3g-ori"/>
+            </connections>
+        </customObject>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customObject id="C6e-Dv-eBu" customClass="WordsTabViewController" customModule="Burmese_Test_V3" customModuleProvider="target">
+            <connections>
+                <outlet property="tabView" destination="SKk-0h-FUI" id="GlO-Aq-x7c"/>
+                <outlet property="view" destination="SKk-0h-FUI" id="s2N-Df-lvF"/>
+            </connections>
+        </customObject>
+        <customView wantsLayer="YES" id="JN3-1Q-WBa">
+            <rect key="frame" x="0.0" y="0.0" width="428" height="244"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <tabView translatesAutoresizingMaskIntoConstraints="NO" id="SKk-0h-FUI">
+                    <rect key="frame" x="-7" y="-10" width="442" height="260"/>
+                    <font key="font" metaFont="system"/>
+                    <tabViewItems>
+                        <tabViewItem label="Tab" identifier="" id="kc0-51-cSd">
+                            <view key="view" id="ho9-7o-wZi">
+                                <rect key="frame" x="10" y="33" width="422" height="214"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                        </tabViewItem>
+                        <tabViewItem label="View" identifier="" id="AcR-Rr-aGQ">
+                            <view key="view" id="PHv-Bd-JzD">
+                                <rect key="frame" x="10" y="33" width="422" height="214"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                        </tabViewItem>
+                    </tabViewItems>
+                </tabView>
+            </subviews>
+            <constraints>
+                <constraint firstItem="SKk-0h-FUI" firstAttribute="top" secondItem="JN3-1Q-WBa" secondAttribute="top" id="0Hb-xe-TLQ"/>
+                <constraint firstItem="SKk-0h-FUI" firstAttribute="leading" secondItem="JN3-1Q-WBa" secondAttribute="leading" id="XGi-Au-XQ2"/>
+                <constraint firstAttribute="trailing" secondItem="SKk-0h-FUI" secondAttribute="trailing" id="o5h-d9-wVi"/>
+                <constraint firstAttribute="bottom" secondItem="SKk-0h-FUI" secondAttribute="bottom" id="yOv-tZ-lbO"/>
+            </constraints>
+            <point key="canvasLocation" x="51" y="-239"/>
+        </customView>
+    </objects>
+</document>
