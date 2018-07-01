@@ -38,12 +38,21 @@ class MainTabViewController: NSTabViewController {
     }
     
     override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
+        
         infoPrint(tabViewItem?.label, #function,self.className)
         
         super .tabView(tabView, willSelect: tabViewItem)
     }
+    
     override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         infoPrint(tabViewItem?.label, #function,self.className)
+        
+        if tabViewItem?.label != "Words" {
+            setTitleToDefault()
+        }
+        else {
+            setTitleToSourceUrl()
+        }
         
         super .tabView(tabView, didSelect: tabViewItem)
     }

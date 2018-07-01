@@ -18,6 +18,8 @@ class WordsTabViewController: NSTabViewController {
     var dataSources             : [TableViewDataSource] = []
     var removingFirstItem       : Bool  = false
     var originalInputLanguage = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
+    var draggingRows = false
+    var indexedRows : IndexSet = IndexSet()
     
     @IBOutlet weak var searchFieldDelegate : SearchDelegate!
     @IBOutlet weak var tableView : NSTableView!
@@ -27,6 +29,8 @@ class WordsTabViewController: NSTabViewController {
         // Do view setup here.
         
         infoPrint("Words Tab",#function,self.className)
+        
+        printResponderChain(getWordsTabViewDelegate())
         
         if tabViewControllersList.count > 0 {
             return
@@ -67,14 +71,17 @@ class WordsTabViewController: NSTabViewController {
         let currentBMT = self.tabViewControllersList[0]
         let view = currentBMT.view
         let tableView = view.viewWithTag(100)
-        if let tableView = tableView as? NSTableView
+        if let tableView = tableView as? PJTableView
         {
             //self.dataSources[0].tableView = tableView
             tableView.dataSource = self.dataSources[0]
             tableView.delegate = self.dataSources[0]
-            tableView.isHidden = true
+            tableView.registerTableForDrag()
+            view.isHidden = true
         }
     }
+    
+    
     
     override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
         infoPrint(tabViewItem?.label, #function,self.className)
@@ -95,6 +102,16 @@ class WordsTabViewController: NSTabViewController {
             }
         }
         
+        if let mainWindow = getMainWindowController().window
+        {
+            let index = getCurrentIndex()
+            if index != -1 {
+                if let url = self.dataSources[getCurrentIndex()].sourceFile {
+                    mainWindow.title = url.lastPathComponent
+                    mainWindow.representedURL = self.dataSources[index].sourceFile
+                }
+            }
+        }
         
         super .tabView(tabView, didSelect: tabViewItem)
     }

@@ -11,6 +11,7 @@ import Cocoa
 class FindBarViewController: NSViewController {
 
     @IBOutlet var findBar : NSBox!
+    @IBOutlet var filterItems : NSMenuItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()

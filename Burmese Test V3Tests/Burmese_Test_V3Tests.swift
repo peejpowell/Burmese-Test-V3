@@ -11,14 +11,6 @@ import XCTest
 
 class Burmese_Test_V3Tests: XCTestCase {
     
-    let fileUrl = URL(string: "/users/peejpowell/BMTFiles/general.plist")!
-    let folderUrl = URL(string: "/users/peejpowell/BMTFiles")!
-    
-    func testPJFileManagerIsDir() {
-        XCTAssertTrue(PJFileManager().isDir(self.folderUrl))
-        XCTAssertFalse(PJFileManager().isDir(self.fileUrl))
-    }
-    
     override func setUp() {
         super.setUp()
         // Put setup code here. This method is called before the invocation of each test method in the class.

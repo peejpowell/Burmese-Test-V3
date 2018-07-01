@@ -11,7 +11,46 @@ import Cocoa
 
 let needsSavingNotificationKey          = "PJNeedsSaving"
 
+
+func printResponderChain(_ responder: NSResponder?) {
+    guard let responder = responder else { return; }
+    
+    print(responder)
+    printResponderChain(responder.nextResponder)
+}
+
+func setTitleToDefault()
+{
+    if let mainWindow = getMainWindowController().window
+    {
+        mainWindow.title = "Burmese Test V3"
+        mainWindow.representedURL = nil
+    }
+}
+
+func setTitleToSourceUrl() {
+    if let mainWindow = getMainWindowController().window {
+        let index = getCurrentIndex()
+        let tabViewController = getWordsTabViewDelegate()
+        if index != -1 {
+            if let url = tabViewController.dataSources[index].sourceFile {
+                mainWindow.title = url.lastPathComponent
+                mainWindow.representedURL = url
+            }
+        }
+    }
+}
+
+func selectWordsTab()
+{
+    let mainTabView = getMainWindowController().mainTabViewController.tabView
+    if mainTabView.selectedTabViewItem?.label != "Words" {
+        mainTabView.selectTabViewItem(at: 2)
+    }
+}
+
 func selectTabForExistingFile(at index: Int) {
+    
     if let wordsTabView = getWordsTabViewDelegate().tabViewItems[index].tabView {
         wordsTabView.selectTabViewItem(at: index)
     }
@@ -29,8 +68,7 @@ extension String {
     
     func stringAfter(_ stringToFind: String)->String
     {
-        if let range = self.range(of: stringToFind)
-        {
+        if let range = self.range(of: stringToFind) {
             let newString = self[range.upperBound..<self.endIndex]
             return "\(newString)"
         }
@@ -39,8 +77,7 @@ extension String {
     
     func stringBefore(_ stringToFind: String)->String
     {
-        if let range = self.range(of: stringToFind)
-        {
+        if let range = self.range(of: stringToFind) {
             let newString = self[self.startIndex..<range.lowerBound]
             return "\(newString)"
         }
@@ -61,6 +98,9 @@ func infoPrint(_ info: String?, _ funcName: String?, _ className: String? )
             if let info = info {
                 if info != "" {
                     print("-->\(funcName) -> \(info)")
+                }
+                else {
+                    print("-->\(funcName)")
                 }
             }
             else {

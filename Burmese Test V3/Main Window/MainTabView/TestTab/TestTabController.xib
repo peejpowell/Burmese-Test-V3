@@ -8,6 +8,7 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="TestTabController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
+                <outlet property="testButton" destination="cEA-Lx-Y3G" id="0qS-04-Cri"/>
                 <outlet property="view" destination="c22-O7-iKe" id="bA1-Mf-OA2"/>
             </connections>
         </customObject>
@@ -18,7 +19,7 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cEA-Lx-Y3G" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
-                    <rect key="frame" x="76" y="155" width="195" height="57"/>
+                    <rect key="frame" x="94" y="163" width="195" height="57"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" title="Button" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lkD-X5-yv0" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
                         <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
@@ -32,6 +33,9 @@
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </buttonCell>
+                    <connections>
+                        <action selector="showNewVC:" target="-2" id="6t1-7H-XRC"/>
+                    </connections>
                 </button>
             </subviews>
         </customView>

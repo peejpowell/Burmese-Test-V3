@@ -22,6 +22,7 @@
         <customObject id="vod-uV-yc1" customClass="MainWindowController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
                 <outlet property="findBarViewController" destination="8TO-bv-S1P" id="05r-oL-lhR"/>
+                <outlet property="mainClipboardController" destination="QId-iA-S1L" id="YeX-Js-ZEl"/>
                 <outlet property="mainFileManager" destination="OqY-he-gAA" id="607-cQ-Atg"/>
                 <outlet property="mainMenuController" destination="a1q-4L-Wmq" id="pe6-88-dXW"/>
                 <outlet property="mainTabViewController" destination="X2E-rt-W8L" id="yqD-P3-Mkc"/>
@@ -32,10 +33,12 @@
         <customObject id="OqY-he-gAA" customClass="PJFileManager" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <customObject id="a1q-4L-Wmq" customClass="MainMenuController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
+                <outlet property="closeWordsFileMenuItem" destination="DVo-aG-piG" id="lCY-rQ-Onz"/>
                 <outlet property="mainMenu" destination="AYu-sK-qS6" id="pza-2X-Sb9"/>
                 <outlet property="recentFilesMenu" destination="RTi-RA-Bbp" id="jZ5-1U-xYO"/>
             </connections>
         </customObject>
+        <customObject id="QId-iA-S1L" customClass="ClipboardController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <customObject id="EEq-js-4AC" customClass="LanguageMenuController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <customObject id="V2I-wv-bHC" customClass="WordTypeMenuController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
@@ -115,7 +118,7 @@
                 </menuItem>
                 <menuItem title="File" id="dMs-cI-mzQ">
                     <modifierMask key="keyEquivalentModifierMask"/>
-                    <menu key="submenu" title="File" id="bib-Uj-vzu">
+                    <menu key="submenu" title="File" autoenablesItems="NO" id="bib-Uj-vzu">
                         <items>
                             <menuItem title="New" keyEquivalent="n" id="Was-JA-tGl">
                                 <connections>
@@ -124,7 +127,7 @@
                             </menuItem>
                             <menuItem title="Open…" keyEquivalent="o" id="IAo-SY-fd9">
                                 <connections>
-                                    <action selector="openDocumentWithSender:" target="a1q-4L-Wmq" id="lGi-YG-1nT"/>
+                                    <action selector="openDocument:" target="-1" id="fjr-fL-5JE"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Open Recent" id="Awc-Ju-d5D">
@@ -139,9 +142,9 @@
                                 </menu>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" id="m54-Is-iLE"/>
-                            <menuItem title="Close" keyEquivalent="w" id="DVo-aG-piG">
+                            <menuItem title="Close Words File" enabled="NO" keyEquivalent="w" id="DVo-aG-piG">
                                 <connections>
-                                    <action selector="performClose:" target="-1" id="HmO-Ls-i7Q"/>
+                                    <action selector="performClose:" target="-1" id="szq-2m-Lgb"/>
                                 </connections>
                             </menuItem>
                             <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
@@ -149,12 +152,12 @@
                                     <action selector="saveDocument:" target="-1" id="teZ-XB-qJY"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save As…" keyEquivalent="S" id="Bw7-FT-i3A">
+                            <menuItem title="Save As…" enabled="NO" keyEquivalent="S" id="Bw7-FT-i3A">
                                 <connections>
                                     <action selector="saveDocumentAs:" target="-1" id="mDf-zr-I0C"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Revert to Saved" keyEquivalent="r" id="KaW-ft-85H">
+                            <menuItem title="Revert to Saved" enabled="NO" keyEquivalent="r" id="KaW-ft-85H">
                                 <connections>
                                     <action selector="revertDocumentToSaved:" target="-1" id="iJ3-Pv-kwq"/>
                                 </connections>
@@ -828,11 +831,11 @@
                 <outlet property="delegate" destination="a1q-4L-Wmq" id="cbx-ke-guU"/>
             </connections>
         </menu>
-        <window title="Burmese Test V3" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
+        <window title="Burmese Test V3" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" animationBehavior="default" tabbingMode="disallowed" id="QvC-M9-y7g" customClass="PJWindow" customModule="Burmese_Test_V3" customModuleProvider="target">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="800" height="500"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
                 <autoresizingMask key="autoresizingMask"/>

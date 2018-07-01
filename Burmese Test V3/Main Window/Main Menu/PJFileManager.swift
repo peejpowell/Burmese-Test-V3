@@ -8,26 +8,6 @@
 
 import Cocoa
 
-extension FileManager {
-    
-    func isDir(_ url:URL) -> Bool
-    {
-        // Is it a directory?
-        do {
-            let fileAttribs = try self.attributesOfItem(atPath: url.path)
-            if let fileType : FileAttributeType = fileAttribs[FileAttributeKey.type] as? FileAttributeType {
-                if fileType == FileAttributeType.typeDirectory {
-                    return true
-                }
-            }
-        } catch let error {
-            print(error)
-        }
-        return false
-    }
-    
-}
-
 class PJFileManager : FileManager
 {
     var openFiles = [URL]() {
@@ -46,12 +26,39 @@ class PJFileManager : FileManager
         return alert
     }
     
-    func loadWordsFromFile(_ fileURL: URL, into dataSource: TableViewDataSource)->TableViewDataSource
+    var warningAlert : NSAlert {
+        let alert = NSAlert()
+        alert.alertStyle = NSAlert.Style.warning
+        alert.addButton(withTitle: "OK")
+        return alert
+    }
+    
+    @objc func loadWordsFromFile(_ fileURL: URL, into dataSource: TableViewDataSource)->TableViewDataSource?
     {
         // Load the words file from the URL into the designated dataSource
-        //let fileManager = FileManager()
+        let fileManager = FileManager()
+        infoPrint("", #function, self.className)
         
-        if self.fileExists(atPath: fileURL.path) {
+        let path = fileURL.path
+        let newURL = URL(fileURLWithPath: path)
+        infoPrint(path, #function, self.className)
+        if fileManager.fileExists(atPath: fileURL.path) {
+            /*if let data:NSData =  FileManager.default.contents(atPath: fileURL.path) as? NSData {
+                do {
+                    if let BMTArray = try PropertyListSerialization.propertyList(from: data as Data, options: PropertyListSerialization.MutabilityOptions.mutableContainersAndLeaves, format: nil) as? NSArray {
+                        dataSource.words.removeAll()
+                        dataSource.sourceFile = URL(fileURLWithPath: fileURL.path)
+                        for wordDictionary : Any in BMTArray {
+                            if let wordDict = wordDictionary as? Dictionary<String,String> {
+                                let word = Words(wordDictionary:wordDict)
+                                dataSource.words.append(word)
+                            }
+                        }
+                    }
+                }catch{
+                    print("Error occured while reading from the plist file")
+                }
+            }*/
             
             if let wordDictionariesNSA  = NSArray(contentsOf: fileURL) {
                 dataSource.words.removeAll()
@@ -71,6 +78,9 @@ class PJFileManager : FileManager
     }
     
     func loadedIndexForUrl(_ url: URL)->Int {
+        
+        infoPrint("", #function, self.className)
+        
         var dataSourceIndex = -1
         var foundFile = false
         for dataSource in getWordsTabViewDelegate().dataSources
@@ -92,15 +102,18 @@ class PJFileManager : FileManager
     
     func loadDataSource(_ dataSource: TableViewDataSource, at index: Int)
     {
+        infoPrint("", #function, self.className)
+        
         let tabViewController = getWordsTabViewDelegate()
         
         tabViewController.dataSources[index] = dataSource
         if let name = dataSource.sourceFile?.path.lastPathComponent {
             tabViewController.tabViewItems[index].label = name
         }
-        if let tableView = tabViewController.tabViewControllersList[index].tableView {
+        if let tableView = tabViewController.tabViewControllersList[index].tableView as? PJTableView {
             tableView.dataSource = tabViewController.dataSources[index]
             tableView.delegate = tabViewController.dataSources[index]
+            tableView.registerTableForDrag()
             
             if tableView.isHidden {
                 tableView.isHidden = false
@@ -109,8 +122,33 @@ class PJFileManager : FileManager
         }
     }
     
+    func setUpNewBMTFor(_ dataSource : TableViewDataSource, with url: URL) {
+        
+        infoPrint("", #function, self.className)
+        
+        let tabViewController = getWordsTabViewDelegate()
+        tabViewController.dataSources.append(dataSource)
+        let newViewController = BMTTabViewController()
+        let view = newViewController.view
+        if let tableView = view.viewWithTag(100) as? NSTableView {
+            if let dataSource = tabViewController.dataSources.last {
+                tableView.dataSource = dataSource
+                tableView.delegate = dataSource
+            }
+        }
+        tabViewController.tabViewControllersList.append(newViewController)
+        let newTabViewItem = NSTabViewItem()
+        newTabViewItem.label = url.path.lastPathComponent
+        newTabViewItem.viewController = newViewController
+        tabViewController.tabViewItems.append(newTabViewItem)
+        selectWordsTab()
+    }
+    
     func loadFileAtURL(_ url: URL, reverting: Bool) {
+        
+        infoPrint("", #function, self.className)
         // Check each datasource to see if it's already loaded and load if not
+        var invalidFile = false
         
         let dataSourceIndex = loadedIndexForUrl(url)
         let fileAlreadyLoaded = dataSourceIndex > -1
@@ -120,8 +158,15 @@ class PJFileManager : FileManager
         
         if tabViewController.dataSources[0].sourceFile == nil {
             var newDataSource = tabViewController.dataSources[0]
-            newDataSource = self.loadWordsFromFile(url, into: newDataSource)
-            loadDataSource(newDataSource, at: 0)
+            if let newDataSource = self.loadWordsFromFile(url, into: newDataSource) {
+                loadDataSource(newDataSource, at: 0)
+                selectWordsTab()
+                getMainMenuController().closeWordsFileMenuItem.isEnabled = true
+            }
+            else
+            {
+                invalidFile = true
+            }
         }
         else {
             if fileAlreadyLoaded && reverting == false {
@@ -129,90 +174,66 @@ class PJFileManager : FileManager
             }
             else {
                 let wordsTabView = tabViewController.tabView
-                let newDataSource = self.loadWordsFromFile(url, into: TableViewDataSource())
+                if let newDataSource = self.loadWordsFromFile(url, into: TableViewDataSource()) {
                 
-                switch reverting {
-                case true:
-                    //Revert the file
-                    loadDataSource(newDataSource, at: dataSourceIndex)
-                    switch dataSourceIndex {
-                    case getCurrentIndex():
-                        break
-                    default:
+                    switch reverting {
+                    case true:
+                        //Revert the file
+                        loadDataSource(newDataSource, at: dataSourceIndex)
                         selectTabForExistingFile(at: dataSourceIndex)
-                    }
-                case false:
-                    if tabViewController.dataSources.count == 0 {
-                        if let tableView = tabViewController.tabViewControllersList[0].tableView {
-                            //newDataSource.sortTable(tableView, sortBy: newDataSource.sortBy)
-                            tableView.dataSource = nil
-                            tableView.delegate = nil
-                            tabViewController.dataSources.append(TableViewDataSource())
-                            loadDataSource(newDataSource, at: 0)
-                            if let viewController =  tabViewController.tabViewItems.first?.viewController as? BMTTabViewController
-                            {
-                                tabViewController.tabViewControllersList.append(viewController)
-                            }
-                        }
-                    }
-                    else {
-                    
-                    //Create a new tab, BMTView and dataSource
-
-                        func setUpNewBMTFor(_ dataSource : TableViewDataSource) {
-                       
-                            tabViewController.dataSources.append(newDataSource)
-                            let newViewController = BMTTabViewController()
-                            let view = newViewController.view
-                            if let tableView = view.viewWithTag(100) as? NSTableView {
-                                if let dataSource = tabViewController.dataSources.last {
-                                    tableView.dataSource = dataSource
-                                    tableView.delegate = dataSource
+                    case false:
+                        if tabViewController.dataSources.count == 0 {
+                            if let tableView = tabViewController.tabViewControllersList[0].tableView {
+                                //newDataSource.sortTable(tableView, sortBy: newDataSource.sortBy)
+                                tableView.dataSource = nil
+                                tableView.delegate = nil
+                                tabViewController.dataSources.append(TableViewDataSource())
+                                loadDataSource(newDataSource, at: 0)
+                                if let viewController =  tabViewController.tabViewItems.first?.viewController as? BMTTabViewController {
+                                    tabViewController.tabViewControllersList.append(viewController)
                                 }
                             }
-                            tabViewController.tabViewControllersList.append(newViewController)
-                            let newTabViewItem = NSTabViewItem()
-                            newTabViewItem.label = url.path.lastPathComponent
-                            newTabViewItem.viewController = newViewController
-                            
-                            tabViewController.tabViewItems.append(newTabViewItem)
                         }
+                        else {
                         
-                        setUpNewBMTFor(newDataSource)
-                        wordsTabView.selectLastTabViewItem(self)
+                            //Create a new tab, BMTView and dataSource
+                            
+                            setUpNewBMTFor(newDataSource, with: url)
+                            wordsTabView.selectLastTabViewItem(self)
+                            selectWordsTab()
+                        }
                     }
                 }
             }
         }
         
-        if !self.openFiles.contains(url) && !url.lastPathComponent.containsString("di")
+        if !self.openFiles.contains(url) && invalidFile == false
         {
             self.openFiles.append(url)
-        }
-        
-        getMainMenuController().updateRecentsMenu(with: url)
-    
-        if let mainWindow = getMainWindowController().window {
-            mainWindow.title = url.lastPathComponent
-            mainWindow.representedURL = url
-        
-            /*if !self.openFiles.contains(url)
-            {
-                self.openFiles.append(url)
-            }*/
-            return
+            getMainMenuController().updateRecentsMenu(with: url)
+            
+            if let mainWindow = getMainWindowController().window {
+                mainWindow.title = url.lastPathComponent
+                mainWindow.representedURL = url
+                
+                /*if !self.openFiles.contains(url)
+                 {
+                 self.openFiles.append(url)
+                 }*/
+                return
+            }
         }
     }
     
     func fileAlreadyLoaded(_ url: URL)-> (Bool, Int)
     {
+        infoPrint("", #function, self.className)
+        
         var loadedAtIndex = -1
         
-        for dataSource in getWordsTabViewDelegate().dataSources
-        {
+        for dataSource in getWordsTabViewDelegate().dataSources {
             loadedAtIndex = loadedAtIndex + 1
-            if dataSource.sourceFile == url
-            {
+            if dataSource.sourceFile == url {
                 return (true, loadedAtIndex)
             }
         }
@@ -220,6 +241,9 @@ class PJFileManager : FileManager
     }
     
     func askToRevert(fileAtUrl: URL)->NSApplication.ModalResponse {
+        
+        infoPrint("", #function, self.className)
+        
         let alert = revertFileAlert
         alert.messageText = "Do you want to revert to the latest version of \(fileAtUrl.path.lastPathComponent)?"
         return alert.runModal()
@@ -227,6 +251,8 @@ class PJFileManager : FileManager
     
     func requestToRevertDataSource(dataSource: TableViewDataSource)->NSApplication.ModalResponse
     {
+        infoPrint("", #function, self.className)
+        
         if let url = dataSource.sourceFile {
             let alertResponse = askToRevert(fileAtUrl: url)
             return alertResponse
@@ -234,16 +260,19 @@ class PJFileManager : FileManager
         return .alertSecondButtonReturn
     }
     
-    func saveFileForDataSource(_ dataSource : TableViewDataSource, at index: Int)
-    {
+    func saveFileForDataSource(_ dataSource : TableViewDataSource, at index: Int) {
+        
+        infoPrint("", #function, self.className)
+        
         let fileManager = PJFileManager()
         
-        if let url = dataSource.sourceFile
-        {
+        if let url = dataSource.sourceFile {
             let alertResponse = requestToRevertDataSource(dataSource: dataSource)
             switch alertResponse {
             case .alertFirstButtonReturn:
-                fileManager.loadFileAtURL(url, reverting: true )
+                if let fileManager = getMainWindowController().mainFileManager {
+                    fileManager.loadFileAtURL(url, reverting: true )
+                }
                 dataSource.needsSaving = false
                 getWordsTabViewDelegate().tabViewControllersList[index].tableView.reloadData()
             case .alertSecondButtonReturn:
@@ -254,21 +283,41 @@ class PJFileManager : FileManager
         }
     }
     
-    func loadOrWarn(_ url: URL)
+    func fileIsInvalid(at fileUrl: URL)->Bool{
+    
+        // try to load the file into an NSArray and show an error if we fail
+        
+        if NSArray(contentsOf: fileUrl) != nil {
+            return false
+        }
+        let alert = warningAlert
+        alert.messageText = "File is not a valid BMT file.\n\(fileUrl.path)"
+        alert.runModal()
+        return true
+    }
+    
+    @objc func loadOrWarn(_ url: URL)
     {
-        let fileManager = PJFileManager()
+        infoPrint("", #function, self.className)
+        
+        // Test to see if it's a valid file
+        
+        if fileIsInvalid(at: url) {
+            return
+        }
         
         let result = fileAlreadyLoaded(url)
         let loaded = result.0
         let loadedAtIndex = result.1
         if !loaded {
-            fileManager.loadFileAtURL(url, reverting: false)
+            if let fileManager = getMainWindowController().mainFileManager {
+                fileManager.loadFileAtURL(url, reverting: false)
+            }
         }
         else {
             // If the file needs saving ask the user to confirm the save before loading the file
             
             let dataSource = getWordsTabViewDelegate().dataSources[loadedAtIndex]
-            dataSource.needsSaving = true
             switch dataSource.needsSaving {
             case true:
                 saveFileForDataSource(dataSource, at: loadedAtIndex)
@@ -277,5 +326,71 @@ class PJFileManager : FileManager
                 selectTabForExistingFile(at: loadedAtIndex)
             }
         }
+        let view = getWordsTabViewDelegate().tabViewControllersList[0].view
+        view.isHidden = false
+    }
+    
+    func convertToPlist(_ arrayToConvert: [Words])->[Dictionary<NSString, NSString>]
+    {
+        infoPrint("", #function, self.className)
+        
+        var convertedArray = [Dictionary<NSString, NSString>]()
+        if arrayToConvert.count > 0 {
+            let fieldNames : [String] = ["Burmese","Roman","English","Insertion","Lesson","wordIndex","categoryIndex","category","wordCategory","isTitle"]
+            for item : Words in arrayToConvert {
+                var convertDict = Dictionary<NSString,NSString>()
+                let fieldValues = [item.burmese,item.roman,item.english,item.insertion,item.lesson,item.wordindex,item.categoryindex,item.category,item.wordcategory,"\(item.istitle)"]
+                
+                for fieldNum in 0 ..< fieldNames.count {
+                    if fieldValues[fieldNum] != "" && fieldValues[fieldNum] != nil {
+                        convertDict[fieldNames[fieldNum] as NSString] = fieldValues[fieldNum] as! NSString
+                    }
+                }
+                convertedArray.append(convertDict)
+            }
+        }
+        return convertedArray
+    }
+    
+    func saveWordsToFile(_ fileURL: URL)->String
+    {
+        infoPrint("", #function, self.className)
+        
+        let index = getCurrentIndex()
+        let wordsTabController = getWordsTabViewDelegate()
+        switch index {
+        case -1:
+            break
+        default:
+            let dataSource = wordsTabController.dataSources[index]
+            let pListToSave : [Dictionary<NSString, NSString>] = self.convertToPlist(dataSource.words)
+            _ = PropertyListSerialization.propertyList(pListToSave, isValidFor: PropertyListSerialization.PropertyListFormat.binary)
+            
+            let plistData : Data?
+            do {
+                plistData = try PropertyListSerialization.data(fromPropertyList: pListToSave, format: PropertyListSerialization.PropertyListFormat.binary, options: 0)
+                do {
+                    try plistData!.write(to: fileURL, options: NSData.WritingOptions.atomicWrite)
+                        wordsTabController.tabViewItems[index].label = fileURL.path.lastPathComponent
+                    } catch let error as NSError {
+                        print("Could not write \(error), \(error.userInfo)")
+                        return "Failed to save file \(fileURL.path)"
+                    }
+            } catch let error as NSError {
+                NSAlert(error: error).runModal()
+                //plistData = nil
+                return "Failed to save file \(fileURL.path)"
+            }
+        }
+        return "Saved \(fileURL.path)"
+    }
+    
+    override init() {
+        super.init()
+        infoPrint("Created new filemanager", #function, self.className)
+    }
+    
+    deinit {
+        infoPrint("Removed filemanager", #function, self.className)
     }
 }

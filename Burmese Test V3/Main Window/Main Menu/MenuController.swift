@@ -183,5 +183,14 @@ class MenuController: NSObject, NSMenuDelegate {
          }*/
     }
 */
-
+    
+    override init() {
+        super.init()
+        infoPrint("", #function, self.className)
+        
+        // Load Recent files from UserDefaults
+        
+        
+        
+    }
 }

@@ -12,7 +12,14 @@ class LanguageMenuController: MenuController {
 
     //FIXME: Enable this function later
     
-    /*
+    func cancelTest()
+    {
+        if let testTabController =  getMainWindowController().mainTabViewController.tabViewItems[0].viewController as? TestTabController
+        {
+            testTabController.multipleChoiceTest.testStarted = false
+        }
+    }
+    
     @IBAction func languageChosen(sender:NSMenuItem)
     {
         let appDelegate = NSApplication.shared.delegate as! AppDelegate
@@ -20,23 +27,17 @@ class LanguageMenuController: MenuController {
         let menuItemClicked = sender
         let menuClicked = menuItemClicked.menu
         
-        switch menuItemClicked.title
-        {
+        switch menuItemClicked.title {
         case "Select All", "Select None":
-            if let menuClickedItems = menuClicked?.items
-            {
-                for item in menuClickedItems
-                {
-                    switch item.title
-                    {
+            if let menuClickedItems = menuClicked?.items {
+                for item in menuClickedItems {
+                    switch item.title {
                     case "Select All", "Select None", "Seperator", "":
                         break
                     default:
-                        switch menuItemClicked.title
-                        {
+                        switch menuItemClicked.title {
                         case "Select All":
-                            switch item.title
-                            {
+                            switch item.title {
                             case "Reload Words", "Burmese Only", "Roman Only", "English Only":
                                 break
                             default:
@@ -51,46 +52,34 @@ class LanguageMenuController: MenuController {
                 }
             }
         case "Burmese Only":
-            if let menuClickedItems = menuClicked?.items
-            {
-                for item in menuClickedItems
-                {
-                    if item.title.containsString("Burmese") && item.title != "Burmese Only"
-                    {
+            if let menuClickedItems = menuClicked?.items {
+                for item in menuClickedItems {
+                    if item.title.containsString("Burmese") && item.title != "Burmese Only" {
                         item.state = .on
                     }
-                    else
-                    {
+                    else {
                         item.state = .off
                     }
                 }
             }
         case "Roman Only":
-            if let menuClickedItems = menuClicked?.items
-            {
-                for item in menuClickedItems
-                {
-                    if item.title.containsString("Roman") && item.title != "Roman Only"
-                    {
+            if let menuClickedItems = menuClicked?.items {
+                for item in menuClickedItems {
+                    if item.title.containsString("Roman") && item.title != "Roman Only" {
                         item.state = .on
                     }
-                    else
-                    {
+                    else {
                         item.state = .off
                     }
                 }
             }
         case "English Only":
-            if let menuClickedItems = menuClicked?.items
-            {
-                for item in menuClickedItems
-                {
-                    if item.title.containsString("English") && item.title != "English Only"
-                    {
+            if let menuClickedItems = menuClicked?.items {
+                for item in menuClickedItems {
+                    if item.title.containsString("English") && item.title != "English Only" {
                         item.state = .on
                     }
-                    else
-                    {
+                    else {
                         item.state = .off
                     }
                 }
@@ -99,33 +88,27 @@ class LanguageMenuController: MenuController {
             // Seperator Item so ignore
             break
         default:
-            if menuItemClicked.state == .on
-            {
+            if menuItemClicked.state == .on {
                 menuItemClicked.state = .off
             }
-            else
-            {
+            else {
                 menuItemClicked.state = .on
             }
         }
         
-        if let parentMenu = sender.menu
-        {
-            switch parentMenu.title
-            {
+        if let parentMenu = sender.menu {
+            switch parentMenu.title {
             case "Word Type", "Language":
-                appDelegate.multipleChoice.testStarted = false
+                cancelTest()
             default:
                 break
             }
         }
         
-        if let parent = sender.parent
-        {
-            switch parent.title
-            {
+        if let parent = sender.parent {
+            switch parent.title {
             case "Word Type", "Language":
-                appDelegate.multipleChoice.testStarted = false
+                cancelTest()
             default:
                 break
             }
@@ -135,10 +118,8 @@ class LanguageMenuController: MenuController {
         {
         case "Language":
             var langArray: NSMutableArray = NSMutableArray()
-            if let items = menuClicked?.items
-            {
-                for item in items
-                {
+            if let items = menuClicked?.items {
+                for item in items {
                     let state = item.state.rawValue
                     langArray.add(NSNumber(value: state))
                 }
@@ -150,14 +131,11 @@ class LanguageMenuController: MenuController {
             break
         }
     }
-    */
     
     override func selectAll(_ sender: NSMenuItem) {
         let menu = sender.menu
-        if let menu = menu
-        {
-            for menuItemNum in 6 ..< menu.items.count-3
-            {
+        if let menu = menu {
+            for menuItemNum in 6 ..< menu.items.count-3 {
                 menu.items[menuItemNum].state = .on
                 //self.toggleCurrent(menu.items[menuItemNum])
             }
@@ -195,17 +173,17 @@ class LanguageMenuController: MenuController {
                 }
             case .off:
                 // Check if the lesson already exists in the list of lessons
-                var lessonExists = false
+                //var lessonExists = false
                 for wordType in wordTypeMenuController.selectedWordTypes {
                     if wordType.lessonName == newLesson {
-                        lessonExists = true
+                        //lessonExists = true
                         // Now remove the word type from the list
                         
-                        var foundWord = false
+                        //var foundWord = false
                         var wordCount = 0
                         for word in wordType.selectedWords {
                             if word == sender.title {
-                                foundWord = true
+                                //foundWord = true
                                 wordType.selectedWords.remove(at: wordCount)
                                 break
                             }

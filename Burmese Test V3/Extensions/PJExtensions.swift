@@ -10,6 +10,15 @@ import Foundation
 import Cocoa
 import Carbon
 
+extension FileManager
+{
+    func isDir(_ url: URL) -> Bool {
+        var isDirectory : ObjCBool = ObjCBool(false)
+        let _ = self.fileExists(atPath: url.path, isDirectory: &isDirectory)
+        return isDirectory.boolValue
+    }
+}
+
 extension TISInputSource {
     
     var id: String {

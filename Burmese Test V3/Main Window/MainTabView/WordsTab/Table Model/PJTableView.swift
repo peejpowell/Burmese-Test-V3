@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Carbon
 
 class PJTableView: NSTableView {
 
@@ -31,7 +32,7 @@ class PJTableView: NSTableView {
                 case "avalaser":
                     setKeyboardByName("British", type: .ascii)
                 default:
-                    break
+                    TISSelectInputSource(getWordsTabViewDelegate().originalInputLanguage)
                 }
             }
         }
@@ -43,7 +44,7 @@ class PJTableView: NSTableView {
                 case "avalaser":
                     setKeyboardByName("British", type: .ascii)
                 default:
-                    break
+                    TISSelectInputSource(getWordsTabViewDelegate().originalInputLanguage)
                 }
             }
         }
@@ -62,4 +63,16 @@ class PJTableView: NSTableView {
     deinit {
         infoPrint("TableView Removed", #function, self.className)
     }
+}
+
+extension PJTableView {
+    
+    func registerTableForDrag()
+    {
+        infoPrint("", #function, self.className)
+        
+        self.registerForDraggedTypes([NSPasteboard.PasteboardType(rawValue: NSPasteboard.Name.drag.rawValue)])
+        
+    }
+    
 }

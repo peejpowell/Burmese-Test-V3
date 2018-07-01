@@ -19,12 +19,9 @@ class TableViewDataSource: NSObject, NSTableViewDataSource {
     var insertablePeople : Dictionary<String,Words> = Dictionary<String,Words>()
     
     var sortAscending = true
-    var sortBy: String = "KLesson"
-    {
-        didSet(oldValue)
-        {
-            if oldValue != sortBy
-            {
+    var sortBy: String = "KLesson" {
+        didSet(oldValue) {
+            if oldValue != sortBy {
                 self.sortAscending = false
             }
         }
@@ -34,7 +31,26 @@ class TableViewDataSource: NSObject, NSTableViewDataSource {
     var unfilteredWords: [Words]?
     var lessons: Dictionary<String,Int> = [:]
     var sourceFile : URL?
-    var needsSaving : Bool = false
+    var needsSaving : Bool = false {
+        didSet(oldValue) {
+            let index = getCurrentIndex()
+            if index != -1 {
+                let wordsTabController = getWordsTabViewDelegate()
+                let item = wordsTabController.tabViewItems[index]
+                if needsSaving  && item.label.left(1) != "*" {
+                    item.label = "* \(wordsTabController.tabViewItems[index].label)"
+                }
+                else {
+                    if item.label.left(1) == "* " {
+                        if let newLabel = item.label.right(item.label.length()-1) {
+                            item.label = newLabel
+                        }
+                    }
+                }
+            }
+        }
+        
+    }
     
     func numberOfRows(in tableView: NSTableView) -> Int {
         let index = getCurrentIndex()
@@ -55,7 +71,16 @@ class TableViewDataSource: NSObject, NSTableViewDataSource {
     }
 }
 
+//MARK: Delegate Functions
+
 extension TableViewDataSource: NSTableViewDelegate {
+    
+    func canDragRowsWithIndexes(_ rowIndexes: IndexSet, atPoint mouseDownPoint: NSPoint) -> Bool
+    {
+        infoPrint("", #function, self.className)
+        
+        return false
+    }
     
     func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
         return false
@@ -340,7 +365,7 @@ extension TableViewDataSource: NSTableViewDelegate {
                                 field.textField?.target = self
                             }
                             
-                            //print("Couldn't get value \(appDelegate.dataSources![index].words[row].wordKeys[identifier])")
+                            //print("Couldn't get value \(dataSource[index].words[row].wordKeys[identifier])")
                         }
                         return field
                     }
@@ -356,11 +381,216 @@ extension TableViewDataSource: NSTableViewDelegate {
     
 }
 
+//MARK: DataSource Functions Extension
+
 extension TableViewDataSource {
     
     func sortTable(_ tableView: NSTableView, sortBy: String)
     {
         infoPrint(nil, #function, self.className)
     }
+    
+    func tableView(_ tableView: NSTableView, draggingSession session: NSDraggingSession, willBeginAt screenPoint: NSPoint, forRowIndexes rowIndexes: IndexSet)
+    {
+        infoPrint("", #function, self.className)
+        
+        getWordsTabViewDelegate().draggingRows = true
+    }
+    
+    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation
+    {
+        infoPrint("", #function, self.className)
+        
+        if let currentEvent = NSApplication.shared.currentEvent {
+            if currentEvent.modifierFlags.rawValue & NSEvent.ModifierFlags.option.rawValue == NSEvent.ModifierFlags.option.rawValue {
+                print("Drag Copy row")
+                return NSDragOperation.copy
+            }
+            else {
+                print("Drag Move row")
+                return NSDragOperation.move
+            }
+        }
+        print("Drag Move row")
+        
+        return NSDragOperation()
+    }
+    
+    func reindexRows(_ rowIndexes: IndexSet, dropOnRow: Int)
+    {
+        infoPrint("", #function, self.className)
+        
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        //let index = getCurrentIndex()
+        
+        for rowIndex in rowIndexes
+        {
+            print("index: \(rowIndex)")
+            //dataSource[index].words[rowIndex].burmese = "\(__FUNCTION__)"
+            //FIXME: write function to reindex
+            //self.reindexLesson(rowIndex)
+        }
+        print("last index: \(rowIndexes.last! + rowIndexes.count)")
+        
+        //let firstDropRow = rowIndexes.firstIndex
+        let firstDropRow = dropOnRow - (rowIndexes.count-1)
+        //let lastDropRow = rowIndexes.lastIndex
+        let lastDropRow = dropOnRow - 1
+        
+        if firstDropRow <= -1 && lastDropRow <= -1
+        {
+            //FIXME: write function to reindex
+            //self.reindexLesson(0)
+        }
+        else
+        {
+            if rowIndexes.count == 1
+            {
+                //FIXME: write function to reindex
+                //self.reindexLesson(dropOnRow)
+                //dataSource[index].words[dropOnRow].burmese = "DROPPED"
+            }
+            else
+            {
+                for rowNum in firstDropRow ... lastDropRow
+                {
+                    //FIXME: write function to reindex
+                    //appDelegate.menuController.reindexLesson(rowNum)
+                    //dataSource[index].words[rowNum].burmese = "DROPPED"
+                }
+            }
+        }
+        //FIXME: write function to reindex
+        //appDelegate.menuController.reindexLesson(dropOnRow)
+        //appDelegate.menuController.reindexLesson(dropOnRow+1)
+    }
+    
+    func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
+        
+        infoPrint("", #function, self.className)
+        
+        let wordsTabController = getWordsTabViewDelegate()
+        let index = getCurrentIndex()
+        let pasteBoard = info.draggingPasteboard
+        let dataSource = wordsTabController.dataSources[index]
+        if let rowData = pasteBoard.data(forType: NSPasteboard.PasteboardType(rawValue: "Words")) {
+            if let rowIndexes = NSKeyedUnarchiver.unarchiveObject(with: rowData) as? IndexSet {
+                var reIndexRowIndexes = IndexSet(rowIndexes)
+                
+                //var dataSource = appDelegate.mainDataController.data.dataSources[index] as [PJWords]
+                /*_ = dataSource
+                 _ = [Int]()
+                 _ = [PJWords]()
+                 */
+                // Work out how many rows were before the row to insert at
+                
+                var rowCount = 0
+                var rowToCheck = rowIndexes.first
+                
+                while rowToCheck! < row {
+                    rowCount = rowCount + 1
+                    rowToCheck = rowIndexes.integerGreaterThan(rowToCheck!)
+                    if rowToCheck == nil {break}
+                }
+                
+                // Make a new array of the data to copy and remove it from the datasource
+                
+                var wordsToInsert = [Words]()
+                var rowToCopy = rowIndexes.last
+                if rowToCopy != nil {
+                    repeat {
+                        // FIXME: Add unfiltered words functionality
+                        /*if let _ = dataSource[index].unfilteredWords
+                        {
+                            let word = dataSource[index].words[rowToCopy!]
+                            if word.filtertype != .add
+                            {
+                                appDelegate.searchFieldDelegate.filterRowsToDelete.add(word.filterindex!)
+                            }
+                        }*/
+                        if info.draggingSourceOperationMask.rawValue & NSDragOperation.move.rawValue == NSDragOperation.move.rawValue {
+                            wordsToInsert.append(dataSource.words.remove(at: rowToCopy!) as Words)
+                        }
+                        else {
+                            wordsToInsert.append(dataSource.words[rowToCopy!])
+                        }
+                        
+                        //wordsToInsert.append(dataSource[index].words.removeAtIndex(rowToCopy) as PJWords)
+                        rowToCopy = rowIndexes.integerLessThan(rowToCopy!)
+                        if rowToCopy == nil { break }
+                    } while rowToCopy! >= rowIndexes.first! && rowToCopy! <= rowIndexes.last!
+                }
+                // Calculate where we actually will insert the new rows
+                
+                var insertAtRow : Int = -1
+                
+                insertAtRow = row - rowCount
+                
+                for wordNum in 0 ..< wordsToInsert.count {
+                    let wordtoInsert = wordsToInsert[wordNum]
+                    if insertAtRow - 1 >= 0 {
+                        let prevWord = dataSource.words[insertAtRow-1]
+                        if let _ = dataSource.unfilteredWords {
+                            wordtoInsert.filtertype = .add
+                            wordtoInsert.filterindex = prevWord.filterindex
+                        }
+                    }
+                    else {
+                        let nextWord = dataSource.words[insertAtRow]
+                        if let _ = dataSource.unfilteredWords {
+                            wordtoInsert.filtertype = .add
+                            wordtoInsert.filterindex = nextWord.filterindex
+                        }
+                    }
+                    dataSource.words.insert(wordtoInsert, at: insertAtRow)
+                }
+                
+                let rowRange : NSRange = NSRange(location: insertAtRow, length: rowIndexes.count)
+                
+                reIndexRowIndexes.insert(insertAtRow)
+                //self.reindexRows(reIndexRowIndexes, dropOnRow: row)
+                wordsTabController.indexedRows.removeAll()
+                //appDelegate.mainDataController.reindexRows(reIndexRowIndexes, tableView: tableView, inSource: dataSource, deleting: true,reIndexingAll: false, editingText: false)
+                
+                tableView.beginUpdates()
+                if info.draggingSourceOperationMask.rawValue & NSDragOperation.move.rawValue == NSDragOperation.move.rawValue {
+                    tableView.removeRows(at: rowIndexes, withAnimation: NSTableView.AnimationOptions.slideUp)
+                }
+                tableView.insertRows(at: IndexSet(integersIn: Range(rowRange)!), withAnimation: .slideDown)
+                tableView.selectRowIndexes(IndexSet(integersIn: Range(rowRange)!), byExtendingSelection: false)
+                // FIXME: Implement reindex
+                //appDelegate.menuController.reindexLesson(insertAtRow)
+                if let rowCount = Range(rowRange)?.count {
+                    // FIXME: Implement reindex
+                    //appDelegate.menuController.reindexLesson(insertAtRow + rowCount)
+                }
+                tableView.endUpdates()
+                
+                dataSource.needsSaving = true
+            }
+            wordsTabController.draggingRows = false
+            return true
+        }
+        //wordsTabController.draggingRows = false
+        return false
+    }
+    
+    func tableView(_ tableView: NSTableView, writeRowsWith rowIndexes: IndexSet, to pboard: NSPasteboard) -> Bool
+    {
+        if tableView.numberOfSelectedRows != tableView.numberOfRows {
+            if tableView.selectedRow == -1 {
+                tableView.selectRowIndexes(rowIndexes, byExtendingSelection: false)
+            }
+            else {
+                let data : Data = NSKeyedArchiver.archivedData(withRootObject: rowIndexes)
+                pboard.declareTypes([NSPasteboard.PasteboardType(rawValue: NSPasteboard.Name.dragPboard.rawValue)], owner: self)
+                pboard.setData(data, forType:NSPasteboard.PasteboardType(rawValue: "Words"))
+                
+                return true
+            }
+        }
+        return false
+    }
+    
 }
 

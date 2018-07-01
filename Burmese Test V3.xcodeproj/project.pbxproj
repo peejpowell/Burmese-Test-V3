@@ -30,6 +30,8 @@
 		3850BA2820E4AA0C00A7C7CF /* LanguageMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3850BA2720E4AA0C00A7C7CF /* LanguageMenuController.swift */; };
 		3850BA3020E4D59B00A7C7CF /* Burmese_Test_V3Tests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3850BA2F20E4D59B00A7C7CF /* Burmese_Test_V3Tests.swift */; };
 		3850BA3E20E5203300A7C7CF /* Burmese_Test_V3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3850BA3D20E5203300A7C7CF /* Burmese_Test_V3UITests.swift */; };
+		386AF90D20E65BFA009F9851 /* testPJFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF90C20E65BFA009F9851 /* testPJFileManager.swift */; };
+		386AF90F20E6882C009F9851 /* MultipleChoiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF90E20E6882C009F9851 /* MultipleChoiceTest.swift */; };
 		38846B7D20E2903D00C0DB3C /* Words.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7C20E2903D00C0DB3C /* Words.swift */; };
 		38846B8020E299C400C0DB3C /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */; };
 		38AEC05720E21F0100E6529F /* FindBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC05620E21F0100E6529F /* FindBarViewController.swift */; };
@@ -45,6 +47,11 @@
 		38AEC07820E2391F00E6529F /* WordsTabController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07720E2391F00E6529F /* WordsTabController.xib */; };
 		38AEC07A20E23A3900E6529F /* BMTTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC07920E23A3900E6529F /* BMTTabViewController.swift */; };
 		38AEC07C20E23D6600E6529F /* BMTTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07B20E23D6600E6529F /* BMTTabViewController.xib */; };
+		38C71BC820E7D2FD00AC4B6E /* InfoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */; };
+		38C71BC920E7D2FD00AC4B6E /* InfoPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38C71BC720E7D2FD00AC4B6E /* InfoPopupViewController.xib */; };
+		38EFAFA520E9292A00C71AE9 /* PJWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFA420E9292A00C71AE9 /* PJWindow.swift */; };
+		38EFAFA720E9354700C71AE9 /* ClipboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFA620E9354700C71AE9 /* ClipboardController.swift */; };
+		38EFAFA920E93A2600C71AE9 /* FindBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38EFAFA820E93A2600C71AE9 /* FindBarViewController.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -95,6 +102,8 @@
 		3850BA3B20E5203300A7C7CF /* Burmese Test V3UITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "Burmese Test V3UITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3850BA3D20E5203300A7C7CF /* Burmese_Test_V3UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Burmese_Test_V3UITests.swift; sourceTree = "<group>"; };
 		3850BA3F20E5203300A7C7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		386AF90C20E65BFA009F9851 /* testPJFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testPJFileManager.swift; sourceTree = "<group>"; };
+		386AF90E20E6882C009F9851 /* MultipleChoiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceTest.swift; sourceTree = "<group>"; };
 		38846B7C20E2903D00C0DB3C /* Words.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Words.swift; sourceTree = "<group>"; };
 		38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 		38AEC05620E21F0100E6529F /* FindBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindBarViewController.swift; sourceTree = "<group>"; };
@@ -110,6 +119,12 @@
 		38AEC07720E2391F00E6529F /* WordsTabController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordsTabController.xib; sourceTree = "<group>"; };
 		38AEC07920E23A3900E6529F /* BMTTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTTabViewController.swift; sourceTree = "<group>"; };
 		38AEC07B20E23D6600E6529F /* BMTTabViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BMTTabViewController.xib; sourceTree = "<group>"; };
+		38B7D5C920E87E9000B13ED1 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPopupViewController.swift; sourceTree = "<group>"; };
+		38C71BC720E7D2FD00AC4B6E /* InfoPopupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoPopupViewController.xib; sourceTree = "<group>"; };
+		38EFAFA420E9292A00C71AE9 /* PJWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJWindow.swift; sourceTree = "<group>"; };
+		38EFAFA620E9354700C71AE9 /* ClipboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardController.swift; sourceTree = "<group>"; };
+		38EFAFA820E93A2600C71AE9 /* FindBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindBarViewController.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -160,6 +175,7 @@
 		381B8A1520E1DAC0008335E0 /* Burmese Test V3 */ = {
 			isa = PBXGroup;
 			children = (
+				38EFAFA320E8C89200C71AE9 /* Extensions */,
 				3821C84B20E242070045E5A8 /* Custom Functions */,
 				38AEC07D20E2417900E6529F /* Custom Controls */,
 				381B8A1620E1DAC0008335E0 /* AppDelegate.swift */,
@@ -170,6 +186,7 @@
 				381B8A2B20E1F354008335E0 /* Images */,
 				381B8A1D20E1DAC2008335E0 /* Info.plist */,
 				381B8A1E20E1DAC2008335E0 /* Burmese_Test_V3.entitlements */,
+				38B7D5C920E87E9000B13ED1 /* MyPlayground.playground */,
 			);
 			path = "Burmese Test V3";
 			sourceTree = "<group>";
@@ -178,6 +195,7 @@
 			isa = PBXGroup;
 			children = (
 				381B8A2520E1DBC5008335E0 /* MainWindowController.swift */,
+				38EFAFA420E9292A00C71AE9 /* PJWindow.swift */,
 				384AB24120E3E75500D7E5D7 /* Main Menu */,
 				38AEC05920E21F3100E6529F /* MainToolBar */,
 				38AEC05820E21F1400E6529F /* FindBar */,
@@ -189,7 +207,6 @@
 		3821C84B20E242070045E5A8 /* Custom Functions */ = {
 			isa = PBXGroup;
 			children = (
-				3821C84C20E242160045E5A8 /* PJExtensions.swift */,
 				3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */,
 			);
 			path = "Custom Functions";
@@ -222,6 +239,7 @@
 			children = (
 				3850BA2F20E4D59B00A7C7CF /* Burmese_Test_V3Tests.swift */,
 				3850BA3120E4D59B00A7C7CF /* Info.plist */,
+				386AF90C20E65BFA009F9851 /* testPJFileManager.swift */,
 			);
 			path = "Burmese Test V3Tests";
 			sourceTree = "<group>";
@@ -247,6 +265,7 @@
 			isa = PBXGroup;
 			children = (
 				38AEC05620E21F0100E6529F /* FindBarViewController.swift */,
+				38EFAFA820E93A2600C71AE9 /* FindBarViewController.xib */,
 			);
 			path = FindBar;
 			sourceTree = "<group>";
@@ -275,7 +294,10 @@
 			isa = PBXGroup;
 			children = (
 				38AEC06120E223ED00E6529F /* TestTabController.swift */,
+				386AF90E20E6882C009F9851 /* MultipleChoiceTest.swift */,
 				38AEC06920E224E500E6529F /* TestTabController.xib */,
+				38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */,
+				38C71BC720E7D2FD00AC4B6E /* InfoPopupViewController.xib */,
 			);
 			path = TestTab;
 			sourceTree = "<group>";
@@ -303,6 +325,7 @@
 			children = (
 				384AB24420E4754400D7E5D7 /* Table Model */,
 				38846B7E20E2905600C0DB3C /* Words Model */,
+				38EFAFA620E9354700C71AE9 /* ClipboardController.swift */,
 				38AEC06520E2241E00E6529F /* WordsTabController.swift */,
 				38AEC07720E2391F00E6529F /* WordsTabController.xib */,
 				38AEC07520E2354800E6529F /* WordsTabViewController.swift */,
@@ -322,6 +345,14 @@
 				38160EAE20E36F0200DA13F1 /* PJTextField.swift */,
 			);
 			path = "Custom Controls";
+			sourceTree = "<group>";
+		};
+		38EFAFA320E8C89200C71AE9 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				3821C84C20E242160045E5A8 /* PJExtensions.swift */,
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -392,6 +423,11 @@
 				TargetAttributes = {
 					381B8A1220E1DAC0008335E0 = {
 						CreatedOnToolsVersion = 10.0;
+						SystemCapabilities = {
+							com.apple.Sandbox = {
+								enabled = 0;
+							};
+						};
 					};
 					3850BA2C20E4D59B00A7C7CF = {
 						CreatedOnToolsVersion = 10.0;
@@ -429,9 +465,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				38AEC06A20E224E500E6529F /* TestTabController.xib in Resources */,
+				38EFAFA920E93A2600C71AE9 /* FindBarViewController.xib in Resources */,
 				38AEC06C20E22C4200E6529F /* ResultsTabController.xib in Resources */,
 				38AEC07C20E23D6600E6529F /* BMTTabViewController.xib in Resources */,
 				38AEC07020E22C6F00E6529F /* ExportTabController.xib in Resources */,
+				38C71BC920E7D2FD00AC4B6E /* InfoPopupViewController.xib in Resources */,
 				381B8A1920E1DAC2008335E0 /* Assets.xcassets in Resources */,
 				38AEC07820E2391F00E6529F /* WordsTabController.xib in Resources */,
 				381B8A2C20E1F355008335E0 /* Images in Resources */,
@@ -468,15 +506,19 @@
 				38AEC06420E2240700E6529F /* ResultsTabController.swift in Sources */,
 				38160EAF20E36F0200DA13F1 /* PJTextField.swift in Sources */,
 				381B8A2620E1DBC5008335E0 /* MainWindowController.swift in Sources */,
+				38EFAFA720E9354700C71AE9 /* ClipboardController.swift in Sources */,
 				384AB24320E466E600D7E5D7 /* WordTypeMenuController.swift in Sources */,
 				38AEC06620E2241E00E6529F /* WordsTabController.swift in Sources */,
 				3821C85420E260100045E5A8 /* PJGlobalFunctions.swift in Sources */,
 				384AB24020E3E74400D7E5D7 /* PJFileManager.swift in Sources */,
+				38EFAFA520E9292A00C71AE9 /* PJWindow.swift in Sources */,
 				3821C85220E260060045E5A8 /* PJPButtonConfig.swift in Sources */,
+				38C71BC820E7D2FD00AC4B6E /* InfoPopupViewController.swift in Sources */,
 				38AEC06820E2243300E6529F /* ExportTabController.swift in Sources */,
 				38846B7D20E2903D00C0DB3C /* Words.swift in Sources */,
 				38AEC06220E223ED00E6529F /* TestTabController.swift in Sources */,
 				3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */,
+				386AF90F20E6882C009F9851 /* MultipleChoiceTest.swift in Sources */,
 				381B8A2A20E1EDB0008335E0 /* ToolbarController.swift in Sources */,
 				381B8A1720E1DAC0008335E0 /* AppDelegate.swift in Sources */,
 				384AB23E20E3E0BB00D7E5D7 /* MainMenuController.swift in Sources */,
@@ -496,6 +538,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3850BA3020E4D59B00A7C7CF /* Burmese_Test_V3Tests.swift in Sources */,
+				386AF90D20E65BFA009F9851 /* testPJFileManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,7 +694,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Burmese Test V3/Burmese_Test_V3.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Burmese Test V3/Info.plist";
@@ -669,7 +711,6 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
-				CODE_SIGN_ENTITLEMENTS = "Burmese Test V3/Burmese_Test_V3.entitlements";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				INFOPLIST_FILE = "Burmese Test V3/Info.plist";
