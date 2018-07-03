@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		380C3C2620EA76950077C2BE /* TextFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C3C2520EA76950077C2BE /* TextFinder.swift */; };
 		38160EAB20E3580000DA13F1 /* TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */; };
 		38160EAD20E3599E00DA13F1 /* SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */; };
 		38160EAF20E36F0200DA13F1 /* PJTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAE20E36F0200DA13F1 /* PJTextField.swift */; };
@@ -17,6 +18,7 @@
 		381B8A2820E1EA10008335E0 /* GeneralFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381B8A2720E1EA10008335E0 /* GeneralFunctions.swift */; };
 		381B8A2A20E1EDB0008335E0 /* ToolbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381B8A2920E1EDB0008335E0 /* ToolbarController.swift */; };
 		381B8A2C20E1F355008335E0 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 381B8A2B20E1F354008335E0 /* Images */; };
+		381F685020EB3DD50085E330 /* FindMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */; };
 		3821C85120E25FFE0045E5A8 /* PJPAutoWrapButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84E20E242530045E5A8 /* PJPAutoWrapButtonCell.swift */; };
 		3821C85220E260060045E5A8 /* PJPButtonConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C85020E242630045E5A8 /* PJPButtonConfig.swift */; };
 		3821C85320E2600C0045E5A8 /* PJPButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84F20E242610045E5A8 /* PJPButton.swift */; };
@@ -52,6 +54,8 @@
 		38EFAFA520E9292A00C71AE9 /* PJWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFA420E9292A00C71AE9 /* PJWindow.swift */; };
 		38EFAFA720E9354700C71AE9 /* ClipboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFA620E9354700C71AE9 /* ClipboardController.swift */; };
 		38EFAFA920E93A2600C71AE9 /* FindBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38EFAFA820E93A2600C71AE9 /* FindBarViewController.xib */; };
+		38EFAFAB20E9CCE900C71AE9 /* TextFinderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFAA20E9CCE900C71AE9 /* TextFinderClient.swift */; };
+		38EFAFAD20E9D08D00C71AE9 /* PJScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFAC20E9D08D00C71AE9 /* PJScrollView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +76,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		380C3C2520EA76950077C2BE /* TextFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinder.swift; sourceTree = "<group>"; };
 		38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDelegate.swift; sourceTree = "<group>"; };
 		38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDelegate.swift; sourceTree = "<group>"; };
 		38160EAE20E36F0200DA13F1 /* PJTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJTextField.swift; sourceTree = "<group>"; };
@@ -85,6 +90,7 @@
 		381B8A2720E1EA10008335E0 /* GeneralFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GeneralFunctions.swift; sourceTree = "<group>"; };
 		381B8A2920E1EDB0008335E0 /* ToolbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarController.swift; sourceTree = "<group>"; };
 		381B8A2B20E1F354008335E0 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = SOURCE_ROOT; };
+		381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMenuDelegate.swift; sourceTree = "<group>"; };
 		3821C84C20E242160045E5A8 /* PJExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJExtensions.swift; sourceTree = "<group>"; };
 		3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJGlobalFunctions.swift; sourceTree = "<group>"; };
 		3821C84E20E242530045E5A8 /* PJPAutoWrapButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJPAutoWrapButtonCell.swift; sourceTree = "<group>"; };
@@ -125,6 +131,8 @@
 		38EFAFA420E9292A00C71AE9 /* PJWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJWindow.swift; sourceTree = "<group>"; };
 		38EFAFA620E9354700C71AE9 /* ClipboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardController.swift; sourceTree = "<group>"; };
 		38EFAFA820E93A2600C71AE9 /* FindBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindBarViewController.xib; sourceTree = "<group>"; };
+		38EFAFAA20E9CCE900C71AE9 /* TextFinderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinderClient.swift; sourceTree = "<group>"; };
+		38EFAFAC20E9D08D00C71AE9 /* PJScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJScrollView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -323,8 +331,7 @@
 		38AEC06020E223C800E6529F /* WordsTab */ = {
 			isa = PBXGroup;
 			children = (
-				384AB24420E4754400D7E5D7 /* Table Model */,
-				38846B7E20E2905600C0DB3C /* Words Model */,
+				38EFAFAE20E9D60400C71AE9 /* ScrollView */,
 				38EFAFA620E9354700C71AE9 /* ClipboardController.swift */,
 				38AEC06520E2241E00E6529F /* WordsTabController.swift */,
 				38AEC07720E2391F00E6529F /* WordsTabController.xib */,
@@ -353,6 +360,19 @@
 				3821C84C20E242160045E5A8 /* PJExtensions.swift */,
 			);
 			path = Extensions;
+			sourceTree = "<group>";
+		};
+		38EFAFAE20E9D60400C71AE9 /* ScrollView */ = {
+			isa = PBXGroup;
+			children = (
+				38EFAFAC20E9D08D00C71AE9 /* PJScrollView.swift */,
+				380C3C2520EA76950077C2BE /* TextFinder.swift */,
+				38EFAFAA20E9CCE900C71AE9 /* TextFinderClient.swift */,
+				381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */,
+				38846B7E20E2905600C0DB3C /* Words Model */,
+				384AB24420E4754400D7E5D7 /* Table Model */,
+			);
+			path = ScrollView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -501,13 +521,16 @@
 				38AEC05720E21F0100E6529F /* FindBarViewController.swift in Sources */,
 				38160EAD20E3599E00DA13F1 /* SearchDelegate.swift in Sources */,
 				38AEC07620E2354800E6529F /* WordsTabViewController.swift in Sources */,
+				38EFAFAB20E9CCE900C71AE9 /* TextFinderClient.swift in Sources */,
 				384AB23C20E3B26800D7E5D7 /* PJTableView.swift in Sources */,
 				3821C85120E25FFE0045E5A8 /* PJPAutoWrapButtonCell.swift in Sources */,
+				380C3C2620EA76950077C2BE /* TextFinder.swift in Sources */,
 				38AEC06420E2240700E6529F /* ResultsTabController.swift in Sources */,
 				38160EAF20E36F0200DA13F1 /* PJTextField.swift in Sources */,
 				381B8A2620E1DBC5008335E0 /* MainWindowController.swift in Sources */,
 				38EFAFA720E9354700C71AE9 /* ClipboardController.swift in Sources */,
 				384AB24320E466E600D7E5D7 /* WordTypeMenuController.swift in Sources */,
+				38EFAFAD20E9D08D00C71AE9 /* PJScrollView.swift in Sources */,
 				38AEC06620E2241E00E6529F /* WordsTabController.swift in Sources */,
 				3821C85420E260100045E5A8 /* PJGlobalFunctions.swift in Sources */,
 				384AB24020E3E74400D7E5D7 /* PJFileManager.swift in Sources */,
@@ -525,6 +548,7 @@
 				381B8A2820E1EA10008335E0 /* GeneralFunctions.swift in Sources */,
 				38AEC07A20E23A3900E6529F /* BMTTabViewController.swift in Sources */,
 				384AB24620E47EFF00D7E5D7 /* MenuController.swift in Sources */,
+				381F685020EB3DD50085E330 /* FindMenuDelegate.swift in Sources */,
 				38AEC05C20E21F9B00E6529F /* MainTabViewController.swift in Sources */,
 				3850BA2820E4AA0C00A7C7CF /* LanguageMenuController.swift in Sources */,
 				38846B8020E299C400C0DB3C /* TableViewDataSource.swift in Sources */,

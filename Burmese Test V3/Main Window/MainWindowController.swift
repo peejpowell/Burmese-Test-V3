@@ -11,7 +11,6 @@ import Cocoa
 class MainWindowController: NSWindowController {
     
     @IBOutlet var toolbarController : ToolbarController!
-    @IBOutlet var findBarViewController : FindBarViewController!
     @IBOutlet var mainTabViewController : MainTabViewController!
     @IBOutlet var mainMenuController : MainMenuController!
     @IBOutlet var mainFileManager : PJFileManager!

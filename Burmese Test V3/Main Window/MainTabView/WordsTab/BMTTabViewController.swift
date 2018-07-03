@@ -12,6 +12,12 @@ class BMTTabViewController: NSViewController {
 
     @IBOutlet weak var tableView : NSTableView!
     
+    @IBOutlet var textFinderClient: TextFinderClient!
+    
+    @IBOutlet weak var scrollView: PJScrollView!
+    
+    var textFinderController: NSTextFinder = NSTextFinder()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
@@ -23,6 +29,12 @@ class BMTTabViewController: NSViewController {
             tableView.wantsLayer = true
             self.tableView = tableView
         }
+        
+        // Set up the textfinder
+       
+        self.textFinderController.client = self.textFinderClient
+        self.textFinderController.findBarContainer = self.scrollView
+        self.textFinderController.isIncrementalSearchingEnabled = true
     }
     
     deinit {

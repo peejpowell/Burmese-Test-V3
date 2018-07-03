@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Carbon
 
 public var logLevel = 1
 
@@ -15,6 +16,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var mainWindowController : MainWindowController!
 
+    var currentInputSource : TISInputSource?    = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
+    var originalInputLanguage : TISInputSource? = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
+    {
+        didSet(oldValue)
+        {
+            print("\(oldValue)")
+            print("\(originalInputLanguage)")
+        }
+    }
+    
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
         infoPrint("", #function, self.className)
@@ -47,6 +58,10 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         getWordsTabViewDelegate().tabViewControllersList.removeAll()
         getWordsTabViewDelegate().dataSources.removeAll()
         getWordsTabViewDelegate().tabViewItems.removeAll()
+        self.currentInputSource = nil
+        TISSelectInputSource(self.originalInputLanguage)
+        self.originalInputLanguage = nil
+        
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -55,6 +70,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         return true
     }
     
+    func applicationDidBecomeActive(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        TISSelectInputSource(self.currentInputSource)
+    }
+    
+    func applicationWillResignActive(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        
+        self.currentInputSource = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
+        TISSelectInputSource(originalInputLanguage)
+    }
     
 }
 
@@ -63,6 +89,13 @@ extension AppDelegate {
     @IBAction func performClose(_ sender: Any?) {
         infoPrint("", #function, self.className)
         getMainMenuController().performCloseWordsFile(sender)
+    }
+
+    @IBAction func performFindPanelAction(_ sender: Any?){
+        infoPrint("", #function, self.className)
+       
+        let index = getCurrentIndex()
+        getWordsTabViewDelegate().tabViewControllersList[index].textFinderClient.performTextFinderAction(sender)
     }
     
 }

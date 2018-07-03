@@ -60,10 +60,13 @@ class PJTableView: NSTableView {
         infoPrint("TableView Created", #function, self.className)
     }
     
+    
     deinit {
         infoPrint("TableView Removed", #function, self.className)
     }
 }
+
+// MARK: DragOperation Functions
 
 extension PJTableView {
     
@@ -74,5 +77,4 @@ extension PJTableView {
         self.registerForDraggedTypes([NSPasteboard.PasteboardType(rawValue: NSPasteboard.Name.drag.rawValue)])
         
     }
-    
 }

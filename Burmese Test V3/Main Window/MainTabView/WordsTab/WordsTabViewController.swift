@@ -23,6 +23,7 @@ class WordsTabViewController: NSTabViewController {
     
     @IBOutlet weak var searchFieldDelegate : SearchDelegate!
     @IBOutlet weak var tableView : NSTableView!
+    //@IBOutlet weak var textFinderClient: TextFinderClient!
     
     override func viewDidLoad() {
         super.viewDidLoad()

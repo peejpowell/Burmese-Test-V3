@@ -8,7 +8,9 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="BMTTabViewController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
+                <outlet property="scrollView" destination="0iF-hh-ZQY" id="c4X-hc-jOM"/>
                 <outlet property="tableView" destination="aAj-Up-qFP" id="yFF-il-KUc"/>
+                <outlet property="textFinderClient" destination="1g7-sm-uRE" id="UfW-Uc-n24"/>
                 <outlet property="view" destination="c22-O7-iKe" id="N7R-fl-fTz"/>
             </connections>
         </customObject>
@@ -18,7 +20,7 @@
             <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <scrollView autohidesScrollers="YES" horizontalLineScroll="26" horizontalPageScroll="10" verticalLineScroll="26" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0iF-hh-ZQY">
+                <scrollView autohidesScrollers="YES" horizontalLineScroll="26" horizontalPageScroll="10" verticalLineScroll="26" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0iF-hh-ZQY" customClass="PJScrollView" customModule="Burmese_Test_V3" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
                     <clipView key="contentView" drawsBackground="NO" id="p17-7G-T5E">
                         <rect key="frame" x="1" y="0.0" width="478" height="271"/>
@@ -578,5 +580,23 @@
             </constraints>
             <point key="canvasLocation" x="63" y="113"/>
         </customView>
+        <customObject id="1g7-sm-uRE" customClass="TextFinderClient" customModule="Burmese_Test_V3" customModuleProvider="target">
+            <connections>
+                <outlet property="menu" destination="FF4-8m-Ujz" id="Klb-0S-NCS"/>
+            </connections>
+        </customObject>
+        <menu id="FF4-8m-Ujz">
+            <items>
+                <menuItem title="Item 1" id="ewe-ON-Vyc">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Item 2" id="LSY-xg-am9">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+                <menuItem title="Item 3" id="eiN-hB-Anl">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                </menuItem>
+            </items>
+        </menu>
     </objects>
 </document>

@@ -432,4 +432,11 @@ extension MainMenuController {
         getMainWindowController().mainClipboardController.moveToPasteBoard()
         
     }
+    
+    @IBAction func performFindPanelAction(_ sender: Any?){
+        infoPrint("", #function, self.className)
+       
+        let index = getCurrentIndex()
+        getWordsTabViewDelegate().tabViewControllersList[index].textFinderClient.performTextFinderAction(sender)
+    }
 }

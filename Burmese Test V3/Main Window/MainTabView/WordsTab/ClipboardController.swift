@@ -34,9 +34,9 @@ class ClipboardController: NSObject {
                 }
             }
         }
+        //FIXME: Enable the following later
+        //self.putDataOnPasteboard(index, dragOperation: "move", filteredItems: getMainWindowController().findBarViewController.findMenuController.filterItems.state.rawValue == 1, searchResult: appDelegate.toolbarDelegate.searchResult)
         
-        self.putDataOnPasteboard(index, dragOperation: "move", filteredItems: getMainWindowController().findBarViewController.findMenuController.filterItems.state.rawValue == 1, searchResult: appDelegate.toolbarDelegate.searchResult)
-        
-        appDelegate.dataSources![index].needsSaving = true
+        dataSource.needsSaving = true
     }
 }
