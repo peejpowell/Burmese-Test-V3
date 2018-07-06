@@ -18,13 +18,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     var currentInputSource : TISInputSource?    = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
     var originalInputLanguage : TISInputSource? = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
-    {
-        didSet(oldValue)
-        {
-            print("\(oldValue)")
-            print("\(originalInputLanguage)")
-        }
-    }
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
@@ -88,14 +81,14 @@ extension AppDelegate {
     
     @IBAction func performClose(_ sender: Any?) {
         infoPrint("", #function, self.className)
-        getMainMenuController().performCloseWordsFile(sender)
+        _ = getMainMenuController().performCloseWordsFile(sender)
     }
 
     @IBAction func performFindPanelAction(_ sender: Any?){
         infoPrint("", #function, self.className)
        
         let index = getCurrentIndex()
-        getWordsTabViewDelegate().tabViewControllersList[index].textFinderClient.performTextFinderAction(sender)
+        _ = getWordsTabViewDelegate().tabViewControllersList[index].textFinderClient.performTextFinderAction(sender)
     }
     
 }

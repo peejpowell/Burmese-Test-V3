@@ -22,11 +22,11 @@ class TextFieldDelegate: NSObject, NSTextFieldDelegate {
     {
         infoPrint("", #function, self.className)
         
+        let index = getCurrentIndex()
         let wordsTabController = getWordsTabViewDelegate()
+        let dataSource = wordsTabController.dataSources[index]
         if let textField = obj.object as? NSTextField {
-            let index = getCurrentIndex()
             var oldValue : String?
-            let dataSource = wordsTabController.dataSources[index]
             if let tableView = wordsTabController.tabViewControllersList[index].tableView {
                 let row = tableView.row(for: textField)
                 if row == -1 {
@@ -394,7 +394,7 @@ class TextFieldDelegate: NSObject, NSTextFieldDelegate {
                         dataSource.words.append(copyOfRow)
                         
                         tableView.insertRows(at: IndexSet(integer:editRow), withAnimation: NSTableView.AnimationOptions.effectGap)
-                        tableView.reloadData(forRowIndexes: IndexSet(integer:editRow), columnIndexes: IndexSet(integersIn: NSRange(location: 0, length: tableView.numberOfColumns).toRange() ?? 0..<0))
+                        tableView.reloadData(forRowIndexes: IndexSet(integer:editRow), columnIndexes: IndexSet(integersIn: 0..<tableView.numberOfColumns))
                     }
                 }
                 //print("Editing column: \(tableView.tableColumns[editColumn].identifier)")

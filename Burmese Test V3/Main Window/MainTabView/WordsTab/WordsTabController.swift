@@ -10,6 +10,7 @@ import Cocoa
 
 class WordsTabController: NSViewController {
 
+    
     @IBOutlet var wordsTabViewController : WordsTabViewController!
     
     override func viewDidLoad() {

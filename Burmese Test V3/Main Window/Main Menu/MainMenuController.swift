@@ -93,19 +93,17 @@ class MainMenuController: MenuController {
         }
         if !foundUrl {
             self.recentFiles.insert(url, at: 0)
-            let newMenuItem = NSMenuItem(title: "\(url.lastPathComponent)", action: "openRecentFile:", keyEquivalent: "")
+            let newMenuItem = NSMenuItem(title: "\(url.lastPathComponent)", action: #selector(openRecentFile(_:)), keyEquivalent: "")
             newMenuItem.target = self
             let iconPath = url.path
             
             newMenuItem.image = loadIconFrom(iconPath)
-            if let image = newMenuItem.image
-            {
+            if let image = newMenuItem.image {
                 image.size = NSSize(width: 16,height: 16)
             }
         
             self.recentFilesMenu.insertItem(newMenuItem, at: 0)
-            if self.recentFilesMenu.items.count > 12
-            {
+            if self.recentFilesMenu.items.count > 12 {
                 self.recentFilesMenu.removeItem(at: self.recentFilesMenu.items.count-3)
                 self.recentFiles.remove(at: self.recentFiles.count-1)
             //print("\(self.recentFiles)")

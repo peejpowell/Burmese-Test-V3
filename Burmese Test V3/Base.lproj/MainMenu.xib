@@ -21,7 +21,6 @@
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
         <customObject id="vod-uV-yc1" customClass="MainWindowController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
-                <outlet property="findBarViewController" destination="8TO-bv-S1P" id="05r-oL-lhR"/>
                 <outlet property="mainClipboardController" destination="QId-iA-S1L" id="YeX-Js-ZEl"/>
                 <outlet property="mainFileManager" destination="OqY-he-gAA" id="607-cQ-Atg"/>
                 <outlet property="mainMenuController" destination="a1q-4L-Wmq" id="pe6-88-dXW"/>

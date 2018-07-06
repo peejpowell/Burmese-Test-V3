@@ -179,45 +179,43 @@ extension String
     func containsText(_ searchFor:String, isBurmese:Bool, fullWord: Bool, ignoreDiacritics: Bool) -> Bool
     {
         //print("\(searchFor) in \(self)")
-        let oldstringLength = self.characters.distance(from: self.startIndex, to: self.endIndex)
+        let oldStringLength = self.distance(from: self.startIndex, to: self.endIndex)
         let stringRange = self.range(of:self)
         var testString = String()
         var range : Range<String.Index>?
         
-        if isBurmese==true
-        {
-            testString = self.replacingOccurrences(of: searchFor, with: "", options: NSString.CompareOptions.literal, range: stringRange)
-            range = self.range(of: searchFor,options:NSString.CompareOptions.widthInsensitive)
-        }
-        else if isBurmese == false && ignoreDiacritics == false
-        {
-            testString = self.replacingOccurrences(of: searchFor, with: "", options: NSString.CompareOptions.caseInsensitive, range: stringRange)
-            range = self.range(of: searchFor,options:NSString.CompareOptions.caseInsensitive)
-        }
-        else
-        {
-            testString = self.replacingOccurrences(of: searchFor, with: "", options: [NSString.CompareOptions.caseInsensitive, NSString.CompareOptions.diacriticInsensitive], range: stringRange)
-            range = self.range(of: searchFor,options:[NSString.CompareOptions.caseInsensitive, NSString.CompareOptions.diacriticInsensitive])
+        var compareOptions = NSString.CompareOptions()
+        var rangeOptions   = NSString.CompareOptions()
+        switch isBurmese {
+        case true:
+            compareOptions = [.literal]
+            rangeOptions = [.widthInsensitive]
+        case false:
+            switch ignoreDiacritics {
+            case false:
+                compareOptions = [.caseInsensitive]
+                rangeOptions = [.caseInsensitive]
+            case true:
+                compareOptions = [.caseInsensitive, .diacriticInsensitive]
+                rangeOptions = [.caseInsensitive, .diacriticInsensitive]
+            }
         }
         
+        testString = self.replacingOccurrences(of: searchFor, with: "", options: compareOptions, range: stringRange)
+        range = self.range(of: searchFor, options: rangeOptions)
         
         let stringLength = testString.distance(from: testString.startIndex, to: testString.endIndex)
         
-        if stringLength == oldstringLength
-        {
+        if stringLength == oldStringLength {
             return false
         }
-        else
-        {
-            if let range = range
-            {
-                if fullWord == true && isBurmese == false
-                {
+        else {
+            if let range = range {
+                if fullWord && !isBurmese {
                     // Convert the word to remove diacritic marks
                     var searchIn : String = self
-                    if ignoreDiacritics == true && isBurmese == false
-                    {
-                        searchIn = self.folding(options: NSString.CompareOptions.diacriticInsensitive, locale: Locale.current as Locale)
+                    if ignoreDiacritics && !isBurmese {
+                        searchIn = self.folding(options: .diacriticInsensitive, locale: .current)
                     }
                     let letters : [String] = ["a","b","c","d","e","f","g","h","i","j",
                                               "k","l","m","n","o","p","q","r","s","t",
@@ -235,10 +233,9 @@ extension String
                         
                         let subRange = (searchIn.index(searchIn.startIndex, offsetBy: location-1) ..< searchIn.index(searchIn.startIndex, offsetBy: location))
                         
-                        let theChar = (searchIn.substring(with: subRange))
+                        let theChar = searchIn[subRange]
                         
-                        if alphabet.member(theChar) != nil
-                        {
+                        if alphabet.member(theChar) != nil {
                             return false
                         }
                     }
@@ -246,22 +243,18 @@ extension String
                     // Check the character after the end of the substring for a space or the end of the string
                     
                     let subStart = location + distance(from: range.lowerBound, to: range.upperBound)
-                    //range.distance(from: range.startIndex, to: range.endIndex)
                     
                     let totalLength = searchIn.distance(from: searchIn.startIndex, to: searchIn.endIndex)
                     
-                    if subStart < totalLength
-                    {
+                    if subStart < totalLength {
                         let subRange = (searchIn.index(searchIn.startIndex, offsetBy: subStart) ..< searchIn.index(searchIn.startIndex, offsetBy: subStart+1))
                         
-                        let theChar = (searchIn.substring(with: subRange))
+                        let theChar = searchIn[subRange]
                         
-                        if alphabet.member(theChar) != nil
-                        {
+                        if alphabet.member(theChar) != nil {
                             return false
                         }
-                        else
-                        {
+                        else {
                             return true
                         }
                     }
@@ -377,7 +370,9 @@ extension NSTextView
     func replaceAllWithText(_ textToInsert: String)
     {
         self.clear()
-        self.insertText(textToInsert)
+        let lengthOfString = self.string.distance(from: self.string.startIndex, to: self.string.endIndex)
+        let fullRange = NSRange(location: 0, length: lengthOfString)
+        self.insertText(textToInsert, replacementRange: fullRange)
         self.moveToBeginningOfDocument(nil)
     }
 }

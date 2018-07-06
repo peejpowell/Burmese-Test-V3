@@ -24,6 +24,7 @@
 		3821C85320E2600C0045E5A8 /* PJPButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84F20E242610045E5A8 /* PJPButton.swift */; };
 		3821C85420E260100045E5A8 /* PJGlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */; };
 		3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84C20E242160045E5A8 /* PJExtensions.swift */; };
+		383797DD20EE4FF400125253 /* TableTextFinderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383797DC20EE4FF400125253 /* TableTextFinderClient.swift */; };
 		384AB23C20E3B26800D7E5D7 /* PJTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384AB23B20E3B26800D7E5D7 /* PJTableView.swift */; };
 		384AB23E20E3E0BB00D7E5D7 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384AB23D20E3E0BB00D7E5D7 /* MainMenuController.swift */; };
 		384AB24020E3E74400D7E5D7 /* PJFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384AB23F20E3E74400D7E5D7 /* PJFileManager.swift */; };
@@ -96,6 +97,7 @@
 		3821C84E20E242530045E5A8 /* PJPAutoWrapButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJPAutoWrapButtonCell.swift; sourceTree = "<group>"; };
 		3821C84F20E242610045E5A8 /* PJPButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJPButton.swift; sourceTree = "<group>"; };
 		3821C85020E242630045E5A8 /* PJPButtonConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJPButtonConfig.swift; sourceTree = "<group>"; };
+		383797DC20EE4FF400125253 /* TableTextFinderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTextFinderClient.swift; sourceTree = "<group>"; };
 		384AB23B20E3B26800D7E5D7 /* PJTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJTableView.swift; sourceTree = "<group>"; };
 		384AB23D20E3E0BB00D7E5D7 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
 		384AB23F20E3E74400D7E5D7 /* PJFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJFileManager.swift; sourceTree = "<group>"; };
@@ -366,6 +368,7 @@
 			isa = PBXGroup;
 			children = (
 				38EFAFAC20E9D08D00C71AE9 /* PJScrollView.swift */,
+				383797DC20EE4FF400125253 /* TableTextFinderClient.swift */,
 				380C3C2520EA76950077C2BE /* TextFinder.swift */,
 				38EFAFAA20E9CCE900C71AE9 /* TextFinderClient.swift */,
 				381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */,
@@ -527,6 +530,7 @@
 				380C3C2620EA76950077C2BE /* TextFinder.swift in Sources */,
 				38AEC06420E2240700E6529F /* ResultsTabController.swift in Sources */,
 				38160EAF20E36F0200DA13F1 /* PJTextField.swift in Sources */,
+				383797DD20EE4FF400125253 /* TableTextFinderClient.swift in Sources */,
 				381B8A2620E1DBC5008335E0 /* MainWindowController.swift in Sources */,
 				38EFAFA720E9354700C71AE9 /* ClipboardController.swift in Sources */,
 				384AB24320E466E600D7E5D7 /* WordTypeMenuController.swift in Sources */,

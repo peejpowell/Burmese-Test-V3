@@ -240,7 +240,6 @@ class Words: NSObject, NSCoding
     func setEdited()
     {
         //Swift.print(__FUNCTION__)
-        let appDelegate = NSApplication.shared.delegate as! AppDelegate
         let index = getCurrentIndex()
         
         if index != -1

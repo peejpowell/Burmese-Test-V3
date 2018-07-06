@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class TableViewDataSource: NSObject, NSTableViewDataSource {
+class TableViewDataSource: NSObject {
 
     //@IBOutlet var tableView : NSTableView!
     var fieldDelegate = TextFieldDelegate()
@@ -52,14 +52,6 @@ class TableViewDataSource: NSObject, NSTableViewDataSource {
         
     }
     
-    func numberOfRows(in tableView: NSTableView) -> Int {
-        let index = getCurrentIndex()
-        if index != -1 {
-            return getWordsTabViewDelegate().dataSources[index].words.count
-        }
-        return 0
-    }
-    
     override init() {
         super.init()
         infoPrint("new Datasource created",#function,self.className)
@@ -74,6 +66,12 @@ class TableViewDataSource: NSObject, NSTableViewDataSource {
 //MARK: Delegate Functions
 
 extension TableViewDataSource: NSTableViewDelegate {
+    
+    func tableView(_ tableView: NSTableView, didDrag tableColumn: NSTableColumn) {
+        let index = getCurrentIndex()
+        let textFinderClient = getWordsTabViewDelegate().tabViewControllersList[index].textFinderClient
+        textFinderClient?.resetSearch()
+    }
     
     func canDragRowsWithIndexes(_ rowIndexes: IndexSet, atPoint mouseDownPoint: NSPoint) -> Bool
     {
@@ -96,6 +94,18 @@ extension TableViewDataSource: NSTableViewDelegate {
     
     func tableViewColumnDidMove(_ notification: Notification) {
         
+    }
+    
+    @objc @IBAction func SearchTest(_ sender: Any) {
+        let myTextFinder = TextFinderClient()
+        myTextFinder.tabIndex = 0
+        print("Indexed: \(myTextFinder.calculateIndex())")
+        print("Total Length: \(myTextFinder.stringLength())")
+        var test = NSRange()
+        var boundary = ObjCBool(false)
+        // Search at each inex looking for the string to search for
+        
+        print("String at: 0 - \(myTextFinder.string(at: 0, effectiveRange: &test, endsWithSearchBoundary: &boundary))")
     }
     
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView?
@@ -135,6 +145,12 @@ extension TableViewDataSource: NSTableViewDelegate {
                 {
                     if let field = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: colId), owner: delegate.dataSources[index]) as? NSTableCellView
                     {
+                        for view in field.subviews {
+                            if let button = view as? NSButton {
+                                button.action = #selector(self.SearchTest(_:))
+                                button.target = self
+                            }
+                        }
                         if let value = delegate.dataSources[index].words[row].wordKeys[colId]
                         {
                             field.textField?.textColor = NSColor.textColor
@@ -383,7 +399,15 @@ extension TableViewDataSource: NSTableViewDelegate {
 
 //MARK: DataSource Functions Extension
 
-extension TableViewDataSource {
+extension TableViewDataSource: NSTableViewDataSource {
+    
+    func numberOfRows(in tableView: NSTableView) -> Int {
+        let index = getCurrentIndex()
+        if index != -1 {
+            return getWordsTabViewDelegate().dataSources[index].words.count
+        }
+        return 0
+    }
     
     func sortTable(_ tableView: NSTableView, sortBy: String)
     {

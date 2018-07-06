@@ -40,7 +40,7 @@ class PJFileManager : FileManager
         infoPrint("", #function, self.className)
         
         let path = fileURL.path
-        let newURL = URL(fileURLWithPath: path)
+        //let newURL = URL(fileURLWithPath: path)
         infoPrint(path, #function, self.className)
         if fileManager.fileExists(atPath: fileURL.path) {
             /*if let data:NSData =  FileManager.default.contents(atPath: fileURL.path) as? NSData {
@@ -157,7 +157,7 @@ class PJFileManager : FileManager
         let tabViewController = getWordsTabViewDelegate()
         
         if tabViewController.dataSources[0].sourceFile == nil {
-            var newDataSource = tabViewController.dataSources[0]
+            let newDataSource = tabViewController.dataSources[0]
             if let newDataSource = self.loadWordsFromFile(url, into: newDataSource) {
                 loadDataSource(newDataSource, at: 0)
                 selectWordsTab()
@@ -264,8 +264,6 @@ class PJFileManager : FileManager
         
         infoPrint("", #function, self.className)
         
-        let fileManager = PJFileManager()
-        
         if let url = dataSource.sourceFile {
             let alertResponse = requestToRevertDataSource(dataSource: dataSource)
             switch alertResponse {
@@ -343,7 +341,7 @@ class PJFileManager : FileManager
                 
                 for fieldNum in 0 ..< fieldNames.count {
                     if fieldValues[fieldNum] != "" && fieldValues[fieldNum] != nil {
-                        convertDict[fieldNames[fieldNum] as NSString] = fieldValues[fieldNum] as! NSString
+                        convertDict[fieldNames[fieldNum] as NSString] = fieldValues[fieldNum] as NSString?
                     }
                 }
                 convertedArray.append(convertDict)

@@ -19,5 +19,4 @@ class FindBarViewController: NSViewController {
         
         infoPrint("",#function,self.className)
     }
-    
 }

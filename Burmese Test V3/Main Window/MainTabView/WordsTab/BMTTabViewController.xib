@@ -10,6 +10,7 @@
             <connections>
                 <outlet property="scrollView" destination="0iF-hh-ZQY" id="c4X-hc-jOM"/>
                 <outlet property="tableView" destination="aAj-Up-qFP" id="yFF-il-KUc"/>
+                <outlet property="testSearchButton" destination="nTs-dZ-yVq" id="DTp-jU-2ct"/>
                 <outlet property="textFinderClient" destination="1g7-sm-uRE" id="UfW-Uc-n24"/>
                 <outlet property="view" destination="c22-O7-iKe" id="N7R-fl-fTz"/>
             </connections>
@@ -26,7 +27,7 @@
                         <rect key="frame" x="1" y="0.0" width="478" height="271"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView verticalHuggingPriority="750" tag="100" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" alternatingRowBackgroundColors="YES" columnSelection="YES" rowHeight="24" headerView="sB4-Tv-rhg" viewBased="YES" id="aAj-Up-qFP" customClass="PJTableView" customModule="Burmese_Test_V3" customModuleProvider="target">
+                            <tableView verticalHuggingPriority="750" tag="100" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveName="BMTColumns" rowHeight="24" headerView="sB4-Tv-rhg" viewBased="YES" id="aAj-Up-qFP" customClass="PJTableView" customModule="Burmese_Test_V3" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="1783" height="248"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -97,6 +98,17 @@
                                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
+                                                    <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="nTs-dZ-yVq">
+                                                        <rect key="frame" x="6" y="-9" width="81" height="32"/>
+                                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                                        <buttonCell key="cell" type="push" title="search" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="a3I-e3-0Jx">
+                                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="SearchTest:" target="-2" id="Vt4-XV-lFx"/>
+                                                        </connections>
+                                                    </button>
                                                 </subviews>
                                                 <constraints>
                                                     <constraint firstItem="rQD-Ga-8El" firstAttribute="leading" secondItem="4Ll-QO-zpq" secondAttribute="leading" id="7Jq-XB-R8G"/>
@@ -580,11 +592,7 @@
             </constraints>
             <point key="canvasLocation" x="63" y="113"/>
         </customView>
-        <customObject id="1g7-sm-uRE" customClass="TextFinderClient" customModule="Burmese_Test_V3" customModuleProvider="target">
-            <connections>
-                <outlet property="menu" destination="FF4-8m-Ujz" id="Klb-0S-NCS"/>
-            </connections>
-        </customObject>
+        <customObject id="1g7-sm-uRE" customClass="TextFinderClient" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <menu id="FF4-8m-Ujz">
             <items>
                 <menuItem title="Item 1" id="ewe-ON-Vyc">

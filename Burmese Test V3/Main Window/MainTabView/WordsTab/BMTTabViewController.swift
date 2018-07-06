@@ -10,6 +10,8 @@ import Cocoa
 
 class BMTTabViewController: NSViewController {
 
+    @IBOutlet weak var testSearchButton: NSButton!
+    
     @IBOutlet weak var tableView : NSTableView!
     
     @IBOutlet var textFinderClient: TextFinderClient!

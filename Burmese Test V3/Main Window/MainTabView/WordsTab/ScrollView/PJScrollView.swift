@@ -39,7 +39,9 @@ extension PJScrollView {
             if let sender = sender as? NSMenuItem {
                 textFinderController.client = textFinderClient
                 textFinderController.findBarContainer = wordsTabController.tabViewControllersList[index].scrollView
-                textFinderController.isIncrementalSearchingEnabled = true
+                textFinderController.isIncrementalSearchingEnabled = false
+                textFinderClient.incremental = textFinderController.isIncrementalSearchingEnabled
+                textFinderClient.allowsMultipleSelection = true
                 //textFinderClient.tabIndex = index
                 //textFinderController.performAction(.showFindInterface)
                 // Interrogate the scrollview to find the findbar
