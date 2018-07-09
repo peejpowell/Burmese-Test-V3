@@ -9,13 +9,13 @@
 import Cocoa
 import Carbon
 
-public var logLevel = 1
+public var logLevel = 0
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
     @IBOutlet weak var mainWindowController : MainWindowController!
-
+    
     var currentInputSource : TISInputSource?    = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
     var originalInputLanguage : TISInputSource? = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
     

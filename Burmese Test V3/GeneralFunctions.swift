@@ -89,24 +89,23 @@ func infoPrint(_ info: String?, _ funcName: String?, _ className: String? )
 {
     switch logLevel {
     case 1:
-        if let className = className?.stringAfter(".")
-        {
-            // Find the first . and then extract the remainder
-            print(className)
-        }
-        if let funcName = funcName {
-            if let info = info {
-                if info != "" {
-                    print("-->\(funcName) -> \(info)")
+        // Find the first . and then extract the remainder
+        if let className = className?.stringAfter(".") {
+            if let funcName = funcName {
+                if let info = info {
+                    if info != "" {
+                        print("\(className) -->\(funcName) -> \(info)")
+                    }
+                    else {
+                        print("\(className) -->\(funcName)")
+                    }
                 }
                 else {
-                    print("-->\(funcName)")
+                    print("\(className) -->\(funcName)")
                 }
             }
-            else {
-                print("-->\(funcName)")
-            }
         }
+        
     default:
         return
     }

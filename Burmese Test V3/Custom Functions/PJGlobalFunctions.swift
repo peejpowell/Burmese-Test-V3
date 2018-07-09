@@ -329,15 +329,16 @@ func getMainWindowController()->MainWindowController
 
 func getCurrentIndex()->Int
 {
-    if getWordsTabViewDelegate().dataSources.count != 0
+    let wordTabController = getWordsTabViewDelegate()
+    if wordTabController.dataSources.count != 0
     {
-        if getWordsTabViewDelegate().removingFirstItem
+        if wordTabController.removingFirstItem
         {
             return 0
         }
-        if let selectedItem = getWordsTabViewDelegate().tabView.selectedTabViewItem
+        if let selectedItem = wordTabController.tabView.selectedTabViewItem
         {
-            return getWordsTabViewDelegate().tabView.indexOfTabViewItem(selectedItem)
+            return wordTabController.tabView.indexOfTabViewItem(selectedItem)
         }
     }
     return -1

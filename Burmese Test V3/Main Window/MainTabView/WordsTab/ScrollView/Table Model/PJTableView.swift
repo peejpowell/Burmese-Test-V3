@@ -18,6 +18,13 @@ class PJTableView: NSTableView {
         // Drawing code here.
     }
     
+    override func keyDown(with theEvent: NSEvent) {
+        if theEvent.keyCode == 51 {
+            NotificationCenter.default.post(name: .removeTableRow, object: nil)
+        }
+        super.keyDown(with: theEvent)
+    }
+    
     override func mouseDown(with event: NSEvent) {
     
         infoPrint("", #function, self.className)

@@ -208,6 +208,9 @@ extension TextFinderClient {
         let index = self.tabIndex
         let wordsTabController = getWordsTabViewDelegate()
         let dataSource = wordsTabController.dataSources[index]
+        if dataSource.words[row].filtertype != .add {
+            dataSource.words[row].filtertype = .change
+        }
         switch col {
         case 0: // burmese
             dataSource.words[row].burmese = word
@@ -469,12 +472,42 @@ extension TextFinderClient {
         dataSource.unfilteredWords = dataSource.words
     }
     
+    func updateChangedRows(in dataSource: TableViewDataSource) {
+        if let unfilteredWords = dataSource.unfilteredWords {
+            for word in dataSource.words {
+                if word.filtertype == .change {
+                    if let filterIndex = word.filterindex {
+                        print("Changing row \(filterIndex) from \(unfilteredWords[filterIndex]) to:  \(word)")
+                        word.filtertype = nil
+                        dataSource.unfilteredWords?[filterIndex] = word
+                    }
+                }
+            }
+        }
+    }
+    
+    func deleteMarkedRows(in dataSource: TableViewDataSource) {
+        for rowIndex in dataSource.filterRowsToDelete.reversed() {
+            dataSource.unfilteredWords?.remove(at: rowIndex)
+        }
+    }
+    
+    func insertNewRows(in unfilteredWords : TableViewDataSource) {
+        
+    }
+    
     func resetToUnfiltered() {
         let dataSource = getWordsTabViewDelegate().dataSources[self.tabIndex]
+        // Update any changed rows
+        self.updateChangedRows(in: dataSource)
+        // Remove any marked rows
+        self.deleteMarkedRows(in: dataSource)
+        // Add any new rows
+        self.insertNewRows(in: dataSource)
         if let unfilteredWords = dataSource.unfilteredWords {
             dataSource.words = unfilteredWords
         }
-        getWordsTabViewDelegate().tabViewControllersList[self.tabIndex].tableView.reloadData()
+        NotificationCenter.default.post(name: .tableNeedsReloading, object: nil)
     }
     
     @objc func filterItemsMenuItem(_ sender: NSMenuItem) {
@@ -554,7 +587,10 @@ extension TextFinderClient {
             case 0:
                 if let burmeseWord = word.burmese {
                     if burmeseWord.contains(textToFind) {
-                        filteredList.append(word)
+                        word.filterindex = row
+                        if let wordCopy = word.copy() as? Words {
+                            filteredList.append(wordCopy)
+                        }
                         continue
                     }
                 }
@@ -562,7 +598,10 @@ extension TextFinderClient {
                 if let englishWord = word.english {
                     if matchTextIn(englishWord, searchFor: textToFind,
                                    ignoreDiacritic: ignoreDiacritic) {
-                        filteredList.append(word)
+                        word.filterindex = row
+                        if let wordCopy = word.copy() as? Words {
+                            filteredList.append(wordCopy)
+                        }
                         continue
                     }
                 }
@@ -570,7 +609,10 @@ extension TextFinderClient {
                 if let romanWord = word.roman {
                     if matchTextIn(romanWord, searchFor: textToFind,
                                    ignoreDiacritic: ignoreDiacritic) {
-                        filteredList.append(word)
+                        word.filterindex = row
+                        if let wordCopy = word.copy() as? Words {
+                            filteredList.append(wordCopy)
+                        }
                         continue
                     }
                 }
@@ -578,7 +620,10 @@ extension TextFinderClient {
                 if let lessonWord = word.lesson{
                     if matchTextIn(lessonWord, searchFor: textToFind,
                                    ignoreDiacritic: ignoreDiacritic) {
-                        filteredList.append(word)
+                        word.filterindex = row
+                        if let wordCopy = word.copy() as? Words {
+                            filteredList.append(wordCopy)
+                        }
                         continue
                     }
                 }
@@ -587,7 +632,7 @@ extension TextFinderClient {
             }
         }
         copyFilteredItems(filteredList)
-        getWordsTabViewDelegate().tabViewControllersList[self.tabIndex].tableView.reloadData()
+        NotificationCenter.default.post(name: .tableNeedsReloading, object:nil)
     }
     
 }
@@ -775,21 +820,15 @@ extension TextFinderClient {
         let col = arrayForLocation[2]
         
         setWordAtRowCol(newString, row, col: col)
-        /*if let dataSource = tableView.dataSource as? TableViewDataSource
-         {
-         let keyName = dataSource.words[row].entity.attributeKeys[col]
-         
-         dataSource.pjWords[row].setValue(newString, forKey: keyName)
-         }*/
-        if let tableView = getWordsTabViewDelegate().tabViewControllersList[self.tabIndex].tableView {
-            tableView.reloadData(forRowIndexes: IndexSet(integer:row), columnIndexes: IndexSet(integersIn: 0..<tableView.numberOfColumns))
-        }
+        
+        let indexes = [IndexSet(integer:row)]
+        NotificationCenter.default.post(name: .tableRowsNeedReloading, object: nil, userInfo: ["indexes" : indexes])
     }
     
     func didReplaceCharacters() {
         _ = self.calculateIndex()
         
-        getCurrentTableView().reloadData()
+        NotificationCenter.default.post(name: .tableNeedsReloading, object: nil)
         //appDelegate.viewController.lessonsTableView.reloadData()
     }
     

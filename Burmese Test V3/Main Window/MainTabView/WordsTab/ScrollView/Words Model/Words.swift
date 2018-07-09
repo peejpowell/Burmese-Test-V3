@@ -239,14 +239,8 @@ class Words: NSObject, NSCoding
     
     func setEdited()
     {
-        //Swift.print(__FUNCTION__)
-        let index = getCurrentIndex()
-        
-        if index != -1
-        {
-            let name = Notification.Name(rawValue: needsSavingNotificationKey)
-            NotificationCenter.default.post(name: name, object: nil)
-        }
+        infoPrint("", #function, self.className)
+        NotificationCenter.default.post(name: .dataSourceNeedsSaving, object: nil)
     }
     
     required init?(coder aDecoder: NSCoder)

@@ -9,6 +9,36 @@
 import Cocoa
 import Carbon
 
+extension Notification.Name {
+    static var dataSourceNeedsSaving: Notification.Name {
+        return .init(rawValue: "WordsTabViewController.dataSourceNeedsSaving")
+    }
+}
+
+extension WordsTabViewController {
+    
+    func createDataSourceObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.setDataSourceNeedsSaving(_:)), name: .dataSourceNeedsSaving, object: nil)
+    }
+    
+    @objc func setDataSourceNeedsSaving(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        let index = getCurrentIndex()
+        self.dataSources[index].needsSaving = true
+        let item = self.tabViewItems[index]
+        if item.label.left(1) != "*" {
+            item.label = "* \(self.tabViewItems[index].label)"
+        }
+        else {
+            if item.label.left(1) == "* " {
+                if let newLabel = item.label.right(item.label.length()-1) {
+                    item.label = newLabel
+                }
+            }
+        }
+    }
+}
+
 class WordsTabViewController: NSTabViewController {
 
     // This holds all the information about the datasources for the tables
@@ -22,6 +52,17 @@ class WordsTabViewController: NSTabViewController {
     var indexedRows : IndexSet = IndexSet()
     
     @IBOutlet weak var searchFieldDelegate : SearchDelegate!
+    
+    override func viewWillAppear() {
+        super.viewWillAppear()
+        self.createDataSourceObservers()
+    }
+    
+    override func viewWillDisappear() {
+        super.viewWillDisappear()
+        NotificationCenter.default.removeObserver(self)
+    }
+    
     @IBOutlet weak var tableView : NSTableView!
     //@IBOutlet weak var textFinderClient: TextFinderClient!
     
@@ -48,11 +89,6 @@ class WordsTabViewController: NSTabViewController {
         let tabViewControllerItem = self.tabViewControllersList[0]
         let newTabViewItem = setupTabViewItem(named:"Nothing Loaded", controlledBy: tabViewControllerItem)
         self.tabViewItems.append(newTabViewItem)
-        
-        // Set up an observer to check if the file needs saving because it was modified
-        self.createObservers()
-        
-        // Add some sample data to a dataSource to show
         
         if self.dataSources.count == 0 {
             if let tableView = self.tabViewControllersList[0].tableView,
@@ -115,19 +151,6 @@ class WordsTabViewController: NSTabViewController {
         }
         
         super .tabView(tabView, didSelect: tabViewItem)
-    }
-    
-    func createObservers()
-    {
-        let needsSaving = Notification.Name(rawValue: needsSavingNotificationKey)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(self.updateNeedsSaving), name: needsSaving, object: nil)
-    }
-    
-    @objc func updateNeedsSaving()
-    {
-        infoPrint(nil,#function, self.className)
-        self.dataSources[getCurrentIndex()].needsSaving = true
     }
     
     deinit {

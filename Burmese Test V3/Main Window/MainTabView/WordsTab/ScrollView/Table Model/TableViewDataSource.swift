@@ -29,27 +29,22 @@ class TableViewDataSource: NSObject {
     
     var words: [Words] = []
     var unfilteredWords: [Words]?
+    var filterRowsToDelete : IndexSet = IndexSet()
     var lessons: Dictionary<String,Int> = [:]
     var sourceFile : URL?
-    var needsSaving : Bool = false {
-        didSet(oldValue) {
-            let index = getCurrentIndex()
-            if index != -1 {
-                let wordsTabController = getWordsTabViewDelegate()
-                let item = wordsTabController.tabViewItems[index]
-                if needsSaving  && item.label.left(1) != "*" {
-                    item.label = "* \(wordsTabController.tabViewItems[index].label)"
-                }
-                else {
-                    if item.label.left(1) == "* " {
-                        if let newLabel = item.label.right(item.label.length()-1) {
-                            item.label = newLabel
-                        }
-                    }
-                }
-            }
-        }
+    var needsSaving : Bool = false
+    
+    func delOrCut() {
+        infoPrint("", #function, self.className)
+        NotificationCenter.default.post(name: .removeTableRow, object: nil)
         
+        /*switch appDelegate.prefsWindow.delegate as! PJPrefsWindowDelegate).useDelForCut.state
+        {
+        case NSControl.StateValue.on:
+            appDelegate.menuController.cut(NSMenuItem())
+        default:
+            self.removeTableRow()
+        }*/
     }
     
     override init() {
@@ -59,7 +54,7 @@ class TableViewDataSource: NSObject {
     
     deinit {
         infoPrint("Datasource removed",#function,self.className)
-        
+        self.sourceFile = nil
     }
 }
 
@@ -145,12 +140,6 @@ extension TableViewDataSource: NSTableViewDelegate {
                 {
                     if let field = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: colId), owner: delegate.dataSources[index]) as? NSTableCellView
                     {
-                        for view in field.subviews {
-                            if let button = view as? NSButton {
-                                button.action = #selector(self.SearchTest(_:))
-                                button.target = self
-                            }
-                        }
                         if let value = delegate.dataSources[index].words[row].wordKeys[colId]
                         {
                             field.textField?.textColor = NSColor.textColor

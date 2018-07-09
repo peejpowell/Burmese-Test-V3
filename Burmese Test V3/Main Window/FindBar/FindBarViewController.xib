@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+    <dependencies>
+        <deployment identifier="macosx"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <customObject id="-2" userLabel="File's Owner"/>
+        <customObject id="-1" userLabel="First Responder" customClass="FirstResponder"/>
+        <customObject id="-3" userLabel="Application" customClass="NSObject"/>
+        <customView misplaced="YES" id="c22-O7-iKe">
+            <rect key="frame" x="0.0" y="0.0" width="597" height="30"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+            <subviews>
+                <view fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IvG-UL-R3C">
+                    <rect key="frame" x="-110" y="-121" width="700" height="31"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                </view>
+                <searchField wantsLayer="YES" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sJt-ZG-JCu">
+                    <rect key="frame" x="340" y="4" width="200" height="22"/>
+                    <constraints>
+                        <constraint firstAttribute="height" priority="250" constant="21" id="LoB-Sg-eZq"/>
+                        <constraint firstAttribute="width" constant="200" id="frN-rk-KYn"/>
+                    </constraints>
+                    <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="eCh-fP-X33">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </searchFieldCell>
+                </searchField>
+                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="nF6-8D-OyK">
+                    <rect key="frame" x="548" y="3" width="44" height="24"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="40" id="k2H-Ly-fc1"/>
+                        <constraint firstAttribute="height" priority="250" constant="22" id="utv-pf-Mxr"/>
+                    </constraints>
+                    <segmentedCell key="cell" continuous="YES" enabled="NO" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="9uw-HI-bON">
+                        <font key="font" metaFont="system"/>
+                        <segments>
+                            <segment image="NSGoLeftTemplate" width="16"/>
+                            <segment image="NSGoRightTemplate" width="16" tag="1"/>
+                        </segments>
+                    </segmentedCell>
+                </segmentedControl>
+                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="vsr-gs-qK3">
+                    <rect key="frame" x="233" y="8" width="104" height="16"/>
+                    <constraints>
+                        <constraint firstAttribute="width" priority="900" constant="100" id="abY-kK-fWG"/>
+                    </constraints>
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="FyC-e3-ILz">
+                        <font key="font" metaFont="cellTitle"/>
+                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                </textField>
+            </subviews>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="vsr-gs-qK3" secondAttribute="bottom" constant="8" id="2cC-mm-9xt"/>
+                <constraint firstItem="sJt-ZG-JCu" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="20" id="5uz-ph-5JO"/>
+                <constraint firstItem="nF6-8D-OyK" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="20" id="CUL-W8-nBR"/>
+                <constraint firstAttribute="trailing" secondItem="sJt-ZG-JCu" secondAttribute="trailing" constant="57" id="R4q-qE-Y3x"/>
+                <constraint firstItem="sJt-ZG-JCu" firstAttribute="leading" secondItem="vsr-gs-qK3" secondAttribute="trailing" constant="5" id="XP6-K8-hak"/>
+                <constraint firstAttribute="trailing" secondItem="nF6-8D-OyK" secondAttribute="trailing" constant="7" id="dbk-Vn-5aB"/>
+                <constraint firstItem="vsr-gs-qK3" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="22" id="gnr-li-yqo"/>
+            </constraints>
+            <point key="canvasLocation" x="-1494" y="97"/>
+        </customView>
+    </objects>
+    <resources>
+        <image name="NSGoLeftTemplate" width="9" height="12"/>
+        <image name="NSGoRightTemplate" width="9" height="12"/>
+    </resources>
+</document>

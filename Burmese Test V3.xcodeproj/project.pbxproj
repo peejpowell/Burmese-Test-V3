@@ -35,6 +35,11 @@
 		3850BA3E20E5203300A7C7CF /* Burmese_Test_V3UITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3850BA3D20E5203300A7C7CF /* Burmese_Test_V3UITests.swift */; };
 		386AF90D20E65BFA009F9851 /* testPJFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF90C20E65BFA009F9851 /* testPJFileManager.swift */; };
 		386AF90F20E6882C009F9851 /* MultipleChoiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF90E20E6882C009F9851 /* MultipleChoiceTest.swift */; };
+		386E33F920F1A3E600763618 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E33F720F1A3E600763618 /* PreferencesViewController.swift */; };
+		386E33FC20F1A48D00763618 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E33FB20F1A48D00763618 /* PreferencesController.swift */; };
+		386E33FF20F1AE2300763618 /* PrefsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E33FE20F1AE2300763618 /* PrefsWindowController.swift */; };
+		386E340320F1B5AC00763618 /* PrefsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 386E340220F1B5AC00763618 /* PrefsWindowController.xib */; };
+		386E340520F1BCF100763618 /* PrefsToolbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E340420F1BCF100763618 /* PrefsToolbarController.swift */; };
 		38846B7D20E2903D00C0DB3C /* Words.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7C20E2903D00C0DB3C /* Words.swift */; };
 		38846B8020E299C400C0DB3C /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */; };
 		38AEC05720E21F0100E6529F /* FindBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC05620E21F0100E6529F /* FindBarViewController.swift */; };
@@ -112,6 +117,11 @@
 		3850BA3F20E5203300A7C7CF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		386AF90C20E65BFA009F9851 /* testPJFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testPJFileManager.swift; sourceTree = "<group>"; };
 		386AF90E20E6882C009F9851 /* MultipleChoiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceTest.swift; sourceTree = "<group>"; };
+		386E33F720F1A3E600763618 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
+		386E33FB20F1A48D00763618 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
+		386E33FE20F1AE2300763618 /* PrefsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWindowController.swift; sourceTree = "<group>"; };
+		386E340220F1B5AC00763618 /* PrefsWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrefsWindowController.xib; sourceTree = "<group>"; };
+		386E340420F1BCF100763618 /* PrefsToolbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsToolbarController.swift; sourceTree = "<group>"; };
 		38846B7C20E2903D00C0DB3C /* Words.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Words.swift; sourceTree = "<group>"; };
 		38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 		38AEC05620E21F0100E6529F /* FindBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindBarViewController.swift; sourceTree = "<group>"; };
@@ -192,6 +202,7 @@
 				381B8A2720E1EA10008335E0 /* GeneralFunctions.swift */,
 				381B8A1A20E1DAC2008335E0 /* MainMenu.xib */,
 				381B8A2420E1DB8E008335E0 /* Main Window */,
+				386E33FD20F1ADDD00763618 /* Prefs Window */,
 				381B8A1820E1DAC2008335E0 /* Assets.xcassets */,
 				381B8A2B20E1F354008335E0 /* Images */,
 				381B8A1D20E1DAC2008335E0 /* Info.plist */,
@@ -261,6 +272,18 @@
 				3850BA3F20E5203300A7C7CF /* Info.plist */,
 			);
 			path = "Burmese Test V3UITests";
+			sourceTree = "<group>";
+		};
+		386E33FD20F1ADDD00763618 /* Prefs Window */ = {
+			isa = PBXGroup;
+			children = (
+				386E33F720F1A3E600763618 /* PreferencesViewController.swift */,
+				386E33FB20F1A48D00763618 /* PreferencesController.swift */,
+				386E33FE20F1AE2300763618 /* PrefsWindowController.swift */,
+				386E340220F1B5AC00763618 /* PrefsWindowController.xib */,
+				386E340420F1BCF100763618 /* PrefsToolbarController.swift */,
+			);
+			path = "Prefs Window";
 			sourceTree = "<group>";
 		};
 		38846B7E20E2905600C0DB3C /* Words Model */ = {
@@ -496,6 +519,7 @@
 				381B8A1920E1DAC2008335E0 /* Assets.xcassets in Resources */,
 				38AEC07820E2391F00E6529F /* WordsTabController.xib in Resources */,
 				381B8A2C20E1F355008335E0 /* Images in Resources */,
+				386E340320F1B5AC00763618 /* PrefsWindowController.xib in Resources */,
 				381B8A1C20E1DAC2008335E0 /* MainMenu.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -523,6 +547,7 @@
 			files = (
 				38AEC05720E21F0100E6529F /* FindBarViewController.swift in Sources */,
 				38160EAD20E3599E00DA13F1 /* SearchDelegate.swift in Sources */,
+				386E33FF20F1AE2300763618 /* PrefsWindowController.swift in Sources */,
 				38AEC07620E2354800E6529F /* WordsTabViewController.swift in Sources */,
 				38EFAFAB20E9CCE900C71AE9 /* TextFinderClient.swift in Sources */,
 				384AB23C20E3B26800D7E5D7 /* PJTableView.swift in Sources */,
@@ -540,11 +565,13 @@
 				384AB24020E3E74400D7E5D7 /* PJFileManager.swift in Sources */,
 				38EFAFA520E9292A00C71AE9 /* PJWindow.swift in Sources */,
 				3821C85220E260060045E5A8 /* PJPButtonConfig.swift in Sources */,
+				386E340520F1BCF100763618 /* PrefsToolbarController.swift in Sources */,
 				38C71BC820E7D2FD00AC4B6E /* InfoPopupViewController.swift in Sources */,
 				38AEC06820E2243300E6529F /* ExportTabController.swift in Sources */,
 				38846B7D20E2903D00C0DB3C /* Words.swift in Sources */,
 				38AEC06220E223ED00E6529F /* TestTabController.swift in Sources */,
 				3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */,
+				386E33FC20F1A48D00763618 /* PreferencesController.swift in Sources */,
 				386AF90F20E6882C009F9851 /* MultipleChoiceTest.swift in Sources */,
 				381B8A2A20E1EDB0008335E0 /* ToolbarController.swift in Sources */,
 				381B8A1720E1DAC0008335E0 /* AppDelegate.swift in Sources */,
@@ -552,6 +579,7 @@
 				381B8A2820E1EA10008335E0 /* GeneralFunctions.swift in Sources */,
 				38AEC07A20E23A3900E6529F /* BMTTabViewController.swift in Sources */,
 				384AB24620E47EFF00D7E5D7 /* MenuController.swift in Sources */,
+				386E33F920F1A3E600763618 /* PreferencesViewController.swift in Sources */,
 				381F685020EB3DD50085E330 /* FindMenuDelegate.swift in Sources */,
 				38AEC05C20E21F9B00E6529F /* MainTabViewController.swift in Sources */,
 				3850BA2820E4AA0C00A7C7CF /* LanguageMenuController.swift in Sources */,

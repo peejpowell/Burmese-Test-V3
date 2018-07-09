@@ -437,4 +437,8 @@ extension MainMenuController {
         let index = getCurrentIndex()
         getWordsTabViewDelegate().tabViewControllersList[index].textFinderClient.performTextFinderAction(sender)
     }
+    
+    @IBAction func openPreferences(_ sender: NSMenuItem) {
+        NotificationCenter.default.post(name: .openPrefsWindow, object: nil)
+    }
 }

@@ -8,6 +8,12 @@
 
 import Cocoa
 
+extension Notification.Name {
+    static var openPrefsWindow: Notification.Name {
+        return .init(rawValue: "MainWindowController.openPrefsWindow")
+    }
+}
+
 class MainWindowController: NSWindowController {
     
     @IBOutlet var toolbarController : ToolbarController!
@@ -15,6 +21,7 @@ class MainWindowController: NSWindowController {
     @IBOutlet var mainMenuController : MainMenuController!
     @IBOutlet var mainFileManager : PJFileManager!
     @IBOutlet var mainClipboardController : ClipboardController!
+    @IBOutlet var prefsWindowController : PrefsWindowController!
     
     override func windowDidLoad() {
         
@@ -30,6 +37,15 @@ class MainWindowController: NSWindowController {
         
         self.window?.minSize = NSSize(width: 800, height: 500)
         self.mainMenuController.closeWordsFileMenuItem.isEnabled = false
+        createObservers()
+    }
+    
+    func createObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(self.openPrefsWindow), name: .openPrefsWindow, object: nil)
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 
@@ -64,5 +80,15 @@ extension MainWindowController {
         //PJLog("Cutting...",1)
         self.mainMenuController.cut(sender)
         //PJLog("Cut finished",1)
+    }
+}
+
+//MARK : Application Menu
+extension MainWindowController {
+    
+    @objc func openPrefsWindow() {
+        if let prefsWindow = self.prefsWindowController.window {
+            NSApplication.shared.runModal(for: prefsWindow)
+        }
     }
 }
