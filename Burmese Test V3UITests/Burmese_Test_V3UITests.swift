@@ -44,16 +44,16 @@ class Burmese_Test_V3UITests: XCTestCase {
         let normalized = app.windows["Burmese Test V3"].coordinate(withNormalizedOffset: CGVector(dx: 0, dy: 0))
         var coordinate = normalized.withOffset(CGVector(dx: 500, dy: 150))
         coordinate.click()
-        coordinate = normalized.withOffset(CGVector(dx: 680, dy: 510))
+        coordinate = normalized.withOffset(CGVector(dx: 760, dy: 510))
         coordinate.click()
         // return
-        let generalPlistWindow = app.windows["general.plist"]
-        generalPlistWindow/*@START_MENU_TOKEN@*/.tabs["Test"]/*[[".tabGroups.tabs[\"Test\"]",".tabs[\"Test\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.click()
-        generalPlistWindow/*@START_MENU_TOKEN@*/.tabs["Words"]/*[[".tabGroups.tabs[\"Words\"]",".tabs[\"Words\"]"],[[[-1,1],[-1,0]]],[0]]@END_MENU_TOKEN@*/.click()
+        let generalPlistWindow = app.windows["General.bmt"]
         menuBarsQuery.menuBarItems["Word Type"].click()
         let wordTypeMenuBarItem = menuBarsQuery.menuBarItems["Word Type"]
         wordTypeMenuBarItem.click()
-        menuBarsQuery/*@START_MENU_TOKEN@*/.menuItems.matching(identifier: "general.plist").menuItems["Select All"]/*[[".menuBarItems[\"Word Type\"]",".menus.menuItems[\"general.plist\"]",".menus.menuItems[\"Select All\"]",".menuItems[\"Select All\"]",".menuItems[\"general.plist\"]",".menus.menuItems.matching(identifier: \"general.plist\")",".menuItems.matching(identifier: \"general.plist\")"],[[[-1,6,2],[-1,5,2],[-1,0,1]],[[-1,4,2],[-1,1,2]],[[-1,3],[-1,2]]],[0,0]]@END_MENU_TOKEN@*/.click()
+        menuBarsQuery.menuItems.matching(identifier: "General.bmt").menuItems["Select All"].click()
+        
+        //menuBarsQuery/*@START_MENU_TOKEN@*/.menuItems.matching(identifier: "general.plist").menuItems["Select All"]/*[[".menuBarItems[\"Word Type\"]",".menus.menuItems[\"general.plist\"]",".menus.menuItems[\"Select All\"]",".menuItems[\"Select All\"]",".menuItems[\"general.plist\"]",".menus.menuItems.matching(identifier: \"general.plist\")",".menuItems.matching(identifier: \"general.plist\")"],[[[-1,6,2],[-1,5,2],[-1,0,1]],[[-1,4,2],[-1,1,2]],[[-1,3],[-1,2]]],[0,0]]@END_MENU_TOKEN@*/.click()
         wordTypeMenuBarItem.click()
     }
     

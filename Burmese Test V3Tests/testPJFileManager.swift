@@ -23,7 +23,7 @@ class testPJFileManager: XCTestCase {
     }
     
     func testPJFileManagerLoadWordsFromFile() {
-        newDataSource = fileManager.loadWordsFromFile(fileUrl, into: newDataSource)
+        newDataSource = fileManager.loadWordsFromFile(fileUrl, into: newDataSource)!
         XCTAssert(newDataSource.words.count > 0, "Datasource is empty.")
     }
     
