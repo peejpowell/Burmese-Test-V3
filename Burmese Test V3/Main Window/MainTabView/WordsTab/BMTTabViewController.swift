@@ -27,6 +27,12 @@ extension Notification.Name {
     static var putTableRowOnPasteboard : Notification.Name {
         return .init(rawValue: "BMTTabViewController.putTableRowOnPasteboard")
     }
+    static var populateLessonsPopup: Notification.Name {
+        return .init(rawValue: "WordsTabViewController.populateLessonsPopup")
+    }
+    static var jumpToLesson: Notification.Name {
+        return .init(rawValue: "WordsTabViewController.jumpToLesson")
+    }
 }
 
 class BMTTabViewController: NSViewController {
@@ -86,6 +92,9 @@ class BMTTabViewController: NSViewController {
                     column.isHidden = false
                 }
             }
+        }
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            dataSource.populateLessons()
         }
     }
     
@@ -170,8 +179,7 @@ private extension BMTTabViewController {
     }
 }
 
-private extension BMTTabViewController {
-    
+extension BMTTabViewController {
     
     // MARK: TableView Functions
 
@@ -188,6 +196,35 @@ private extension BMTTabViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.cutRows(_:)),name: .cutRows, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.copyRows(_:)),name: .copyRows, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.pasteRows(_:)),name: .pasteRows, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.populateLessonsPopup),name: .populateLessonsPopup, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.jumpToLesson(_:)),name: .jumpToLesson, object: nil)
+        
+    }
+    
+    @objc func jumpToLesson(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        if let userInfo = notification.userInfo {
+            if let senderTag = userInfo["senderTag"] as? Int {
+                self.tableView.selectRowIndexes(IndexSet(integer: senderTag), byExtendingSelection: false)
+                let visibleRowRange = tableView.rows(in: tableView.visibleRect)
+                let topRow = visibleRowRange.location
+                let numberOfVisibleRows = visibleRowRange.length - 2
+                if senderTag > topRow {
+                    self.tableView.scrollRowToVisible(senderTag + numberOfVisibleRows)
+                }
+                else {
+                    self.tableView.scrollRowToVisible(senderTag)
+                }
+                getMainWindowController().window?.makeFirstResponder(tableView)
+            }
+        }
+    }
+    
+    @objc func populateLessonsPopup(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        if let dataSource = self.tableView.dataSource as? TableViewDataSource {
+            dataSource.populateLessons()
+        }
     }
     
     @objc func putTableRowsOnPasteboard(rowIndexes: IndexSet) {
@@ -375,6 +412,111 @@ private extension BMTTabViewController {
         tableView.selectRowIndexes(IndexSet(integer: rowIndexes.first!), byExtendingSelection: false)
         
         NotificationCenter.default.post(name: .dataSourceNeedsSaving, object: nil)
+    }
+    
+    func changed(previous: String?, current: String?)->Bool {
+        if previous != current {
+            return true
+        }
+        return false
+    }
+    
+    func findFirstLessonRowFor(lesson: String?, at row: Int)->Int {
+        infoPrint("", #function, self.className)
+        // Find the start of this lesson block
+        // -- Go backwards from the current lesson row looking for previous lessons
+        // -- If we find a previous lesson set the startRow to the row after it and return
+        // -- If we reach -1 return 0
+        
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            var currentRow = row
+            let lessonForSection = dataSource.words[currentRow].lesson
+            while lessonForSection == dataSource.words[currentRow].lesson && currentRow > -1 {
+                currentRow -= 1
+                if currentRow == -1 {
+                    break
+                }
+            }
+            return currentRow + 1
+        }
+        return row
+    }
+    
+    func indexLessonForRow(row: Int) {
+        infoPrint("", #function, self.className)
+        // Reindex the lesson block
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            if row >= dataSource.words.count {
+                return
+            }
+            
+            let startRow = findFirstLessonRowFor(lesson: dataSource.words[row].lesson, at: row)
+            let lessonForSection = dataSource.words[startRow].lesson
+            var currentRow = startRow
+            while dataSource.words[currentRow].lesson == lessonForSection {
+                currentRow += 1
+                if currentRow > dataSource.words.count - 1 {
+                    currentRow = dataSource.words.count - 1
+                    break
+                }
+            }
+            self.reindexInRange(startRow..<currentRow)
+        }
+    }
+    
+    @IBAction func reindexLesson(_ sender: NSMenuItem) {
+        infoPrint("", #function, self.className)
+        if tableView.selectedRow != -1 {
+            self.indexLessonForRow(row: tableView.selectedRow)
+        }
+    }
+    
+    func reindexInRange(_ range: Range<Int>) {
+        infoPrint("", #function, self.className)
+        if let dataSource = self.tableView.dataSource as? TableViewDataSource {
+            var wordIndex = 0
+            var categoryIndex = 0
+            var prevLesson : String?
+            var prevCategory : String?
+            
+            for wordNum in range {
+                let word = dataSource.words[wordNum]
+                if changed(previous: prevLesson, current: word.lesson) {
+                    categoryIndex = 0
+                    wordIndex = 0
+                }
+                else {
+                    if changed(previous: prevCategory, current: word.category) {
+                        categoryIndex += 1
+                        wordIndex = 0
+                    }
+                    else {
+                        wordIndex += 1
+                    }
+                }
+                prevLesson = word.lesson
+                prevCategory = word.category
+                if word.wordindex == "#" {
+                    word.istitle = true
+                }
+                else {
+                    word.istitle = false
+                }
+                word.categoryindex = "\(categoryIndex)".padBefore("0", desiredLength: 4)
+                word.wordindex = "\(wordIndex)".padBefore("0", desiredLength: 4)
+            }
+        }
+    }
+    
+    @IBAction func indexAll(_ sender: NSMenuItem) {
+        infoPrint("", #function, self.className)
+        // Index all the rows in the current dataSource
+        if let dataSource = self.tableView.dataSource as? TableViewDataSource {
+            let reindexRange = 0..<dataSource.words.count
+            self.reindexInRange(reindexRange)
+        }
+        self.tableView.reloadData()
+        //NotificationCenter.default.post(name: .tableNeedsReloading, object: nil)
     }
 }
 

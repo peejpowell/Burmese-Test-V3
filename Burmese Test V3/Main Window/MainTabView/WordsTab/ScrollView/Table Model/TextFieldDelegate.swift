@@ -89,6 +89,10 @@ class TextFieldDelegate: NSObject, NSTextFieldDelegate {
                     // Check if the value changed
                     if let oldValue = oldValue {
                         if textField.stringValue != oldValue {
+                            let bmtController = wordsTabController.tabViewControllersList[index]
+                            //bmtController.indexLessonForRow(row: row)
+                            //bmtController.indexLessonForRow(row: row + 1)
+                            
                             // FIXME: Write reindexLesson function
                             //delegate.menuController.reindexLesson(row)
                             //delegate.menuController.reindexLesson(row+1)
@@ -102,7 +106,7 @@ class TextFieldDelegate: NSObject, NSTextFieldDelegate {
                     break
                 }
                 //tableView.reloadData(forRowIndexes: IndexSet(integer:tableView.row(for: textField)), columnIndexes: IndexSet(integersIn: NSRange(location:0,length:tableView.numberOfColumns).toRange() ?? 0..<0))
-                NotificationCenter.default.post(name: .tableNeedsReloading, object: nil)
+                //NotificationCenter.default.post(name: .tableNeedsReloading, object: nil)
             }
         }
         

@@ -42,6 +42,7 @@
 		386E340520F1BCF100763618 /* PrefsToolbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E340420F1BCF100763618 /* PrefsToolbarController.swift */; };
 		38846B7D20E2903D00C0DB3C /* Words.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7C20E2903D00C0DB3C /* Words.swift */; };
 		38846B8020E299C400C0DB3C /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */; };
+		3884FA8020F60E67006EDF11 /* PJTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3884FA7F20F60E67006EDF11 /* PJTextView.swift */; };
 		38AEC05720E21F0100E6529F /* FindBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC05620E21F0100E6529F /* FindBarViewController.swift */; };
 		38AEC05C20E21F9B00E6529F /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC05B20E21F9B00E6529F /* MainTabViewController.swift */; };
 		38AEC06220E223ED00E6529F /* TestTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC06120E223ED00E6529F /* TestTabController.swift */; };
@@ -124,6 +125,7 @@
 		386E340420F1BCF100763618 /* PrefsToolbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsToolbarController.swift; sourceTree = "<group>"; };
 		38846B7C20E2903D00C0DB3C /* Words.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Words.swift; sourceTree = "<group>"; };
 		38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
+		3884FA7F20F60E67006EDF11 /* PJTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJTextView.swift; sourceTree = "<group>"; };
 		38AEC05620E21F0100E6529F /* FindBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindBarViewController.swift; sourceTree = "<group>"; };
 		38AEC05B20E21F9B00E6529F /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		38AEC06120E223ED00E6529F /* TestTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTabController.swift; sourceTree = "<group>"; };
@@ -375,6 +377,7 @@
 				3821C84F20E242610045E5A8 /* PJPButton.swift */,
 				3821C85020E242630045E5A8 /* PJPButtonConfig.swift */,
 				38160EAE20E36F0200DA13F1 /* PJTextField.swift */,
+				3884FA7F20F60E67006EDF11 /* PJTextView.swift */,
 			);
 			path = "Custom Controls";
 			sourceTree = "<group>";
@@ -570,6 +573,7 @@
 				38AEC06820E2243300E6529F /* ExportTabController.swift in Sources */,
 				38846B7D20E2903D00C0DB3C /* Words.swift in Sources */,
 				38AEC06220E223ED00E6529F /* TestTabController.swift in Sources */,
+				3884FA8020F60E67006EDF11 /* PJTextView.swift in Sources */,
 				3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */,
 				386E33FC20F1A48D00763618 /* PreferencesController.swift in Sources */,
 				386AF90F20E6882C009F9851 /* MultipleChoiceTest.swift in Sources */,

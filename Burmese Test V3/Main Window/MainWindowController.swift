@@ -23,6 +23,8 @@ class MainWindowController: NSWindowController {
     @IBOutlet var mainClipboardController : ClipboardController!
     @IBOutlet var prefsWindowController : PrefsWindowController!
     
+    var fieldEditor = PJTextView()
+    
     override func windowDidLoad() {
         
         infoPrint("",#function,self.className)
@@ -121,6 +123,39 @@ extension MainWindowController {
 }
 
 extension MainWindowController: NSWindowDelegate {
+    
+    func windowWillReturnFieldEditor(_ sender: NSWindow, to client: Any?) -> Any?
+    {
+        //Swift.print(__FUNCTION__)
+        
+        if (client as AnyObject).identifier == "english"
+        {
+            return nil
+        }
+        if (client as AnyObject).identifier == "avalaser"
+        {
+            //Swift.print("Field editor: \((client as! NSTextField).identifier)")
+            
+            return nil
+        }
+        
+        let appDelegate = NSApplication.shared.delegate as! AppDelegate
+        
+        var fieldEditor = self.fieldEditor
+        fieldEditor.identifier = NSUserInterfaceItemIdentifier(rawValue: "test")
+        
+        if let id: String = (fieldEditor.identifier).map({ $0.rawValue })
+        {
+            if id == "new"
+            {
+                fieldEditor = PJTextView()
+                fieldEditor.isFieldEditor = true
+                fieldEditor.identifier = NSUserInterfaceItemIdentifier(rawValue: "configured")
+            }
+            return fieldEditor
+        }
+        return nil
+    }
     
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         infoPrint("", #function, self.className)

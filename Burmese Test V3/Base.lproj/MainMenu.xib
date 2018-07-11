@@ -50,6 +50,7 @@
         </customObject>
         <customObject id="cZX-Hr-rWv" customClass="ToolbarController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
+                <outlet property="lessonsPopup" destination="jAe-l9-LXu" id="CuU-hh-bcH"/>
                 <outlet property="mainToolbar" destination="TiW-iP-i6R" id="YLN-ji-FHV"/>
             </connections>
         </customObject>
@@ -906,7 +907,6 @@
                         </constraints>
                         <color key="borderColor" name="scrollBarColor" catalog="System" colorSpace="catalog"/>
                         <color key="fillColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                        <font key="titleFont" metaFont="message" size="11"/>
                     </box>
                     <tabView type="bottomTabsBezelBorder" translatesAutoresizingMaskIntoConstraints="NO" id="WwX-7h-K8S" userLabel="Main Tab View">
                         <rect key="frame" x="-7" y="-1" width="814" height="505"/>
@@ -1056,7 +1056,6 @@
                             </view>
                             <color key="borderColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                             <color key="fillColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                            <font key="titleFont" metaFont="message" size="11"/>
                         </box>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="4vo-uW-PWf"/>

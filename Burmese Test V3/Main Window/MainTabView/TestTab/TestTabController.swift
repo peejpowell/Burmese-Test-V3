@@ -15,9 +15,9 @@ class TestTabController: NSViewController {
     @IBOutlet weak var testButton: PJPButton!
     
     @IBAction func showNewVC(_ sender: Any) {
-        //let index = getCurrentIndex()
+        let index = getCurrentIndex()
         
-        //self.present(InfoPopupViewController(), asPopoverRelativeTo: self.testButton.frame, of: self.view, preferredEdge: NSRectEdge.minY, behavior: NSPopover.Behavior.transient)
+        self.present(InfoPopupViewController(), asPopoverRelativeTo: self.testButton.frame, of: self.view, preferredEdge: NSRectEdge.minY, behavior: NSPopover.Behavior.transient)
     }
     
     override func viewDidLoad() {

@@ -59,3 +59,4 @@ newurl = url.deletingPathExtension()
 url.deleteLastPathComponent()
 
 "testé".folding(options: NSString.CompareOptions.diacriticInsensitive, locale: Locale.current as Locale)
+

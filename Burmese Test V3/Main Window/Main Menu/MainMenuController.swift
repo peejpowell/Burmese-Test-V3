@@ -72,6 +72,10 @@ class MainMenuController: MenuController {
         {
             if fileManager.fileExists(atPath: url.path) {
                 fileManager.loadOrWarn(url)
+                if let menuController = getWordTypeMenuController() {
+                    menuController.buildWordTypeMenu()
+                }
+                NotificationCenter.default.post(name: .populateLessonsPopup, object: nil)
             }
         }
     }
@@ -202,6 +206,9 @@ extension MainMenuController {
         if let menuController = getWordTypeMenuController() {
             menuController.buildWordTypeMenu()
         }
+        // Populate the lessons popup menu
+        NotificationCenter.default.post(name: .populateLessonsPopup, object:nil)
+        
         let view = getWordsTabViewDelegate().tabViewControllersList[getCurrentIndex()].view
         view.isHidden = false
     }

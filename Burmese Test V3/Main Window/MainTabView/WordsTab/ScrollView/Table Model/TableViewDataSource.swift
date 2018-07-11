@@ -58,6 +58,55 @@ class TableViewDataSource: NSObject {
     }
 }
 
+// MARK: Other Functions
+
+extension TableViewDataSource {
+
+    @objc func jumpToLesson(_ sender: NSMenuItem) {
+        infoPrint("", #function, self.className)
+        NotificationCenter.default.post(name: .jumpToLesson, object: nil, userInfo:["senderTag" : sender.tag])
+    }
+    
+    func populateLessons() {
+        infoPrint("", #function, self.className)
+        // Populate the Lessons in the list
+        if let lessonPopup = getMainWindowController().toolbarController.lessonsPopup {
+            // First remove all but the top and bottom items
+            for _ in 1 ..< lessonPopup.itemArray.count-1 {
+                lessonPopup.removeItem(at: 1)
+            }
+            
+            var rowNum = -1
+            var prevLesson = ""
+            
+            if let menu = lessonPopup.menu,
+                let lastMenuItem = menu.items.last,
+                let firstMenuItem = menu.items.first
+            {
+                menu.removeAllItems()
+                menu.addItem(firstMenuItem)
+                
+                for word in self.words {
+                    rowNum += 1
+                    
+                    if let lesson = word.lesson {
+                        if lesson != prevLesson {
+                            // New Lesson reached, add to the popup menu with the rownum as the tag
+                            
+                            let newMenuItem = NSMenuItem(title: lesson, action: #selector(self.jumpToLesson(_:)), keyEquivalent: "")
+                            newMenuItem.tag = rowNum
+                            newMenuItem.target = self
+                            menu.addItem(newMenuItem)
+                        }
+                        prevLesson = lesson
+                    }
+                }
+                menu.addItem(lastMenuItem)
+            }
+        }
+    }
+}
+
 //MARK: Delegate Functions
 
 extension TableViewDataSource: NSTableViewDelegate {
@@ -76,7 +125,7 @@ extension TableViewDataSource: NSTableViewDelegate {
     }
     
     func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
-        if self.words[row].wordindex == "#" {
+        if self.words[row].wordindex == "#" || self.words[row].istitle {
             return true
         }
         return false
@@ -139,6 +188,7 @@ extension TableViewDataSource: NSTableViewDelegate {
             
             if let identifier = tableColumn?.identifier {
                 if let colId = identifier.rawValue.left(identifier.rawValue.length() - 3) {
+                    //infoPrint("colid = \(colId)", #function, self.className)
                     if let field = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: colId),
                                                       owner: dataSource) as? NSTableCellView {
                         if let value = dataSource.words[row].wordForKey(colId) {
@@ -342,6 +392,9 @@ extension TableViewDataSource: NSTableViewDelegate {
                             }
                             else {
                                 field.textField?.stringValue = ""
+                                field.textField?.delegate = self.fieldDelegate
+                                field.textField?.isEditable = true
+                                field.textField?.isEnabled = true
                             }
                         }
                         return field
@@ -370,20 +423,17 @@ extension TableViewDataSource: NSTableViewDataSource {
         return 0
     }
     
-    func sortTable(_ tableView: NSTableView, sortBy: String)
-    {
+    func sortTable(_ tableView: NSTableView, sortBy: String) {
         infoPrint(nil, #function, self.className)
     }
     
-    func tableView(_ tableView: NSTableView, draggingSession session: NSDraggingSession, willBeginAt screenPoint: NSPoint, forRowIndexes rowIndexes: IndexSet)
-    {
+    func tableView(_ tableView: NSTableView, draggingSession session: NSDraggingSession, willBeginAt screenPoint: NSPoint, forRowIndexes rowIndexes: IndexSet) {
         infoPrint("", #function, self.className)
-        
+        getWordsTabViewDelegate().tabViewControllersList[getCurrentIndex()].indexLessonForRow(row: rowIndexes.first!)
         getWordsTabViewDelegate().draggingRows = true
     }
     
-    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation
-    {
+    func tableView(_ tableView: NSTableView, validateDrop info: NSDraggingInfo, proposedRow row: Int, proposedDropOperation dropOperation: NSTableView.DropOperation) -> NSDragOperation {
         infoPrint("", #function, self.className)
         
         if let currentEvent = NSApplication.shared.currentEvent {
@@ -401,8 +451,7 @@ extension TableViewDataSource: NSTableViewDataSource {
         return NSDragOperation()
     }
     
-    func reindexRows(_ rowIndexes: IndexSet, dropOnRow: Int)
-    {
+    func reindexRows(_ rowIndexes: IndexSet, dropOnRow: Int) {
         infoPrint("", #function, self.className)
         
         let appDelegate = NSApplication.shared.delegate as! AppDelegate
@@ -563,9 +612,10 @@ extension TableViewDataSource: NSTableViewDataSource {
                 tableView.selectRowIndexes(IndexSet(integersIn: Range(rowRange)!), byExtendingSelection: false)
                 // FIXME: Implement reindex
                 //appDelegate.menuController.reindexLesson(insertAtRow)
+                wordsTabController.tabViewControllersList[index].indexLessonForRow(row: insertAtRow)
                 if let rowCount = Range(rowRange)?.count {
-                    // FIXME: Implement reindex
-                    //appDelegate.menuController.reindexLesson(insertAtRow + rowCount)
+                // FIXME: Implement reindex
+                   wordsTabController.tabViewControllersList[index].indexLessonForRow(row: insertAtRow + rowCount)
                 }
                 tableView.endUpdates()
                 
