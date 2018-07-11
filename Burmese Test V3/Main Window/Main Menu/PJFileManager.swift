@@ -162,6 +162,8 @@ class PJFileManager : FileManager
                 loadDataSource(newDataSource, at: 0)
                 selectWordsTab()
                 getMainMenuController().closeWordsFileMenuItem.isEnabled = true
+                getMainMenuController().saveFileMenuItem.isEnabled = true
+                getMainMenuController().saveAsFileMenuItem.isEnabled = true
             }
             else
             {

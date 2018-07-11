@@ -9,7 +9,7 @@
 import Cocoa
 import Carbon
 
-public var logLevel = 0
+public var logLevel = 1
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {

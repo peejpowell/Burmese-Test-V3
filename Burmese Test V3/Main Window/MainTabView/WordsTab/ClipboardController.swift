@@ -8,6 +8,17 @@
 
 import Cocoa
 
+extension Notification.Name {
+    static var cutRows: Notification.Name {
+        return .init(rawValue: "ClipboardController.cutRows")
+    }
+    static var copyRows: Notification.Name {
+        return .init(rawValue: "ClipboardController.copyRows")
+    }
+    static var pasteRows: Notification.Name {
+        return .init(rawValue: "ClipboardController.pasteRows")
+    }
+}
 class ClipboardController: NSObject {
 
     func moveToPasteBoard()
@@ -34,6 +45,7 @@ class ClipboardController: NSObject {
                 }
             }
         }
+        //self.putDataOnPasteboard()
         //FIXME: Enable the following later
         //self.putDataOnPasteboard(index, dragOperation: "move", filteredItems: getMainWindowController().findBarViewController.findMenuController.filterItems.state.rawValue == 1, searchResult: appDelegate.toolbarDelegate.searchResult)
         

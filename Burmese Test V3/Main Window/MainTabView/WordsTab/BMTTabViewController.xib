@@ -23,14 +23,14 @@
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="26" horizontalPageScroll="10" verticalLineScroll="26" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0iF-hh-ZQY" customClass="PJScrollView" customModule="Burmese_Test_V3" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
                     <clipView key="contentView" drawsBackground="NO" id="p17-7G-T5E">
-                        <rect key="frame" x="1" y="0.0" width="478" height="271"/>
+                        <rect key="frame" x="1" y="0.0" width="478" height="256"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" tag="100" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveName="BMTColumns" rowHeight="24" headerView="sB4-Tv-rhg" viewBased="YES" id="aAj-Up-qFP" customClass="PJTableView" customModule="Burmese_Test_V3" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="1783" height="248"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1783" height="233"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
-                                <color key="backgroundColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <tableViewGridLines key="gridStyleMask" dashed="YES"/>
                                 <color key="gridColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                                 <tableColumns>
@@ -239,16 +239,16 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES" userResizable="YES"/>
                                         <prototypeCellViews>
-                                            <tableCellView identifier="groupRow" id="dfo-LZ-WJY">
+                                            <tableCellView identifier="groupRow" misplaced="YES" id="dfo-LZ-WJY">
                                                 <rect key="frame" x="1016" y="1" width="58" height="17"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField identifier="KLesson" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="b5g-ZG-0zb" customClass="PJTextField" customModule="Burmese_Test_V3" customModuleProvider="target">
-                                                        <rect key="frame" x="0.0" y="0.0" width="58" height="17"/>
-                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" alignment="center" placeholderString="Title Here" drawsBackground="YES" id="Jba-U8-tnS">
-                                                            <font key="font" metaFont="system"/>
-                                                            <color key="textColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
-                                                            <color key="backgroundColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="58" height="21"/>
+                                                        <textFieldCell key="cell" lineBreakMode="truncatingTail" sendsActionOnEndEditing="YES" borderStyle="border" alignment="left" placeholderString="Title Here" drawsBackground="YES" id="Jba-U8-tnS">
+                                                            <font key="font" metaFont="systemBold"/>
+                                                            <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="selectedControlColor" catalog="System" colorSpace="catalog"/>
                                                         </textFieldCell>
                                                     </textField>
                                                 </subviews>
@@ -554,12 +554,15 @@
                                         </prototypeCellViews>
                                     </tableColumn>
                                 </tableColumns>
+                                <connections>
+                                    <outlet property="menu" destination="oHQ-Bv-DKn" id="s3t-ei-hfR"/>
+                                </connections>
                             </tableView>
                         </subviews>
                         <nil key="backgroundColor"/>
                     </clipView>
-                    <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="KdF-4E-WdZ">
-                        <rect key="frame" x="1" y="255" width="478" height="16"/>
+                    <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="0.45670498084291189" horizontal="YES" id="KdF-4E-WdZ">
+                        <rect key="frame" x="1" y="256" width="478" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="ySe-kQ-PsY">
@@ -581,17 +584,31 @@
             <point key="canvasLocation" x="63" y="113"/>
         </customView>
         <customObject id="1g7-sm-uRE" customClass="TextFinderClient" customModule="Burmese_Test_V3" customModuleProvider="target"/>
-        <menu id="FF4-8m-Ujz">
+        <menu id="oHQ-Bv-DKn" userLabel="TableView menu">
             <items>
-                <menuItem title="Item 1" id="ewe-ON-Vyc">
+                <menuItem title="Cut" keyEquivalent="x" id="3gb-hO-E7V">
+                    <connections>
+                        <action selector="cut:" target="-1" id="8cm-BI-4aG"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Copy" keyEquivalent="c" id="rav-lb-X9c">
+                    <connections>
+                        <action selector="copy:" target="-1" id="cOi-Pb-yRp"/>
+                    </connections>
+                </menuItem>
+                <menuItem title="Paste" keyEquivalent="v" id="sV4-4O-E1f">
+                    <connections>
+                        <action selector="paste:" target="-1" id="Yfp-rW-O8e"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="Gtx-n2-dDa"/>
+                <menuItem title="Change to Title" id="bAf-1A-onT">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="Item 2" id="LSY-xg-am9">
+                <menuItem title="Insert Row Below" keyEquivalent="" id="EJ9-W5-8QT">
                     <modifierMask key="keyEquivalentModifierMask"/>
                 </menuItem>
-                <menuItem title="Item 3" id="eiN-hB-Anl">
-                    <modifierMask key="keyEquivalentModifierMask"/>
-                </menuItem>
+                <menuItem title="Copy Row Down" keyEquivalent="C" id="mxj-Jo-zOU"/>
             </items>
         </menu>
     </objects>

@@ -13,12 +13,48 @@ extension Notification.Name {
     static var dataSourceNeedsSaving: Notification.Name {
         return .init(rawValue: "WordsTabViewController.dataSourceNeedsSaving")
     }
+    static var newDocument: Notification.Name {
+        return .init(rawValue: "WordsTabViewController.newDocument")
+    }
 }
 
 extension WordsTabViewController {
     
     func createDataSourceObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.setDataSourceNeedsSaving(_:)), name: .dataSourceNeedsSaving, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.createNewDocument(_:)), name: .newDocument, object: nil)
+    }
+    
+    @objc func createNewDocument(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        
+        if let _ = self.dataSources[0].sourceFile {
+            // Add a new tab and use that
+        }
+        else {
+            // Use the existing tab and populate the dataSource
+            let viewController = self.tabViewControllersList[0]
+            viewController.view.isHidden = false
+            self.tabViewItems[0].label = "Untitled"
+            dataSources[0].words.append(Words())
+            if let tableView = self.tabViewControllersList[0].tableView {
+                tableView.dataSource = dataSources[0]
+                tableView.delegate = dataSources[0]
+                tableView.reloadData()
+                // Find the first editable column
+                for columnNum in 0..<tableView.tableColumns.count {
+                    let column = tableView.tableColumns[columnNum]
+                    if column.isEditable && !column.isHidden {
+                        tableView.editColumn(columnNum, row: 0, with: nil, select: false)
+                        break
+                    }
+                }
+            }
+            NotificationCenter.default.post(name: .dataSourceNeedsSaving, object: nil)
+            getMainMenuController().closeWordsFileMenuItem.isEnabled = true
+            getMainMenuController().saveFileMenuItem.isEnabled = true
+            getMainMenuController().saveAsFileMenuItem.isEnabled = true
+        }
     }
     
     @objc func setDataSourceNeedsSaving(_ notification: Notification) {

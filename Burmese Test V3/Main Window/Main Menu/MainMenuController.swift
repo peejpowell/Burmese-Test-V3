@@ -24,6 +24,8 @@ class MainMenuController: MenuController {
     @IBOutlet var mainMenu : NSMenu!
     @IBOutlet var recentFilesMenu : NSMenu!
     @IBOutlet var closeWordsFileMenuItem : NSMenuItem!
+    @IBOutlet var saveFileMenuItem : NSMenuItem!
+    @IBOutlet var saveAsFileMenuItem : NSMenuItem!
     
     var removingFirstItem = false
     
@@ -145,6 +147,11 @@ extension MainMenuController {
     // MARK: First Responder Actions
     // MARK: -- File Menu
     
+    @IBAction func newDocument(_ sender: Any?) {
+        infoPrint("", #function, self.className)
+        NotificationCenter.default.post(name: .newDocument, object: nil)
+    }
+    
     @IBAction func openDocument(_ sender: Any?) {
         
         infoPrint(nil,#function, self.className)
@@ -214,7 +221,44 @@ extension MainMenuController {
         //saveDlg.setDirectory(self.prefs.filePath)
         saveDocumentPanel.allowedFileTypes = ["bmt"]
         saveDocumentPanel.allowsOtherFileTypes = false
+        saveDocumentPanel
         return saveDocumentPanel
+    }
+    
+    @IBAction func saveDocument(_ sender: Any?) {
+        infoPrint("", #function, self.className)
+        
+        let index = getCurrentIndex()
+        let wordsTabController = getWordsTabViewDelegate()
+        let dataSource = wordsTabController.dataSources[index]
+        
+        switch index {
+        case -1:
+            break
+        default:
+            if let url = dataSource.sourceFile {
+                if let fileManager = getMainWindowController().mainFileManager {
+                    let saveResult = fileManager.saveWordsToFile(url)
+                    switch saveResult.left(5) {
+                    case "Saved":
+                        break
+                    default:
+                        let alert = fileManager.warningAlert
+                        alert.messageText = saveResult
+                        alert.runModal()
+                        return
+                    }
+                    
+                    dataSource.needsSaving = false
+                    getMainMenuController().updateRecentsMenu(with: url)
+                    getMainWindowController().window?.title = url.lastPathComponent
+                    getMainWindowController().window?.representedURL = url
+                }
+            }
+            else {
+                self.saveDocumentAs(sender)
+            }
+        }
     }
     
     @IBAction func saveDocumentAs(_ sender: Any?) {
@@ -236,7 +280,18 @@ extension MainMenuController {
             }*/
             
             let savePanel = saveDocumentPanel
-            savePanel.nameFieldStringValue = wordsTabController.tabViewItems[index].label
+            let fileNameToSave = wordsTabController.tabViewItems[index].label
+            if fileNameToSave.left(1) != "*" {
+                savePanel.nameFieldStringValue = fileNameToSave
+            }
+            else {
+                if let fileNameToSave = fileNameToSave.right(fileNameToSave.length()-2) {
+                    savePanel.nameFieldStringValue = fileNameToSave
+                }
+                else {
+                    savePanel.nameFieldStringValue = "Untitled"
+                }
+            }
             savePanel.directoryURL = wordsTabController.dataSources[index].sourceFile?.deletingLastPathComponent()
             let saveDocumentResult = savePanel.runModal()
             
@@ -266,6 +321,7 @@ extension MainMenuController {
                 }
             default:
                 print("Cancelled save as")
+                NotificationCenter.default.post(name: .dataSourceNeedsSaving, object: nil)
             }
         }
     }
@@ -292,12 +348,22 @@ extension MainMenuController {
                     if let filetoSave = dataSource.sourceFile?.path.lastPathComponent {
                         alert.messageText = "Do you want to save the changes to \(filetoSave)?"
                     }
+                    else {
+                        alert.messageText = "Do you want to save the new file?"
+                    }
                     let alertResult = alert.runModal()
                     switch alertResult {
                     case NSApplication.ModalResponse.alertFirstButtonReturn:
                         print("Saved")
                         if let sourceFile = dataSource.sourceFile {
                             getMainWindowController().mainFileManager.saveWordsToFile(sourceFile)
+                        }
+                        else {
+                            // File has never been saved
+                            self.saveDocumentAs(self)
+                            if dataSource.needsSaving {
+                                return false
+                            }
                         }
                     case NSApplication.ModalResponse.alertSecondButtonReturn:
                         print("Cancelled")
@@ -385,6 +451,8 @@ extension MainMenuController {
         //self.buildWordTypeMenu()
         if getWordsTabViewDelegate().dataSources[0].sourceFile == nil {
             getMainMenuController().closeWordsFileMenuItem.isEnabled = false
+            getMainMenuController().saveFileMenuItem.isEnabled = false
+            getMainMenuController().saveAsFileMenuItem.isEnabled = false
         }
         return true
     }
@@ -426,9 +494,19 @@ extension MainMenuController {
     func cut(_ sender: Any?)
     {
         infoPrint("", #function, self.className)
-        
-        getMainWindowController().mainClipboardController.moveToPasteBoard()
-        
+        NotificationCenter.default.post(name: .cutRows, object: nil)
+    }
+    
+    func copy(_ sender: Any?)
+    {
+        infoPrint("", #function, self.className)
+        NotificationCenter.default.post(name: .copyRows, object: nil)
+    }
+    
+    func paste(_ sender: Any?)
+    {
+        infoPrint("", #function, self.className)
+        NotificationCenter.default.post(name: .pasteRows, object: nil)
     }
     
     @IBAction func performFindPanelAction(_ sender: Any?){

@@ -9,6 +9,23 @@
 import Foundation
 import Cocoa
 
+enum WordType : String {
+    case burmese = "KBurmese"
+    case english = "KEnglish"
+    case roman = "KRoman"
+    case lesson = "KLesson"
+    case wordindex = "KWordIndex"
+    case category = "KCategory"
+    case categoryindex = "KCategoryIndex"
+    case insertion = "KInsertion"
+    case filterindex = "KFilterIndex"
+    case filtertype = "KFilterType"
+    case wordcategory = "KWordCategory"
+    case correct = "KCorrect"
+    case incorrect = "KIncorrect"
+    case istitle = "KIstitle"
+}
+
 class Words: NSObject, NSCoding
 {
     var wordKeys : Dictionary<String,AnyObject> = ["KBurmese":"" as AnyObject,"KRoman":"" as AnyObject,"KEnglish":"" as AnyObject,"KLesson":"" as AnyObject,"KWordIndex":"" as AnyObject,"KCategory":"" as AnyObject,"KCategoryIndex":"" as AnyObject,"KInsertion":"" as AnyObject,"KFilterIndex":0 as AnyObject,"KFilterType":0 as AnyObject,"KWordCategory":"" as AnyObject,"KCorrect":"" as AnyObject,"KIncorrect":"" as AnyObject,"KIstitle":false as AnyObject]
@@ -73,31 +90,24 @@ class Words: NSObject, NSCoding
     
     var name: String = "PJWord class"
     
-    enum PJFilterType : Int
-    {
+    enum PJFilterType : Int {
         case none = 0
         case add
         case delete
         case change
-        
     }
     
-    @objc  var burmese:        String?
-        {
-        didSet(oldValue)
-        {
-            if oldValue != self.burmese
-            {
+    @objc  var burmese: String? {
+        didSet(oldValue) {
+            if oldValue != self.burmese {
                 self.wordKeys["KBurmese"] = self.burmese as AnyObject
                 self.setEdited()
             }
         }
     }
     
-    @objc var roman:        String?
-        {
-        didSet(oldValue)
-        {
+    @objc var roman: String? {
+        didSet(oldValue) {
             if oldValue != self.roman
             {
                 self.wordKeys["KRoman"] = self.roman as AnyObject
@@ -105,10 +115,8 @@ class Words: NSObject, NSCoding
             }
         }
     }
-    @objc var english:        String?
-        {
-        didSet(oldValue)
-        {
+    @objc var english: String? {
+        didSet(oldValue) {
             if oldValue != self.english
             {
                 self.wordKeys["KEnglish"] = self.english as AnyObject
@@ -116,10 +124,8 @@ class Words: NSObject, NSCoding
             }
         }
     }
-    @objc var lesson:        String?
-        {
-        didSet(oldValue)
-        {
+    @objc var lesson: String? {
+        didSet(oldValue) {
             if oldValue != self.lesson
             {
                 self.wordKeys["KLesson"] = self.lesson as AnyObject
@@ -132,10 +138,8 @@ class Words: NSObject, NSCoding
             }
         }
     }
-    @objc var wordindex:        String?
-        {
-        didSet(oldValue)
-        {
+    @objc var wordindex: String? {
+        didSet(oldValue) {
             if oldValue != self.wordindex
             {
                 self.wordKeys["KWordIndex"] = self.wordindex as AnyObject
@@ -143,10 +147,8 @@ class Words: NSObject, NSCoding
             }
         }
     }
-    @objc var category:        String?
-        {
-        didSet(oldValue)
-        {
+    @objc var category: String? {
+        didSet(oldValue) {
             if oldValue != self.category
             {
                 self.wordKeys["KCategory"] = self.category as AnyObject
@@ -156,56 +158,45 @@ class Words: NSObject, NSCoding
     }
     
     
-    @objc var categoryindex:  String?
-        {
-        didSet(oldValue)
-        {
+    @objc var categoryindex: String? {
+        didSet(oldValue) {
             self.wordKeys["KCategoryIndex"] = self.categoryindex as AnyObject
         }
     }
     
-    @objc var insertion:      String?
-        {
-        didSet(oldValue)
-        {
+    @objc var insertion: String? {
+        didSet(oldValue) {
             self.wordKeys["KInsertion"] = self.insertion as AnyObject
         }
     }
-    var filterindex:    Int?
-    {
-        didSet(oldValue)
-        {
+    
+    var filterindex: Int? {
+        didSet(oldValue) {
             self.wordKeys["KFilterIndex"] = self.filterindex as AnyObject
         }
     }
-    var filtertype:     PJFilterType?
-    {
-        didSet(oldValue)
-        {
-            if oldValue?.rawValue != self.filtertype?.rawValue
-            {
+    
+    var filtertype: PJFilterType? {
+        didSet(oldValue) {
+            if oldValue?.rawValue != self.filtertype?.rawValue {
                 self.wordKeys["KFilterType"] = self.filtertype?.rawValue as AnyObject
             }
         }
     }
-    @objc var wordcategory:        String?
-        {
-        didSet(oldValue)
-        {
+    @objc var wordcategory: String? {
+        didSet(oldValue) {
             self.wordKeys["KWordCategory"] = self.wordcategory as AnyObject
         }
     }
-    @objc var correct:        String?
-        {
-        didSet(oldValue)
-        {
+    
+    @objc var correct: String? {
+        didSet(oldValue) {
             self.wordKeys["KCorrect"] = self.correct as AnyObject
         }
     }
-    @objc var incorrect:      String?
-        {
-        didSet(oldValue)
-        {
+    
+    @objc var incorrect:      String? {
+        didSet(oldValue) {
             self.wordKeys["KIncorrect"] = self.incorrect as AnyObject
         }
     }
@@ -220,6 +211,70 @@ class Words: NSObject, NSCoding
             print("Title changed: \(oldValue) to \(self.istitle)")
             self.wordKeys["KIsTitle"] = self.istitle as AnyObject
         }
+    }
+    
+    func wordForKey(_ key: String)->String? {
+        if let wordType = WordType(rawValue: key) {
+            switch wordType {
+            case .burmese:
+                if let burmeseWord = self.burmese {
+                    return burmeseWord
+                }
+            case .roman:
+                if let romanWord = self.roman {
+                    return romanWord
+                }
+            case .english:
+                if let englishWord = self.english {
+                    return englishWord
+                }
+            case .lesson:
+                if let lesson = self.lesson {
+                    return lesson
+                }
+            case .wordindex:
+                if let wordIndex = self.wordindex {
+                    return wordIndex
+                }
+            case .category:
+                if let category = self.category {
+                    return category
+                }
+            case .categoryindex:
+                if let categoryIndex = self.categoryindex {
+                    return categoryIndex
+                }
+            case .insertion:
+                if let insertion = self.insertion {
+                    return insertion
+                }
+            case .filterindex:
+                if let filterIndex = self.filterindex {
+                    return "\(filterIndex)"
+                }
+            case .filtertype:
+                if let filterType = self.filtertype {
+                    return "\(filterType.rawValue)"
+                }
+            case .wordcategory:
+                if let wordCategory = self.wordcategory {
+                    return wordCategory
+                }
+            case .correct:
+                if let correct = self.correct {
+                    return correct
+                }
+            case .incorrect:
+                if let incorrect = self.incorrect {
+                    return incorrect
+                }
+            case .istitle:
+                return "\(self.istitle)"
+            default:
+                break
+            }
+        }
+        return nil
     }
     
     func encode(with aCoder: NSCoder)

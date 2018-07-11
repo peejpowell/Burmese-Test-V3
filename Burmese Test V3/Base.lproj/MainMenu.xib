@@ -37,6 +37,8 @@
                 <outlet property="closeWordsFileMenuItem" destination="DVo-aG-piG" id="lCY-rQ-Onz"/>
                 <outlet property="mainMenu" destination="AYu-sK-qS6" id="pza-2X-Sb9"/>
                 <outlet property="recentFilesMenu" destination="RTi-RA-Bbp" id="jZ5-1U-xYO"/>
+                <outlet property="saveAsFileMenuItem" destination="Bw7-FT-i3A" id="I6B-8P-pxT"/>
+                <outlet property="saveFileMenuItem" destination="pxx-59-PXV" id="fK2-3t-lkr"/>
             </connections>
         </customObject>
         <customObject id="QId-iA-S1L" customClass="ClipboardController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
@@ -152,7 +154,7 @@
                                     <action selector="performClose:" target="-1" id="szq-2m-Lgb"/>
                                 </connections>
                             </menuItem>
-                            <menuItem title="Save…" keyEquivalent="s" id="pxx-59-PXV">
+                            <menuItem title="Save…" enabled="NO" keyEquivalent="s" id="pxx-59-PXV">
                                 <connections>
                                     <action selector="saveDocument:" target="-1" id="teZ-XB-qJY"/>
                                 </connections>
@@ -904,6 +906,7 @@
                         </constraints>
                         <color key="borderColor" name="scrollBarColor" catalog="System" colorSpace="catalog"/>
                         <color key="fillColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                        <font key="titleFont" metaFont="message" size="11"/>
                     </box>
                     <tabView type="bottomTabsBezelBorder" translatesAutoresizingMaskIntoConstraints="NO" id="WwX-7h-K8S" userLabel="Main Tab View">
                         <rect key="frame" x="-7" y="-1" width="814" height="505"/>
@@ -1053,6 +1056,7 @@
                             </view>
                             <color key="borderColor" name="gridColor" catalog="System" colorSpace="catalog"/>
                             <color key="fillColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
+                            <font key="titleFont" metaFont="message" size="11"/>
                         </box>
                     </toolbarItem>
                     <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="4vo-uW-PWf"/>

@@ -51,6 +51,13 @@ class MainWindowController: NSWindowController {
 
 extension MainWindowController {
     
+    @IBAction func newDocument(_ sender: Any?) {
+        infoPrint("",#function,self.className)
+        self.mainTabViewController.tabView.selectTabViewItem(at: 2)
+        selectTabForExistingFile(at: 0)
+        self.mainMenuController.newDocument(sender)
+    }
+    
     @IBAction func openDocument(_ sender: Any?) {
         infoPrint("",#function,self.className)
         
@@ -61,6 +68,12 @@ extension MainWindowController {
         infoPrint("",#function,self.className)
         
         self.mainMenuController.performClose(sender)
+    }
+    
+    @IBAction func saveDocument(_ sender: Any?) {
+        infoPrint("",#function,self.className)
+        
+        self.mainMenuController.saveDocument(sender)
     }
     
     @IBAction func saveDocumentAs(_ sender: Any?) {
@@ -76,11 +89,25 @@ extension MainWindowController {
     @IBAction func cut(_ sender: Any?)
     {
         infoPrint("", #function, self.className)
-        
-        //PJLog("Cutting...",1)
+
         self.mainMenuController.cut(sender)
-        //PJLog("Cut finished",1)
     }
+    
+    @IBAction func copy(_ sender: Any?)
+    {
+        infoPrint("", #function, self.className)
+        
+        self.mainMenuController.copy(sender)
+    }
+    
+    @IBAction func paste(_ sender: Any?)
+    {
+        infoPrint("", #function, self.className)
+
+        self.mainMenuController.paste(sender)
+    }
+    
+    
 }
 
 //MARK : Application Menu
@@ -90,5 +117,20 @@ extension MainWindowController {
         if let prefsWindow = self.prefsWindowController.window {
             NSApplication.shared.runModal(for: prefsWindow)
         }
+    }
+}
+
+extension MainWindowController: NSWindowDelegate {
+    
+    func windowShouldClose(_ sender: NSWindow) -> Bool {
+        infoPrint("", #function, self.className)
+        for tabNum in (0..<getWordsTabViewDelegate().tabViewItems.count).reversed()
+        {
+            getWordsTabViewDelegate().tabView.selectTabViewItem(at:tabNum)
+            if !self.mainMenuController.performCloseWordsFile(self) {
+                return false
+            }
+        }
+        return true
     }
 }

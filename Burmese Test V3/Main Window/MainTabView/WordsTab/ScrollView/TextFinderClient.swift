@@ -490,10 +490,37 @@ extension TextFinderClient {
         for rowIndex in dataSource.filterRowsToDelete.reversed() {
             dataSource.unfilteredWords?.remove(at: rowIndex)
         }
+        // Update filterindexes
+        self.updateFilterIndexes(in: dataSource)
+        
+        dataSource.filterRowsToDelete.removeAll()
     }
     
-    func insertNewRows(in unfilteredWords : TableViewDataSource) {
-        
+    func insertNewRows(in dataSource : TableViewDataSource) {
+        for word in dataSource.words.reversed() {
+            if word.filtertype == .add {
+                if let wordCopy = word.copy() as? Words {
+                    wordCopy.filtertype = nil
+                    if let insertRow = word.filterindex {
+                        dataSource.unfilteredWords?.insert(wordCopy, at: insertRow + 1)
+                    }
+                }
+            }
+        }
+    }
+    
+    func updateFilterIndexes(in dataSource: TableViewDataSource) {
+        for indexToDelete in dataSource.filterRowsToDelete {
+            for word in dataSource.words {
+                if let filterIndex = word.filterindex {
+                    if word.filtertype == .add {
+                        if filterIndex >= indexToDelete {
+                            word.filterindex = filterIndex - 1
+                        }
+                    }
+                }
+            }
+        }
     }
     
     func resetToUnfiltered() {
@@ -516,6 +543,8 @@ extension TextFinderClient {
         case .off:
             // Filter the items
             let searchString = self.searchField.stringValue
+            let dataSource = getWordsTabViewDelegate().dataSources[self.tabIndex]
+            dataSource.unfilteredWords?.removeAll()
             copyUnfilteredItems()
             findMatchingItems(textToFind: searchString)
             self.resetSearch()

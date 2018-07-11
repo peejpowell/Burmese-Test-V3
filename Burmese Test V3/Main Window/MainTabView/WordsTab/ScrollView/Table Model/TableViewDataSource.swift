@@ -76,6 +76,9 @@ extension TableViewDataSource: NSTableViewDelegate {
     }
     
     func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
+        if self.words[row].wordindex == "#" {
+            return true
+        }
         return false
     }
     
@@ -111,47 +114,40 @@ extension TableViewDataSource: NSTableViewDelegate {
         
         if index != -1
         {
+            let dataSource = getWordsTabViewDelegate().dataSources[index]
             let delegate = getWordsTabViewDelegate()
-            if row >= delegate.dataSources[index].words.count {
+            if row >= dataSource.words.count {
                 return NSTableCellView()
             }
-            if delegate.dataSources[index].words.count == 0 {
+            if dataSource.words.count == 0 {
                 return NSTableCellView()
             }
-            if delegate.dataSources[index].words[row].istitle || delegate.dataSources[index].words[row].wordindex == "#"
-            {
-                if let groupTitle = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "groupRow"), owner: delegate.dataSources[index]) as? NSTableCellView
-                {
-                    if let lesson = delegate.dataSources[index].words[row].lesson
-                    {
+            if  dataSource.words[row].istitle ||
+                dataSource.words[row].wordindex == "#" {
+                if let groupTitle = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "groupRow"),
+                                                       owner: dataSource) as? NSTableCellView {
+                    if let lesson = dataSource.words[row].lesson {
                         groupTitle.textField?.stringValue = lesson.uppercased()
                     }
-                    else
-                    {
+                    else {
                         groupTitle.textField?.stringValue = ""
                     }
+                    groupTitle.textField?.textColor = NSColor.white
                     return groupTitle
                 }
             }
             
-            if let identifier = tableColumn?.identifier
-            {
-                if let colId = identifier.rawValue.left(identifier.rawValue.length() - 3)
-                {
-                    if let field = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: colId), owner: delegate.dataSources[index]) as? NSTableCellView
-                    {
-                        if let value = delegate.dataSources[index].words[row].wordKeys[colId]
-                        {
+            if let identifier = tableColumn?.identifier {
+                if let colId = identifier.rawValue.left(identifier.rawValue.length() - 3) {
+                    if let field = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: colId),
+                                                      owner: dataSource) as? NSTableCellView {
+                        if let value = dataSource.words[row].wordForKey(colId) {
                             field.textField?.textColor = NSColor.textColor
-                            switch colId
-                            {
+                            switch colId {
                             case "KFilterType":
-                                if let intValue = value as? Int
-                                {
-                                    if let filterType = Words.PJFilterType(rawValue: intValue)
-                                    {
-                                        switch filterType
-                                        {
+                                if let intValue = Int(value) {
+                                    if let filterType = Words.PJFilterType(rawValue: intValue) {
+                                        switch filterType {
                                         case .add:
                                             field.textField?.stringValue = "A"
                                         case .change:
@@ -165,69 +161,44 @@ extension TableViewDataSource: NSTableViewDelegate {
                                 }
                             case "KBurmese":
                                 field.textField?.font = NSFont(name: "Myanmar Census", size: 13)
-                                field.textField?.stringValue = value as! String
+                                field.textField?.stringValue = value
                                 field.textField?.delegate = self.fieldDelegate
                                 field.textField?.isEditable = true
                                 field.textField?.isEnabled = true
-                                //return field
-                                
-                                
                             default:
-                                if let stringValue = value as? String
-                                {
-                                    field.textField?.stringValue = stringValue
-                                }
-                                if let intValue = value as? Int
-                                {
-                                    field.textField?.stringValue = "\(intValue)"
+                                if let value = dataSource.words[row].wordKeys[colId] {
+                                    if let stringValue = value as? String {
+                                        field.textField?.stringValue = stringValue
+                                    }
+                                    if let intValue = value as? Int
+                                    {
+                                        field.textField?.stringValue = "\(intValue)"
+                                    }
                                 }
                             }
-                            if field.identifier?.rawValue != "avalaser"
-                            {
+                            if field.identifier?.rawValue != "avalaser" {
                                 field.textField?.delegate = self.fieldDelegate
                             }
                             field.textField?.target = self
                             field.textField?.isHighlighted = false
                             
-                            if let _ = delegate.dataSources[index].unfilteredWords
-                            {
+                            if let _ = dataSource.unfilteredWords {
                                 field.textField?.isHighlighted = false
                                 field.textField?.textColor = NSColor.textColor
                             }
-                            else
-                            {
-// FIXME: Fix the following
-
-/*                              if delegate.searchFieldDelegate.foundItems.count > 0
-                                {
-                                    for foundItem in delegate.searchFieldDelegate.foundItems
-                                    {
-                                        if foundItem.foundOnRow == row && foundItem.foundInField == identifier.rawValue
-                                        {
-                                            field.textField?.isHighlighted = true
-                                            field.textField?.textColor = NSColor.blue
-                                            break
-                                        }
-                                        else
-                                        {
-                                            field.textField?.isHighlighted = false
-                                            field.textField?.textColor = NSColor.textColor
-                                        }
-                                    }
-                                }*/
+                            else {
+                                // Hilight the cells where a word has been found
                             }
                         }
                         else
                         {
-                            if colId == "KRowNumber"
-                            {
+                            if colId == "KRowNumber" {
                                 field.textField?.stringValue = "\(row)"
                             }
-                            if colId == "KAvalaser"
-                            {
+                            else if colId == "KAvalaser" {
                                 var oldStringToCheck : AnyObject?
                                 
-                                oldStringToCheck = delegate.dataSources[index].words[row].wordKeys["KBurmese"]
+                                oldStringToCheck = dataSource.words[row].burmese as AnyObject
                                 
                                 field.textField?.font = NSFont(name: "AvalaserT1A", size: 20)
                                 if let oldString = oldStringToCheck as? String
@@ -369,8 +340,9 @@ extension TableViewDataSource: NSTableViewDelegate {
                                 field.textField?.delegate = self.fieldDelegate
                                 field.textField?.target = self
                             }
-                            
-                            //print("Couldn't get value \(dataSource[index].words[row].wordKeys[identifier])")
+                            else {
+                                field.textField?.stringValue = ""
+                            }
                         }
                         return field
                     }
@@ -509,18 +481,36 @@ extension TableViewDataSource: NSTableViewDataSource {
                 // Make a new array of the data to copy and remove it from the datasource
                 
                 var wordsToInsert = [Words]()
-                var rowToCopy = rowIndexes.last
+                for rowIndex in rowIndexes.reversed() {
+                    if let _ = dataSource.unfilteredWords {
+                        let word = dataSource.words[rowIndex]
+                        if word.filtertype != .add {
+                            if let filterIndex = word.filterindex {
+                                dataSource.filterRowsToDelete.insert(filterIndex)
+                            }
+                        }
+                    }
+                    if info.draggingSourceOperationMask.rawValue & NSDragOperation.move.rawValue == NSDragOperation.move.rawValue {
+                        wordsToInsert.append(dataSource.words.remove(at: rowIndex) as Words)
+                    }
+                    else {
+                        wordsToInsert.append(dataSource.words[rowIndex])
+                    }
+                }
+                /*var rowToCopy = rowIndexes.last
                 if rowToCopy != nil {
                     repeat {
                         // FIXME: Add unfiltered words functionality
-                        /*if let _ = dataSource[index].unfilteredWords
+                        if let _ = dataSource.unfilteredWords
                         {
-                            let word = dataSource[index].words[rowToCopy!]
+                            let word = dataSource.words[rowToCopy!]
                             if word.filtertype != .add
                             {
-                                appDelegate.searchFieldDelegate.filterRowsToDelete.add(word.filterindex!)
+                                if let filterIndex = word.filterindex {
+                                    dataSource.filterRowsToDelete.insert(filterIndex)
+                                }
                             }
-                        }*/
+                        }
                         if info.draggingSourceOperationMask.rawValue & NSDragOperation.move.rawValue == NSDragOperation.move.rawValue {
                             wordsToInsert.append(dataSource.words.remove(at: rowToCopy!) as Words)
                         }
@@ -532,7 +522,7 @@ extension TableViewDataSource: NSTableViewDataSource {
                         rowToCopy = rowIndexes.integerLessThan(rowToCopy!)
                         if rowToCopy == nil { break }
                     } while rowToCopy! >= rowIndexes.first! && rowToCopy! <= rowIndexes.last!
-                }
+                }*/
                 // Calculate where we actually will insert the new rows
                 
                 var insertAtRow : Int = -1
@@ -579,7 +569,7 @@ extension TableViewDataSource: NSTableViewDataSource {
                 }
                 tableView.endUpdates()
                 
-                dataSource.needsSaving = true
+                NotificationCenter.default.post(name: .dataSourceNeedsSaving, object:nil)
             }
             wordsTabController.draggingRows = false
             return true

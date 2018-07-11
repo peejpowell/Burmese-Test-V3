@@ -12,26 +12,169 @@ extension Notification.Name {
     static var tableNeedsReloading: Notification.Name {
         return .init(rawValue: "BMTTabViewController.tableNeedsReloading")
     }
-    
     static var tableRowsNeedReloading: Notification.Name {
         return .init(rawValue: "BMTTabViewController.tableRowsNeedReloading")
     }
-
     static var removeTableRow: Notification.Name {
         return .init(rawValue: "BMTTabViewController.removeTableRow")
     }
-
     static var columnVisibilityChanged: Notification.Name {
         return .init(rawValue: "BMTTabViewController.columnsVisibilityChanged")
     }
-    
     static var toggleColumn: Notification.Name {
         return .init(rawValue: "BMTTabViewController.toggleColumn")
+    }
+    static var putTableRowOnPasteboard : Notification.Name {
+        return .init(rawValue: "BMTTabViewController.putTableRowOnPasteboard")
+    }
+}
+
+class BMTTabViewController: NSViewController {
+    
+    // MARK: IBOutlets
+    
+    @IBOutlet weak var testSearchButton: NSButton!
+    @IBOutlet weak var tableView : NSTableView!
+    @IBOutlet var textFinderClient: TextFinderClient!
+    @IBOutlet weak var scrollView: PJScrollView!
+    
+    // MARK: Vars
+    
+    var textFinderController: NSTextFinder = NSTextFinder()
+    
+    // MARK: View Controller Functions
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        // Do view setup here.
+        
+        infoPrint("New BMT Tab",#function,self.className)
+        
+        let view = self.view
+        if let tableView = view.viewWithTag(100) as? NSTableView {
+            tableView.wantsLayer = true
+            self.tableView = tableView
+        }
+        // Set up the textfinder
+        
+        self.textFinderController.client = self.textFinderClient
+        self.textFinderController.findBarContainer = self.scrollView
+        self.textFinderController.isIncrementalSearchingEnabled = true
+    }
+    
+    override func viewDidAppear() {
+        super.viewDidAppear()
+        infoPrint("", #function, self.className)
+        self.createTableViewObservers()
+        
+        func getArrayPref(for key: Preferences)->[String] {
+            let userDefaults = UserDefaults.standard
+            if let array = userDefaults.array(forKey: key.rawValue) as? [String] {
+                return array
+            }
+            return []
+        }
+        
+        let hiddenColumns = getArrayPref(for: Preferences.HiddenColumns)
+        for column in self.tableView.tableColumns {
+            let id = column.identifier.rawValue
+            if let colId = id.left(id.length()-3) {
+                if hiddenColumns.contains(colId) {
+                    column.isHidden = true
+                }
+                else {
+                    column.isHidden = false
+                }
+            }
+        }
+    }
+    
+    override func viewDidDisappear() {
+        super.viewDidDisappear()
+        infoPrint("", #function, self.className)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    deinit {
+        infoPrint("removed BMT",#function, self.className)
+    }
+}
+
+// MARK: Clipboard Functions
+private extension BMTTabViewController {
+    
+    func updateFilteredRowsToDelete(rowIndexes: IndexSet) {
+        infoPrint("", #function, self.className)
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            if let _ = dataSource.unfilteredWords {
+                for rowIndex in rowIndexes {
+                    let word = dataSource.words[rowIndex]
+                    if let filterIndex = word.filterindex {
+                        if word.filtertype == .change {
+                            dataSource.filterRowsToDelete.insert(filterIndex)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func removeSelectedRowsFromDataSource(rowIndexes: IndexSet) {
+        infoPrint("", #function, self.className)
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            for rowIndex in rowIndexes.reversed() {
+                if let filterIndex = dataSource.words[rowIndex].filterindex {
+                    dataSource.filterRowsToDelete.insert(filterIndex)
+                }
+                dataSource.words.remove(at: rowIndex)
+            }
+            var row = -1
+            if let firstRow = rowIndexes.first {
+                row = firstRow
+                if row == tableView.numberOfRows {
+                    row -= 1
+                }
+                if row != tableView.numberOfRows-1 {
+                    tableView.selectRowIndexes(IndexSet(integer: firstRow), byExtendingSelection: false)
+                }
+                else {
+                    tableView.selectRowIndexes(IndexSet(integer: tableView.numberOfRows-1), byExtendingSelection: false)
+                }
+            }
+        }
+    }
+    
+    @objc func cutRows(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        let selectedRowIndexes = tableView.selectedRowIndexes
+        // First put the relevant data on the pasteboard
+        self.putTableRowsOnPasteboard(rowIndexes: selectedRowIndexes)
+        // Update any filtered rows to remove them
+        //self.updateFilteredRowsToDelete(rowIndexes: selectedRowIndexes)
+        // Remove the table rows
+        tableView.removeRows(at: selectedRowIndexes, withAnimation: .slideUp)
+        // Remove the underlying data
+        self.removeSelectedRowsFromDataSource(rowIndexes: selectedRowIndexes)
+        NotificationCenter.default.post(name: .dataSourceNeedsSaving, object:nil)
+    }
+    
+    @objc func copyRows(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        
+        // First put the relevant data on the pasteboard
+        self.putTableRowsOnPasteboard(rowIndexes: tableView.selectedRowIndexes)
+    }
+    
+    @objc func pasteRows(_ notification: Notification) {
+        self.pasteFromPasteboard()
     }
 }
 
 private extension BMTTabViewController {
     
+    
+    // MARK: TableView Functions
+
     enum TableIndex : Int {
         case rows
         case columns
@@ -42,7 +185,57 @@ private extension BMTTabViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableRows(_:)), name: .tableRowsNeedReloading, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.removeTableRow), name: .removeTableRow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.toggleColumnWithId(_:)),name: .toggleColumn, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.cutRows(_:)),name: .cutRows, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.copyRows(_:)),name: .copyRows, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.pasteRows(_:)),name: .pasteRows, object: nil)
     }
+    
+    @objc func putTableRowsOnPasteboard(rowIndexes: IndexSet) {
+        infoPrint("", #function, self.className)
+        
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            if !tableView.selectedRowIndexes.isEmpty {
+                let pBoard = NSPasteboard.general
+                var myPasteArray = [Words]()
+                for rowIndex in rowIndexes {
+                    myPasteArray.append(dataSource.words[rowIndex])
+                }
+                let data: Data = NSKeyedArchiver.archivedData(withRootObject: myPasteArray)
+                pBoard.declareTypes([NSPasteboard.PasteboardType(rawValue: NSPasteboard.Name.general.rawValue)], owner: self)
+                pBoard.setData(data, forType: NSPasteboard.PasteboardType(rawValue: "Words"))
+                infoPrint("data copied", #function, self.className)
+            }
+        }
+    }
+    
+    func pasteFromPasteboard() {
+        let pBoard = NSPasteboard.general
+        var pasteRow = tableView.selectedRow
+        if pasteRow == -1 && tableView.numberOfRows > 0 {
+            // Paste at the end of the table
+            pasteRow = tableView.numberOfRows-1
+        }
+        else if pasteRow == -1 && tableView.numberOfRows == 0 {
+            pasteRow = 0
+        }
+        
+        if let rowData = pBoard.data(forType: NSPasteboard.PasteboardType(rawValue: "Words")) {
+            if let pastedWords = NSKeyedUnarchiver.unarchiveObject(with: rowData) as? [Words] {
+                for word in pastedWords {
+                    if let dataSource = tableView.dataSource as? TableViewDataSource {
+                        dataSource.words.insert(word, at: pasteRow)
+                    }
+                }
+                self.tableView.insertRows(at: IndexSet(integersIn: pasteRow..<pasteRow+pastedWords.count), withAnimation: .slideDown)
+            }
+        }
+        else {
+            __NSBeep()
+            return
+        }
+        
+    }
+    
     
     @objc func toggleColumnWithId(_ notification: Notification) {
         infoPrint("", #function, self.className)
@@ -102,17 +295,16 @@ private extension BMTTabViewController {
     
     @objc func columnVisibilityChanged(_ notification: Notification) {
         infoPrint("", #function, self.className)
-        if let hiddenColumnsDict = notification.userInfo as? [String:[String]] {
-            if let hiddenColumns = hiddenColumnsDict["columnVisibilityChanged"] {
-                for column in self.tableView.tableColumns {
-                    let id = column.identifier.rawValue
-                    if let colId = id.left(id.length()-3) {
-                        if hiddenColumns.contains(colId) {
-                            column.isHidden = true
-                        }
-                        else {
-                            column.isHidden = false
-                        }
+        if  let hiddenColumnsDict = notification.userInfo as? [String:[String]],
+            let hiddenColumns = hiddenColumnsDict["columnVisibilityChanged"] {
+            for column in self.tableView.tableColumns {
+                let id = column.identifier.rawValue
+                if let colId = id.left(id.length()-3) {
+                    if hiddenColumns.contains(colId) {
+                        column.isHidden = true
+                    }
+                    else {
+                        column.isHidden = false
                     }
                 }
             }
@@ -121,26 +313,25 @@ private extension BMTTabViewController {
     
     @objc func refreshTableRows(_ notification: Notification) {
         infoPrint("", #function, self.className)
-        if let object = notification.userInfo as? [String: [IndexSet]] {
+        if  let object = notification.userInfo as? [String: [IndexSet]],
+            let indexes = object["indexes"] {
             // Unpack the dictionary
-            if let indexes = object["indexes"] {
-                var rowIndexes      : IndexSet = IndexSet()
-                var columnIndexes   : IndexSet = IndexSet()
-                rowIndexes = indexes[0]
-                if indexes.count == 1 {
-                    columnIndexes = IndexSet(integersIn: 0..<tableView.tableColumns.count)
-                }
-                else {
-                    columnIndexes = indexes[1]
-                }
-                self.tableView.reloadData(forRowIndexes: rowIndexes, columnIndexes: columnIndexes)
+            var rowIndexes      : IndexSet = IndexSet()
+            var columnIndexes   : IndexSet = IndexSet()
+            rowIndexes = indexes[0]
+            if indexes.count == 1 {
+                columnIndexes = IndexSet(integersIn: 0..<tableView.tableColumns.count)
             }
+            else {
+                columnIndexes = indexes[1]
+            }
+            self.tableView.reloadData(forRowIndexes: rowIndexes, columnIndexes: columnIndexes)
         }
     }
     
     @objc func removeTableRow() {
         infoPrint("", #function, self.className)
-        let index = getCurrentIndex()
+        
         let rowIndexes = self.tableView.selectedRowIndexes
         
         var rowIndex = rowIndexes.last
@@ -187,70 +378,4 @@ private extension BMTTabViewController {
     }
 }
 
-class BMTTabViewController: NSViewController {
 
-    @IBOutlet weak var testSearchButton: NSButton!
-    
-    @IBOutlet weak var tableView : NSTableView!
-    
-    @IBOutlet var textFinderClient: TextFinderClient!
-    
-    @IBOutlet weak var scrollView: PJScrollView!
-    
-    var textFinderController: NSTextFinder = NSTextFinder()
-    
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do view setup here.
-        
-        infoPrint("New BMT Tab",#function,self.className)
-        
-        let view = self.view
-        if let tableView = view.viewWithTag(100) as? NSTableView {
-            tableView.wantsLayer = true
-            self.tableView = tableView
-        }
-        // Set up the textfinder
-       
-        self.textFinderController.client = self.textFinderClient
-        self.textFinderController.findBarContainer = self.scrollView
-        self.textFinderController.isIncrementalSearchingEnabled = true
-    }
-    
-    override func viewDidAppear() {
-        super.viewDidAppear()
-        infoPrint("", #function, self.className)
-        self.createTableViewObservers()
-        
-        func getArrayPref(for key: Preferences)->[String] {
-            let userDefaults = UserDefaults.standard
-            if let array = userDefaults.array(forKey: key.rawValue) as? [String] {
-                return array
-            }
-            return []
-        }
-        
-        let hiddenColumns = getArrayPref(for: Preferences.HiddenColumns)
-        for column in self.tableView.tableColumns {
-            let id = column.identifier.rawValue
-            if let colId = id.left(id.length()-3) {
-                if hiddenColumns.contains(colId) {
-                    column.isHidden = true
-                }
-                else {
-                    column.isHidden = false
-                }
-            }
-        }
-    }
-    
-    override func viewDidDisappear() {
-        super.viewDidDisappear()
-        infoPrint("", #function, self.className)
-        NotificationCenter.default.removeObserver(self)
-    }
-    
-    deinit {
-        infoPrint("removed BMT",#function, self.className)
-    }
-}

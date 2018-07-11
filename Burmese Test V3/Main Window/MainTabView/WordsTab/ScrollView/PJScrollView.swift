@@ -66,7 +66,12 @@ extension PJScrollView {
     override func findBarViewDidChangeHeight() {
         infoPrint("", #function, self.className)
     }
+}
+
+// MARK: First Responder functions
+extension PJScrollView {
     
-    
-    
+    func cut(_ sender: Any?) {
+        infoPrint("", #function, self.className)
+    }
 }
