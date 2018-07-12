@@ -216,7 +216,7 @@ extension TableViewDataSource: NSTableViewDelegate {
                                 field.textField?.isEditable = true
                                 field.textField?.isEnabled = true
                             default:
-                                if let value = dataSource.words[row].wordKeys[colId] {
+                                if let value = dataSource.words[row].wordForKey(colId) {
                                     if let stringValue = value as? String {
                                         field.textField?.stringValue = stringValue
                                     }

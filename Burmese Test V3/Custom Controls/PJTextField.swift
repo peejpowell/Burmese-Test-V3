@@ -34,4 +34,17 @@ class PJTextField: NSTextField {
         }
     }
     
+    override init(frame frameRect: NSRect) {
+        super.init(frame: frameRect)
+        //infoPrint("\(self)", #function, self.className)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        //infoPrint("\(self)", #function, self.className)
+    }
+    
+    deinit {
+        //infoPrint("\(self)", #function, self.className)
+    }
 }

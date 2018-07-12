@@ -3027,4 +3027,18 @@ import Cocoa
     override func mouseEntered(with event: NSEvent) {
         super.mouseEntered(with: event)
     }
+    
+    override init(textCell string: String) {
+        super.init(textCell: string)
+        infoPrint("\(self)", #function, self.className)
+    }
+    
+    required init(coder: NSCoder) {
+        super.init(coder: coder)
+        infoPrint("\(self)", #function, self.className)
+    }
+    
+    deinit {
+        infoPrint("\(self)", #function, self.className)
+    }
 }

@@ -46,7 +46,18 @@ class MainWindowController: NSWindowController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.openPrefsWindow), name: .openPrefsWindow, object: nil)
     }
     
+    override init(window: NSWindow?) {
+        super.init(window: window)
+        infoPrint("\(self)", #function, self.className)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        infoPrint("\(self)", #function, self.className)
+    }
+    
     deinit {
+        infoPrint("\(self)", #function, self.className)
         NotificationCenter.default.removeObserver(self)
     }
 }

@@ -64,4 +64,8 @@ class PJTextView: NSTextView
         
         // Drawing code here.
     }
+    
+    deinit {
+        infoPrint("\(self)", #function, self.className)
+    }
 }

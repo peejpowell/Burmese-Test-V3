@@ -22,5 +22,8 @@ class PJPButtonConfig: NSObject {
     init(frame: NSRect) {
         self.buttonFrame = frame
     }
-
+    
+    deinit {
+        infoPrint("\(self)", #function, self.className)
+    }
 }

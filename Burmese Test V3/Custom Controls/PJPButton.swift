@@ -41,14 +41,14 @@ enum PJPButtonState: Int
     override init(frame frameRect: NSRect)
     {
         super.init(frame: frameRect)
-        
+        infoPrint("\(self)", #function, self.className)
         self.createTrackingArea()
        
     }
     
     required init?(coder: NSCoder) {
-        //fatalError("init(coder:) has not been implemented")
         super.init(coder: coder)
+        infoPrint("\(self)", #function, self.className)
     }
     
     override func awakeFromNib() {
@@ -385,4 +385,7 @@ enum PJPButtonState: Int
         }
     }
     
+    deinit {
+        infoPrint("\(self)", #function, self.className)
+    }
 }

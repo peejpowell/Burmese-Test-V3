@@ -258,12 +258,22 @@ extension BMTTabViewController {
         
         if let rowData = pBoard.data(forType: NSPasteboard.PasteboardType(rawValue: "Words")) {
             if let pastedWords = NSKeyedUnarchiver.unarchiveObject(with: rowData) as? [Words] {
-                for word in pastedWords {
+                for word in pastedWords.reversed() {
                     if let dataSource = tableView.dataSource as? TableViewDataSource {
+                        if let _ = dataSource.unfilteredWords {
+                            word.filtertype = .add
+                            if pasteRow - 1 > -1 {
+                                word.filterindex = dataSource.words[pasteRow-1].filterindex
+                            }
+                            else {
+                                word.filterindex = 0
+                            }
+                        }
                         dataSource.words.insert(word, at: pasteRow)
                     }
                 }
                 self.tableView.insertRows(at: IndexSet(integersIn: pasteRow..<pasteRow+pastedWords.count), withAnimation: .slideDown)
+                NotificationCenter.default.post(name: .dataSourceNeedsSaving, object: nil)
             }
         }
         else {
@@ -478,44 +488,46 @@ extension BMTTabViewController {
             var categoryIndex = 0
             var prevLesson : String?
             var prevCategory : String?
-            
-            for wordNum in range {
-                let word = dataSource.words[wordNum]
-                if changed(previous: prevLesson, current: word.lesson) {
-                    categoryIndex = 0
-                    wordIndex = 0
-                }
-                else {
-                    if changed(previous: prevCategory, current: word.category) {
-                        categoryIndex += 1
+            DispatchQueue.global(qos: .background).async {
+                infoPrint("started Indexing", #function, self.className)
+                for wordNum in range {
+                    let word = dataSource.words[wordNum]
+                    if self.changed(previous: prevLesson, current: word.lesson) {
+                        categoryIndex = 0
                         wordIndex = 0
                     }
                     else {
-                        wordIndex += 1
+                        if self.changed(previous: prevCategory, current: word.category) {
+                            categoryIndex += 1
+                            wordIndex = 0
+                        }
+                        else {
+                            wordIndex += 1
+                        }
                     }
+                    prevLesson = word.lesson
+                    prevCategory = word.category
+                    if word.wordindex == "#" {
+                        word.istitle = true
+                    }
+                    else {
+                        word.istitle = false
+                    }
+                    word.categoryindex = "\(categoryIndex)".padBefore("0", desiredLength: 4)
+                    word.wordindex = "\(wordIndex)".padBefore("0", desiredLength: 4)
                 }
-                prevLesson = word.lesson
-                prevCategory = word.category
-                if word.wordindex == "#" {
-                    word.istitle = true
-                }
-                else {
-                    word.istitle = false
-                }
-                word.categoryindex = "\(categoryIndex)".padBefore("0", desiredLength: 4)
-                word.wordindex = "\(wordIndex)".padBefore("0", desiredLength: 4)
+                infoPrint("finished Indexing", #function, self.className)
             }
         }
     }
     
-    @IBAction func indexAll(_ sender: NSMenuItem) {
+    @IBAction func indexAll(_ sender: NSMenuItem?) {
         infoPrint("", #function, self.className)
         // Index all the rows in the current dataSource
         if let dataSource = self.tableView.dataSource as? TableViewDataSource {
             let reindexRange = 0..<dataSource.words.count
             self.reindexInRange(reindexRange)
         }
-        self.tableView.reloadData()
         //NotificationCenter.default.post(name: .tableNeedsReloading, object: nil)
     }
 }
