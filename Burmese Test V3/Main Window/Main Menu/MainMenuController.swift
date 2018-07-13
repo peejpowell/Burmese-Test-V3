@@ -144,6 +144,7 @@ class MainMenuController: MenuController {
         infoPrint("", #function, self.className)
         super.awakeFromNib()
         loadRecentFiles(UserDefaults.standard)
+        NotificationCenter.default.post(name: .loadRecentFiles, object: nil)
     }
 }
 
@@ -292,12 +293,8 @@ extension MainMenuController {
                 savePanel.nameFieldStringValue = fileNameToSave
             }
             else {
-                if let fileNameToSave = fileNameToSave.right(fileNameToSave.length()-2) {
-                    savePanel.nameFieldStringValue = fileNameToSave
-                }
-                else {
-                    savePanel.nameFieldStringValue = "Untitled"
-                }
+                let fileNameToSave = fileNameToSave.minus(2)
+                savePanel.nameFieldStringValue = fileNameToSave
             }
             savePanel.directoryURL = wordsTabController.dataSources[index].sourceFile?.deletingLastPathComponent()
             let saveDocumentResult = savePanel.runModal()

@@ -114,6 +114,9 @@ class PJFileManager : FileManager
             tableView.dataSource = tabViewController.dataSources[index]
             tableView.delegate = tabViewController.dataSources[index]
             tableView.registerTableForDrag()
+            if let dataSource = tableView.dataSource as? TableViewDataSource {
+                dataSource.sortTable(tableView, sortBy: SortKeys.English.rawValue)
+            }
             
             if tableView.isHidden {
                 tableView.isHidden = false

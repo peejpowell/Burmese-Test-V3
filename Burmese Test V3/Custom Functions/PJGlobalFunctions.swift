@@ -27,10 +27,10 @@ extension String
         return stringToPad
     }
     
-    func length()->Int
+    /*func length()->Int
     {
         return self.distance(from: self.startIndex, to: self.endIndex)
-    }
+    }*/
     
     func left(_ length:Int)->String?
     {
@@ -104,7 +104,7 @@ extension String
     
     func sentenceCase()->String
     {   let initial = self.left(1)!.uppercased()
-        let theRest = self.right(self.length()-1)!
+        let theRest = self.right(self.count-1)!
         return "\(initial)\(theRest)"
     }
     

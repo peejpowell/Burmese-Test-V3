@@ -2,6 +2,47 @@ import Cocoa
 
 var str = "Hello, playground"
 
+extension String {
+    enum MinusLocation: Int {
+        case front
+        case back
+    }
+    
+    func minus(_ upTo: Int)-> String {
+        switch upTo >= 0 {
+        case true:
+            let lastIndex = self.index(self.endIndex, offsetBy: -upTo)
+            let stringToReturn = self[..<lastIndex]
+            return String(stringToReturn)
+        case false:
+            let newUpTo = -upTo
+            let firstIndex = self.index(self.startIndex, offsetBy: newUpTo)
+            let stringToReturn = self[firstIndex..<self.endIndex]
+            return String(stringToReturn)
+        }
+    }
+    
+    func minus(_ upTo: Int, location: MinusLocation)-> String {
+        switch location {
+        case .front:
+            let lastIndex = self.index(self.endIndex, offsetBy: -upTo)
+            let stringToReturn = self[..<lastIndex]
+            return String(stringToReturn)
+        case .back:
+            let firstIndex = self.index(self.startIndex, offsetBy: upTo)
+            let stringToReturn = self[firstIndex..<self.endIndex]
+            return String(stringToReturn)
+        }
+    }
+    
+    func left(_ to: Int)-> String {
+        let lastIndex = self.index(self.startIndex, offsetBy: to)
+        
+        let stringToReturn = self[..<lastIndex]
+        return String(stringToReturn)
+    }
+}
+
 extension FileManager {
     
     /*func isDir(_ url:URL) -> Bool
@@ -59,4 +100,11 @@ newurl = url.deletingPathExtension()
 url.deleteLastPathComponent()
 
 "testé".folding(options: NSString.CompareOptions.diacriticInsensitive, locale: Locale.current as Locale)
+
+let testString = "<--KBurmeseCol-->"
+testString.minus(3)
+testString.minus(-3)
+
+
+
 

@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Carbon
 
 extension Notification.Name {
     static var tableNeedsReloading: Notification.Name {
@@ -32,6 +33,12 @@ extension Notification.Name {
     }
     static var jumpToLesson: Notification.Name {
         return .init(rawValue: "WordsTabViewController.jumpToLesson")
+    }
+    static var jumpToFirstRow: Notification.Name {
+        return .init(rawValue: "WordsTabViewController.jumpToFirstRow")
+    }
+    static var jumpToLastRow: Notification.Name {
+        return .init(rawValue: "WordsTabViewController.jumpToLastRow")
     }
 }
 
@@ -84,13 +91,12 @@ class BMTTabViewController: NSViewController {
         let hiddenColumns = getArrayPref(for: Preferences.HiddenColumns)
         for column in self.tableView.tableColumns {
             let id = column.identifier.rawValue
-            if let colId = id.left(id.length()-3) {
-                if hiddenColumns.contains(colId) {
-                    column.isHidden = true
-                }
-                else {
-                    column.isHidden = false
-                }
+            let colId = id.minus(3)
+            if hiddenColumns.contains(colId) {
+                column.isHidden = true
+            }
+            else {
+                column.isHidden = false
             }
         }
         if let dataSource = tableView.dataSource as? TableViewDataSource {
@@ -114,16 +120,41 @@ private extension BMTTabViewController {
     
     func updateFilteredRowsToDelete(rowIndexes: IndexSet) {
         infoPrint("", #function, self.className)
-        if let dataSource = tableView.dataSource as? TableViewDataSource {
-            if let _ = dataSource.unfilteredWords {
-                for rowIndex in rowIndexes {
-                    let word = dataSource.words[rowIndex]
-                    if let filterIndex = word.filterindex {
-                        if word.filtertype == .change {
-                            dataSource.filterRowsToDelete.insert(filterIndex)
-                        }
+        if  let dataSource = tableView.dataSource as? TableViewDataSource,
+            let _ = dataSource.unfilteredWords {
+            for rowIndex in rowIndexes {
+                let word = dataSource.words[rowIndex]
+                if let filterIndex = word.filterindex {
+                    if word.filtertype == .change {
+                        dataSource.filterRowsToDelete.insert(filterIndex)
                     }
                 }
+            }
+        }
+    }
+        
+    @IBAction func tableViewDoubleClick(_ sender: PJTableView)
+    {
+        infoPrint("", #function, self.className)
+        
+        let row = sender.clickedRow
+        let column = sender.clickedColumn
+        
+        if column != -1 && row != -1 {
+            if !tableView.tableColumns[column].isEditable {
+                __NSBeep()
+                return
+            }
+            sender.editColumn(column, row: row, with: nil, select: true)
+            
+            if sender.tableColumns[column].identifier.rawValue == "KBurmese" {
+                setKeyboardByName("Myanmar", type: .all)
+            }
+            else if sender.tableColumns[column].identifier.rawValue == "KAvalaser" {
+                setKeyboardByName("British", type: .ascii)
+            }
+            else {
+                TISSelectInputSource(getAppDelegate().originalInputLanguage)
             }
         }
     }
@@ -131,6 +162,7 @@ private extension BMTTabViewController {
     func removeSelectedRowsFromDataSource(rowIndexes: IndexSet) {
         infoPrint("", #function, self.className)
         if let dataSource = tableView.dataSource as? TableViewDataSource {
+            
             for rowIndex in rowIndexes.reversed() {
                 if let filterIndex = dataSource.words[rowIndex].filterindex {
                     dataSource.filterRowsToDelete.insert(filterIndex)
@@ -198,7 +230,24 @@ extension BMTTabViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.pasteRows(_:)),name: .pasteRows, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.populateLessonsPopup),name: .populateLessonsPopup, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.jumpToLesson(_:)),name: .jumpToLesson, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.jumpToFirst(_:)),name: .jumpToFirstRow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.jumpToLast(_:)),name: .jumpToLastRow, object: nil)
         
+    }
+    
+    @objc func jumpToFirst(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        self.tableView.selectRowIndexes(IndexSet(integer: 0), byExtendingSelection: false)
+        self.tableView.scrollRowToVisible(0)
+        getMainWindowController().window?.makeFirstResponder(tableView)
+    }
+    
+    @objc func jumpToLast(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        self.tableView.selectRowIndexes(IndexSet(integer: self.tableView.numberOfRows - 1), byExtendingSelection: false)
+        self.tableView.scrollRowToVisible(self.tableView.numberOfRows - 1)
+        
+        getMainWindowController().window?.makeFirstResponder(tableView)
     }
     
     @objc func jumpToLesson(_ notification: Notification) {
@@ -301,12 +350,11 @@ extension BMTTabViewController {
             }
             for tableColumn in tableView.tableColumns {
                 let id = tableColumn.identifier.rawValue
-                if let colName = id.left(id.length()-3) {
-                    if colName == colToChange {
-                        tableColumn.isHidden = hideColumn
-                        resizeAllColumns()
-                        break
-                    }
+                let colName = id.minus(3)
+                if colName == colToChange {
+                    tableColumn.isHidden = hideColumn
+                    resizeAllColumns()
+                    break
                 }
             }
         }
@@ -346,13 +394,12 @@ extension BMTTabViewController {
             let hiddenColumns = hiddenColumnsDict["columnVisibilityChanged"] {
             for column in self.tableView.tableColumns {
                 let id = column.identifier.rawValue
-                if let colId = id.left(id.length()-3) {
-                    if hiddenColumns.contains(colId) {
-                        column.isHidden = true
-                    }
-                    else {
-                        column.isHidden = false
-                    }
+                let colId = id.minus(3)
+                if hiddenColumns.contains(colId) {
+                    column.isHidden = true
+                }
+                else {
+                    column.isHidden = false
                 }
             }
         }
@@ -524,9 +571,17 @@ extension BMTTabViewController {
     @IBAction func indexAll(_ sender: NSMenuItem?) {
         infoPrint("", #function, self.className)
         // Index all the rows in the current dataSource
+        // Make sure the table is sorted by Lesson first
+        
         if let dataSource = self.tableView.dataSource as? TableViewDataSource {
+            let oldSortBy = dataSource.sortBy
+            dataSource.sortBy = "KLesson"
+            dataSource.sortTable(tableView, sortBy: dataSource.sortBy)
             let reindexRange = 0..<dataSource.words.count
             self.reindexInRange(reindexRange)
+            dataSource.sortBy = oldSortBy
+            dataSource.sortTable(tableView, sortBy: dataSource.sortBy)
+            
         }
         //NotificationCenter.default.post(name: .tableNeedsReloading, object: nil)
     }

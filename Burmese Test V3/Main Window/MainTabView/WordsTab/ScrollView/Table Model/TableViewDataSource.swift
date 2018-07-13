@@ -62,6 +62,14 @@ class TableViewDataSource: NSObject {
 
 extension TableViewDataSource {
 
+    @objc func jumpToFirstRow(_ sender: NSMenuItem) {
+        NotificationCenter.default.post(name: .jumpToFirstRow, object: nil)
+    }
+    
+    @objc func jumpToLastRow(_ sender: NSMenuItem) {
+        NotificationCenter.default.post(name: .jumpToLastRow, object: nil)
+    }
+    
     @objc func jumpToLesson(_ sender: NSMenuItem) {
         infoPrint("", #function, self.className)
         NotificationCenter.default.post(name: .jumpToLesson, object: nil, userInfo:["senderTag" : sender.tag])
@@ -83,6 +91,11 @@ extension TableViewDataSource {
                 let lastMenuItem = menu.items.last,
                 let firstMenuItem = menu.items.first
             {
+                firstMenuItem.action = #selector(jumpToFirstRow(_:))
+                lastMenuItem.action = #selector(jumpToLastRow(_:))
+                firstMenuItem.target = self
+                lastMenuItem.target = self
+                
                 menu.removeAllItems()
                 menu.addItem(firstMenuItem)
                 
@@ -131,8 +144,32 @@ extension TableViewDataSource: NSTableViewDelegate {
         return false
     }
     
-    func tableView(_ tableView: NSTableView, didClick tableColumn: NSTableColumn) {
-        
+    func tableView(_ tableView: NSTableView, didClick tableColumn: NSTableColumn)
+    {
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+
+            // Change the sort descriptor
+            let columnId = tableColumn.identifier.rawValue.minus(3)
+            switch dataSource.sortBy {
+            case columnId:
+                dataSource.sortAscending = !dataSource.sortAscending
+            default:
+                dataSource.sortBy = columnId
+                dataSource.sortAscending = true
+            }
+            
+            for column in tableView.tableColumns {
+                tableView.setIndicatorImage(NSImage(), in: column)
+                if column.title.containsString("(") {
+                    column.title = column.title.minus(3)
+                }
+            }
+            
+            // Sort the relevant column
+            dataSource.sortTable(tableView, sortBy: dataSource.sortBy)
+            
+            tableView.reloadData()
+        }
     }
     
     func tableViewColumnDidResize(_ notification: Notification) {
@@ -187,218 +224,217 @@ extension TableViewDataSource: NSTableViewDelegate {
             }
             
             if let identifier = tableColumn?.identifier {
-                if let colId = identifier.rawValue.left(identifier.rawValue.length() - 3) {
-                    //infoPrint("colid = \(colId)", #function, self.className)
-                    if let field = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: colId),
-                                                      owner: dataSource) as? NSTableCellView {
-                        if let value = dataSource.words[row].wordForKey(colId) {
-                            field.textField?.textColor = NSColor.textColor
-                            switch colId {
-                            case "KFilterType":
-                                if let intValue = Int(value) {
-                                    if let filterType = Words.PJFilterType(rawValue: intValue) {
-                                        switch filterType {
-                                        case .add:
-                                            field.textField?.stringValue = "A"
-                                        case .change:
-                                            field.textField?.stringValue = "C"
-                                        case .delete:
-                                            field.textField?.stringValue = "D"
-                                        case .none:
-                                            field.textField?.stringValue = ""
-                                        }
-                                    }
-                                }
-                            case "KBurmese":
-                                field.textField?.font = NSFont(name: "Myanmar Census", size: 13)
-                                field.textField?.stringValue = value
-                                field.textField?.delegate = self.fieldDelegate
-                                field.textField?.isEditable = true
-                                field.textField?.isEnabled = true
-                            default:
-                                if let value = dataSource.words[row].wordForKey(colId) {
-                                    if let stringValue = value as? String {
-                                        field.textField?.stringValue = stringValue
-                                    }
-                                    if let intValue = value as? Int
-                                    {
-                                        field.textField?.stringValue = "\(intValue)"
+                let colId = identifier.rawValue.minus(3)
+                //infoPrint("colid = \(colId)", #function, self.className)
+                if let field = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: colId),
+                                                  owner: dataSource) as? NSTableCellView {
+                    if let value = dataSource.words[row].wordForKey(colId) {
+                        field.textField?.textColor = NSColor.textColor
+                        switch colId {
+                        case "KFilterType":
+                            if let intValue = Int(value) {
+                                if let filterType = Words.PJFilterType(rawValue: intValue) {
+                                    switch filterType {
+                                    case .add:
+                                        field.textField?.stringValue = "A"
+                                    case .change:
+                                        field.textField?.stringValue = "C"
+                                    case .delete:
+                                        field.textField?.stringValue = "D"
+                                    case .none:
+                                        field.textField?.stringValue = ""
                                     }
                                 }
                             }
-                            if field.identifier?.rawValue != "avalaser" {
-                                field.textField?.delegate = self.fieldDelegate
-                            }
-                            field.textField?.target = self
-                            field.textField?.isHighlighted = false
-                            
-                            if let _ = dataSource.unfilteredWords {
-                                field.textField?.isHighlighted = false
-                                field.textField?.textColor = NSColor.textColor
-                            }
-                            else {
-                                // Hilight the cells where a word has been found
-                            }
-                        }
-                        else
-                        {
-                            if colId == "KRowNumber" {
-                                field.textField?.stringValue = "\(row)"
-                            }
-                            else if colId == "KAvalaser" {
-                                var oldStringToCheck : AnyObject?
-                                
-                                oldStringToCheck = dataSource.words[row].burmese as AnyObject
-                                
-                                field.textField?.font = NSFont(name: "AvalaserT1A", size: 20)
-                                if let oldString = oldStringToCheck as? String
+                        case "KBurmese":
+                            field.textField?.font = NSFont(name: "Myanmar Census", size: 13)
+                            field.textField?.stringValue = value
+                            field.textField?.delegate = self.fieldDelegate
+                            field.textField?.isEditable = true
+                            field.textField?.isEnabled = true
+                        default:
+                            if let value = dataSource.words[row].wordForKey(colId) {
+                                if let stringValue = value as? String {
+                                    field.textField?.stringValue = stringValue
+                                }
+                                if let intValue = value as? Int
                                 {
-                                    var newString: String = oldString
-                                    var burmeseDict : Dictionary<String,String> = [:]
-                                    burmeseDict["ခြေ"] = "e®K"
-                                    burmeseDict["ချ"] = "K¥"
-                                    burmeseDict["င်"] = "c\\"
-                                    burmeseDict["း"] = ";"
-                                    burmeseDict["ဝ"] = "w"
-                                    burmeseDict["တ်"] = "t\\"
-                                    burmeseDict["ထေ"] = "eT"
-                                    burmeseDict["ာ"] = "a"
-                                    burmeseDict["ါ"] = "å"
-                                    burmeseDict["က်"] = "k\\"
-                                    burmeseDict["ဗို"] = "biu"
-                                    burmeseDict["မျ"] = "m¥"
-                                    burmeseDict["ခုံ"] = "KuM"
-                                    burmeseDict["တေ"] = "et"
-                                    burmeseDict["ရ"] = "r"
-                                    burmeseDict["ည်"] = "v\\"
-                                    burmeseDict["ခေ"]="Ke"
-                                    burmeseDict["နှ"] = "n˙"
-                                    burmeseDict["နှု"] = "n˙u"
-                                    burmeseDict["ခ"] = "K"
-                                    burmeseDict["မ်"] = "m\\"
-                                    burmeseDict["ပ"] = "p"
-                                    burmeseDict["စ"] = "s"
-                                    burmeseDict["ပ်"] = "p\\"
-                                    burmeseDict["သွ"] = "q∑"
-                                    burmeseDict["လျှ"] = "lY"
-                                    burmeseDict["တ"] = "t"
-                                    burmeseDict["စ်"] = "s\\"
-                                    burmeseDict["ကို"] = "kiu"
-                                    burmeseDict["ယ်"] = "y\\"
-                                    burmeseDict["လုံ"] = "luM"
-                                    burmeseDict["မေ"] = "em"
-                                    burmeseDict["န"] = "n"
-                                    burmeseDict["ထ"] = "t"
-                                    burmeseDict["ဖ"] = "P"
-                                    burmeseDict["ပ"] = "p"
-                                    burmeseDict["ရွ"] = "r∑"
-                                    burmeseDict["လ"] = "l"
-                                    burmeseDict["ကေ"] = "ek"
-                                    burmeseDict["တံ"] = "tM"
-                                    burmeseDict["ဆ"] = "S"
-                                    burmeseDict["ချေ"] = "eK¥"
-                                    burmeseDict["ဖ"] = "P"
-                                    burmeseDict["နေ"] = "en"
-                                    burmeseDict["င့်"] = "c\\."
-                                    burmeseDict["သ"] = "q"
-                                    burmeseDict["ဦ"] = "√^"
-                                    burmeseDict["နှေ"] = "en˙"
-                                    burmeseDict["အ"] = "A"
-                                    burmeseDict["ရို"] = "Rui"
-                                    burmeseDict["ကြ"] = "Âk"
-                                    burmeseDict["ခြ"] = "®K"
-                                    burmeseDict["ကြေ"] = "eÂk"
-                                    burmeseDict["ကျ"] = "k¥"
-                                    burmeseDict["ကု"] = "ku"
-                                    burmeseDict["န်"] = "n\\"
-                                    burmeseDict["ကျေ"] = "ek¥"
-                                    burmeseDict["ဘ"] = "B"
-                                    burmeseDict["ပေ"] = "ep"
-                                    burmeseDict["ဒူ"] = "d¨"
-                                    burmeseDict["ညို့"] = "Viu>"
-                                    burmeseDict["ဆံ"] = "SM"
-                                    burmeseDict["ဖီ"] = "P^"
-                                    burmeseDict["စေ့"] = "es."
-                                    burmeseDict["စိ"] = "si"
-                                    burmeseDict["ဥ်"] = "√\\"
-                                    burmeseDict["ည့်"] = "v\\."
-                                    burmeseDict["မြ"] = "®m"
-                                    burmeseDict["တွေ့"] = "et∑>"
-                                    burmeseDict["ငို"] = "ciu"
-                                    burmeseDict["သေ"] = "eq"
-                                    burmeseDict["ပြုံ"] = "®pMo"
-                                    burmeseDict["ရီ"] = "r^"
-                                    burmeseDict["က"] = "k"
-                                    burmeseDict["ပြေ"] = "e®p"
-                                    burmeseDict["အေ"] = "eA"
-                                    burmeseDict["ာ်"] = "a\\"
-                                    burmeseDict["ညွှ"] = "VW"
-                                    burmeseDict["ပြ"] = "®p"
-                                    burmeseDict["ရေ"] = "er"
-                                    burmeseDict["လျှေ"] = "elYH"
-                                    burmeseDict["ထို"] = "Tiu"
-                                    burmeseDict["မ"] = "m"
-                                    burmeseDict["အိ"] = "Ai"
-                                    burmeseDict["ချီ"] = "K¥^"
-                                    burmeseDict["လွ"] = "l∑"
-                                    burmeseDict["ရေ"] = "er"
-                                    burmeseDict["ထူ"] = "T¨"
-                                    burmeseDict["လို့"] = "liu≥"
-                                    burmeseDict["ဘူ"] = "B¨"
-                                    burmeseDict["မှ"] = "m˙"
-                                    burmeseDict["ဖု"] = "Pu"
-                                    burmeseDict["လို"] = "liu"
-                                    burmeseDict["ဖို"] = "Piu"
-                                    burmeseDict["တို"] = "tiu"
-                                    burmeseDict["ပီ"] = "pˆ"
-                                    burmeseDict["ကူ"] = "k¨"
-                                    burmeseDict["တွေ"] = "et∑"
-                                    burmeseDict["ခို"] = "Kiu"
-                                    burmeseDict["ခု"] = "Ku"
-                                    burmeseDict["ပဲ"] = "p´"
-                                    burmeseDict["ဓ"] = "m"
-                                    burmeseDict["ပုံ"] = "pMu"
-                                    burmeseDict["ဖြေ"] = "e®P"
-                                    burmeseDict["နို"] = "niu"
-                                    burmeseDict["ငံ"] = "cM"
-                                    burmeseDict["ဟ"] = "h"
-                                    burmeseDict["တီ"] = "t^"
-                                    burmeseDict["လု"] = "lu"
-                                    burmeseDict["ဒီ"] = "d^"
-                                    burmeseDict["ာ့"] = "a."
-                                    burmeseDict["သီ"] = "q^"
-                                    burmeseDict["ဆို"] = "Siu"
-                                    burmeseDict["ဗ"] = "b"
-                                    burmeseDict["သူ"] = "q¨"
-                                    burmeseDict["လှ"] = "l˙"
-                                    burmeseDict["မေ့"] = "em."
-                                    for key in burmeseDict.keys
-                                    {
-                                        //let burmChar = burmeseChars[characterNum]
-                                        //let avaChar = avalaserChars[characterNum]
-                                        
-                                        newString.replaceString(key, withString: burmeseDict[key]!)
-                                        /*if newString.containsString(burmeseChars[characterNum])
-                                         {
-                                         //print("Word \(row), Found: \(burmChar), replaced: \(avaChar)")
-                                         newString =
-                                         newString.stringByReplacingOccurrencesOfString(burmChar, withString: avaChar)
-                                         }*/
-                                    }
-                                    field.textField?.stringValue = newString as String
+                                    field.textField?.stringValue = "\(intValue)"
                                 }
-                                field.textField?.delegate = self.fieldDelegate
-                                field.textField?.target = self
-                            }
-                            else {
-                                field.textField?.stringValue = ""
-                                field.textField?.delegate = self.fieldDelegate
-                                field.textField?.isEditable = true
-                                field.textField?.isEnabled = true
                             }
                         }
-                        return field
+                        if field.identifier?.rawValue != "avalaser" {
+                            field.textField?.delegate = self.fieldDelegate
+                        }
+                        field.textField?.target = self
+                        field.textField?.isHighlighted = false
+                        
+                        if let _ = dataSource.unfilteredWords {
+                            field.textField?.isHighlighted = false
+                            field.textField?.textColor = NSColor.textColor
+                        }
+                        else {
+                            // Hilight the cells where a word has been found
+                        }
                     }
+                    else
+                    {
+                        if colId == "KRowNumber" {
+                            field.textField?.stringValue = "\(row)"
+                        }
+                        else if colId == "KAvalaser" {
+                            var oldStringToCheck : AnyObject?
+                            
+                            oldStringToCheck = dataSource.words[row].burmese as AnyObject
+                            
+                            field.textField?.font = NSFont(name: "AvalaserT1A", size: 20)
+                            if let oldString = oldStringToCheck as? String
+                            {
+                                var newString: String = oldString
+                                var burmeseDict : Dictionary<String,String> = [:]
+                                burmeseDict["ခြေ"] = "e®K"
+                                burmeseDict["ချ"] = "K¥"
+                                burmeseDict["င်"] = "c\\"
+                                burmeseDict["း"] = ";"
+                                burmeseDict["ဝ"] = "w"
+                                burmeseDict["တ်"] = "t\\"
+                                burmeseDict["ထေ"] = "eT"
+                                burmeseDict["ာ"] = "a"
+                                burmeseDict["ါ"] = "å"
+                                burmeseDict["က်"] = "k\\"
+                                burmeseDict["ဗို"] = "biu"
+                                burmeseDict["မျ"] = "m¥"
+                                burmeseDict["ခုံ"] = "KuM"
+                                burmeseDict["တေ"] = "et"
+                                burmeseDict["ရ"] = "r"
+                                burmeseDict["ည်"] = "v\\"
+                                burmeseDict["ခေ"]="Ke"
+                                burmeseDict["နှ"] = "n˙"
+                                burmeseDict["နှု"] = "n˙u"
+                                burmeseDict["ခ"] = "K"
+                                burmeseDict["မ်"] = "m\\"
+                                burmeseDict["ပ"] = "p"
+                                burmeseDict["စ"] = "s"
+                                burmeseDict["ပ်"] = "p\\"
+                                burmeseDict["သွ"] = "q∑"
+                                burmeseDict["လျှ"] = "lY"
+                                burmeseDict["တ"] = "t"
+                                burmeseDict["စ်"] = "s\\"
+                                burmeseDict["ကို"] = "kiu"
+                                burmeseDict["ယ်"] = "y\\"
+                                burmeseDict["လုံ"] = "luM"
+                                burmeseDict["မေ"] = "em"
+                                burmeseDict["န"] = "n"
+                                burmeseDict["ထ"] = "t"
+                                burmeseDict["ဖ"] = "P"
+                                burmeseDict["ပ"] = "p"
+                                burmeseDict["ရွ"] = "r∑"
+                                burmeseDict["လ"] = "l"
+                                burmeseDict["ကေ"] = "ek"
+                                burmeseDict["တံ"] = "tM"
+                                burmeseDict["ဆ"] = "S"
+                                burmeseDict["ချေ"] = "eK¥"
+                                burmeseDict["ဖ"] = "P"
+                                burmeseDict["နေ"] = "en"
+                                burmeseDict["င့်"] = "c\\."
+                                burmeseDict["သ"] = "q"
+                                burmeseDict["ဦ"] = "√^"
+                                burmeseDict["နှေ"] = "en˙"
+                                burmeseDict["အ"] = "A"
+                                burmeseDict["ရို"] = "Rui"
+                                burmeseDict["ကြ"] = "Âk"
+                                burmeseDict["ခြ"] = "®K"
+                                burmeseDict["ကြေ"] = "eÂk"
+                                burmeseDict["ကျ"] = "k¥"
+                                burmeseDict["ကု"] = "ku"
+                                burmeseDict["န်"] = "n\\"
+                                burmeseDict["ကျေ"] = "ek¥"
+                                burmeseDict["ဘ"] = "B"
+                                burmeseDict["ပေ"] = "ep"
+                                burmeseDict["ဒူ"] = "d¨"
+                                burmeseDict["ညို့"] = "Viu>"
+                                burmeseDict["ဆံ"] = "SM"
+                                burmeseDict["ဖီ"] = "P^"
+                                burmeseDict["စေ့"] = "es."
+                                burmeseDict["စိ"] = "si"
+                                burmeseDict["ဥ်"] = "√\\"
+                                burmeseDict["ည့်"] = "v\\."
+                                burmeseDict["မြ"] = "®m"
+                                burmeseDict["တွေ့"] = "et∑>"
+                                burmeseDict["ငို"] = "ciu"
+                                burmeseDict["သေ"] = "eq"
+                                burmeseDict["ပြုံ"] = "®pMo"
+                                burmeseDict["ရီ"] = "r^"
+                                burmeseDict["က"] = "k"
+                                burmeseDict["ပြေ"] = "e®p"
+                                burmeseDict["အေ"] = "eA"
+                                burmeseDict["ာ်"] = "a\\"
+                                burmeseDict["ညွှ"] = "VW"
+                                burmeseDict["ပြ"] = "®p"
+                                burmeseDict["ရေ"] = "er"
+                                burmeseDict["လျှေ"] = "elYH"
+                                burmeseDict["ထို"] = "Tiu"
+                                burmeseDict["မ"] = "m"
+                                burmeseDict["အိ"] = "Ai"
+                                burmeseDict["ချီ"] = "K¥^"
+                                burmeseDict["လွ"] = "l∑"
+                                burmeseDict["ရေ"] = "er"
+                                burmeseDict["ထူ"] = "T¨"
+                                burmeseDict["လို့"] = "liu≥"
+                                burmeseDict["ဘူ"] = "B¨"
+                                burmeseDict["မှ"] = "m˙"
+                                burmeseDict["ဖု"] = "Pu"
+                                burmeseDict["လို"] = "liu"
+                                burmeseDict["ဖို"] = "Piu"
+                                burmeseDict["တို"] = "tiu"
+                                burmeseDict["ပီ"] = "pˆ"
+                                burmeseDict["ကူ"] = "k¨"
+                                burmeseDict["တွေ"] = "et∑"
+                                burmeseDict["ခို"] = "Kiu"
+                                burmeseDict["ခု"] = "Ku"
+                                burmeseDict["ပဲ"] = "p´"
+                                burmeseDict["ဓ"] = "m"
+                                burmeseDict["ပုံ"] = "pMu"
+                                burmeseDict["ဖြေ"] = "e®P"
+                                burmeseDict["နို"] = "niu"
+                                burmeseDict["ငံ"] = "cM"
+                                burmeseDict["ဟ"] = "h"
+                                burmeseDict["တီ"] = "t^"
+                                burmeseDict["လု"] = "lu"
+                                burmeseDict["ဒီ"] = "d^"
+                                burmeseDict["ာ့"] = "a."
+                                burmeseDict["သီ"] = "q^"
+                                burmeseDict["ဆို"] = "Siu"
+                                burmeseDict["ဗ"] = "b"
+                                burmeseDict["သူ"] = "q¨"
+                                burmeseDict["လှ"] = "l˙"
+                                burmeseDict["မေ့"] = "em."
+                                for key in burmeseDict.keys
+                                {
+                                    //let burmChar = burmeseChars[characterNum]
+                                    //let avaChar = avalaserChars[characterNum]
+                                    
+                                    newString.replaceString(key, withString: burmeseDict[key]!)
+                                    /*if newString.containsString(burmeseChars[characterNum])
+                                     {
+                                     //print("Word \(row), Found: \(burmChar), replaced: \(avaChar)")
+                                     newString =
+                                     newString.stringByReplacingOccurrencesOfString(burmChar, withString: avaChar)
+                                     }*/
+                                }
+                                field.textField?.stringValue = newString as String
+                            }
+                            field.textField?.delegate = self.fieldDelegate
+                            field.textField?.target = self
+                        }
+                        else {
+                            field.textField?.stringValue = ""
+                            field.textField?.delegate = self.fieldDelegate
+                            field.textField?.isEditable = true
+                            field.textField?.isEnabled = true
+                        }
+                    }
+                    return field
                 }
             }
         }
@@ -424,7 +460,306 @@ extension TableViewDataSource: NSTableViewDataSource {
     }
     
     func sortTable(_ tableView: NSTableView, sortBy: String) {
-        infoPrint(nil, #function, self.className)
+        infoPrint("", #function, self.className)
+        
+        for tableColumn in tableView.tableColumns {
+            tableView.setIndicatorImage(nil, in: tableColumn)
+            if tableColumn.title.containsString("(") {
+                let trimmedTitle = tableColumn.title.minus(3)
+                tableColumn.title = trimmedTitle
+            }
+        }
+        
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            var sortKey : SortKeys = .Lesson
+            
+            let sortIndicatorImage : NSImage = {
+                switch dataSource.sortAscending {
+                case true:
+                    if let image = NSImage(named: "NSAscendingSortIndicator") {
+                        return image
+                    }
+                case false:
+                    if let image = NSImage(named: "NSDescendingSortIndicator") {
+                        return image
+                    }
+                }
+                return NSImage()
+            }()
+            
+            switch dataSource.sortBy {
+            case "KRoman","KBurmese", "KEnglish", "KCategory":
+                if let localSortKey = SortKeys(rawValue: dataSource.sortBy) {
+                    sortKey = localSortKey
+                    tableView.setIndicatorImage(sortIndicatorImage, in: tableView.tableColumns[tableView.column(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "\(localSortKey.rawValue)Col"))])
+                }
+            case "KAvalaser":
+                if let localSortKey = SortKeys(rawValue: "KBurmese") {
+                    sortKey = localSortKey
+                    tableView.setIndicatorImage(sortIndicatorImage, in: tableView.tableColumns[tableView.column(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "KBurmeseCol"))])
+                }
+            default:
+                sortKey = .Lesson
+                
+                let lessonColumn    = tableView.tableColumns[tableView.column(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "KLessonCol"))]
+                let categoryColumn  = tableView.tableColumns[tableView.column(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "KCategoryCol"))]
+                let wordIndexColumn  = tableView.tableColumns[tableView.column(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "KWordIndexCol"))]
+                
+                tableView.setIndicatorImage(sortIndicatorImage, in: lessonColumn)
+                
+                if !lessonColumn.title.containsString("(") {
+                    lessonColumn.title += " (1)"
+                }
+                
+                tableView.setIndicatorImage(sortIndicatorImage, in: categoryColumn)
+                
+                if !categoryColumn.title.containsString("(") {
+                    categoryColumn.title += " (2)"
+                }
+                
+                tableView.setIndicatorImage(sortIndicatorImage, in: wordIndexColumn)
+                
+                if !wordIndexColumn.title.containsString("(") {
+                    wordIndexColumn.title += " (3)"
+                }
+            }
+            
+            infoPrint("Sorting DataSource by \(dataSource.sortBy)...", #function, self.className)
+            quicksort_source(&dataSource.words, sortKey: sortKey,  start: 0, end: dataSource.words.count, ascending: dataSource.sortAscending)
+            infoPrint("Finished sorting.", #function, self.className)
+        }
+    }
+    
+    func quicksort_source(_ source:inout [Words], sortKey: SortKeys, start:Int, end:Int, ascending: Bool) {
+        if (end - start < 2) {
+            return
+        }
+        let p = source[start + (end - start)/2]
+        var l = start
+        var r = end - 1
+        while (l <= r) {
+            if ascending {
+                switch sortKey {
+                case .Burmese:
+                    let leftBurmese = getLowerOrBlank(source[l].burmese)
+                    let rightBurmese = getLowerOrBlank(source[r].burmese)
+                    let pBurmese = getLowerOrBlank(p.burmese)
+                    
+                    if leftBurmese < pBurmese {
+                        l += 1
+                        continue
+                    }
+                    if rightBurmese > pBurmese {
+                        r -= 1
+                        continue
+                    }
+                case .Roman:
+                    var leftRoman = getLowerOrBlank(source[l].roman)
+                    var rightRoman = getLowerOrBlank(source[r].roman)
+                    var pRoman = getLowerOrBlank(p.roman)
+                    
+                    leftRoman.foldString()
+                    rightRoman.foldString()
+                    pRoman.foldString()
+                    
+                    if leftRoman < pRoman {
+                        l += 1
+                        continue
+                    }
+                    if rightRoman > pRoman {
+                        r -= 1
+                        continue
+                    }
+                case .English:
+                    let leftEnglish = getLowerOrBlank(source[l].english)
+                    let rightEnglish = getLowerOrBlank(source[r].english)
+                    let pEnglish = getLowerOrBlank(p.english)
+                    
+                    if leftEnglish < pEnglish {
+                        l += 1
+                        continue
+                    }
+                    if rightEnglish > pEnglish {
+                        r -= 1
+                        continue
+                    }
+                case .Lesson:
+                    
+                    let leftLesson = getLowerOrBlank(source[l].lesson)
+                    let rightLesson = getLowerOrBlank(source[r].lesson)
+                    let pLesson = getLowerOrBlank(p.lesson)
+                    
+                    let leftCategory = getLowerOrBlank(source[l].category)
+                    let rightCategory = getLowerOrBlank(source[r].category)
+                    let pCategory = getLowerOrBlank(p.category)
+                    
+                    let leftWordIndex = getLowerOrBlank(source[l].wordindex)
+                    let rightWordIndex = getLowerOrBlank(source[r].wordindex)
+                    let pWordIndex = getLowerOrBlank(p.wordindex)
+                    
+                    if leftLesson < pLesson {
+                        l += 1
+                        continue
+                    }
+                    else if leftLesson == pLesson {
+                        if leftCategory < pCategory {
+                            l += 1
+                            continue
+                        }
+                        else if leftCategory == pCategory {
+                            if leftWordIndex < pWordIndex {
+                                l += 1
+                                continue
+                            }
+                        }
+                    }
+                    if rightLesson > pLesson {
+                        r -= 1
+                        continue
+                    }
+                    else if rightLesson == pLesson {
+                        if rightCategory > pCategory {
+                            r -= 1
+                            continue
+                        }
+                        else if rightCategory == pCategory {
+                            if rightWordIndex > pWordIndex {
+                                r -= 1
+                                continue
+                            }
+                        }
+                    }
+                case .Category:
+                    
+                    let leftCategory = getLowerOrBlank(source[l].category)
+                    let rightCategory = getLowerOrBlank(source[r].category)
+                    let pCategory = getLowerOrBlank(p.category)
+                    
+                    if leftCategory < pCategory {
+                        l += 1
+                        continue
+                    }
+                    if rightCategory > pCategory {
+                        r -= 1
+                        continue
+                    }
+                }
+            }
+            else {
+                switch sortKey {
+                case .Burmese:
+                    let leftBurmese = getLowerOrBlank(source[l].burmese)
+                    let rightBurmese = getLowerOrBlank(source[r].burmese)
+                    let pBurmese = getLowerOrBlank(p.burmese)
+                    
+                    if leftBurmese > pBurmese {
+                        l += 1
+                        continue
+                    }
+                    if rightBurmese < pBurmese {
+                        r -= 1
+                        continue
+                    }
+                case .Roman:
+                    var leftRoman = getLowerOrBlank(source[l].roman)
+                    var rightRoman = getLowerOrBlank(source[r].roman)
+                    var pRoman = getLowerOrBlank(p.roman)
+                    
+                    leftRoman.foldString()
+                    rightRoman.foldString()
+                    pRoman.foldString()
+                    
+                    if leftRoman > pRoman {
+                        l += 1
+                        continue
+                    }
+                    if rightRoman < pRoman {
+                        r -= 1
+                        continue
+                    }
+                case .English:
+                    let leftEnglish = getLowerOrBlank(source[l].english)
+                    let rightEnglish = getLowerOrBlank(source[r].english)
+                    let pEnglish = getLowerOrBlank(p.english)
+                    
+                    if leftEnglish > pEnglish {
+                        l += 1
+                        continue
+                    }
+                    if rightEnglish < pEnglish {
+                        r -= 1
+                        continue
+                    }
+                case .Lesson:
+                    
+                    let leftLesson = getLowerOrBlank(source[l].lesson)
+                    let rightLesson = getLowerOrBlank(source[r].lesson)
+                    let pLesson = getLowerOrBlank(p.lesson)
+                    
+                    let leftCategory = getLowerOrBlank(source[l].category)
+                    let rightCategory = getLowerOrBlank(source[r].category)
+                    let pCategory = getLowerOrBlank(p.category)
+                    
+                    let leftWordIndex = getLowerOrBlank(source[l].wordindex)
+                    let rightWordIndex = getLowerOrBlank(source[r].wordindex)
+                    let pWordIndex = getLowerOrBlank(p.wordindex)
+                    
+                    if leftLesson > pLesson {
+                        l += 1
+                        continue
+                    }
+                    else if leftLesson == pLesson {
+                        if leftCategory > pCategory {
+                            l += 1
+                            continue
+                        }
+                        else if leftCategory == pCategory {
+                            if leftWordIndex > pWordIndex {
+                                l += 1
+                                continue
+                            }
+                        }
+                    }
+                    if rightLesson < pLesson {
+                        r -= 1
+                        continue
+                    }
+                    else if rightLesson == pLesson {
+                        if rightCategory < pCategory {
+                            r -= 1
+                            continue
+                        }
+                        else if rightCategory == pCategory {
+                            if rightWordIndex < pWordIndex {
+                                r -= 1
+                                continue
+                            }
+                        }
+                    }
+                case .Category:
+                    
+                    let leftCategory = getLowerOrBlank(source[l].category)
+                    let rightCategory = getLowerOrBlank(source[r].category)
+                    let pCategory = getLowerOrBlank(p.category)
+                    
+                    if leftCategory > pCategory {
+                        l += 1
+                        continue
+                    }
+                    if rightCategory < pCategory {
+                        r -= 1
+                        continue
+                    }
+                }
+            }
+            let t = source[l]
+            source[l] = source[r]
+            source[r] = t
+            l += 1
+            r -= 1
+        }
+        quicksort_source(&source, sortKey: sortKey, start: start, end: r + 1, ascending: ascending)
+        quicksort_source(&source, sortKey: sortKey, start: r + 1, end: end, ascending: ascending)
     }
     
     func tableView(_ tableView: NSTableView, draggingSession session: NSDraggingSession, willBeginAt screenPoint: NSPoint, forRowIndexes rowIndexes: IndexSet) {

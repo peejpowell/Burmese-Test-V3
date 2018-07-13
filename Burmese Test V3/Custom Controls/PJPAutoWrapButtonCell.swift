@@ -50,7 +50,7 @@ import Cocoa
     
     func getLastSpaceIndex(text: String)->String.Index
     {
-        let textLength : Int = text.length()
+        let textLength : Int = text.count
         var firstIndex = text.index(before: text.endIndex)
         let lastIndex = text.endIndex
         for _ in 1 ..< textLength

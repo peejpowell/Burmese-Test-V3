@@ -108,8 +108,8 @@ extension PreferencesViewController {
         if let view = prefsTabView.tabViewItem(at: 1).view {
             for view in view.subviews {
                 if  let btn = view as? NSButton,
-                    let checkId = btn.identifier?.rawValue,
-                    let checkBtnName = checkId.left(checkId.length() - 5){
+                    let checkId = btn.identifier?.rawValue {
+                    let checkBtnName = checkId.minus(5)
                     if preferencesController.hiddenColumns != nil {
                         if preferencesController.hiddenColumns!.contains(checkBtnName) {
                             btn.state = .off
@@ -125,24 +125,22 @@ extension PreferencesViewController {
         switch sender.state {
         case .on:
             if let checkId = sender.identifier?.rawValue {
-                if let btnName = checkId.left(checkId.length()-5) {
-                    if let hiddenColumns = preferencesController.hiddenColumns {
-                        let removedId = hiddenColumns.filter { (someString) -> Bool in
-                            someString != btnName
-                        }
-                        preferencesController.hiddenColumns = removedId
-                        showColumnForBtn(sender)
+                let btnName = checkId.minus(5)
+                if let hiddenColumns = preferencesController.hiddenColumns {
+                    let removedId = hiddenColumns.filter { (someString) -> Bool in
+                        someString != btnName
                     }
+                    preferencesController.hiddenColumns = removedId
+                    showColumnForBtn(sender)
                 }
             }
         case .off:
             if let checkId = sender.identifier?.rawValue {
-                if let btnName = checkId.left(checkId.length()-5) {
-                    if let hiddenColumns = preferencesController.hiddenColumns {
-                        if !hiddenColumns.contains(btnName) {
-                            preferencesController.hiddenColumns!.append(btnName)
-                            hideColumnForBtn(sender)
-                        }
+                let btnName = checkId.minus(5)
+                if let hiddenColumns = preferencesController.hiddenColumns {
+                    if !hiddenColumns.contains(btnName) {
+                        preferencesController.hiddenColumns!.append(btnName)
+                        hideColumnForBtn(sender)
                     }
                 }
             }
@@ -153,16 +151,16 @@ extension PreferencesViewController {
     
     func hideColumnForBtn(_ button: NSButton) {
         infoPrint("", #function, self.className)
-        if  let id = button.identifier?.rawValue,
-            let btnName = id.left(id.length()-5) {
+        if  let id = button.identifier?.rawValue {
+            let btnName = id.minus(5)
             NotificationCenter.default.post(name: .toggleColumn, object: nil, userInfo: ["HideColumn" : btnName])
         }
     }
     
     func showColumnForBtn(_ button: NSButton) {
         infoPrint("", #function, self.className)
-        if  let id = button.identifier?.rawValue,
-            let btnName = id.left(id.length()-5) {
+        if  let id = button.identifier?.rawValue {
+            let btnName = id.minus(5)
             NotificationCenter.default.post(name: .toggleColumn, object: nil, userInfo: ["ShowColumn" : btnName])
         }
     }

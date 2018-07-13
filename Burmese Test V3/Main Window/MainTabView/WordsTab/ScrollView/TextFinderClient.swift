@@ -911,7 +911,7 @@ extension TextFinderClient {
                             var diacriticInsensitiveWord = word.english
                             diacriticInsensitiveWord?.foldString()
                             if let newWord = diacriticInsensitiveWord {
-                                totalLength = totalLength + newWord.length()
+                                totalLength = totalLength + newWord.count
                             }
                         case false:
                             if let word = word.english as NSString? {
@@ -924,7 +924,7 @@ extension TextFinderClient {
                             var diacriticInsensitiveWord = word.roman
                             diacriticInsensitiveWord?.foldString()
                             if let newWord = diacriticInsensitiveWord {
-                                totalLength = totalLength + newWord.length()
+                                totalLength = totalLength + newWord.count
                             }
                         case false:
                             if let word = word.roman as NSString? {
@@ -937,7 +937,7 @@ extension TextFinderClient {
                             var diacriticInsensitiveWord = word.lesson
                             diacriticInsensitiveWord?.foldString()
                             if let newWord = diacriticInsensitiveWord {
-                                totalLength = totalLength + newWord.length()
+                                totalLength = totalLength + newWord.count
                             }
                         case false:
                             if let word = word.lesson as NSString? {

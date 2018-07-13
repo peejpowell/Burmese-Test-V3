@@ -16,13 +16,36 @@ extension Notification.Name {
     static var newDocument: Notification.Name {
         return .init(rawValue: "WordsTabViewController.newDocument")
     }
+    
+    static var loadRecentFiles: Notification.Name {
+        return .init(rawValue: "WordsTabViewController.loadRecentFiles")
+    }
 }
 
 extension WordsTabViewController {
     
+    @objc func openRecentFiles() {
+        let userDefaults = UserDefaults.standard
+        let openMostRecent = userDefaults.bool(forKey: "OpenMostRecentAtStart")
+        if openMostRecent {
+            // Open the most recent file in the recent files menu
+            if let mainFileManager = getMainWindowController().mainFileManager {
+                let fileToOpen = getMainWindowController().mainMenuController.recentFiles[0]
+                if mainFileManager.fileExists(atPath: fileToOpen.path) {
+                    mainFileManager.loadOrWarn(fileToOpen)
+                    if let menuController = getWordTypeMenuController() {
+                        menuController.buildWordTypeMenu()
+                    }
+                    NotificationCenter.default.post(name: .populateLessonsPopup, object: nil)
+                }
+            }
+        }
+    }
+    
     func createDataSourceObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.setDataSourceNeedsSaving(_:)), name: .dataSourceNeedsSaving, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.createNewDocument(_:)), name: .newDocument, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.openRecentFiles), name: .loadRecentFiles, object: nil)
     }
     
     @objc func createNewDocument(_ notification: Notification) {
@@ -67,9 +90,8 @@ extension WordsTabViewController {
         }
         else {
             if item.label.left(1) == "* " {
-                if let newLabel = item.label.right(item.label.length()-1) {
-                    item.label = newLabel
-                }
+                let newLabel = item.label.minus(-2)
+                item.label = newLabel
             }
         }
     }
@@ -152,6 +174,7 @@ class WordsTabViewController: NSTabViewController {
             tableView.registerTableForDrag()
             view.isHidden = true
         }
+        self.openRecentFiles()
     }
     
     

@@ -23,11 +23,11 @@
                 <scrollView autohidesScrollers="YES" horizontalLineScroll="26" horizontalPageScroll="10" verticalLineScroll="26" verticalPageScroll="10" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0iF-hh-ZQY" customClass="PJScrollView" customModule="Burmese_Test_V3" customModuleProvider="target">
                     <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
                     <clipView key="contentView" drawsBackground="NO" id="p17-7G-T5E">
-                        <rect key="frame" x="1" y="0.0" width="478" height="271"/>
+                        <rect key="frame" x="1" y="0.0" width="478" height="256"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView verticalHuggingPriority="750" tag="100" allowsExpansionToolTips="YES" selectionHighlightStyle="sourceList" alternatingRowBackgroundColors="YES" columnSelection="YES" autosaveName="BMTColumns" rowHeight="24" headerView="sB4-Tv-rhg" viewBased="YES" id="aAj-Up-qFP" customClass="PJTableView" customModule="Burmese_Test_V3" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="1783" height="248"/>
+                                <rect key="frame" x="0.0" y="0.0" width="1783" height="233"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
                                 <color key="backgroundColor" name="_sourceListBackgroundColor" catalog="System" colorSpace="catalog"/>
@@ -555,14 +555,15 @@
                                     </tableColumn>
                                 </tableColumns>
                                 <connections>
+                                    <action trigger="doubleAction" selector="tableViewDoubleClick:" target="-2" id="Dpn-be-Cae"/>
                                     <outlet property="menu" destination="oHQ-Bv-DKn" id="s3t-ei-hfR"/>
                                 </connections>
                             </tableView>
                         </subviews>
                         <nil key="backgroundColor"/>
                     </clipView>
-                    <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="0.73256704980842913" horizontal="YES" id="KdF-4E-WdZ">
-                        <rect key="frame" x="1" y="255" width="478" height="16"/>
+                    <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="KdF-4E-WdZ">
+                        <rect key="frame" x="1" y="256" width="478" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
                     <scroller key="verticalScroller" hidden="YES" verticalHuggingPriority="750" horizontal="NO" id="ySe-kQ-PsY">

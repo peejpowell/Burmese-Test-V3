@@ -82,6 +82,24 @@ extension TISInputSource {
     }
 }
 
+extension String {
+    
+    func minus(_ upTo: Int)-> String {
+        switch upTo >= 0 {
+        case true:
+            let lastIndex = self.index(self.endIndex, offsetBy: -upTo)
+            let stringToReturn = self[..<lastIndex]
+            return String(stringToReturn)
+        case false:
+            let newUpTo = -upTo
+            let firstIndex = self.index(self.startIndex, offsetBy: newUpTo)
+            let stringToReturn = self[firstIndex..<self.endIndex]
+            return String(stringToReturn)
+        }
+    }
+    
+}
+
 extension String
 {
     // MARK: Fixes for String functions/variables
