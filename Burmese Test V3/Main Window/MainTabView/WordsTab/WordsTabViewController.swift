@@ -83,17 +83,20 @@ extension WordsTabViewController {
     @objc func setDataSourceNeedsSaving(_ notification: Notification) {
         infoPrint("", #function, self.className)
         let index = getCurrentIndex()
+        if dataSources[index].needsSaving {
+            return
+        }
         self.dataSources[index].needsSaving = true
         let item = self.tabViewItems[index]
         if item.label.left(1) != "*" {
             item.label = "* \(self.tabViewItems[index].label)"
         }
-        else {
-            if item.label.left(1) == "* " {
+        /*else {
+            if item.label.left(1) == "*" {
                 let newLabel = item.label.minus(-2)
                 item.label = newLabel
             }
-        }
+        }*/
     }
 }
 

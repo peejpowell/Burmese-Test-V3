@@ -84,11 +84,11 @@ extension AppDelegate {
         _ = getMainMenuController().performCloseWordsFile(sender)
     }
 
-    @IBAction func performFindPanelAction(_ sender: Any?){
+    /*@IBAction func performFindPanelAction(_ sender: Any?){
         infoPrint("", #function, self.className)
        
         let index = getCurrentIndex()
         _ = getWordsTabViewDelegate().tabViewControllersList[index].textFinderClient.performTextFinderAction(sender)
     }
-    
+    */
 }

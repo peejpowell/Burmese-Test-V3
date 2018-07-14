@@ -58,6 +58,7 @@
 		38AEC07C20E23D6600E6529F /* BMTTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07B20E23D6600E6529F /* BMTTabViewController.xib */; };
 		38C71BC820E7D2FD00AC4B6E /* InfoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */; };
 		38C71BC920E7D2FD00AC4B6E /* InfoPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38C71BC720E7D2FD00AC4B6E /* InfoPopupViewController.xib */; };
+		38CBB93320FA415800C7CAA6 /* TextFinderClientProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBB93220FA415800C7CAA6 /* TextFinderClientProtocols.swift */; };
 		38EFAFA520E9292A00C71AE9 /* PJWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFA420E9292A00C71AE9 /* PJWindow.swift */; };
 		38EFAFA720E9354700C71AE9 /* ClipboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFA620E9354700C71AE9 /* ClipboardController.swift */; };
 		38EFAFA920E93A2600C71AE9 /* FindBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38EFAFA820E93A2600C71AE9 /* FindBarViewController.xib */; };
@@ -142,6 +143,7 @@
 		38B7D5C920E87E9000B13ED1 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPopupViewController.swift; sourceTree = "<group>"; };
 		38C71BC720E7D2FD00AC4B6E /* InfoPopupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoPopupViewController.xib; sourceTree = "<group>"; };
+		38CBB93220FA415800C7CAA6 /* TextFinderClientProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinderClientProtocols.swift; sourceTree = "<group>"; };
 		38EFAFA420E9292A00C71AE9 /* PJWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJWindow.swift; sourceTree = "<group>"; };
 		38EFAFA620E9354700C71AE9 /* ClipboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardController.swift; sourceTree = "<group>"; };
 		38EFAFA820E93A2600C71AE9 /* FindBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindBarViewController.xib; sourceTree = "<group>"; };
@@ -397,6 +399,7 @@
 				383797DC20EE4FF400125253 /* TableTextFinderClient.swift */,
 				380C3C2520EA76950077C2BE /* TextFinder.swift */,
 				38EFAFAA20E9CCE900C71AE9 /* TextFinderClient.swift */,
+				38CBB93220FA415800C7CAA6 /* TextFinderClientProtocols.swift */,
 				381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */,
 				38846B7E20E2905600C0DB3C /* Words Model */,
 				384AB24420E4754400D7E5D7 /* Table Model */,
@@ -552,6 +555,7 @@
 				38160EAD20E3599E00DA13F1 /* SearchDelegate.swift in Sources */,
 				386E33FF20F1AE2300763618 /* PrefsWindowController.swift in Sources */,
 				38AEC07620E2354800E6529F /* WordsTabViewController.swift in Sources */,
+				38CBB93320FA415800C7CAA6 /* TextFinderClientProtocols.swift in Sources */,
 				38EFAFAB20E9CCE900C71AE9 /* TextFinderClient.swift in Sources */,
 				384AB23C20E3B26800D7E5D7 /* PJTableView.swift in Sources */,
 				3821C85120E25FFE0045E5A8 /* PJPAutoWrapButtonCell.swift in Sources */,

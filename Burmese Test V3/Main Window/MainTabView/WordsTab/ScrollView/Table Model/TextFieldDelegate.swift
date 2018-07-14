@@ -90,7 +90,7 @@ class TextFieldDelegate: NSObject, NSTextFieldDelegate {
                     if let oldValue = oldValue {
                         if textField.stringValue != oldValue {
                             let bmtController = wordsTabController.tabViewControllersList[index]
-                            bmtController.indexAll(nil)
+                            //bmtController.indexAll(nil)
                             
                             //bmtController.indexLessonForRow(row: row)
                             //bmtController.indexLessonForRow(row: row + 1)
@@ -107,6 +107,7 @@ class TextFieldDelegate: NSObject, NSTextFieldDelegate {
                 default:
                     break
                 }
+                //tableView.reloadData()
                 tableView.reloadData(forRowIndexes: IndexSet(integer:tableView.row(for: textField)), columnIndexes: IndexSet(integersIn: NSRange(location:0,length:tableView.numberOfColumns).toRange() ?? 0..<0))
                 //NotificationCenter.default.post(name: .tableNeedsReloading, object: nil)
             }

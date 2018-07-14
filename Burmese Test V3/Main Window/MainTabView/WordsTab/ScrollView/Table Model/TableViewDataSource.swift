@@ -182,7 +182,7 @@ extension TableViewDataSource: NSTableViewDelegate {
     
     @objc @IBAction func SearchTest(_ sender: Any) {
         let myTextFinder = TextFinderClient()
-        myTextFinder.tabIndex = 0
+        //myTextFinder.tabIndex = 0
         print("Indexed: \(myTextFinder.calculateIndex())")
         print("Total Length: \(myTextFinder.stringLength())")
         var test = NSRange()

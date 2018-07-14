@@ -53,7 +53,7 @@ class BMTTabViewController: NSViewController {
     
     // MARK: Vars
     
-    var textFinderController: NSTextFinder = NSTextFinder()
+    //var textFinderController: NSTextFinder = NSTextFinder()
     
     // MARK: View Controller Functions
     
@@ -67,20 +67,24 @@ class BMTTabViewController: NSViewController {
         if let tableView = view.viewWithTag(100) as? NSTableView {
             tableView.wantsLayer = true
             self.tableView = tableView
-            self.textFinderClient.tableView = tableView
+            self.textFinderClient.tableView = self.tableView
         }
         // Set up the textfinder
         
-        self.textFinderController.client = self.textFinderClient
-        self.textFinderController.findBarContainer = self.scrollView
-        self.textFinderController.isIncrementalSearchingEnabled = true
+        self.textFinderClient.findBarContainer = self.scrollView
+        self.textFinderClient.client = textFinderClient
+        //self.textFinderController.client = self.textFinderClient
+        //self.textFinderController.findBarContainer = self.scrollView
+        //self.textFinderController.isIncrementalSearchingEnabled = true
     }
     
     override func viewDidAppear() {
         super.viewDidAppear()
         infoPrint("", #function, self.className)
         self.createTableViewObservers()
-        
+        /*self.textFinderClient = TextFinderClient()
+        self.textFinderClient.client = textFinderClient
+        self.textFinderClient.tableView = self.tableView*/
         func getArrayPref(for key: Preferences)->[String] {
             let userDefaults = UserDefaults.standard
             if let array = userDefaults.array(forKey: key.rawValue) as? [String] {
@@ -108,10 +112,18 @@ class BMTTabViewController: NSViewController {
     override func viewDidDisappear() {
         super.viewDidDisappear()
         infoPrint("", #function, self.className)
+        //self.textFinderClient = nil
         NotificationCenter.default.removeObserver(self)
     }
     
     deinit {
+        // Make sure all searchbars are closed
+        if let scrollView = self.tableView.superview?.superview as? PJScrollView {
+            infoPrint("Closing visible searchBar.", #function, self.className)
+            if scrollView.isFindBarVisible {
+                self.textFinderClient.performAction(1)
+            }
+        }
         infoPrint("removed BMT",#function, self.className)
     }
 }
