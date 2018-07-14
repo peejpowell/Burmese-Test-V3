@@ -12,6 +12,9 @@ extension Notification.Name {
     static var openPrefsWindow: Notification.Name {
         return .init(rawValue: "MainWindowController.openPrefsWindow")
     }
+    static var showSearchBar: Notification.Name {
+        return .init(rawValue: "MainWindowController.showSearchBar")
+    }
 }
 
 class MainWindowController: NSWindowController {
@@ -44,6 +47,22 @@ class MainWindowController: NSWindowController {
     
     func createObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.openPrefsWindow), name: .openPrefsWindow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.showSearchBar(_:)), name: .showSearchBar, object: nil)
+    }
+    
+    @objc func showSearchBar(_ notification : Notification) {
+        infoPrint("", #function, self.className)
+        // Interrogate the searchfield to discover what the value next to the search is:
+        // First get the findbarcontainer
+        return
+        if  let userInfo = notification.userInfo,
+            let numberOfRanges = userInfo["numberOfRanges"] as? Int {
+            // Set the total of tick marks to the number of ranges passed by the notification
+            if numberOfRanges > 0 {
+                self.toolbarController.searchSlider.numberOfTickMarks = numberOfRanges
+                self.toolbarController.searchSlider.isHidden = false
+            }
+        }
     }
     
     override init(window: NSWindow?) {

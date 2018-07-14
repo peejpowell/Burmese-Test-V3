@@ -40,12 +40,12 @@ extension PJScrollView {
                 textFinderController.client = textFinderClient
                 textFinderController.findBarContainer = wordsTabController.tabViewControllersList[index].scrollView
                 textFinderController.isIncrementalSearchingEnabled = false
+                textFinderController.incrementalSearchingShouldDimContentView = true
                 textFinderClient.incremental = textFinderController.isIncrementalSearchingEnabled
                 textFinderClient.allowsMultipleSelection = true
                 //textFinderClient.tabIndex = index
                 //textFinderController.performAction(.showFindInterface)
                 // Interrogate the scrollview to find the findbar
-                
                 textFinderClient.performTextFinderAction(sender)
             }
         }

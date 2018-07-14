@@ -12,6 +12,7 @@ class ToolbarController: NSObject, NSToolbarDelegate {
     
     @IBOutlet weak var mainToolbar : NSToolbar!
     @IBOutlet weak var lessonsPopup : NSPopUpButton!
+    @IBOutlet weak var searchSlider : NSSlider!
     
     @IBAction func selectLessonInPopup(_ sender: NSPopUpButton) {
         infoPrint("", #function, self.className)

@@ -8,9 +8,16 @@
 
 import Cocoa
 
-class TextFinderClient: NSObject, NSTextFinderClient {
+protocol WordsTextFinder : NSTextFinderClient {
+    
+}
+
+class TextFinderClient: NSObject, WordsTextFinder {
 
     // Gives nice names for the columns we want to enable for searching
+    
+    lazy var tableView : NSTableView = NSTableView()
+    lazy var textFinderController = NSTextFinder()
     
     enum SearchableColumn : Int {
         typealias RawValue = Int
@@ -18,6 +25,7 @@ class TextFinderClient: NSObject, NSTextFinderClient {
         case english = 1
         case roman   = 2
         case lesson  = 3
+        case category = 4
     }
     
     // Returns the SearchField from the built in text finder view
@@ -26,10 +34,16 @@ class TextFinderClient: NSObject, NSTextFinderClient {
     
     var searchField : NSSearchField {
         let textFinderController = getWordsTabViewDelegate().tabViewControllersList[self.tabIndex].textFinderController
+        if let scrollView = tableView.superview?.superview as? PJScrollView {
+            print(scrollView)
+        }
         if let findBarContainer = textFinderController.findBarContainer {
             if let findBarView = findBarContainer.findBarView {
                 let topOfStack = findBarView.subviews[0]
                 if let findSearchField = topOfStack.subviews[0] as? NSSearchField {
+                    if let cell = findSearchField.cell as? NSSearchFieldCell {
+                        print(cell)
+                    }
                     return findSearchField
                 }
             }
@@ -37,14 +51,12 @@ class TextFinderClient: NSObject, NSTextFinderClient {
         return NSSearchField()
     }
     
-    // Returns the column names for the active tableview
+    // Returns the column names for the associated tableview
     
     var tableColumnNames : [String] {
         var columnNames = [String]()
-        if let tableView = getWordsTabViewDelegate().tabViewControllersList[self.tabIndex].tableView {
-            for column in tableView.tableColumns {
+        for column in tableView.tableColumns {
                 columnNames.append(column.identifier.rawValue)
-            }
         }
         return columnNames
     }
@@ -66,25 +78,24 @@ class TextFinderClient: NSObject, NSTextFinderClient {
     let wordsKeys = ["KBurmeseCol","KEnglishCol","KRomanCol","KLessonCol","KCategoryCol","KWordCategoryCol"]
     
     var visibleCharacterRanges: [NSValue] {
-        // Determine the visible rows in the tableview to works out what ranges to use
+        // Determine the visible rows in the tableview to work out what ranges to use
         var visibleCharRange : [NSValue] = []
-        if let tableView = getWordsTabViewDelegate().tabViewControllersList[self.tabIndex].tableView {
-            let visibleRect = tableView.visibleRect
-            let rangeOfVisibleRows = tableView.rows(in: visibleRect)
-            for item in self.finderIndex {
-                let row = item[1]
-                let col = item[2]
-                if row >= rangeOfVisibleRows.location && row < rangeOfVisibleRows.length {
-                    let wordLength = getWordAtRowCol(row, col: col).length
-                    visibleCharRange.append(NSValue(range:NSRange(location: item[0], length: wordLength)))
-                }
+        let rangeOfVisibleRows = tableView.rows(in: tableView.visibleRect)
+        for item in self.finderIndex {
+            let row = item[1]
+            let col = item[2]
+            if row >= rangeOfVisibleRows.location && row < rangeOfVisibleRows.length {
+                let wordLength = getWordAtRowCol(row, col: col).length
+                visibleCharRange.append(NSValue(range:NSRange(location: item[0], length: wordLength)))
             }
         }
         print("Visible range: \(visibleCharRange)")
+        NotificationCenter.default.post(name: .showSearchBar, object:nil, userInfo: ["numberOfRanges":visibleCharRange.count])
         return visibleCharRange
     }
     
     var selectedRanges: [NSValue] = []
+    
     var allowsMultipleSelection = false
     
     func validateAction(_ op: NSTextFinder.Action) -> Bool
@@ -102,11 +113,11 @@ class TextFinderClient: NSObject, NSTextFinderClient {
         let wordsTabController = getWordsTabViewDelegate()
         let textFinderController = wordsTabController.tabViewControllersList[index].textFinderController
         
-        if let scrollView = wordsTabController.tabViewControllersList[index].tableView.superview?.superview as? PJScrollView {
+        if let scrollView = tableView.superview?.superview as? PJScrollView {
             //self.foundWord = false
             //self.foundWordLocation["row"] = -1
             //self.foundWordLocation["col"] = -1
-            
+            infoPrint("Find tag: \(tag)", #function, self.className)
             switch tag {
             case  1:
                 // Show find interface
@@ -118,49 +129,41 @@ class TextFinderClient: NSObject, NSTextFinderClient {
                 _ = self.calculateIndex()
                 textFinderController.performAction(NSTextFinder.Action(rawValue:tag)!)
                 
-                if let findBarContainer = textFinderController.findBarContainer {
-                    if let findBarView = findBarContainer.findBarView {
-                        let topOfStack = findBarView.subviews[0]
-                        let findSearchField = topOfStack.subviews[0]
-                        if let searchField = findSearchField as? NSSearchField {
-                           if let findMenu = searchField.searchMenuTemplate as? NSMenu {
-                                let newMenuTemplate = findMenu
-                                self.searchMenuTemplate = newMenuTemplate
-                                if let lastItem = newMenuTemplate.items.last {
-                                    if lastItem.title != "Ignore Diacritics" {
-                                        let filterItem = NSMenuItem(title: "Filter", action: #selector(self.filterItemsMenuItem(_:)), keyEquivalent: "")
-                                        filterItem.target = self
-                                        let ignoreDiacriticItem = NSMenuItem(title: "Ignore Diacritics", action: #selector(self.ignoreDiacritic(_:)), keyEquivalent: "")
-                                        ignoreDiacriticItem.target = self
-                                        switch self.diacriticInsensitive {
-                                        case true:
-                                            ignoreDiacriticItem.state = .on
-                                        case false:
-                                            ignoreDiacriticItem.state = .off
-                                        }
-                                        newMenuTemplate.addItem(NSMenuItem.separator())
-                                        newMenuTemplate.addItem(filterItem)
-                                        newMenuTemplate.addItem(ignoreDiacriticItem)
-                                    }
-                                    else
-                                    {
-                                        switch self.diacriticInsensitive {
-                                        case true:
-                                            lastItem.state = .on
-                                        case false:
-                                            lastItem.state = .off
-                                        }
-                                    }
-                                    searchField.searchMenuTemplate = newMenuTemplate
-                                }
+                if let findMenu = searchField.searchMenuTemplate {
+                    let newMenuTemplate = findMenu
+                    self.searchMenuTemplate = newMenuTemplate
+                    if let lastItem = newMenuTemplate.items.last {
+                        if lastItem.title != "Ignore Diacritics" {
+                            let filterItem = NSMenuItem(title: "Filter", action: #selector(self.filterItemsMenuItem(_:)), keyEquivalent: "")
+                            filterItem.target = self
+                            let ignoreDiacriticItem = NSMenuItem(title: "Ignore Diacritics", action: #selector(self.ignoreDiacritic(_:)), keyEquivalent: "")
+                            ignoreDiacriticItem.target = self
+                            switch self.diacriticInsensitive {
+                            case true:
+                                ignoreDiacriticItem.state = .on
+                            case false:
+                                ignoreDiacriticItem.state = .off
+                            }
+                            newMenuTemplate.addItem(NSMenuItem.separator())
+                            newMenuTemplate.addItem(filterItem)
+                            newMenuTemplate.addItem(ignoreDiacriticItem)
+                        }
+                        else
+                        {
+                            switch self.diacriticInsensitive {
+                            case true:
+                                lastItem.state = .on
+                            case false:
+                                lastItem.state = .off
                             }
                         }
+                        searchField.searchMenuTemplate = newMenuTemplate
                     }
                 }
             case  2:
                 Swift.print(tag) // Find Next
                 _ = self.calculateIndex()
-            textFinderController.performAction(NSTextFinder.Action(rawValue:tag)!)
+                textFinderController.performAction(NSTextFinder.Action(rawValue:tag)!)
                 
             case 12:
                 Swift.print(tag) //Find and Replace Text
@@ -188,11 +191,11 @@ class TextFinderClient: NSObject, NSTextFinderClient {
     
 extension TextFinderClient {
     
-    func getTableColumnForCol(_ colIndex: Int, table: NSTableView) -> Int
+    func getTableColumnForCol(_ colIndex: Int) -> Int
     {
         var index = 0
         let keyWord = self.wordsKeys[colIndex]
-        for column in table.tableColumns {
+        for column in tableView.tableColumns {
             if column.identifier.rawValue == keyWord {
                 return index
             }
@@ -220,6 +223,8 @@ extension TextFinderClient {
             dataSource.words[row].roman = word
         case 3: // lesson
             dataSource.words[row].lesson = word
+        case 4: // category
+            dataSource.words[row].category = word
         default:
             break
         }
@@ -230,6 +235,22 @@ extension TextFinderClient {
         let wordsTabController = getWordsTabViewDelegate()
         let dataSource = wordsTabController.dataSources[index]
         return dataSource.words[row]
+    }
+    
+    func getWordOrDiacriticWord(_ word: String?, ignoreDiacritic: Bool)->NSString {
+        switch ignoreDiacritic {
+        case true:
+            var diacriticInsensitiveWord = word
+            diacriticInsensitiveWord?.foldString()
+            if let newWord = diacriticInsensitiveWord as NSString? {
+                return newWord
+            }
+        case false:
+            if let word = word as NSString? {
+                return word
+            }
+        }
+        return ""
     }
     
     func getWordAtRowCol(_ row: Int, col: Int)->NSString
@@ -246,58 +267,16 @@ extension TextFinderClient {
                 return word
             }
         case 1: // english
-            let word = dataSource.words[row].english
-            switch ignoreDiacritic {
-            case true:
-                var diacriticInsensitiveWord = word
-                diacriticInsensitiveWord?.foldString()
-                if let newWord = diacriticInsensitiveWord as NSString? {
-                    return newWord
-                }
-            case false:
-                if let word = word as NSString? {
-                    return word
-                }
-            }
+            return getWordOrDiacriticWord(dataSource.words[row].english, ignoreDiacritic: ignoreDiacritic)
         case 2: // roman
-            let word = dataSource.words[row].roman
-            switch ignoreDiacritic {
-            case true:
-                var diacriticInsensitiveWord = word
-                diacriticInsensitiveWord?.foldString()
-                if let newWord = diacriticInsensitiveWord as NSString? {
-                    return newWord
-                }
-            case false:
-                if let word = word as NSString? {
-                    return word
-                }
-            }
+            return getWordOrDiacriticWord(dataSource.words[row].roman, ignoreDiacritic: ignoreDiacritic)
         case 3: // lesson
-            let word = dataSource.words[row].lesson
-            switch ignoreDiacritic {
-            case true:
-                var diacriticInsensitiveWord = word
-                diacriticInsensitiveWord?.foldString()
-                if let newWord = diacriticInsensitiveWord as NSString? {
-                    return newWord
-                }
-            case false:
-                if let word = word as NSString? {
-                    return word
-                }
-            }
+            return getWordOrDiacriticWord(dataSource.words[row].lesson, ignoreDiacritic: ignoreDiacritic)
+        case 4: // category
+            return getWordOrDiacriticWord(dataSource.words[row].category, ignoreDiacritic: ignoreDiacritic)
         default:
             break
         }
-        /*let keyWord = dataSource.words[row].entity.attributeKeys[col]
-            if let string = dataSource.pjWords[row].value(forKey: keyWord) as? String
-            {
-                //appDelegate.viewController.PJTableView.
-                
-                return string as NSString
-            }
-        }*/
         return ""
     }
     
@@ -308,8 +287,7 @@ extension TextFinderClient {
         
         var currentIdx : Int = 0
         
-        repeat
-        {
+        repeat {
             pos = pos - 1
             currentIdx = finderIndex[pos][0]
             
@@ -369,6 +347,10 @@ extension TextFinderClient {
                 case "KLessonCol":
                     if let word = word.lesson {
                         count = checkDiacriticAndIndex(word, currentIndex: count, row: row, col: SearchableColumn.lesson.rawValue, ignoreDiacritic: ignoreDiacritic)
+                    }
+                case "KCategoryCol":
+                    if let word = word.category {
+                        count = checkDiacriticAndIndex(word, currentIndex: count, row: row, col: SearchableColumn.category.rawValue, ignoreDiacritic: ignoreDiacritic)
                     }
                 default:
                     break
@@ -472,49 +454,55 @@ extension TextFinderClient {
         dataSource.unfilteredWords = dataSource.words
     }
     
-    func updateChangedRows(in dataSource: TableViewDataSource) {
-        if let unfilteredWords = dataSource.unfilteredWords {
-            for word in dataSource.words {
-                if word.filtertype == .change {
+    func updateChangedRows() {
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            if let unfilteredWords = dataSource.unfilteredWords {
+                for word in dataSource.words {
+                    if word.filtertype == .change {
+                        if let filterIndex = word.filterindex {
+                            print("Changing row \(filterIndex) from \(unfilteredWords[filterIndex]) to:  \(word)")
+                            word.filtertype = nil
+                            dataSource.unfilteredWords?[filterIndex] = word
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func deleteMarkedRows() {
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            for rowIndex in dataSource.filterRowsToDelete.reversed() {
+                dataSource.unfilteredWords?.remove(at: rowIndex)
+            }
+            // Update filterindexes
+            self.updateFilterIndexes()
+            
+            dataSource.filterRowsToDelete.removeAll()
+        }
+    }
+    
+    func insertNewRows() {
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            for word in dataSource.words.reversed() {
+                if word.filtertype == .add {
+                    if let wordCopy = word.copy() as? Words {
+                        wordCopy.filtertype = nil
+                        if let insertRow = word.filterindex {
+                            dataSource.unfilteredWords?.insert(wordCopy, at: insertRow + 1)
+                        }
+                    }
+                }
+            }
+        }
+    }
+    
+    func updateFilterIndexes() {
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            for indexToDelete in dataSource.filterRowsToDelete {
+                for word in dataSource.words {
                     if let filterIndex = word.filterindex {
-                        print("Changing row \(filterIndex) from \(unfilteredWords[filterIndex]) to:  \(word)")
-                        word.filtertype = nil
-                        dataSource.unfilteredWords?[filterIndex] = word
-                    }
-                }
-            }
-        }
-    }
-    
-    func deleteMarkedRows(in dataSource: TableViewDataSource) {
-        for rowIndex in dataSource.filterRowsToDelete.reversed() {
-            dataSource.unfilteredWords?.remove(at: rowIndex)
-        }
-        // Update filterindexes
-        self.updateFilterIndexes(in: dataSource)
-        
-        dataSource.filterRowsToDelete.removeAll()
-    }
-    
-    func insertNewRows(in dataSource : TableViewDataSource) {
-        for word in dataSource.words.reversed() {
-            if word.filtertype == .add {
-                if let wordCopy = word.copy() as? Words {
-                    wordCopy.filtertype = nil
-                    if let insertRow = word.filterindex {
-                        dataSource.unfilteredWords?.insert(wordCopy, at: insertRow + 1)
-                    }
-                }
-            }
-        }
-    }
-    
-    func updateFilterIndexes(in dataSource: TableViewDataSource) {
-        for indexToDelete in dataSource.filterRowsToDelete {
-            for word in dataSource.words {
-                if let filterIndex = word.filterindex {
-                    if word.filtertype == .add {
-                        if filterIndex >= indexToDelete {
+                        if word.filtertype == .add && filterIndex >= indexToDelete {
                             word.filterindex = filterIndex - 1
                         }
                     }
@@ -524,15 +512,16 @@ extension TextFinderClient {
     }
     
     func resetToUnfiltered() {
-        let dataSource = getWordsTabViewDelegate().dataSources[self.tabIndex]
-        // Update any changed rows
-        self.updateChangedRows(in: dataSource)
-        // Remove any marked rows
-        self.deleteMarkedRows(in: dataSource)
-        // Add any new rows
-        self.insertNewRows(in: dataSource)
-        if let unfilteredWords = dataSource.unfilteredWords {
-            dataSource.words = unfilteredWords
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            // Update any changed rows
+            self.updateChangedRows()
+            // Remove any marked rows
+            self.deleteMarkedRows()
+            // Add any new rows
+            self.insertNewRows()
+            if let unfilteredWords = dataSource.unfilteredWords {
+                dataSource.words = unfilteredWords
+            }
         }
         NotificationCenter.default.post(name: .tableNeedsReloading, object: nil)
     }
@@ -543,8 +532,9 @@ extension TextFinderClient {
         case .off:
             // Filter the items
             let searchString = self.searchField.stringValue
-            let dataSource = getWordsTabViewDelegate().dataSources[self.tabIndex]
-            dataSource.unfilteredWords?.removeAll()
+            if let dataSource = tableView.dataSource as? TableViewDataSource {
+                dataSource.unfilteredWords?.removeAll()
+            }
             copyUnfilteredItems()
             findMatchingItems(textToFind: searchString)
             self.resetSearch()
@@ -656,6 +646,17 @@ extension TextFinderClient {
                         continue
                     }
                 }
+            case 4:
+                if let categoryWord = word.category{
+                    if matchTextIn(categoryWord, searchFor: textToFind,
+                                   ignoreDiacritic: ignoreDiacritic) {
+                        word.filterindex = row
+                        if let wordCopy = word.copy() as? Words {
+                            filteredList.append(wordCopy)
+                        }
+                        continue
+                    }
+                }
             default:
                 break
             }
@@ -663,12 +664,6 @@ extension TextFinderClient {
         copyFilteredItems(filteredList)
         NotificationCenter.default.post(name: .tableNeedsReloading, object:nil)
     }
-    
-}
-
-// MARK: TextFinderClient Protocol
-
-extension TextFinderClient {
     
     func performTextFinderAction(_ sender: Any?) {
         infoPrint("", #function, self.className)
@@ -681,6 +676,11 @@ extension TextFinderClient {
     @IBAction func performFindPanelAction(_ sender: NSMenuItem) {
         self.performAction(sender.tag)
     }
+}
+
+// MARK: TextFinderClient Protocol Adherence
+
+extension TextFinderClient {
     
     func rects(forCharacterRange range: NSRange) -> [NSValue]? {
         //Swift.print("Range: \(range)")
@@ -691,31 +691,25 @@ extension TextFinderClient {
     
     func contentView(at index: Int, effectiveCharacterRange outRange: NSRangePointer) -> NSView {
         //infoPrint("", #function, self.className)
+        let arrayForLocation = self.arrayForLocation(index)
+        let row = arrayForLocation[1]
+        let col = arrayForLocation[2]
+        let tableCol = getTableColumnForCol(col)
+        let str = getWordAtRowCol(row, col: col)
         
-        let dataSourceIndex = self.tabIndex
-        let wordsTabController = getWordsTabViewDelegate()
-        if let tableView = wordsTabController.tabViewControllersList[dataSourceIndex].tableView {
-            
-            let arrayForLocation = self.arrayForLocation(index)
-            let row = arrayForLocation[1]
-            let col = arrayForLocation[2]
-            let tableCol = getTableColumnForCol(col, table: tableView)
-            let str = getWordAtRowCol(row, col: col)
-            
-            tableView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
-            
-            outRange.pointee = NSRange(location: arrayForLocation[0], length: str.length)
-            
-            if let viewToReturn = tableView.view(atColumn: tableCol, row: row, makeIfNecessary: true) {
-                let subViews = viewToReturn.subviews
-                for subView in subViews {
-                    if let textField = subView as? NSTextField {
-                        self.foundFrame = textField.frame
-                        return textField
-                    }
+        tableView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
+        
+        outRange.pointee = NSRange(location: arrayForLocation[0], length: str.length)
+        
+        if let viewToReturn = tableView.view(atColumn: tableCol, row: row, makeIfNecessary: true) {
+            let subViews = viewToReturn.subviews
+            for subView in subViews {
+                if let textField = subView as? NSTextField {
+                    self.foundFrame = textField.frame
+                    return textField
                 }
-                //return viewToReturn
             }
+            //return viewToReturn
         }
         return NSView()
     }
@@ -752,8 +746,6 @@ extension TextFinderClient {
         }
         outRange.pointee = myRange
         outFlag.pointee = true
-        //Swift.print("string: \(str)")
-        
         return str as String
     }
     
@@ -856,23 +848,25 @@ extension TextFinderClient {
     
     func didReplaceCharacters() {
         _ = self.calculateIndex()
-        
-        NotificationCenter.default.post(name: .tableNeedsReloading, object: nil)
-        //appDelegate.viewController.lessonsTableView.reloadData()
+        tableView.reloadData()
     }
     
     func scrollRangeToVisible(_ range: NSRange)
     {
-        //Swift.print("firstSelectedRange: \(range)")
         // Find where the range is in the list of strings
 
         let arrayForLocation = self.arrayForLocation(range.location)
         let row = arrayForLocation[1]
-        let arrayForOldLocation = self.arrayForLocation(self.firstSelectedRange.location)
-        let index = getCurrentIndex()
-        if let tableView = getWordsTabViewDelegate().tabViewControllersList[index].tableView {
-            tableView.scrollRowToVisible(row)// + extraScrollAmount)
+        let visibleRowRange = tableView.rows(in: tableView.visibleRect)
+        let topRow = visibleRowRange.location
+        let numberOfVisibleRows = visibleRowRange.length - 5
+        if row > topRow {
+            tableView.scrollRowToVisible(row + numberOfVisibleRows)
         }
+        else {
+            tableView.scrollRowToVisible(row)
+        }
+        tableView.selectRowIndexes(IndexSet(integer: row), byExtendingSelection: false)
         self.firstSelectedRange = range
         self.selectedRanges.append(NSValue(range: range))
     }
@@ -887,73 +881,40 @@ extension TextFinderClient {
         let index = self.tabIndex
         let wordsTabController = getWordsTabViewDelegate()
         let dataSource = wordsTabController.dataSources[index]
-        if let tableView = wordsTabController.tabViewControllersList[index].tableView {
-            var totalLength : Int = 0   // The total Length of all strings in the search concatenated together
-            let ignoreDiacritic = isIgnoreDiacriticChecked()
-            infoPrint("stringlength started...", #function, self.className)
-            
-            for word in dataSource.words {
-                for column in tableView.tableColumns {
-                    let key = column.identifier.rawValue
-                    if key.contains("index") {
-                        continue
+        
+        var totalLength : Int = 0   // The total Length of all strings in the search concatenated together
+        let ignoreDiacritic = isIgnoreDiacriticChecked()
+        infoPrint("stringlength started...", #function, self.className)
+        
+        for word in dataSource.words {
+            for column in tableView.tableColumns {
+                let key = column.identifier.rawValue
+                if key.contains("index") {
+                    continue
+                }
+                
+                //Find the appropriate string and use it
+                switch key {
+                case "KBurmeseCol":
+                    if let word = word.burmese as NSString? {
+                        totalLength = totalLength + word.length
                     }
-                    
-                    //Find the appropriate string and use it
-                    switch key {
-                    case "KBurmeseCol":
-                        if let word = word.burmese as NSString? {
-                            totalLength = totalLength + word.length
-                        }
-                    case "KEnglishCol":
-                        switch ignoreDiacritic {
-                        case true:
-                            var diacriticInsensitiveWord = word.english
-                            diacriticInsensitiveWord?.foldString()
-                            if let newWord = diacriticInsensitiveWord {
-                                totalLength = totalLength + newWord.count
-                            }
-                        case false:
-                            if let word = word.english as NSString? {
-                                totalLength = totalLength + word.length
-                            }
-                        }
-                    case "KRomanCol":
-                        switch ignoreDiacritic {
-                        case true:
-                            var diacriticInsensitiveWord = word.roman
-                            diacriticInsensitiveWord?.foldString()
-                            if let newWord = diacriticInsensitiveWord {
-                                totalLength = totalLength + newWord.count
-                            }
-                        case false:
-                            if let word = word.roman as NSString? {
-                                totalLength = totalLength + word.length
-                            }
-                        }
-                    case "KLessonCol":
-                        switch ignoreDiacritic {
-                        case true:
-                            var diacriticInsensitiveWord = word.lesson
-                            diacriticInsensitiveWord?.foldString()
-                            if let newWord = diacriticInsensitiveWord {
-                                totalLength = totalLength + newWord.count
-                            }
-                        case false:
-                            if let word = word.lesson as NSString? {
-                                totalLength = totalLength + word.length
-                            }
-                        }
-                    default:
-                        break
-                    }
+                case "KEnglishCol":
+                    totalLength = totalLength + getWordOrDiacriticWord(word.english, ignoreDiacritic: ignoreDiacritic).length
+                case "KRomanCol":
+                    totalLength = totalLength + getWordOrDiacriticWord(word.roman, ignoreDiacritic: ignoreDiacritic).length
+                case "KLessonCol":
+                    totalLength = totalLength + getWordOrDiacriticWord(word.lesson, ignoreDiacritic: ignoreDiacritic).length
+                case "KCategoryCol":
+                    totalLength = totalLength + getWordOrDiacriticWord(word.category, ignoreDiacritic: ignoreDiacritic).length
+                default:
+                    break
                 }
             }
-            infoPrint("stringlength ended... \(totalLength)", #function, self.className)
-            
-            precountedStringLength = totalLength
-            return totalLength
         }
+        infoPrint("stringlength ended... \(totalLength)", #function, self.className)
+        
+        precountedStringLength = totalLength
         return precountedStringLength
     }
 }

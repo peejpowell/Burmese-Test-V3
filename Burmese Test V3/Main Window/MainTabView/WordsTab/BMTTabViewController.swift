@@ -67,6 +67,7 @@ class BMTTabViewController: NSViewController {
         if let tableView = view.viewWithTag(100) as? NSTableView {
             tableView.wantsLayer = true
             self.tableView = tableView
+            self.textFinderClient.tableView = tableView
         }
         // Set up the textfinder
         

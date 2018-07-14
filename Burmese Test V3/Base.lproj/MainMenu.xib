@@ -52,14 +52,10 @@
             <connections>
                 <outlet property="lessonsPopup" destination="jAe-l9-LXu" id="CuU-hh-bcH"/>
                 <outlet property="mainToolbar" destination="TiW-iP-i6R" id="YLN-ji-FHV"/>
+                <outlet property="searchSlider" destination="P9O-gA-iey" id="zjq-Dl-202"/>
             </connections>
         </customObject>
-        <customObject id="8TO-bv-S1P" customClass="FindBarViewController" customModule="Burmese_Test_V3" customModuleProvider="target">
-            <connections>
-                <outlet property="findBar" destination="G6D-Km-hK7" id="mb3-fq-OL7"/>
-                <outlet property="view" destination="G6D-Km-hK7" id="3Zy-Q6-MXn"/>
-            </connections>
-        </customObject>
+        <customObject id="8TO-bv-S1P" customClass="FindBarViewController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <customObject id="X2E-rt-W8L" customClass="MainTabViewController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
                 <outlet property="exportTabController" destination="8Fv-wk-5t6" id="S21-mN-r6k"/>
@@ -848,66 +844,6 @@
                 <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <box autoresizesSubviews="NO" boxType="custom" borderType="none" title="Box" titlePosition="noTitle" translatesAutoresizingMaskIntoConstraints="NO" id="G6D-Km-hK7" userLabel="Find Bar">
-                        <rect key="frame" x="0.0" y="500" width="800" height="0.0"/>
-                        <view key="contentView" id="BQF-U8-K4Y">
-                            <rect key="frame" x="0.0" y="0.0" width="800" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                            <subviews>
-                                <searchField wantsLayer="YES" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bH6-ju-K4Y">
-                                    <rect key="frame" x="545" y="-27" width="200" height="22"/>
-                                    <constraints>
-                                        <constraint firstAttribute="height" priority="250" constant="21" id="LUk-GY-sBd"/>
-                                        <constraint firstAttribute="width" constant="200" id="TjB-UH-aVH"/>
-                                    </constraints>
-                                    <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" usesSingleLineMode="YES" bezelStyle="round" id="g7n-lc-gUC">
-                                        <font key="font" metaFont="system"/>
-                                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                    </searchFieldCell>
-                                </searchField>
-                                <segmentedControl verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="9yL-JE-GVY">
-                                    <rect key="frame" x="753" y="-28" width="44" height="24"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="40" id="TjX-ar-4fn"/>
-                                        <constraint firstAttribute="height" priority="250" constant="22" id="bt8-ib-sCI"/>
-                                    </constraints>
-                                    <segmentedCell key="cell" continuous="YES" enabled="NO" borderStyle="border" alignment="left" style="rounded" trackingMode="momentary" id="LAR-vp-Xsb">
-                                        <font key="font" metaFont="system"/>
-                                        <segments>
-                                            <segment image="NSGoLeftTemplate" width="16"/>
-                                            <segment image="NSGoRightTemplate" width="16" tag="1"/>
-                                        </segments>
-                                    </segmentedCell>
-                                </segmentedControl>
-                                <textField hidden="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="APo-WL-DFE">
-                                    <rect key="frame" x="438" y="-7" width="104" height="0.0"/>
-                                    <constraints>
-                                        <constraint firstAttribute="width" priority="900" constant="100" id="9tj-78-F0T"/>
-                                    </constraints>
-                                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="right" title="Label" id="77s-Az-4sY">
-                                        <font key="font" metaFont="cellTitle"/>
-                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                        <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
-                                    </textFieldCell>
-                                </textField>
-                            </subviews>
-                            <constraints>
-                                <constraint firstItem="bH6-ju-K4Y" firstAttribute="top" secondItem="BQF-U8-K4Y" secondAttribute="top" constant="5" id="2W2-aM-D2l"/>
-                                <constraint firstItem="bH6-ju-K4Y" firstAttribute="leading" secondItem="APo-WL-DFE" secondAttribute="trailing" priority="900" constant="5" id="5FN-sI-cql"/>
-                                <constraint firstAttribute="bottom" secondItem="APo-WL-DFE" secondAttribute="bottom" priority="900" constant="8" id="Wa8-h5-HlK"/>
-                                <constraint firstAttribute="trailing" secondItem="9yL-JE-GVY" secondAttribute="trailing" constant="5" id="gza-DS-Kzc"/>
-                                <constraint firstAttribute="trailing" secondItem="bH6-ju-K4Y" secondAttribute="trailing" constant="55" id="lSB-IT-94j"/>
-                                <constraint firstItem="APo-WL-DFE" firstAttribute="top" secondItem="BQF-U8-K4Y" secondAttribute="top" priority="950" constant="7" id="lbw-b3-okz"/>
-                                <constraint firstItem="9yL-JE-GVY" firstAttribute="top" secondItem="BQF-U8-K4Y" secondAttribute="top" constant="5" id="mEQ-CH-11H"/>
-                            </constraints>
-                        </view>
-                        <constraints>
-                            <constraint firstAttribute="height" id="LGr-MI-Knw"/>
-                        </constraints>
-                        <color key="borderColor" name="scrollBarColor" catalog="System" colorSpace="catalog"/>
-                        <color key="fillColor" name="windowBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </box>
                     <tabView type="bottomTabsBezelBorder" translatesAutoresizingMaskIntoConstraints="NO" id="WwX-7h-K8S" userLabel="Main Tab View">
                         <rect key="frame" x="-7" y="-1" width="814" height="505"/>
                         <font key="font" metaFont="system"/>
@@ -940,13 +876,10 @@
                     </tabView>
                 </subviews>
                 <constraints>
+                    <constraint firstItem="WwX-7h-K8S" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="6Y6-qO-P5Z"/>
                     <constraint firstAttribute="trailing" secondItem="WwX-7h-K8S" secondAttribute="trailing" id="7ye-4u-mYE"/>
                     <constraint firstItem="WwX-7h-K8S" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="AJC-eM-ZqZ"/>
-                    <constraint firstItem="G6D-Km-hK7" firstAttribute="top" secondItem="EiT-Mj-1SZ" secondAttribute="top" id="CIV-lS-RCy"/>
-                    <constraint firstItem="G6D-Km-hK7" firstAttribute="leading" secondItem="EiT-Mj-1SZ" secondAttribute="leading" id="K4g-te-5jh"/>
                     <constraint firstAttribute="bottom" secondItem="WwX-7h-K8S" secondAttribute="bottom" constant="5" id="L7f-WN-dvl"/>
-                    <constraint firstItem="WwX-7h-K8S" firstAttribute="top" secondItem="G6D-Km-hK7" secondAttribute="bottom" id="UWg-Kq-iwl"/>
-                    <constraint firstAttribute="trailing" secondItem="G6D-Km-hK7" secondAttribute="trailing" id="e34-bx-S8F"/>
                 </constraints>
             </view>
             <toolbar key="toolbar" implicitIdentifier="018827CD-BCF3-4935-8F9F-3F9CB2626651" autosavesConfiguration="NO" allowsUserCustomization="NO" showsBaselineSeparator="NO" displayMode="iconOnly" sizeMode="regular" id="TiW-iP-i6R">
@@ -1100,8 +1033,6 @@
         </window>
     </objects>
     <resources>
-        <image name="NSGoLeftTemplate" width="9" height="12"/>
-        <image name="NSGoRightTemplate" width="9" height="12"/>
         <image name="PSAddRow" width="19" height="19"/>
         <image name="PSCopyRow" width="19" height="19"/>
         <image name="PSDeleteRow" width="19" height="19"/>

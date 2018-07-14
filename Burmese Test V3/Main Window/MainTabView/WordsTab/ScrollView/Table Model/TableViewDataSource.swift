@@ -201,7 +201,6 @@ extension TableViewDataSource: NSTableViewDelegate {
         if index != -1
         {
             let dataSource = getWordsTabViewDelegate().dataSources[index]
-            let delegate = getWordsTabViewDelegate()
             if row >= dataSource.words.count {
                 return NSTableCellView()
             }
@@ -254,11 +253,8 @@ extension TableViewDataSource: NSTableViewDelegate {
                             field.textField?.isEnabled = true
                         default:
                             if let value = dataSource.words[row].wordForKey(colId) {
-                                if let stringValue = value as? String {
-                                    field.textField?.stringValue = stringValue
-                                }
-                                if let intValue = value as? Int
-                                {
+                                field.textField?.stringValue = value
+                                if let intValue = Int(value) {
                                     field.textField?.stringValue = "\(intValue)"
                                 }
                             }
@@ -789,7 +785,6 @@ extension TableViewDataSource: NSTableViewDataSource {
     func reindexRows(_ rowIndexes: IndexSet, dropOnRow: Int) {
         infoPrint("", #function, self.className)
         
-        let appDelegate = NSApplication.shared.delegate as! AppDelegate
         //let index = getCurrentIndex()
         
         for rowIndex in rowIndexes

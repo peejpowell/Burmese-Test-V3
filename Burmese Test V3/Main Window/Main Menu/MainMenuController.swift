@@ -229,7 +229,6 @@ extension MainMenuController {
         //saveDlg.setDirectory(self.prefs.filePath)
         saveDocumentPanel.allowedFileTypes = ["bmt"]
         saveDocumentPanel.allowsOtherFileTypes = false
-        saveDocumentPanel
         return saveDocumentPanel
     }
     
@@ -360,7 +359,7 @@ extension MainMenuController {
                     case NSApplication.ModalResponse.alertFirstButtonReturn:
                         print("Saved")
                         if let sourceFile = dataSource.sourceFile {
-                            getMainWindowController().mainFileManager.saveWordsToFile(sourceFile)
+                            _ = getMainWindowController().mainFileManager.saveWordsToFile(sourceFile)
                         }
                         else {
                             // File has never been saved
