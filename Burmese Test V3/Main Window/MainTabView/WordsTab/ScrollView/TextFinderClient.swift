@@ -8,6 +8,8 @@
 
 import Cocoa
 
+/// A class to handle Text Finding
+
 class TextFinderClient: NSTextFinder {
     
     /**

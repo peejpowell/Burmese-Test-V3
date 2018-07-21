@@ -99,8 +99,14 @@ enum PJPButtonState: Int
         
         if self.isEnabled
         {
-            if let cell = self.cell as? PJPAutoWrapButtonCell
-            {
+            if  let cell = self.cell as? PJPAutoWrapButtonCell,
+                let buttonState = cell.buttonState {
+                switch buttonState {
+                case .disabled:
+                    return
+                default:
+                    break
+                }
                 cell.buttonState = .hover
                 self.setNeedsDisplay()
             }
@@ -147,9 +153,21 @@ enum PJPButtonState: Int
                         cell.buttonState = .down
                     case .toggle:
                         break
+                    case .simple:
+                        cell.buttonState = .down
                     default:
                         break
                     }
+                case .up:
+                    switch buttonStyle {
+                    case .simple:
+                        cell.buttonState = .down
+                        
+                    default:
+                        break
+                    }
+                case .disabled:
+                    return
                 default:
                     break
                 }
@@ -157,7 +175,7 @@ enum PJPButtonState: Int
             }
         }
         super.mouseDown(with: event)
-        //self.mouseUp(theEvent)
+        self.mouseUp(with: event)
     }
     
     override func mouseUp(with event: NSEvent)
@@ -165,13 +183,20 @@ enum PJPButtonState: Int
         Swift.print("mouseUp")
         if self.isEnabled
         {
-            if let cell = self.cell as? PJPAutoWrapButtonCell
+            if  let cell = self.cell as? PJPAutoWrapButtonCell,
+                let buttonState = cell.buttonState
             {
-                if cell.buttonState == .on
+                switch buttonState {
+                case .disabled:
+                    return
+                default:
+                    break
+                }
+                if buttonState == .on
                 {
                     cell.buttonState = .off
                 }
-                else if cell.buttonState == .down
+                else if buttonState == .down
                 {
                     cell.buttonState = .hover
                 }
@@ -190,6 +215,12 @@ enum PJPButtonState: Int
                 let buttonState = cell.buttonState,
                 let buttonStyle = cell.buttonStyle
             {
+                switch buttonState {
+                case .disabled:
+                    return
+                default:
+                    break
+                }
                 switch self.enteredCount
                 {
                 case 0:
@@ -215,6 +246,8 @@ enum PJPButtonState: Int
                             cell.buttonState = .hover
                         case .toggle:
                             cell.buttonState = .hoverOn
+                        case .simple:
+                            cell.buttonState = .hover
                         default:
                             cell.buttonState = .hoverOn
                         }
@@ -276,6 +309,8 @@ enum PJPButtonState: Int
                             cell.buttonState = .hover
                         case .toggle:
                             cell.buttonState = .hoverOn
+                        case .simple:
+                            cell.buttonState = .hover
                         default:
                             cell.buttonState = .hoverOn
                         }
@@ -297,6 +332,12 @@ enum PJPButtonState: Int
                 let buttonState = cell.buttonState,
                 let buttonStyle = cell.buttonStyle
             {
+                switch buttonState {
+                case .disabled:
+                    return
+                default:
+                    break
+                }
                 switch buttonState
                 {
                 case .on:
@@ -326,6 +367,8 @@ enum PJPButtonState: Int
                         cell.buttonState = .up
                     case .toggle:
                         cell.buttonState = .off
+                    case .simple:
+                        cell.buttonState = .up
                     default:
                         break
                     }
@@ -383,6 +426,10 @@ enum PJPButtonState: Int
             }
             super.mouseExited(with:event)
         }
+    }
+    
+    override func prepareForInterfaceBuilder() {
+        super .prepareForInterfaceBuilder()
     }
     
     deinit {

@@ -61,12 +61,14 @@ protocol TextFinderIndexing : NSTextFinderClient {
     
     /**
      Index the word depending on whether diacritics are being ignored.
-     - Parameter word: word to be indexed
-     - Parameter currentIndex: the index to add
-     - Parameter row: the row to add to the index
-     - Parameter col: the column to add to the index
-     - Parameter ignoreDiacritic: whether diacritics are ignored or not
-     - Returns: new index after taking length of the indexed word as Int
+     
+     - Parameters:
+        - word: word to be indexed
+        - currentIndex: the index to add
+        - row: the row to add to the index
+        - col: the column to add to the index
+        - ignoreDiacritic: whether diacritics are ignored or not
+    - Returns: new index after taking length of the indexed word as Int
      */
     func checkDiacriticAndIndex(_ word: String, currentIndex: Int, row: Int, col: Int, ignoreDiacritic: Bool)->Int
     

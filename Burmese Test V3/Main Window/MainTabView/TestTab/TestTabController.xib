@@ -19,22 +19,47 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cEA-Lx-Y3G" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
-                    <rect key="frame" x="94" y="163" width="195" height="57"/>
+                    <rect key="frame" x="94" y="171" width="210" height="49"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" title="Button" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lkD-X5-yv0" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
-                        <behavior key="behavior" pushIn="YES" changeContents="YES" lightByContents="YES"/>
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="styleAdapter">
-                                <integer key="value" value="0"/>
+                                <integer key="value" value="3"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="stateAdapter">
-                                <integer key="value" value="2"/>
+                                <integer key="value" value="0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="oldStyle">
+                                <integer key="value" value="0"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </buttonCell>
                     <connections>
                         <action selector="showNewVC:" target="-2" id="6t1-7H-XRC"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y95-2l-LcS" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
+                    <rect key="frame" x="39" y="119" width="210" height="49"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" title="Button" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AJX-rO-ZcL" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="styleAdapter">
+                                <integer key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="stateAdapter">
+                                <integer key="value" value="0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="oldStyle">
+                                <integer key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showNewVC:" target="-2" id="eIS-b7-ECI"/>
                     </connections>
                 </button>
             </subviews>

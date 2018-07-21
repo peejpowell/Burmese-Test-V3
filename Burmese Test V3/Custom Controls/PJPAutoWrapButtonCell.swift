@@ -10,6 +10,7 @@ import Cocoa
 
 @IBDesignable class PJPAutoWrapButtonCell: NSButtonCell
 {
+    @IBInspectable var oldStyle: Int = 0
     var lastFont : NSFont?
     var lastTitle : String?
     var lastRect : NSRect?
@@ -2221,10 +2222,8 @@ import Cocoa
     
     override func drawBezel(withFrame frame: NSRect, in controlView: NSView)
     {
-        if let button = controlView as? PJPButton
-        {
-            if !button.isEnabled && self.buttonState != .down && self.buttonState != .on
-            {
+        if let button = controlView as? PJPButton {
+            if !button.isEnabled && self.buttonState != .down && self.buttonState != .on {
                 self.buttonState = .disabled
             }
         }
@@ -2238,12 +2237,10 @@ import Cocoa
         //var color : NSColor = NSColor(deviceRed: 0.5, green: 0.5, blue: 0.5, alpha: 1)
         
         
-        if let buttonColor = self.buttonColor
-        {
+        if let buttonColor = self.buttonColor {
             buttonConfig.buttonColor = buttonColor
         }
-        else
-        {
+        else {
             buttonConfig.buttonColor = NSColor(deviceRed: 0.5, green: 0.5, blue: 0.5, alpha: 1)
         }
         
@@ -2252,17 +2249,14 @@ import Cocoa
         
         ctx?.saveGraphicsState()
         
-        if let cornerDivider = self.cornerDivider
-        {
+        if let cornerDivider = self.cornerDivider {
             buttonConfig.buttonDivider = cornerDivider
         }
         
         var cornerRad : CGFloat = 0
         
-        if let divider = buttonConfig.buttonDivider
-        {
-            if divider > 0
-            {
+        if let divider = buttonConfig.buttonDivider {
+            if divider > 0 {
                 cornerRad = frame.size.height / divider
             }
         }
@@ -2295,192 +2289,7 @@ import Cocoa
             let divider = buttonConfig.buttonDivider!
             let color = buttonConfig.buttonColor!
             
-            
-            
-            
-            func simpleButtons()
-            {
-                if let buttonState = buttonState
-                {
-                    func drawUpButton()
-                    {
-                        Swift.print("Drawing")
-                        let buttonBezelShadow = NSBezierPath(roundedRect: frame, xRadius: rad, yRadius: rad)
-                        
-                        let buttonBezelBackRect = NSRect(x: x+2, y: y+2, width: width - 4, height: frame.size.height - 4)
-                        let buttonBezelBack = NSBezierPath(roundedRect: buttonBezelBackRect, xRadius: rad, yRadius: rad)
-                        
-                        let buttonBezelMiddleRect = NSRect(x: x+4, y: y+4, width: width - 8, height: height - 8)
-                        let buttonBezelMiddle = NSBezierPath(roundedRect: buttonBezelMiddleRect, xRadius: rad, yRadius: rad)
-                        
-                        let buttonBezelFrontRect = NSRect(x: x+6, y: y+6, width: width - 12, height: height - 12)
-                        let buttonBezelFront = NSBezierPath(roundedRect: buttonBezelFrontRect, xRadius: rad, yRadius: rad)
-                        
-                        let gradColors = [NSColor(deviceWhite: 1, alpha: 1), NSColor(deviceWhite: 1, alpha: 1),NSColor(deviceWhite: 0.8, alpha: 1)]
-                        let gradLocations : [CGFloat] = [0,0.5,1]
-                        
-                        let buttonFrontGradient = NSGradient(colorsAndLocations: (gradColors[0],gradLocations[0]),(gradColors[1],gradLocations[1]),(gradColors[2],gradLocations[2]))
-                        
-                        
-                        buttonBezelShadow.setClip()
-                        NSColor(deviceWhite: 0.8, alpha: 1).setFill()
-                        buttonBezelShadow.fill()
-                        NSColor.white.setFill()
-                        buttonBezelBack.fill()
-                        NSColor(deviceWhite: 0.6, alpha: 1).setFill()
-                        buttonBezelMiddle.fill()
-                        NSColor(deviceWhite: 0.9, alpha: 1).setFill()
-                        buttonBezelFront.fill()
-                        buttonBezelFront.setClip()
-                        
-                        if let buttonFrontGradient = buttonFrontGradient {
-                            buttonFrontGradient.draw(in:buttonBezelFrontRect, angle: 90)
-                        }
-                    }
-                    
-                    func drawDownButton()
-                    {
-                        let buttonBezelShadow = NSBezierPath(roundedRect: frame, xRadius: rad, yRadius: rad)
-                        
-                        let buttonBezelBackRect = NSRect(x: frame.origin.x+2, y: frame.origin.y+2, width: frame.size.width - 4, height: frame.size.height - 4)
-                        let buttonBezelBack = NSBezierPath(roundedRect: buttonBezelBackRect, xRadius: rad, yRadius: rad)
-                        
-                        let buttonBezelMiddleRect = NSRect(x: frame.origin.x+4, y: frame.origin.y+4, width: frame.size.width - 8, height: frame.size.height - 8)
-                        let buttonBezelMiddle = NSBezierPath(roundedRect: buttonBezelMiddleRect, xRadius: rad, yRadius: rad)
-                        
-                        let buttonAreaRect = NSRect(x: frame.origin.x+6, y: frame.origin.y+6, width: frame.size.width - 12, height: frame.size.height - 12)
-                        let buttonArea = NSBezierPath(roundedRect: buttonAreaRect, xRadius: rad, yRadius: rad)
-                        
-                        let offset : CGFloat = 2
-                        let buttonBezelFrontRect = NSRect(x: frame.origin.x+6, y: frame.origin.y+6+offset, width: frame.size.width-6, height: frame.size.height - 12)
-                        let buttonBezelFront = NSBezierPath(roundedRect: buttonBezelFrontRect, xRadius: rad, yRadius: rad)
-                        
-                        let buttonClipFrontRect = NSRect(x: frame.origin.x+7, y: frame.origin.y+7, width: frame.size.width-12, height: frame.size.height - 12)
-                        
-                        let buttonClipFront = NSBezierPath(roundedRect: buttonClipFrontRect, xRadius: rad, yRadius: rad)
-                        
-                        let gradBackColors = [NSColor(deviceWhite: 0.3, alpha: 1), NSColor(deviceWhite: 0.7, alpha: 1)]
-                        let gradBackLocations : [CGFloat] = [0,1]
-                        
-                        let buttonBackGradient = NSGradient(colorsAndLocations: (gradBackColors[0],gradBackLocations[0]),(gradBackColors[1],gradBackLocations[1]))
-                        
-                        var gradFrontColors = [NSColor(deviceWhite: 1, alpha: 1), NSColor(deviceWhite: 1, alpha: 1),NSColor(deviceWhite: 0.8, alpha: 1)]
-                        var gradFrontLocations : [CGFloat] = [0,0.5,1]
-                        
-                        if let buttonColor = self.buttonColor
-                        {
-                            gradFrontColors[2] = buttonColor
-                        }
-                        
-                        let buttonFrontGradient = NSGradient(colorsAndLocations: (gradFrontColors[0],gradFrontLocations[0]),(gradFrontColors[1],gradFrontLocations[1]),(gradFrontColors[2],gradFrontLocations[2]))
-                        
-                        
-                        buttonBezelShadow.setClip()
-                        NSColor(deviceWhite: 0.8, alpha: 1).setFill()
-                        buttonBezelShadow.fill()
-                        NSColor.white.setFill()
-                        buttonBezelBack.fill()
-                        buttonBezelMiddle.setClip()
-                        if let buttonBackGradient = buttonBackGradient {
-                            buttonBackGradient.draw(in:buttonBezelMiddleRect, angle: 90)
-                        }
-                        NSColor(deviceWhite: 1, alpha: 1).setFill()
-                        buttonBezelFront.setClip()
-                        buttonBezelMiddle.addClip()
-                        NSColor.red.setFill()
-                        buttonClipFront.addClip()
-                        buttonArea.addClip()
-                        if let buttonFrontGradient = buttonFrontGradient {
-                            buttonFrontGradient.draw(in:buttonBezelFrontRect, angle: 90)
-                        }
-                    }
-                    
-                    func drawHoverButton()
-                    {
-                        let buttonBezelShadow = NSBezierPath(roundedRect: frame, xRadius: rad, yRadius: rad)
-                        
-                        let buttonBezelBackRect = NSRect(x: frame.origin.x+2, y: frame.origin.y+2, width: frame.size.width - 4, height: frame.size.height - 4)
-                        let buttonBezelBack = NSBezierPath(roundedRect: buttonBezelBackRect, xRadius: rad, yRadius: rad)
-                        
-                        let buttonBezelMiddleRect = NSRect(x: frame.origin.x+4, y: frame.origin.y+4, width: frame.size.width - 8, height: frame.size.height - 8)
-                        let buttonBezelMiddle = NSBezierPath(roundedRect: buttonBezelMiddleRect, xRadius: rad, yRadius: rad)
-                        
-                        let buttonBezelFrontRect = NSRect(x: frame.origin.x+6, y: frame.origin.y+6, width: frame.size.width - 12, height: frame.size.height - 12)
-                        let buttonBezelFront = NSBezierPath(roundedRect: buttonBezelFrontRect, xRadius: rad, yRadius: rad)
-                        
-                        let gradColors = [NSColor(deviceWhite: 1, alpha: 1),NSColor(deviceWhite: 1, alpha: 1), NSColor(deviceWhite: 1, alpha: 0.25)/*NSColor(deviceRed: 0.25, green: 1, blue: 0.9, alpha: 0.5)*/]
-                        let gradLocations : [CGFloat] = [0,0.5,1]
-                        
-                        let buttonFrontGradient = NSGradient(colorsAndLocations: (gradColors[0],gradLocations[0]),(gradColors[1],gradLocations[1]),(gradColors[2],gradLocations[2]))
-                        
-                        buttonBezelShadow.setClip()
-                        NSColor(deviceWhite: 0.8, alpha: 1).setFill()
-                        buttonBezelShadow.fill()
-                        NSColor.white.setFill()
-                        buttonBezelBack.fill()
-                        NSColor(deviceWhite: 0.6, alpha: 1).setFill()
-                        buttonBezelMiddle.fill()
-                        NSColor(deviceWhite: 0.9, alpha: 1).setFill()
-                        buttonBezelFront.fill()
-                        buttonBezelFront.setClip()
-                        if let buttonFrontGradient = buttonFrontGradient {
-                            buttonFrontGradient.draw(in:buttonBezelFrontRect, angle: 90)
-                        }
-                    }
-                    
-                    func drawDisabledButton()
-                    {
-                        let buttonBezelShadow = NSBezierPath(roundedRect: frame, xRadius: rad, yRadius: rad)
-                        
-                        let buttonBezelBackRect = NSRect(x: frame.origin.x+2, y: frame.origin.y+2, width: frame.size.width - 4, height: frame.size.height - 4)
-                        let buttonBezelBack = NSBezierPath(roundedRect: buttonBezelBackRect, xRadius: rad, yRadius: rad)
-                        
-                        let buttonBezelMiddleRect = NSRect(x: frame.origin.x+4, y: frame.origin.y+4, width: frame.size.width - 8, height: frame.size.height - 8)
-                        let buttonBezelMiddle = NSBezierPath(roundedRect: buttonBezelMiddleRect, xRadius: rad, yRadius: rad)
-                        
-                        let buttonBezelFrontRect = NSRect(x: frame.origin.x+6, y: frame.origin.y+6, width: frame.size.width - 12, height: frame.size.height - 12)
-                        let buttonBezelFront = NSBezierPath(roundedRect: buttonBezelFrontRect, xRadius: rad, yRadius: rad)
-                        
-                        let gradColors = [NSColor(deviceWhite: 1, alpha: 0.5), NSColor(deviceWhite: 1, alpha: 0.5),NSColor(deviceWhite: 0.8, alpha: 0.5)]
-                        let gradLocations : [CGFloat] = [0,0.5,1]
-                        
-                        let buttonFrontGradient = NSGradient(colorsAndLocations: (gradColors[0],gradLocations[0]),(gradColors[1],gradLocations[1]),(gradColors[2],gradLocations[2]))
-                        
-                        buttonBezelShadow.setClip()
-                        NSColor(deviceWhite: 0.8, alpha: 0.5).setFill()
-                        buttonBezelShadow.fill()
-                        NSColor.white.setFill()
-                        buttonBezelBack.fill()
-                        NSColor(deviceWhite: 0.6, alpha: 0.5).setFill()
-                        buttonBezelMiddle.fill()
-                        NSColor(deviceWhite: 0.9, alpha: 0.5).setFill()
-                        buttonBezelFront.fill()
-                        buttonBezelFront.setClip()
-                        if let buttonFrontGradient = buttonFrontGradient {
-                            buttonFrontGradient.draw(in:buttonBezelFrontRect, angle: 90)
-                        }
-                    }
-                    
-                    Swift.print("test buttons")
-                    switch buttonState
-                    {
-                    case .up:
-                        print("up Button")
-                        drawUpButton()
-                        print("Drawn up button")
-                    case .down:
-                        drawDownButton()
-                    case .hover:
-                        drawHoverButton()
-                    case .disabled:
-                        drawDisabledButton()
-                    default:
-                        drawUpButton()
-                    }
-                }
-            }
-            
-            func toggleButtons(frame: NSRect, x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, rad: CGFloat, cornerRad: CGFloat, showBorder: Bool?, originalFrame: NSRect)
+            func oldToggleButtons(frame: NSRect, x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, rad: CGFloat, cornerRad: CGFloat, showBorder: Bool?, originalFrame: NSRect)
             {
                 if let buttonState = buttonState
                 {
@@ -2539,19 +2348,21 @@ import Cocoa
                             ceiling = 15
                             newAlphaInc = 0.02
                         }
+                        print("Old - frame: \(frame), x: \(x), y: \(y), width: \(width), height:\(height), rad: \(rad), horOffset: \(horOffset)")
                         for bezNum in 0 ..< ceiling
                         {
                             let num = CGFloat(bezNum)
-                            let bezier = NSBezierPath(roundedRect: frame1, xRadius: rad, yRadius: rad)
+                            let bezier1 = NSBezierPath(roundedRect: frame1, xRadius: rad, yRadius: rad)
                             
                             let frame2 = NSRect(x: x+num, y: y+num, width: height+horOffset+(height/2)-num, height: height-num)
+                            print("old frame 2 rect: \(frame2)")
                             
                             let bezier2 = NSBezierPath(roundedRect: frame2, xRadius: rad, yRadius: rad)
-                            bezier.setClip()
-                            bezier.append(bezier2)
-                            bezier.windingRule = NSBezierPath.WindingRule.evenOdd
+                            bezier1.setClip()
+                            bezier1.append(bezier2)
+                            bezier1.windingRule = NSBezierPath.WindingRule.evenOdd
                             NSColor(deviceWhite:0, alpha: newAlphaInc).setFill()
-                            bezier.fill()
+                            bezier1.fill()
                         }
                     }
                     
@@ -2628,6 +2439,7 @@ import Cocoa
                         func drawButtonFrontHilight(inFrame frame: NSRect, xOffset: CGFloat = 0, yOffset: CGFloat = 0, widthOffset : CGFloat = 0, heightOffset: CGFloat = 0, gradientColors:[NSColor?] = [NSColor.white], x: CGFloat, y: CGFloat, width: CGFloat, height: CGFloat, rad: CGFloat, horOffset: CGFloat)
                         {
                             let frontHilightRect = NSRect(x: x+(height/2)+horOffset+xOffset,y: y+yOffset, width: height-heightOffset, height: height/2-heightOffset)
+                            print("frontHilightRectOld: \(frontHilightRect)")
                             
                             let frontHilightPath = NSBezierPath(roundedRect: frontHilightRect, xRadius: rad, yRadius: rad)
                             
@@ -2974,6 +2786,17 @@ import Cocoa
                 }
             }
             
+            
+            let horOffset = height/4
+            let buttonHeight = height/2
+            let recessWidth = height*2 - horOffset
+            
+            let simpleConfig = SimpleButtonConfig(frame: frame, x: x, y: y, rad: rad, width: width, height: height, showBorder: false, originalFrame: originalFrame)
+
+            let toggleConfig = ToggleButtonConfig(frame: frame, x: x, y: y, rad: rad, width: width, height: height, recessWidth: (height*2) - (height/4), showBorder: self.showBorder, originalFrame: originalFrame, alphaVal: 1, alphaInc: 0.05, cornerRad: cornerRad /*height / divider*/, horOffset: height/4, xOffset: 0, yOffset: 2, widthOffset: 0, heightOffset: 0)
+            
+            let glassyConfig = GlassyButtonConfig(frame: frame, x: x, y: y, rad: rad, width: width, height: height, recessWidth: (height*2) - (height/4), showBorder: self.showBorder, originalFrame: originalFrame, alphaVal: 1, alphaInc: 0.05, cornerRad: cornerRad /*height / divider*/, horOffset: height/4, xOffset: 0, yOffset: 2, widthOffset: 0, heightOffset: 0)
+            
             switch buttonStyle
             {
             case .metallic:
@@ -2982,15 +2805,27 @@ import Cocoa
             case .glassy:
                 Swift.print("glassy")
                 //buttonConfig.buttonColor = NSColor.red
-                glassyButtons(with: buttonConfig)
+                if self.oldStyle == 1 {
+                    glassyButtons(with: buttonConfig)
+                }
+                else
+                {
+                    glassyButtons(using: glassyConfig)
+                }
             case .simple:
                 Swift.print("simple")
-                simpleButtons()
+                simpleButtons(using: simpleConfig)
             case .toggle:
-                toggleButtons(frame: frame, x: x,y: y,width: width,height: height,rad: rad, cornerRad: cornerRad, showBorder: self.showBorder, originalFrame: originalFrame)
+                if self.oldStyle == 1 {
+                oldToggleButtons(frame: frame, x: x,y: y,width: width,height: height,rad: rad, cornerRad: cornerRad, showBorder: self.showBorder, originalFrame: originalFrame)
+                }
+                else {
+                    toggleButtons(using: toggleConfig)
+                }
+                //toggleButtons(using: toggleConfig)
+                //toggleButtons(frame: frame, x: x,y: y,width: width,height: height,rad: rad, cornerRad: cornerRad, showBorder: self.showBorder, originalFrame: originalFrame)
             default:
-                
-                simpleButtons()
+                simpleButtons(using: simpleConfig)
             }
             Swift.print("bezier")
             NSBezierPath(rect:frame).setClip()

@@ -21,6 +21,7 @@ class InfoPopupViewController: NSViewController {
         let index = getCurrentIndex()
         let tableView = getWordsTabViewDelegate().tabViewControllersList[index].tableView
         if let row = tableView?.selectedRow {
+            if row == -1 {return}
             if let burmeseWord = getWordsTabViewDelegate().dataSources[index].words[row].burmese {
                 self.burmeseWord.stringValue = burmeseWord
             }
