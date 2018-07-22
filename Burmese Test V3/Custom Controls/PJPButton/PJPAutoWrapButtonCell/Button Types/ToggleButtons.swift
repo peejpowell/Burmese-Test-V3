@@ -9,52 +9,6 @@
 import Foundation
 import Cocoa
 
-class ToggleButtonConfig {
-    var frame: NSRect
-    var x: CGFloat
-    var y: CGFloat
-    var rad: CGFloat
-    var width: CGFloat
-    var height: CGFloat
-    var recessWidth: CGFloat
-    var showBorder: Bool?
-    var originalFrame: NSRect
-    var alphaVal: CGFloat
-    var alphaInc: CGFloat
-    var cornerRad: CGFloat
-    var horOffset: CGFloat
-    var xOffset: CGFloat
-    var yOffset: CGFloat
-    var widthOffset: CGFloat
-    var heightOffset: CGFloat
-    
-    
-    init(frame: NSRect, x: CGFloat, y: CGFloat, rad: CGFloat, width: CGFloat, height: CGFloat, recessWidth: CGFloat, showBorder: Bool?, originalFrame: NSRect, alphaVal: CGFloat, alphaInc: CGFloat, cornerRad: CGFloat, horOffset: CGFloat, xOffset: CGFloat, yOffset: CGFloat, widthOffset: CGFloat, heightOffset: CGFloat) {
-        self.frame = frame
-        self.x = x
-        self.y = y
-        self.rad = rad
-        self.width = width
-        self.height = height
-        self.recessWidth = recessWidth
-        self.showBorder = showBorder
-        self.originalFrame = originalFrame
-        self.alphaVal = alphaVal
-        self.alphaInc = alphaInc
-        self.cornerRad = cornerRad
-        self.horOffset = horOffset
-        self.xOffset = xOffset
-        self.yOffset = yOffset
-        self.widthOffset = widthOffset
-        self.heightOffset = heightOffset
-        print("Created ToggleButtonConfig: \(self)")
-    }
-    
-    deinit {
-        print("Removed ToggleButtonConfig : \(self)")
-    }
-}
-
 /// Toggle Buttons Extension - .toggle = 1
 
 extension PJPAutoWrapButtonCell {

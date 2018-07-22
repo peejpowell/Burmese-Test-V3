@@ -19,14 +19,14 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cEA-Lx-Y3G" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
-                    <rect key="frame" x="94" y="171" width="210" height="49"/>
+                    <rect key="frame" x="20" y="204" width="210" height="49"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" title="Button" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lkD-X5-yv0" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="styleAdapter">
-                                <integer key="value" value="3"/>
+                                <integer key="value" value="0"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="stateAdapter">
                                 <integer key="value" value="0"/>
@@ -41,9 +41,53 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Y95-2l-LcS" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
-                    <rect key="frame" x="39" y="119" width="210" height="49"/>
+                    <rect key="frame" x="20" y="149" width="210" height="49"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <buttonCell key="cell" type="smallSquare" title="Button" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AJX-rO-ZcL" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="styleAdapter">
+                                <integer key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="stateAdapter">
+                                <integer key="value" value="7"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="oldStyle">
+                                <integer key="value" value="0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showNewVC:" target="-2" id="eIS-b7-ECI"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="KzF-Ue-DKj" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
+                    <rect key="frame" x="20" y="94" width="210" height="49"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" title="Button" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zb7-aq-wo3" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="styleAdapter">
+                                <integer key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="stateAdapter">
+                                <integer key="value" value="0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="oldStyle">
+                                <integer key="value" value="0"/>
+                            </userDefinedRuntimeAttribute>
+                        </userDefinedRuntimeAttributes>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showNewVC:" target="-2" id="FMT-Yq-GpP"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="2pF-hr-Pwl" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
+                    <rect key="frame" x="20" y="39" width="210" height="49"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" title="Button" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Fs-At-LNc" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                         <userDefinedRuntimeAttributes>
@@ -54,12 +98,92 @@
                                 <integer key="value" value="0"/>
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="oldStyle">
-                                <integer key="value" value="1"/>
+                                <integer key="value" value="0"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </buttonCell>
                     <connections>
-                        <action selector="showNewVC:" target="-2" id="eIS-b7-ECI"/>
+                        <action selector="showNewVC:" target="-2" id="cd5-Wh-p3o"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ord-0u-Jt2" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
+                    <rect key="frame" x="238" y="204" width="210" height="49"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" title="Button" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="0te-oa-D5o" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="styleAdapter">
+                                <integer key="value" value="0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="stateAdapter">
+                                <integer key="value" value="0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="oldStyle" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showNewVC:" target="-2" id="lp9-Ng-ci5"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EFQ-mL-7qe" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
+                    <rect key="frame" x="238" y="149" width="210" height="49"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" title="Button" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="5TV-cM-VS2" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="styleAdapter">
+                                <integer key="value" value="1"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="stateAdapter">
+                                <integer key="value" value="7"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="oldStyle" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showNewVC:" target="-2" id="zHI-oa-neT"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qRi-pE-78l" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
+                    <rect key="frame" x="238" y="94" width="210" height="49"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" title="Button" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="BCS-6e-ThA" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="styleAdapter">
+                                <integer key="value" value="2"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="stateAdapter">
+                                <integer key="value" value="0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="oldStyle" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showNewVC:" target="-2" id="ecW-L6-8a7"/>
+                    </connections>
+                </button>
+                <button verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Tdp-H5-jxv" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
+                    <rect key="frame" x="238" y="39" width="210" height="49"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="smallSquare" title="Button" bezelStyle="smallSquare" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1CI-xd-oYH" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
+                        <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                        <font key="font" metaFont="system"/>
+                        <userDefinedRuntimeAttributes>
+                            <userDefinedRuntimeAttribute type="number" keyPath="styleAdapter">
+                                <integer key="value" value="3"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="stateAdapter">
+                                <integer key="value" value="0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="oldStyle" value="YES"/>
+                        </userDefinedRuntimeAttributes>
+                    </buttonCell>
+                    <connections>
+                        <action selector="showNewVC:" target="-2" id="hXe-Mg-oA1"/>
                     </connections>
                 </button>
             </subviews>

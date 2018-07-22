@@ -58,6 +58,10 @@
 		38AEC07820E2391F00E6529F /* WordsTabController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07720E2391F00E6529F /* WordsTabController.xib */; };
 		38AEC07A20E23A3900E6529F /* BMTTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC07920E23A3900E6529F /* BMTTabViewController.swift */; };
 		38AEC07C20E23D6600E6529F /* BMTTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07B20E23D6600E6529F /* BMTTabViewController.xib */; };
+		38C5801121041D5100E2E961 /* ButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C5801021041D5100E2E961 /* ButtonText.swift */; };
+		38C5801521041F4300E2E961 /* GlassyButtonConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C5801421041F4300E2E961 /* GlassyButtonConfig.swift */; };
+		38C5801721041F8D00E2E961 /* SimpleButtonConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C5801621041F8D00E2E961 /* SimpleButtonConfig.swift */; };
+		38C580192104201400E2E961 /* ToggleButtonConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C580182104201400E2E961 /* ToggleButtonConfig.swift */; };
 		38C71BC820E7D2FD00AC4B6E /* InfoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */; };
 		38C71BC920E7D2FD00AC4B6E /* InfoPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38C71BC720E7D2FD00AC4B6E /* InfoPopupViewController.xib */; };
 		38CBB93320FA415800C7CAA6 /* TextFinderClientProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBB93220FA415800C7CAA6 /* TextFinderClientProtocols.swift */; };
@@ -147,6 +151,10 @@
 		38AEC07920E23A3900E6529F /* BMTTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTTabViewController.swift; sourceTree = "<group>"; };
 		38AEC07B20E23D6600E6529F /* BMTTabViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BMTTabViewController.xib; sourceTree = "<group>"; };
 		38B7D5C920E87E9000B13ED1 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
+		38C5801021041D5100E2E961 /* ButtonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonText.swift; sourceTree = "<group>"; };
+		38C5801421041F4300E2E961 /* GlassyButtonConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassyButtonConfig.swift; sourceTree = "<group>"; };
+		38C5801621041F8D00E2E961 /* SimpleButtonConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleButtonConfig.swift; sourceTree = "<group>"; };
+		38C580182104201400E2E961 /* ToggleButtonConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButtonConfig.swift; sourceTree = "<group>"; };
 		38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPopupViewController.swift; sourceTree = "<group>"; };
 		38C71BC720E7D2FD00AC4B6E /* InfoPopupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoPopupViewController.xib; sourceTree = "<group>"; };
 		38CBB93220FA415800C7CAA6 /* TextFinderClientProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinderClientProtocols.swift; sourceTree = "<group>"; };
@@ -383,14 +391,33 @@
 		38AEC07D20E2417900E6529F /* Custom Controls */ = {
 			isa = PBXGroup;
 			children = (
-				38E7B29B210039690052FC00 /* Button Types */,
-				3821C84E20E242530045E5A8 /* PJPAutoWrapButtonCell.swift */,
-				3821C84F20E242610045E5A8 /* PJPButton.swift */,
-				3821C85020E242630045E5A8 /* PJPButtonConfig.swift */,
+				38C5801321041F0500E2E961 /* PJPButton */,
 				38160EAE20E36F0200DA13F1 /* PJTextField.swift */,
 				3884FA7F20F60E67006EDF11 /* PJTextView.swift */,
 			);
 			path = "Custom Controls";
+			sourceTree = "<group>";
+		};
+		38C5801221041EDD00E2E961 /* PJPAutoWrapButtonCell */ = {
+			isa = PBXGroup;
+			children = (
+				3821C85020E242630045E5A8 /* PJPButtonConfig.swift */,
+				38C5801421041F4300E2E961 /* GlassyButtonConfig.swift */,
+				38C5801621041F8D00E2E961 /* SimpleButtonConfig.swift */,
+				38C580182104201400E2E961 /* ToggleButtonConfig.swift */,
+				3821C84E20E242530045E5A8 /* PJPAutoWrapButtonCell.swift */,
+				38E7B29B210039690052FC00 /* Button Types */,
+			);
+			path = PJPAutoWrapButtonCell;
+			sourceTree = "<group>";
+		};
+		38C5801321041F0500E2E961 /* PJPButton */ = {
+			isa = PBXGroup;
+			children = (
+				3821C84F20E242610045E5A8 /* PJPButton.swift */,
+				38C5801221041EDD00E2E961 /* PJPAutoWrapButtonCell */,
+			);
+			path = PJPButton;
 			sourceTree = "<group>";
 		};
 		38E7B29B210039690052FC00 /* Button Types */ = {
@@ -400,6 +427,7 @@
 				38E7B2992100395F0052FC00 /* SimpleButtons.swift */,
 				38E7B29C21005CD00052FC00 /* ToggleButtons.swift */,
 				389D7E4121036674009F794E /* MetallicButtons.swift */,
+				38C5801021041D5100E2E961 /* ButtonText.swift */,
 			);
 			path = "Button Types";
 			sourceTree = "<group>";
@@ -578,6 +606,7 @@
 				389D7E402102A415009F794E /* GlassyButtons.swift in Sources */,
 				38CBB93320FA415800C7CAA6 /* TextFinderClientProtocols.swift in Sources */,
 				38EFAFAB20E9CCE900C71AE9 /* TextFinderClient.swift in Sources */,
+				38C580192104201400E2E961 /* ToggleButtonConfig.swift in Sources */,
 				384AB23C20E3B26800D7E5D7 /* PJTableView.swift in Sources */,
 				3821C85120E25FFE0045E5A8 /* PJPAutoWrapButtonCell.swift in Sources */,
 				380C3C2620EA76950077C2BE /* TextFinder.swift in Sources */,
@@ -598,7 +627,9 @@
 				38E7B29A2100395F0052FC00 /* SimpleButtons.swift in Sources */,
 				389D7E4221036674009F794E /* MetallicButtons.swift in Sources */,
 				38AEC06820E2243300E6529F /* ExportTabController.swift in Sources */,
+				38C5801521041F4300E2E961 /* GlassyButtonConfig.swift in Sources */,
 				38846B7D20E2903D00C0DB3C /* Words.swift in Sources */,
+				38C5801121041D5100E2E961 /* ButtonText.swift in Sources */,
 				38AEC06220E223ED00E6529F /* TestTabController.swift in Sources */,
 				3884FA8020F60E67006EDF11 /* PJTextView.swift in Sources */,
 				3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */,
@@ -612,6 +643,7 @@
 				38AEC07A20E23A3900E6529F /* BMTTabViewController.swift in Sources */,
 				384AB24620E47EFF00D7E5D7 /* MenuController.swift in Sources */,
 				386E33F920F1A3E600763618 /* PreferencesViewController.swift in Sources */,
+				38C5801721041F8D00E2E961 /* SimpleButtonConfig.swift in Sources */,
 				381F685020EB3DD50085E330 /* FindMenuDelegate.swift in Sources */,
 				38AEC05C20E21F9B00E6529F /* MainTabViewController.swift in Sources */,
 				3850BA2820E4AA0C00A7C7CF /* LanguageMenuController.swift in Sources */,

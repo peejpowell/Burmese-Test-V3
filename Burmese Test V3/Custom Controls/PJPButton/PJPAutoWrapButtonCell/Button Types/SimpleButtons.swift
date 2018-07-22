@@ -11,34 +11,6 @@ import Cocoa
 
 /// Simple Buttons Extension - .simple = 2
 
-class SimpleButtonConfig {
-    var frame: NSRect
-    var x: CGFloat
-    var y: CGFloat
-    var rad: CGFloat
-    var width: CGFloat
-    var height: CGFloat
-    var showBorder: Bool?
-    var originalFrame: NSRect
-    
-    init(frame: NSRect, x: CGFloat, y: CGFloat, rad: CGFloat, width: CGFloat, height: CGFloat, showBorder: Bool?, originalFrame: NSRect) {
-        self.frame = frame
-        self.x = x
-        self.y = y
-        self.rad = rad
-        self.width = width
-        self.height = height
-        self.showBorder = showBorder
-        self.originalFrame = originalFrame
-        
-        print("Created SimpleButtonConfig \(self)")
-    }
-    
-    deinit {
-        print("Removed SimpleButtonConfig \(self)")
-    }
-}
-
 extension PJPAutoWrapButtonCell {
     
     enum SimpleElement : Int {
