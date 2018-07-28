@@ -438,7 +438,7 @@ extension PJPAutoWrapButtonCell {
         if let bordered = self.showBorder {
             switch bordered {
             case true:
-                let buttonAreaRect = NSRect(x: config.originalFrame.origin.x+1, y: config.originalFrame.origin.y+1, width: config.originalFrame.width-2, height: config.originalFrame.height-2)
+                let buttonAreaRect = NSRect(x: config.frame.origin.x+1, y: config.frame.origin.y+1, width: config.frame.width-2, height: config.frame.height-2)
                 let buttonArea = NSBezierPath(roundedRect: buttonAreaRect, xRadius: config.cornerRad, yRadius: config.cornerRad)
                 NSColor(deviceWhite: 0, alpha: 0.5).setStroke()
                 switch disabled {
@@ -535,8 +535,10 @@ extension PJPAutoWrapButtonCell {
             switch buttonState {
             case .on:
                 drawToggleOnButton(using: config)
+            case .off:
+                drawToggleOffButton(using: config)
             case .up:
-                drawToggleOnButton(using: config)
+                drawToggleOffButton(using: config)
             case .down:
                 drawToggleOffButton(using:config)
             case .hoverOn:

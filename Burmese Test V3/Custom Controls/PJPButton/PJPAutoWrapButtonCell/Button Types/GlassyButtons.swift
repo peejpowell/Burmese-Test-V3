@@ -12,8 +12,9 @@ import Cocoa
 /// Glassy Buttons Extension - .glassy = 0
 
 extension PJPAutoWrapButtonCell {
-    
+   
     enum GlassyElement : Int {
+        typealias RawValue = Int
         case shadow
         case topHilight
         case middle
@@ -95,7 +96,7 @@ extension PJPAutoWrapButtonCell {
     
     // MARK: Gradients
     
-    func glassyButtonMiddleGradient(hover: Bool = false)->NSGradient? {
+    @objc func glassyButtonMiddleGradient(hover: Bool = false)->NSGradient? {
         var gradMiddleColors = [NSColor(deviceWhite: 0.95, alpha: 1),
                                NSColor(deviceWhite: 0.6, alpha: 1)]
         switch hover {
@@ -179,15 +180,16 @@ extension PJPAutoWrapButtonCell {
                           (gradFrontColors[2], gradFrontLocations[2])
         )
     }
+    
     // MARK: Button Elements
     
-    func drawGlassyShadow(using config: GlassyButtonConfig) {
+    @objc func drawGlassyShadow(using config: GlassyButtonConfig) {
         NSColor.gray.setFill()
         drawGlassyBezelElementFor(.shadow, using: config).setClip()
         drawGlassyBezelElementFor(.shadow, using: config).fill()
     }
     
-    func drawGlassyTopHilight(using config: GlassyButtonConfig, hover: Bool = false) {
+    @objc func drawGlassyTopHilight(using config: GlassyButtonConfig, hover: Bool = false) {
         drawGlassyBezelElementFor(.topHilight, using: config).setClip()
         switch hover {
         case false:
@@ -198,34 +200,34 @@ extension PJPAutoWrapButtonCell {
         drawGlassyBezelElementFor(.topHilight, using: config).fill()
     }
     
-    func drawGlassyMiddle(using config: GlassyButtonConfig, hover: Bool = false) {
+    @objc func drawGlassyMiddle(using config: GlassyButtonConfig, hover: Bool = false) {
         NSColor(deviceWhite: 0.5, alpha: 1).setFill()
         if let middleGradient = glassyButtonMiddleGradient(hover: hover) {
             middleGradient.draw(in: drawGlassyBezelElementFor(.middle, using: config), angle: 90)
         }
     }
     
-    func drawGlassyFront(using config: GlassyButtonConfig, hover: Bool = false) {
+    @objc func drawGlassyFront(using config: GlassyButtonConfig, hover: Bool = false) {
         drawGlassyBezelElementFor(.front, using: config).setClip()
         if let frontGradient = glassyButtonFrontGradient(hover: hover) {
             frontGradient.draw(in: drawGlassyBezelElementFor(.front, using: config), angle: 90)
         }
     }
     
-    func drawGlassyFrontHilight(using config: GlassyButtonConfig, hover: Bool = false, down: Bool = false) {
+    @objc func drawGlassyFrontHilight(using config: GlassyButtonConfig, hover: Bool = false, down: Bool = false) {
         if let frontHilightGradient = glassyButtonFrontHilightGradient(hover: hover, down: down) {
             frontHilightGradient.draw(in: drawGlassyBezelRectFor(element: .frontHilight, using: config, down: down), angle: 90)
         }
     }
     
-    func drawGlassyColorOverlay(using config: GlassyButtonConfig) {
+    @objc func drawGlassyColorOverlay(using config: GlassyButtonConfig) {
         drawGlassyBezelElementFor(.colorOverlay, using: config).setClip()
         if let frontHilightGradient = glassyButtonColorOverlayGradient() {
             frontHilightGradient.draw(in: drawGlassyBezelElementFor(.colorOverlay, using: config), angle: 90)
         }
     }
     
-    func drawGlassyTopShadow(using config: GlassyButtonConfig) {
+    @objc func drawGlassyTopShadow(using config: GlassyButtonConfig) {
         var ceiling : Int = 15
         var alphaInc : CGFloat = 0.02
         if config.height < 50 {
@@ -245,7 +247,7 @@ extension PJPAutoWrapButtonCell {
     
     // MARK: Glassy Button States
     
-    func drawGlassyUpButton(using config: GlassyButtonConfig) {
+    @objc func drawGlassyUpButton(using config: GlassyButtonConfig) {
         drawGlassyShadow(using: config)
         drawGlassyTopHilight(using: config)
         drawGlassyMiddle(using: config)
@@ -253,7 +255,7 @@ extension PJPAutoWrapButtonCell {
         drawGlassyFrontHilight(using: config)
     }
     
-    func drawGlassyDownButton(using config: GlassyButtonConfig) {
+    @objc func drawGlassyDownButton(using config: GlassyButtonConfig) {
         drawGlassyShadow(using: config)
         drawGlassyTopHilight(using: config)
         drawGlassyMiddle(using: config)
@@ -279,7 +281,7 @@ extension PJPAutoWrapButtonCell {
         drawGlassyFrontHilight(using: config)
     }
     
-    func glassyButtons(using config: GlassyButtonConfig) {
+    @objc func glassyButtons(using config: GlassyButtonConfig) {
         if let buttonState = buttonState {
             Swift.print("Glassy buttons")
             switch buttonState {

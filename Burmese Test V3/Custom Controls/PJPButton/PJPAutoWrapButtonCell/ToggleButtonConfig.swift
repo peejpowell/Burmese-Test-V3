@@ -18,7 +18,6 @@ class ToggleButtonConfig : PJPButtonConfig {
     var height: CGFloat
     var recessWidth: CGFloat
     var showBorder: Bool?
-    var originalFrame: NSRect
     var alphaVal: CGFloat = 1
     var alphaInc: CGFloat = 0.05
     var cornerRad: CGFloat
@@ -29,7 +28,7 @@ class ToggleButtonConfig : PJPButtonConfig {
     var heightOffset: CGFloat = 0
     
     convenience init(using config: PJPButtonConfig) {
-        self.init(frame: config.buttonFrame, rad: config.buttonCornerRadius, cornerRad: config.buttonCornerRadius * 2)
+        self.init(frame: config.buttonFrame, rad: config.buttonCornerRadius/2, cornerRad: config.buttonCornerRadius)
     }
     
     init(frame: NSRect, rad: CGFloat, cornerRad: CGFloat) {
@@ -40,15 +39,8 @@ class ToggleButtonConfig : PJPButtonConfig {
         self.height = frame.height / 2
         self.rad = rad
         self.recessWidth = (self.height * 2) - (self.height / 4)
-        self.originalFrame = frame
         self.cornerRad = cornerRad
         self.horOffset = self.height / 4
         super.init(frame: frame)
-        
-        print("Created ToggleButtonConfig: \(self)")
-    }
-    
-    deinit {
-        print("Removed ToggleButtonConfig : \(self)")
     }
 }

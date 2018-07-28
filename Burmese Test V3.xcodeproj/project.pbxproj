@@ -72,6 +72,7 @@
 		38EFAFA920E93A2600C71AE9 /* FindBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38EFAFA820E93A2600C71AE9 /* FindBarViewController.xib */; };
 		38EFAFAB20E9CCE900C71AE9 /* TextFinderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFAA20E9CCE900C71AE9 /* TextFinderClient.swift */; };
 		38EFAFAD20E9D08D00C71AE9 /* PJScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFAC20E9D08D00C71AE9 /* PJScrollView.swift */; };
+		38FE436C21071EC80027606D /* PJPAutowrapButtonCellCA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE436B21071EC80027606D /* PJPAutowrapButtonCellCA.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -165,6 +166,7 @@
 		38EFAFA820E93A2600C71AE9 /* FindBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindBarViewController.xib; sourceTree = "<group>"; };
 		38EFAFAA20E9CCE900C71AE9 /* TextFinderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinderClient.swift; sourceTree = "<group>"; };
 		38EFAFAC20E9D08D00C71AE9 /* PJScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJScrollView.swift; sourceTree = "<group>"; };
+		38FE436B21071EC80027606D /* PJPAutowrapButtonCellCA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJPAutowrapButtonCellCA.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -402,10 +404,11 @@
 			isa = PBXGroup;
 			children = (
 				3821C85020E242630045E5A8 /* PJPButtonConfig.swift */,
-				38C5801421041F4300E2E961 /* GlassyButtonConfig.swift */,
 				38C5801621041F8D00E2E961 /* SimpleButtonConfig.swift */,
 				38C580182104201400E2E961 /* ToggleButtonConfig.swift */,
+				38C5801421041F4300E2E961 /* GlassyButtonConfig.swift */,
 				3821C84E20E242530045E5A8 /* PJPAutoWrapButtonCell.swift */,
+				38FE436B21071EC80027606D /* PJPAutowrapButtonCellCA.swift */,
 				38E7B29B210039690052FC00 /* Button Types */,
 			);
 			path = PJPAutoWrapButtonCell;
@@ -620,6 +623,7 @@
 				38AEC06620E2241E00E6529F /* WordsTabController.swift in Sources */,
 				3821C85420E260100045E5A8 /* PJGlobalFunctions.swift in Sources */,
 				384AB24020E3E74400D7E5D7 /* PJFileManager.swift in Sources */,
+				38FE436C21071EC80027606D /* PJPAutowrapButtonCellCA.swift in Sources */,
 				38EFAFA520E9292A00C71AE9 /* PJWindow.swift in Sources */,
 				3821C85220E260060045E5A8 /* PJPButtonConfig.swift in Sources */,
 				386E340520F1BCF100763618 /* PrefsToolbarController.swift in Sources */,

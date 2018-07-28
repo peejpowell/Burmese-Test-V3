@@ -15,6 +15,7 @@ extension PJPAutoWrapButtonCell {
     
     func getLastSpaceIndex(text: String)->String.Index
     {
+        infoPrint("\(self)", #function, self.className)
         let textLength : Int = text.count
         var firstIndex = text.index(before: text.endIndex)
         let lastIndex = text.endIndex
@@ -32,19 +33,13 @@ extension PJPAutoWrapButtonCell {
         return lastIndex
     }
     
-    func test()
+    func wrapTitleText(title: String, frame: NSRect, titleFont: NSFont)->(String, NSSize)
     {
-        var test = "test"
-        
-        test.replaceString("  ", withString: " ")
-    }
-    
-    func wrapTitleText(title: String, button: NSView, titleFont: NSFont)->String
-    {
-        var buttonWidth = button.frame.size.width - (button.frame.size.width * 0.10)
+        infoPrint("\(self)", #function, self.className)
+        //var buttonWidth = button.frame.size.width// - (button.frame.size.width * 0.10)
         if self.buttonStyle == .toggle
         {
-            buttonWidth = button.frame.size.width - ((button.frame.size.height+button.frame.size.height/2)+20) - (button.frame.size.width * 0.10)
+            //buttonWidth = button.frame.size.width - ((button.frame.size.height+button.frame.size.height/2)+20) - (button.frame.size.width * 0.10)-50
         }
         
         let buttonTitle = title.replacingOccurrences(of: "  ", with: " ", options: String.CompareOptions.literal, range: title.startIndex..<title.endIndex)
@@ -54,14 +49,14 @@ extension PJPAutoWrapButtonCell {
         {
             paragraphStyle = copyOfParagraphStyle
         }
-        if self.buttonStyle == .toggle
+        /*if self.buttonStyle == .toggle
         {
             paragraphStyle.alignment = NSTextAlignment.left
         }
         else
         {
             paragraphStyle.alignment = NSTextAlignment.center
-        }
+        }*/
         let font = titleFont
         //let attributes = NSDictionary(objectsAndKeys: font, NSFontAttributeName, paragraphStyle, NSParagraphStyleAttributeName)
         //var textSize = buttonTitle.sizeWithAttributes(attributes)
@@ -73,7 +68,7 @@ extension PJPAutoWrapButtonCell {
         
         var counter = 0
         
-        if buttonWidth < textSize.width
+        if frame.width < textSize.width
         {
             //PJLog("too long, chop it up")
             // Find the last space
@@ -95,7 +90,7 @@ extension PJPAutoWrapButtonCell {
                 
                 //PJLog(textSize.width)
                 
-                if buttonWidth < firstTextSize.width
+                if frame.width < firstTextSize.width
                 {
                     tooLong = true
                 }
@@ -111,12 +106,12 @@ extension PJPAutoWrapButtonCell {
                     initialText = remainingChunk
                     _ = remainingChunk.size(withAttributes: attributes)
                     firstTextSize = firstChunk.size(withAttributes: attributes)
-                    if firstTextSize.width < buttonWidth
+                    if firstTextSize.width < frame.width
                     {
                         tooLong = false
                     }
                 }
-                if counter == 20
+                if counter == 200
                 {
                     tooLong = false
                 }
@@ -124,6 +119,7 @@ extension PJPAutoWrapButtonCell {
             }
         }
         chunkArray.append(remainingChunk)
+        print("remaining: \(remainingChunk)")
         var wrappedText = ""
         for text in 0 ..< chunkArray.count-1
         {
@@ -133,34 +129,90 @@ extension PJPAutoWrapButtonCell {
         {
             wrappedText += endText
         }
-        return wrappedText
+        
+        let newSize = wrappedText.size(withAttributes: attributes)
+        
+        return (wrappedText, newSize)
     }
     
-    func wrapTitle(titleText: String, button: NSView, font: NSFont)->(String, NSFont)
+    /// Takes a string of text and inserts line feeds where a word will make it exceed the width of frame
+    
+    func boundsForStyle(_ style: PJPButtonStyle?, frame: NSRect, down: Bool = false)->NSRect {
+        var textBounds = frame
+        var cornerRadius : CGFloat = 0
+        let offset: CGFloat = 2
+        if let buttonStyle = style {
+            switch buttonStyle {
+            case .noStyle:
+                break
+            case .glassy, .metallic, .simple:
+                if let divider = self.cornerDivider {
+                    if divider > 0 {
+                        cornerRadius = frame.size.height / divider
+                    }
+                }
+                textBounds.origin.x = textBounds.origin.x + cornerRadius
+                textBounds.size.width = textBounds.width - (cornerRadius * 2)
+                if down {
+                    textBounds.origin.x = textBounds.origin.x + offset*2
+                    textBounds.origin.y = textBounds.origin.y + offset
+                    textBounds.size.width = textBounds.width - offset * 2
+                }
+            case .toggle:
+                var recessWidth : CGFloat = 0
+                if let controlView = self.controlView {
+                    recessWidth = (controlView.frame.height * 2) - (controlView.frame.height / 3)
+                
+                    print("recess: \(recessWidth)")
+                    textBounds.origin.x = textBounds.origin.x + (controlView.frame.height / 2) + recessWidth
+                }
+                textBounds.size.width = textBounds.width - textBounds.origin.x - 5
+                NSGraphicsContext.current?.saveGraphicsState()
+                //NSColor.yellow.setFill()
+                //textBounds.fill()
+                switch self.buttonStyle! {
+                case .toggle:
+                    print("text frame: \(textBounds)")
+                default:
+                    break
+                }
+                NSGraphicsContext.current?.restoreGraphicsState()
+                
+            }
+        }
+        return textBounds
+    }
+    
+    func wrapTitle(titleText: String, frame: NSRect, font: NSFont)->(String, NSFont, NSSize)
     {
-        // Calculate how wide to make the text in the current button width
+        infoPrint("\(self)", #function, self.className)
         
-        var titleText = wrapTitleText(title: titleText, button:button, titleFont: font)
+        // Work out how wide the bounds of the text box should be so it doesn't overlap the edges of the button (even if curved)
+        var textBounds = frame
+        var cornerRadius : CGFloat = 0
+        textBounds = boundsForStyle(self.buttonStyle, frame: textBounds)
+        
+        var (newTitleText, newSize) = wrapTitleText(title: titleText, frame: textBounds, titleFont: font)
+        
+        infoPrint("title Text: \(newTitleText)", #function, self.className)
         var paragraphStyle: NSMutableParagraphStyle = NSMutableParagraphStyle()
-        if let copyOfParagraphStyle = NSMutableParagraphStyle.default.mutableCopy() as? NSMutableParagraphStyle
-        {
+        if let copyOfParagraphStyle = NSMutableParagraphStyle.default.mutableCopy() as? NSMutableParagraphStyle {
             paragraphStyle = copyOfParagraphStyle
         }
-        if self.buttonStyle == .toggle
+        /*if self.buttonStyle == .toggle
         {
             paragraphStyle.alignment = NSTextAlignment.left
         }
         else
         {
             paragraphStyle.alignment = NSTextAlignment.center
-        }
+        }*/
         
         let attributes = [NSAttributedString.Key.font: font, NSAttributedString.Key.paragraphStyle: paragraphStyle]
-        var textSize = titleText.size(withAttributes: attributes)
-        
+        var textSize = newTitleText.size(withAttributes: attributes)
         var myFont = font
-        
-        while textSize.height > button.frame.size.height - 10
+        /*
+        while textSize.height > frame.height - 10
         {
             //PJLog("textsize height: \(textSize.height) - \(button.frame.size.height)")
             
@@ -172,43 +224,43 @@ extension PJPAutoWrapButtonCell {
             let attributes = [NSAttributedString.Key.font: myFont, NSAttributedString.Key.paragraphStyle: paragraphStyle]
             let unwrappedText =  titleText.replacingOccurrences(of: "\n", with: " ", options: String.CompareOptions.literal, range: titleText.startIndex..<titleText.endIndex)
             
-            titleText = wrapTitleText(title: unwrappedText, button:button, titleFont: myFont)
+            titleText = wrapTitleText(title: unwrappedText, frame: textBounds, titleFont: myFont)
             textSize = titleText.size(withAttributes: attributes)
+        }*/
+        return (newTitleText, myFont, newSize)
+    }
+    
+    func findSpaces(inString string: String)->[String.Index]
+    {
+        var spaceIndexes : [String.Index] = [string.startIndex]
+        spaceIndexes.remove(at: 0)
+        //spaceIndexes.removeAtIndex(0)
+        var start : String.Index = string.startIndex
+        var end : String.Index = string.index(after:string.startIndex)
+        
+        while end < string.endIndex
+        {
+            //var char = string.substringWithRange(Range(start: start, end: end))
+            let char = string[start..<end]
+            if char == " "
+            {
+                spaceIndexes.append(end)
+            }
+            start = string.index(after:start)
+            end = string.index(after:start)
         }
-        return (titleText, myFont)
+        return spaceIndexes
     }
     
     func wrapString(stringToWrap: String, inRect: NSRect, attributes: Dictionary<NSAttributedString.Key, AnyObject>)->(String, Int)
     {
+        infoPrint("\(self)", #function, self.className)
         if stringToWrap.size(withAttributes: attributes).width < inRect.width
         {
             return (stringToWrap, 1)
         }
         var wrappedString = ""
         let stringSize : NSSize = stringToWrap.size(withAttributes: attributes)
-        
-        func findSpaces(inString string: String)->[String.Index]
-        {
-            var spaceIndexes : [String.Index] = [string.startIndex]
-            spaceIndexes.remove(at: 0)
-            //spaceIndexes.removeAtIndex(0)
-            var start : String.Index = string.startIndex
-            var end : String.Index = string.index(after:string.startIndex)
-            
-            while end < string.endIndex
-            {
-                //var char = string.substringWithRange(Range(start: start, end: end))
-                let char = string[start..<end]
-                if char == " "
-                {
-                    spaceIndexes.append(end)
-                }
-                start = string.index(after:start)
-                end = string.index(after:start)
-            }
-            return spaceIndexes
-        }
-        
         let spaceLocations : [String.Index] = findSpaces(inString: stringToWrap)
         var newString = ""
         var startLoc = stringToWrap.startIndex
@@ -223,27 +275,22 @@ extension PJPAutoWrapButtonCell {
             newString = String(stringToWrap[startLoc..<endLoc])
             //PJLog(newString)
             
-            if newString.size(withAttributes: attributes).width < inRect.width
-            {
+            if newString.size(withAttributes: attributes).width < inRect.width {
                 returnString = newString
-                if spaceNum < spaceLocations.count-1
-                {
+                if spaceNum < spaceLocations.count-1 {
                     endLoc = spaceLocations[spaceNum+1]
                 }
-                if spaceNum == spaceLocations.count-1
-                {
+                if spaceNum == spaceLocations.count-1 {
                     strings.append(returnString)
                 }
             }
-            else
-            {
+            else {
                 //PJLog("newstring is too long : \(newString)")
                 returnString = oldString
                 startLoc = spaceLocations[spaceNum-1]
                 //PJLog("return: \(returnString)")
                 strings.append(returnString)
-                if spaceNum == spaceLocations.count-1
-                {
+                if spaceNum == spaceLocations.count-1 {
                     endLoc = startLoc
                 }
             }
@@ -251,33 +298,29 @@ extension PJPAutoWrapButtonCell {
         let remainder = stringToWrap[endLoc..<stringToWrap.endIndex]
         //PJLog("remainder: \(remainder)")
         let lastAndRemainder = "\(strings[strings.count-1])\(remainder)"
-        if lastAndRemainder.size(withAttributes: attributes).width > inRect.width
-        {
+        if lastAndRemainder.size(withAttributes: attributes).width > inRect.width {
             strings.append(String(remainder))
         }
-        else
-        {
+        else {
             strings[strings.count-1] = lastAndRemainder
         }
         
-        for stringNum in 0 ..< strings.count-1
-        {
+        for stringNum in 0 ..< strings.count-1 {
             strings[stringNum] = "\(strings[stringNum])\n"
             wrappedString = wrappedString + strings[stringNum]
         }
         wrappedString = wrappedString + strings[strings.count-1]
-        if wrappedString != ""
-        {
+        if wrappedString != "" {
             return (wrappedString,strings.count-1)
         }
-        else
-        {
+        else {
             return (stringToWrap,1)
         }
     }
     
     func findString(dirtyRect: NSRect, string: String, attributes: Dictionary<NSAttributedString.Key, AnyObject>)->(Dictionary<NSAttributedString.Key, AnyObject>, Int)
     {
+        infoPrint("\(self)", #function, self.className)
         let paragraphStyle : NSParagraphStyle = attributes[NSAttributedString.Key.paragraphStyle] as! NSParagraphStyle
         var font : NSFont = attributes[NSAttributedString.Key.font] as! NSFont
         
@@ -303,8 +346,9 @@ extension PJPAutoWrapButtonCell {
      return controlView.frame
      }*/
     
-    func drawMyTitle(title: String, withFrame frame: NSRect, inView controlView : NSView)
+    /*func drawMyTitle(title: String, withFrame frame: NSRect, inView controlView : NSView)
     {
+        infoPrint("\(self)", #function, self.className)
         return
         /*
          if let lastTitle = self.lastTitle
@@ -396,24 +440,32 @@ extension PJPAutoWrapButtonCell {
         self.lastTitle = title
         self.lastBounds = frame
         title.draw(in: bounds, withAttributes: attributes)
-    }
+    }*/
     
     override func drawTitle(_ title: NSAttributedString, withFrame frame: NSRect, in controlView: NSView) -> NSRect
     {
-        if let font = self.font
-        {
-            // let paragraphStyle = NSMutableParagraphStyle.defaultParagraphStyle().mutableCopy() as NSMutableParagraphStyle
+        infoPrint("\(self)", #function, self.className)
+        if let font = self.font,
+           let paragraphStyle = NSMutableParagraphStyle.default.mutableCopy() as? NSMutableParagraphStyle {
+            var xOffset: CGFloat = 0
+            paragraphStyle.alignment = self.alignment
+            switch paragraphStyle.alignment {
+            case .center:
+                break
+            case .right:
+                xOffset = -10
+            case .left:
+                xOffset = 10
+            case .justified:
+                xOffset = 10
+            case .natural:
+                break
+            }
             
-            let paragraphStyle = NSMutableParagraphStyle.default.mutableCopy() as! NSMutableParagraphStyle
-            if self.buttonStyle == .toggle
-            {
-                paragraphStyle.alignment = NSTextAlignment.left
-            }
-            else
-            {
-                paragraphStyle.alignment = NSTextAlignment.center
-            }
-            let (originalText, newFont) = wrapTitle(titleText: title.string, button: controlView, font: font)
+            //NSColor.green.setFill()
+            //frame.fill()
+            
+            let (originalText, newFont, newSize) = wrapTitle(titleText: title.string, frame: frame, font: font)
             //self.font = newFont
             //var attributes = NSDictionary(objectsAndKeys: newFont, NSFontAttributeName, paragraphStyle, NSParagraphStyleAttributeName)
             var attributes = [NSAttributedString.Key.font : newFont, NSAttributedString.Key.paragraphStyle : paragraphStyle]
@@ -426,31 +478,28 @@ extension PJPAutoWrapButtonCell {
                     attributes = [NSAttributedString.Key.font : newFont, NSAttributedString.Key.paragraphStyle : paragraphStyle, NSAttributedString.Key.foregroundColor : NSColor(deviceRed: 0, green: 0, blue: 0, alpha: 0.5)]
                 }
             }
-            let textSize = originalText.size(withAttributes: attributes)
             
-            let textBounds = NSRect(x: frame.origin.x, y: frame.origin.y, width: textSize.width, height: textSize.height)
-            // using frame argument seems to produce text in wrong place
-            let f = NSRect(x: 0, y: (controlView.frame.size.height - textSize.height) / 2, width: controlView.frame.size.width, height: textSize.height)
-            let offset : CGFloat = 2
-            let f2 = NSRect(x: (0 + offset), y: ((controlView.frame.size.height - textSize.height) / 2) + offset, width: controlView.frame.size.width, height: textSize.height)
-            let f3 = NSRect(x: (0 + controlView.frame.size.height+(controlView.frame.size.height/2)+20), y: ((controlView.frame.size.height - textSize.height) / 2) + offset, width: controlView.frame.size.width, height: textSize.height)
+            let textSize = newSize//originalText.size(withAttributes: attributes)
             
-            if self.buttonStyle == .toggle
-            {
-                originalText.draw(in:f3, withAttributes: attributes)
+            var newFrame = frame
+            //newFrame.size.width = textSize.width
+            if textSize.height > frame.height {
+                newFrame.size.height = textSize.height
+                newFrame.origin.y = newFrame.origin.y - (textSize.height / 4)
             }
-            else
-            {
-                if self.buttonState == .down
-                {
-                    originalText.draw(in:f2, withAttributes: attributes)
-                }
-                else
-                {
-                    originalText.draw(in:f, withAttributes: attributes)
-                }
-            }
+            let textFrame = boundsForStyle(buttonStyle, frame: newFrame)
             
+            let downTextFrame = boundsForStyle(buttonStyle, frame: newFrame, down: true)
+            let textBounds = textFrame
+            
+            if self.buttonState == .down {
+                originalText.draw(in:downTextFrame, withAttributes: attributes)
+            }
+            else {
+                //NSColor.red.setFill()
+                //textFrame.fill()
+                originalText.draw(in:textFrame, withAttributes: attributes)
+            }
             return textBounds
         }
         return frame

@@ -23,6 +23,13 @@ enum PJPButtonState: Int
     case none // 8
 }
 
+extension NSButton {
+    override open var intrinsicContentSize: CGSize {
+        
+        return CGSize(width: 0, height: 0)
+    }
+}
+
 @IBDesignable class PJPButton: NSButton {
     
     var oldState : PJPButtonState?
@@ -32,7 +39,7 @@ enum PJPButtonState: Int
     {
         let focusTrackingAreaOptions : NSTrackingArea.Options = [NSTrackingArea.Options.activeInActiveApp,
              NSTrackingArea.Options.mouseEnteredAndExited,
-             NSTrackingArea.Options.assumeInside,
+             //NSTrackingArea.Options.assumeInside,
              NSTrackingArea.Options.inVisibleRect]
         let focusTrackingArea = NSTrackingArea(rect: NSZeroRect, options: focusTrackingAreaOptions, owner: self, userInfo: nil)
         self.addTrackingArea(focusTrackingArea)
@@ -66,26 +73,6 @@ enum PJPButtonState: Int
             self.removeTrackingArea(trackingArea as NSTrackingArea)
         }
     }
-    /*
-
-    - (void)createTrackingArea
-    {
-    NSTrackingAreaOptions focusTrackingAreaOptions = NSTrackingActiveInActiveApp;
-    focusTrackingAreaOptions |= NSTrackingMouseEnteredAndExited;
-    focusTrackingAreaOptions |= NSTrackingAssumeInside;
-    focusTrackingAreaOptions |= NSTrackingInVisibleRect;
-    
-    NSTrackingArea *focusTrackingArea = [[NSTrackingArea alloc] initWithRect:NSZeroRect
-    options:focusTrackingAreaOptions owner:self userInfo:nil];
-    [self addTrackingArea:focusTrackingArea];
-    }
-    
-    
-    - (void)awakeFromNib
-    {
-    [self createTrackingArea];
-    }
-*/
     
     override func draw(_ dirtyRect: NSRect)
     {
@@ -97,8 +84,7 @@ enum PJPButtonState: Int
     override func mouseMoved(with event: NSEvent) {
         Swift.print("mouseMoved")
         
-        if self.isEnabled
-        {
+        if self.isEnabled {
             if  let cell = self.cell as? PJPAutoWrapButtonCell,
                 let buttonState = cell.buttonState {
                 switch buttonState {
@@ -118,12 +104,10 @@ enum PJPButtonState: Int
     {
         Swift.print("mouseDown")
         
-        if self.isEnabled
-        {
+        if self.isEnabled {
             if  let cell = self.cell as? PJPAutoWrapButtonCell,
                 let buttonState = cell.buttonState,
-                let buttonStyle = cell.buttonStyle
-            {
+                let buttonStyle = cell.buttonStyle {
                 switch buttonState
                 {
                 case .on:
@@ -261,6 +245,8 @@ enum PJPButtonState: Int
                         {
                         case .glassy:
                             cell.buttonState = .hover
+                        case .toggle:
+                            cell.buttonState = .hoverOff
                         default:
                             cell.buttonState = .hover
                         }

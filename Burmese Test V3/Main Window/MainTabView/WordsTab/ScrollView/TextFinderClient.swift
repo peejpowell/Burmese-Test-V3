@@ -786,7 +786,7 @@ extension TextFinderClient {
     
     func shouldReplaceCharacters(inRanges ranges: [NSValue], with strings: [String]) -> Bool
     {
-        // If there are more that one replacement (replacing all) then prompt to comfirm this is really wanted
+        // If there are more that one replacement (replacing all) then prompt to confirm this is really wanted
         
         if ranges.count == 1 {
             return true
@@ -870,7 +870,7 @@ extension TextFinderClient {
     }
     
     func didReplaceCharacters() {
-        _ = self.calculateIndex()
+        self.resetSearch()
         tableView.reloadData()
     }
     

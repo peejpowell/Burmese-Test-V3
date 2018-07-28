@@ -32,10 +32,5 @@ class SimpleButtonConfig : PJPButtonConfig {
         self.height = height
         self.originalFrame = originalFrame
         super.init(frame: frame)
-        print("Created SimpleButtonConfig \(self)")
-    }
-    
-    deinit {
-        print("Removed SimpleButtonConfig \(self)")
     }
 }

@@ -43,12 +43,6 @@ class GlassyButtonConfig : PJPButtonConfig {
         self.cornerRad = cornerRad
         self.horOffset = frame.height / 4
         super.init(frame: frame)
-        
-        print("Created GlassyButtonConfig: \(self)")
-    }
-    
-    deinit {
-        print("Removed GlassyButtonConfig : \(self)")
     }
 }
 

@@ -25,6 +25,8 @@ class PJPButtonConfig: NSObject {
         self.buttonY = frame.origin.y
         self.buttonWidth = frame.width
         self.buttonHeight = frame.height
+        super.init()
+        infoPrint("\(self)", #function, self.className)
     }
     
     deinit {
