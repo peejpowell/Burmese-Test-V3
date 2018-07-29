@@ -1,7 +1,7 @@
 import Cocoa
 
-var str = "Hello, playground"
-
+var str = "Hello, playground.  This is a test to see where the last space is."
+/*
 extension String {
     enum MinusLocation: Int {
         case front
@@ -104,7 +104,16 @@ url.deleteLastPathComponent()
 let testString = "<--KBurmeseCol-->"
 testString.minus(3)
 testString.minus(-3)
+*/
 
 
+func getLastSpaceIndex(text: String)->String.Index {
+    //infoPrint("\(self)", #function, self.className)
+    if let spaceIndex = text.lastIndex(of: " ") {
+        let charIndex = text.index(after: spaceIndex)
+        return charIndex
+    }
+    return text.endIndex
+}
 
-
+str[getLastSpaceIndex(text: str)]

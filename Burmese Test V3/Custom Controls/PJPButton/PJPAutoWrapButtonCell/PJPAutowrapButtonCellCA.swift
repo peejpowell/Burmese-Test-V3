@@ -314,7 +314,7 @@ extension PJPAutoWrapButtonCellCA {
             }
             textLayer.fontSize = pointSize
             textLayer.foregroundColor = CGColor.black
-            textLayer.string = wrapTitleText(title: self.title, frame: textLayer.frame, titleFont: self.font!)
+            textLayer.string = wrapText(self.title, in: textLayer.frame, using: self.font!)
             cellLayer.addSublayer(textLayer)
         }
     }

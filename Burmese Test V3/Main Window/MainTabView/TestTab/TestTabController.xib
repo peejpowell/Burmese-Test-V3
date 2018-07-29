@@ -19,13 +19,13 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
                 <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="cEA-Lx-Y3G" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
-                    <rect key="frame" x="5" y="216" width="803" height="52"/>
+                    <rect key="frame" x="20" y="201" width="773" height="52"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="Xvz-wK-TcD"/>
+                        <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="ghv-52-VK5"/>
                     </constraints>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="justified" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lkD-X5-yv0" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
+                    <buttonCell key="cell" type="smallSquare" title="Just some short text" bezelStyle="smallSquare" alignment="justified" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lkD-X5-yv0" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <string key="title">This is a very long title to demonstrate the ability and capabilities of the autowrap button. This is a very long title to demonstrate the ability and capabilities of the autowrap buttoncell.</string>
                         <font key="font" metaFont="system"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="styleAdapter">
@@ -37,6 +37,7 @@
                             <userDefinedRuntimeAttribute type="number" keyPath="oldStyle">
                                 <integer key="value" value="0"/>
                             </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShrinkText" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </buttonCell>
                     <connections>
@@ -44,13 +45,9 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="Y95-2l-LcS" userLabel="Test Button 2" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
-                    <rect key="frame" x="5" y="161" width="803" height="52"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="7dz-tV-Sin"/>
-                    </constraints>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AJX-rO-ZcL" customClass="PJPAutoWrapButtonCellCA" customModule="Burmese_Test_V3" customModuleProvider="target">
+                    <rect key="frame" x="20" y="143" width="773" height="52"/>
+                    <buttonCell key="cell" type="smallSquare" title="Short text 2" bezelStyle="smallSquare" alignment="center" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AJX-rO-ZcL" customClass="PJPAutoWrapButtonCellCA" customModule="Burmese_Test_V3" customModuleProvider="target">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <string key="title">This is a very long title to demonstrate the ability and capabilities of the autowrap button. This is a very long title to demonstrate the ability and capabilities of the autowrap buttoncell. This is a very long title to demonstrate the ability and capabilities of the autowrap buttoncell.</string>
                         <font key="font" metaFont="system"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="styleAdapter">
@@ -61,6 +58,9 @@
                             </userDefinedRuntimeAttribute>
                             <userDefinedRuntimeAttribute type="number" keyPath="oldStyle">
                                 <integer key="value" value="0"/>
+                            </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="number" keyPath="cornerDividerAdapter">
+                                <real key="value" value="3.5"/>
                             </userDefinedRuntimeAttribute>
                         </userDefinedRuntimeAttributes>
                     </buttonCell>
@@ -69,13 +69,10 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="KzF-Ue-DKj" userLabel="Test Button 3" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
-                    <rect key="frame" x="5" y="106" width="803" height="52"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="wG7-lk-ZbZ"/>
-                    </constraints>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zb7-aq-wo3" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
+                    <rect key="frame" x="20" y="85" width="773" height="52"/>
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="justified" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zb7-aq-wo3" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                        <string key="title">This is a very long title to demonstrate the ability and capabilities of the autowrap button. This is a very long title to demonstrate the ability and capabilities of the autowrap buttoncell.</string>
+                        <string key="title">This is a very long title to demonstrate the ability and capabilities of the autowrap button. This is a very long title to demonstrate the ability and capabilities of the autowrap buttoncell. This is a very long title to demonstrate the ability and capabilities of the autowrap buttoncell.</string>
                         <font key="font" metaFont="system"/>
                         <userDefinedRuntimeAttributes>
                             <userDefinedRuntimeAttribute type="number" keyPath="styleAdapter">
@@ -87,6 +84,7 @@
                             <userDefinedRuntimeAttribute type="number" keyPath="oldStyle">
                                 <integer key="value" value="0"/>
                             </userDefinedRuntimeAttribute>
+                            <userDefinedRuntimeAttribute type="boolean" keyPath="shouldShrinkText" value="YES"/>
                         </userDefinedRuntimeAttributes>
                     </buttonCell>
                     <connections>
@@ -94,10 +92,7 @@
                     </connections>
                 </button>
                 <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="2pF-hr-Pwl" userLabel="Test Button 4" customClass="PJPButton" customModule="Burmese_Test_V3" customModuleProvider="target">
-                    <rect key="frame" x="5" y="51" width="803" height="52"/>
-                    <constraints>
-                        <constraint firstAttribute="height" constant="50" id="yhE-De-j9v"/>
-                    </constraints>
+                    <rect key="frame" x="20" y="26" width="773" height="52"/>
                     <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Fs-At-LNc" customClass="PJPAutoWrapButtonCell" customModule="Burmese_Test_V3" customModuleProvider="target">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <string key="title">This is a very long title to demonstrate the ability and capabilities of the autowrap button. This is a very long title to demonstrate the ability and capabilities of the autowrap buttoncell.</string>
@@ -120,18 +115,24 @@
                 </button>
             </subviews>
             <constraints>
-                <constraint firstAttribute="trailing" secondItem="2pF-hr-Pwl" secondAttribute="trailing" constant="5" id="1Sl-fE-4dv"/>
-                <constraint firstItem="cEA-Lx-Y3G" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="5" id="2Lf-Oh-qaL"/>
-                <constraint firstItem="cEA-Lx-Y3G" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="5" id="3cO-v8-byV"/>
-                <constraint firstItem="KzF-Ue-DKj" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="5" id="Dcp-az-hht"/>
-                <constraint firstAttribute="trailing" secondItem="KzF-Ue-DKj" secondAttribute="trailing" constant="5" id="JIY-vs-Dqf"/>
-                <constraint firstAttribute="trailing" secondItem="Y95-2l-LcS" secondAttribute="trailing" constant="5" id="M75-Zs-BJI"/>
-                <constraint firstItem="KzF-Ue-DKj" firstAttribute="top" secondItem="Y95-2l-LcS" secondAttribute="bottom" constant="5" id="ccU-IK-BrE"/>
-                <constraint firstItem="2pF-hr-Pwl" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="5" id="dc7-Vw-CRd"/>
-                <constraint firstItem="Y95-2l-LcS" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="5" id="hc7-Oz-wQ9"/>
-                <constraint firstItem="Y95-2l-LcS" firstAttribute="top" secondItem="cEA-Lx-Y3G" secondAttribute="bottom" constant="5" id="imE-g3-JNE"/>
-                <constraint firstItem="2pF-hr-Pwl" firstAttribute="top" secondItem="KzF-Ue-DKj" secondAttribute="bottom" constant="5" id="mEf-r6-qxW"/>
-                <constraint firstAttribute="trailing" secondItem="cEA-Lx-Y3G" secondAttribute="trailing" constant="5" id="ufg-5l-ZWT"/>
+                <constraint firstItem="KzF-Ue-DKj" firstAttribute="top" secondItem="Y95-2l-LcS" secondAttribute="bottom" constant="8" symbolic="YES" id="1hB-P2-ztM"/>
+                <constraint firstItem="KzF-Ue-DKj" firstAttribute="trailing" secondItem="cEA-Lx-Y3G" secondAttribute="trailing" id="2pf-Tz-609"/>
+                <constraint firstItem="KzF-Ue-DKj" firstAttribute="width" secondItem="cEA-Lx-Y3G" secondAttribute="width" id="BH3-fV-p3Z"/>
+                <constraint firstItem="2pF-hr-Pwl" firstAttribute="trailing" secondItem="cEA-Lx-Y3G" secondAttribute="trailing" id="CvD-5W-d49"/>
+                <constraint firstItem="cEA-Lx-Y3G" firstAttribute="leading" secondItem="c22-O7-iKe" secondAttribute="leading" constant="20" symbolic="YES" id="HSS-yX-nFt"/>
+                <constraint firstAttribute="trailing" secondItem="cEA-Lx-Y3G" secondAttribute="trailing" constant="20" symbolic="YES" id="IDa-AV-EhN"/>
+                <constraint firstItem="KzF-Ue-DKj" firstAttribute="leading" secondItem="cEA-Lx-Y3G" secondAttribute="leading" id="JDB-SD-fou"/>
+                <constraint firstItem="KzF-Ue-DKj" firstAttribute="height" secondItem="cEA-Lx-Y3G" secondAttribute="height" id="OlV-yU-wcG"/>
+                <constraint firstItem="Y95-2l-LcS" firstAttribute="trailing" secondItem="cEA-Lx-Y3G" secondAttribute="trailing" id="VcB-sp-Ci5"/>
+                <constraint firstItem="Y95-2l-LcS" firstAttribute="top" secondItem="cEA-Lx-Y3G" secondAttribute="bottom" constant="8" symbolic="YES" id="bQv-ZH-xSw"/>
+                <constraint firstItem="cEA-Lx-Y3G" firstAttribute="top" secondItem="c22-O7-iKe" secondAttribute="top" constant="20" symbolic="YES" id="eyN-I0-K2a"/>
+                <constraint firstItem="Y95-2l-LcS" firstAttribute="leading" secondItem="cEA-Lx-Y3G" secondAttribute="leading" id="hdu-nG-S2C"/>
+                <constraint firstItem="Y95-2l-LcS" firstAttribute="width" secondItem="cEA-Lx-Y3G" secondAttribute="width" id="qAh-k7-sfD"/>
+                <constraint firstItem="2pF-hr-Pwl" firstAttribute="leading" secondItem="cEA-Lx-Y3G" secondAttribute="leading" id="qkh-bV-xOd"/>
+                <constraint firstItem="2pF-hr-Pwl" firstAttribute="top" secondItem="KzF-Ue-DKj" secondAttribute="bottom" constant="9" id="r8E-mf-ieE"/>
+                <constraint firstItem="Y95-2l-LcS" firstAttribute="height" secondItem="cEA-Lx-Y3G" secondAttribute="height" id="rEa-6S-cU4"/>
+                <constraint firstItem="2pF-hr-Pwl" firstAttribute="width" secondItem="cEA-Lx-Y3G" secondAttribute="width" id="ulM-rM-mKa"/>
+                <constraint firstItem="2pF-hr-Pwl" firstAttribute="height" secondItem="cEA-Lx-Y3G" secondAttribute="height" id="vaR-eK-qfd"/>
             </constraints>
             <point key="canvasLocation" x="-17.5" y="169"/>
         </customView>

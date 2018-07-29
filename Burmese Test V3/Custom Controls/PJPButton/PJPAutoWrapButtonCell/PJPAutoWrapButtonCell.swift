@@ -24,7 +24,7 @@ enum PJPButtonStyle: Int
     var lastTitle : String?
     var lastRect : NSRect?
     var lastBounds : NSRect?
-    
+    @IBInspectable var shouldShrinkText : Bool = false
     @IBInspectable var styleAdapter : Int {
         get                 { return self.buttonStyle!.hashValue }
         set (styleIndex)    { self.buttonStyle = PJPButtonStyle(rawValue: styleIndex) ?? .none }
@@ -35,8 +35,17 @@ enum PJPButtonStyle: Int
         set (stateIndex)    { self.buttonState = PJPButtonState(rawValue: stateIndex) ?? .up }
     }
 
-    var buttonColor         : NSColor? = NSColor.white
     var cornerDivider       : CGFloat? = 2
+    
+    @IBInspectable var cornerDividerAdapter : Float {
+        get {   if let divider = self.cornerDivider {
+            return Float(divider)
+                }
+                return 0
+            }
+        set (cornerDivider) { self.cornerDivider = CGFloat(cornerDivider) }
+    }
+    var buttonColor         : NSColor? = NSColor.white
     var buttonStyle         : PJPButtonStyle? = .glassy
     var buttonState         : PJPButtonState? {
         didSet (oldState){

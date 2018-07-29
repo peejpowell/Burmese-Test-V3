@@ -23,7 +23,7 @@ enum PJPButtonState: Int
     case none // 8
 }
 
-extension NSButton {
+extension PJPButton {
     override open var intrinsicContentSize: CGSize {
         
         return CGSize(width: 0, height: 0)
@@ -35,8 +35,7 @@ extension NSButton {
     var oldState : PJPButtonState?
     var enteredCount : Int = 0
     
-    func createTrackingArea()
-    {
+    func createTrackingArea() {
         let focusTrackingAreaOptions : NSTrackingArea.Options = [NSTrackingArea.Options.activeInActiveApp,
              NSTrackingArea.Options.mouseEnteredAndExited,
              //NSTrackingArea.Options.assumeInside,
@@ -371,43 +370,6 @@ extension NSButton {
                 default:
                     break
                 }
-               /* if cell.buttonState == .hover || cell.buttonState == .down
-                {
-                    Swift.print("Setting up state")
-                    
-                    
-                    cell.buttonState = .up
-                }
-                else if cell.buttonState == .hoverOn || cell.buttonState == .hoverOff
-                {
-                    Swift.print("Setting old state back")
-                    if self.oldState == .off
-                    {
-                        Swift.print("Off")
-                    }
-                    else if self.oldState == .on
-                    {
-                        Swift.print("On")
-                    }
-                    else if self.oldState == .hoverOn
-                    {
-                        Swift.print("hoverOn")
-                    }
-                    else if self.oldState == .hoverOff
-                    {
-                        Swift.print("hoverOff")
-                    }
-                    else if self.oldState == .up
-                    {
-                        Swift.print("up")
-                    }
-                    else if self.oldState == .down
-                    {
-                        Swift.print("down")
-                    }
-
-                    cell.buttonState = self.oldState
-                }*/
                 self.setNeedsDisplay()
             }
             super.mouseExited(with:event)

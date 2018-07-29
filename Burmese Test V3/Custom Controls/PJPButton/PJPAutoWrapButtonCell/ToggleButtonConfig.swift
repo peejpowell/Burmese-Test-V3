@@ -31,6 +31,19 @@ class ToggleButtonConfig : PJPButtonConfig {
         self.init(frame: config.buttonFrame, rad: config.buttonCornerRadius/2, cornerRad: config.buttonCornerRadius)
     }
     
+    override init(frame: NSRect) {
+        self.frame = frame
+        self.x = frame.origin.x + (frame.height / 2)
+        self.y = frame.origin.y + (frame.height / 4)
+        self.width = frame.width
+        self.height = frame.height / 2
+        self.rad = 0
+        self.recessWidth = (self.height * 2) - (self.height / 4)
+        self.cornerRad = 0
+        self.horOffset = self.height / 4
+        super.init(frame: frame)
+    }
+    
     init(frame: NSRect, rad: CGFloat, cornerRad: CGFloat) {
         self.frame = frame
         self.x = frame.origin.x + (frame.height / 2)
