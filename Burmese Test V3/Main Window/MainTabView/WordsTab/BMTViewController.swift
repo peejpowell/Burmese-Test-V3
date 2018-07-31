@@ -1,5 +1,5 @@
 //
-//  BMTTabViewController.swift
+//  BMTViewController.swift
 //  Burmese Test V3
 //
 //  Created by Philip Powell on 26/06/2018.
@@ -11,22 +11,22 @@ import Carbon
 
 extension Notification.Name {
     static var tableNeedsReloading: Notification.Name {
-        return .init(rawValue: "BMTTabViewController.tableNeedsReloading")
+        return .init(rawValue: "BMTViewController.tableNeedsReloading")
     }
     static var tableRowsNeedReloading: Notification.Name {
-        return .init(rawValue: "BMTTabViewController.tableRowsNeedReloading")
+        return .init(rawValue: "BMTViewController.tableRowsNeedReloading")
     }
     static var removeTableRow: Notification.Name {
-        return .init(rawValue: "BMTTabViewController.removeTableRow")
+        return .init(rawValue: "BMTViewController.removeTableRow")
     }
     static var columnVisibilityChanged: Notification.Name {
-        return .init(rawValue: "BMTTabViewController.columnsVisibilityChanged")
+        return .init(rawValue: "BMTViewController.columnsVisibilityChanged")
     }
     static var toggleColumn: Notification.Name {
-        return .init(rawValue: "BMTTabViewController.toggleColumn")
+        return .init(rawValue: "BMTViewController.toggleColumn")
     }
     static var putTableRowOnPasteboard : Notification.Name {
-        return .init(rawValue: "BMTTabViewController.putTableRowOnPasteboard")
+        return .init(rawValue: "BMTViewController.putTableRowOnPasteboard")
     }
     static var populateLessonsPopup: Notification.Name {
         return .init(rawValue: "WordsTabViewController.populateLessonsPopup")

@@ -96,8 +96,6 @@ extension PJPAutoWrapButtonCell {
 
     func boundsForStyle(_ style: PJPButtonStyle?,in frame: NSRect, down: Bool = false)->NSRect {
         var textBounds = frame
-        var cornerRadius : CGFloat = 0
-        let offset: CGFloat = 2
         if let buttonStyle = style {
             switch buttonStyle {
             case .noStyle:

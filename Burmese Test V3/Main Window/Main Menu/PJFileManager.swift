@@ -131,7 +131,7 @@ class PJFileManager : FileManager
         
         let tabViewController = getWordsTabViewDelegate()
         tabViewController.dataSources.append(dataSource)
-        let newViewController = BMTTabViewController()
+        let newViewController = BMTViewController()
         let view = newViewController.view
         if let tableView = view.viewWithTag(100) as? NSTableView {
             if let dataSource = tabViewController.dataSources.last {
@@ -194,7 +194,7 @@ class PJFileManager : FileManager
                                 tableView.delegate = nil
                                 tabViewController.dataSources.append(TableViewDataSource())
                                 loadDataSource(newDataSource, at: 0)
-                                if let viewController =  tabViewController.tabViewItems.first?.viewController as? BMTTabViewController {
+                                if let viewController =  tabViewController.tabViewItems.first?.viewController as? BMTViewController {
                                     tabViewController.tabViewControllersList.append(viewController)
                                 }
                             }

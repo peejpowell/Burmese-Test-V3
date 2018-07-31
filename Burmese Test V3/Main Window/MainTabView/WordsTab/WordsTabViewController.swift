@@ -105,7 +105,7 @@ class WordsTabViewController: NSTabViewController {
     // This holds all the information about the datasources for the tables
     // inside the tabs.
     
-    var tabViewControllersList  : [BMTTabViewController] = []
+    var tabViewControllersList  : [BMTViewController] = []
     var dataSources             : [TableViewDataSource] = []
     var removingFirstItem       : Bool  = false
     var originalInputLanguage = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
@@ -138,8 +138,8 @@ class WordsTabViewController: NSTabViewController {
         if tabViewControllersList.count > 0 {
             return
         }
-        tabViewControllersList.append(BMTTabViewController())
-        //tabViewControllersList.append(BMTTabViewController())
+        tabViewControllersList.append(BMTViewController())
+        //tabViewControllersList.append(BMTViewController())
         if let tableView = tabViewControllersList[0].tableView
         {
             tableView.dataSource = nil

@@ -19,11 +19,10 @@
 		381B8A2A20E1EDB0008335E0 /* ToolbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381B8A2920E1EDB0008335E0 /* ToolbarController.swift */; };
 		381B8A2C20E1F355008335E0 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 381B8A2B20E1F354008335E0 /* Images */; };
 		381F685020EB3DD50085E330 /* FindMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */; };
-		3821C85120E25FFE0045E5A8 /* PJPAutoWrapButtonCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84E20E242530045E5A8 /* PJPAutoWrapButtonCell.swift */; };
-		3821C85220E260060045E5A8 /* PJPButtonConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C85020E242630045E5A8 /* PJPButtonConfig.swift */; };
-		3821C85320E2600C0045E5A8 /* PJPButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84F20E242610045E5A8 /* PJPButton.swift */; };
 		3821C85420E260100045E5A8 /* PJGlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */; };
 		3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84C20E242160045E5A8 /* PJExtensions.swift */; };
+		38295EAB210E3E2200854A1F /* Custom_Buttons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38295EAA210E3DF700854A1F /* Custom_Buttons.framework */; };
+		38295EAC210E3E2200854A1F /* Custom_Buttons.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38295EAA210E3DF700854A1F /* Custom_Buttons.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		383797DD20EE4FF400125253 /* TableTextFinderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383797DC20EE4FF400125253 /* TableTextFinderClient.swift */; };
 		384AB23C20E3B26800D7E5D7 /* PJTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384AB23B20E3B26800D7E5D7 /* PJTableView.swift */; };
 		384AB23E20E3E0BB00D7E5D7 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384AB23D20E3E0BB00D7E5D7 /* MainMenuController.swift */; };
@@ -43,8 +42,6 @@
 		38846B7D20E2903D00C0DB3C /* Words.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7C20E2903D00C0DB3C /* Words.swift */; };
 		38846B8020E299C400C0DB3C /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */; };
 		3884FA8020F60E67006EDF11 /* PJTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3884FA7F20F60E67006EDF11 /* PJTextView.swift */; };
-		389D7E402102A415009F794E /* GlassyButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389D7E3F2102A415009F794E /* GlassyButtons.swift */; };
-		389D7E4221036674009F794E /* MetallicButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 389D7E4121036674009F794E /* MetallicButtons.swift */; };
 		38AEC05720E21F0100E6529F /* FindBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC05620E21F0100E6529F /* FindBarViewController.swift */; };
 		38AEC05C20E21F9B00E6529F /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC05B20E21F9B00E6529F /* MainTabViewController.swift */; };
 		38AEC06220E223ED00E6529F /* TestTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC06120E223ED00E6529F /* TestTabController.swift */; };
@@ -56,26 +53,33 @@
 		38AEC07020E22C6F00E6529F /* ExportTabController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC06F20E22C6F00E6529F /* ExportTabController.xib */; };
 		38AEC07620E2354800E6529F /* WordsTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC07520E2354800E6529F /* WordsTabViewController.swift */; };
 		38AEC07820E2391F00E6529F /* WordsTabController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07720E2391F00E6529F /* WordsTabController.xib */; };
-		38AEC07A20E23A3900E6529F /* BMTTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC07920E23A3900E6529F /* BMTTabViewController.swift */; };
-		38AEC07C20E23D6600E6529F /* BMTTabViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07B20E23D6600E6529F /* BMTTabViewController.xib */; };
-		38C5801121041D5100E2E961 /* ButtonText.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C5801021041D5100E2E961 /* ButtonText.swift */; };
-		38C5801521041F4300E2E961 /* GlassyButtonConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C5801421041F4300E2E961 /* GlassyButtonConfig.swift */; };
-		38C5801721041F8D00E2E961 /* SimpleButtonConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C5801621041F8D00E2E961 /* SimpleButtonConfig.swift */; };
-		38C580192104201400E2E961 /* ToggleButtonConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C580182104201400E2E961 /* ToggleButtonConfig.swift */; };
+		38AEC07A20E23A3900E6529F /* BMTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC07920E23A3900E6529F /* BMTViewController.swift */; };
+		38AEC07C20E23D6600E6529F /* BMTViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07B20E23D6600E6529F /* BMTViewController.xib */; };
 		38C71BC820E7D2FD00AC4B6E /* InfoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */; };
 		38C71BC920E7D2FD00AC4B6E /* InfoPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38C71BC720E7D2FD00AC4B6E /* InfoPopupViewController.xib */; };
 		38CBB93320FA415800C7CAA6 /* TextFinderClientProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBB93220FA415800C7CAA6 /* TextFinderClientProtocols.swift */; };
-		38E7B29A2100395F0052FC00 /* SimpleButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E7B2992100395F0052FC00 /* SimpleButtons.swift */; };
-		38E7B29D21005CD00052FC00 /* ToggleButtons.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38E7B29C21005CD00052FC00 /* ToggleButtons.swift */; };
 		38EFAFA520E9292A00C71AE9 /* PJWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFA420E9292A00C71AE9 /* PJWindow.swift */; };
 		38EFAFA720E9354700C71AE9 /* ClipboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFA620E9354700C71AE9 /* ClipboardController.swift */; };
 		38EFAFA920E93A2600C71AE9 /* FindBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38EFAFA820E93A2600C71AE9 /* FindBarViewController.xib */; };
 		38EFAFAB20E9CCE900C71AE9 /* TextFinderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFAA20E9CCE900C71AE9 /* TextFinderClient.swift */; };
 		38EFAFAD20E9D08D00C71AE9 /* PJScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFAC20E9D08D00C71AE9 /* PJScrollView.swift */; };
-		38FE436C21071EC80027606D /* PJPAutowrapButtonCellCA.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38FE436B21071EC80027606D /* PJPAutowrapButtonCellCA.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		38295EA9210E3DF700854A1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38295EA5210E3DF700854A1F /* Custom Buttons.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 38CFD59B210E3A5B00A01E35;
+			remoteInfo = "Custom Buttons";
+		};
+		38295EAD210E3E2200854A1F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 38295EA5210E3DF700854A1F /* Custom Buttons.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 38CFD59A210E3A5B00A01E35;
+			remoteInfo = "Custom Buttons";
+		};
 		3850BA3220E4D59B00A7C7CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 381B8A0B20E1DAC0008335E0 /* Project object */;
@@ -91,6 +95,20 @@
 			remoteInfo = "Burmese Test V3";
 		};
 /* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		38295EAF210E3E2200854A1F /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				38295EAC210E3E2200854A1F /* Custom_Buttons.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		380C3C2520EA76950077C2BE /* TextFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinder.swift; sourceTree = "<group>"; };
@@ -110,9 +128,7 @@
 		381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMenuDelegate.swift; sourceTree = "<group>"; };
 		3821C84C20E242160045E5A8 /* PJExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJExtensions.swift; sourceTree = "<group>"; };
 		3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJGlobalFunctions.swift; sourceTree = "<group>"; };
-		3821C84E20E242530045E5A8 /* PJPAutoWrapButtonCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJPAutoWrapButtonCell.swift; sourceTree = "<group>"; };
-		3821C84F20E242610045E5A8 /* PJPButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJPButton.swift; sourceTree = "<group>"; };
-		3821C85020E242630045E5A8 /* PJPButtonConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJPButtonConfig.swift; sourceTree = "<group>"; };
+		38295EA5210E3DF700854A1F /* Custom Buttons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Custom Buttons.xcodeproj"; path = "../Custom Buttons/Custom Buttons.xcodeproj"; sourceTree = "<group>"; };
 		383797DC20EE4FF400125253 /* TableTextFinderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTextFinderClient.swift; sourceTree = "<group>"; };
 		384AB23B20E3B26800D7E5D7 /* PJTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJTableView.swift; sourceTree = "<group>"; };
 		384AB23D20E3E0BB00D7E5D7 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
@@ -136,8 +152,6 @@
 		38846B7C20E2903D00C0DB3C /* Words.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Words.swift; sourceTree = "<group>"; };
 		38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 		3884FA7F20F60E67006EDF11 /* PJTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJTextView.swift; sourceTree = "<group>"; };
-		389D7E3F2102A415009F794E /* GlassyButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassyButtons.swift; sourceTree = "<group>"; };
-		389D7E4121036674009F794E /* MetallicButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MetallicButtons.swift; sourceTree = "<group>"; };
 		38AEC05620E21F0100E6529F /* FindBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindBarViewController.swift; sourceTree = "<group>"; };
 		38AEC05B20E21F9B00E6529F /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		38AEC06120E223ED00E6529F /* TestTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTabController.swift; sourceTree = "<group>"; };
@@ -149,24 +163,17 @@
 		38AEC06F20E22C6F00E6529F /* ExportTabController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportTabController.xib; sourceTree = "<group>"; };
 		38AEC07520E2354800E6529F /* WordsTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTabViewController.swift; sourceTree = "<group>"; };
 		38AEC07720E2391F00E6529F /* WordsTabController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordsTabController.xib; sourceTree = "<group>"; };
-		38AEC07920E23A3900E6529F /* BMTTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTTabViewController.swift; sourceTree = "<group>"; };
-		38AEC07B20E23D6600E6529F /* BMTTabViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BMTTabViewController.xib; sourceTree = "<group>"; };
+		38AEC07920E23A3900E6529F /* BMTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTViewController.swift; sourceTree = "<group>"; };
+		38AEC07B20E23D6600E6529F /* BMTViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BMTViewController.xib; sourceTree = "<group>"; };
 		38B7D5C920E87E9000B13ED1 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
-		38C5801021041D5100E2E961 /* ButtonText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonText.swift; sourceTree = "<group>"; };
-		38C5801421041F4300E2E961 /* GlassyButtonConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassyButtonConfig.swift; sourceTree = "<group>"; };
-		38C5801621041F8D00E2E961 /* SimpleButtonConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleButtonConfig.swift; sourceTree = "<group>"; };
-		38C580182104201400E2E961 /* ToggleButtonConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButtonConfig.swift; sourceTree = "<group>"; };
 		38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPopupViewController.swift; sourceTree = "<group>"; };
 		38C71BC720E7D2FD00AC4B6E /* InfoPopupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoPopupViewController.xib; sourceTree = "<group>"; };
 		38CBB93220FA415800C7CAA6 /* TextFinderClientProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinderClientProtocols.swift; sourceTree = "<group>"; };
-		38E7B2992100395F0052FC00 /* SimpleButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleButtons.swift; sourceTree = "<group>"; };
-		38E7B29C21005CD00052FC00 /* ToggleButtons.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleButtons.swift; sourceTree = "<group>"; };
 		38EFAFA420E9292A00C71AE9 /* PJWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJWindow.swift; sourceTree = "<group>"; };
 		38EFAFA620E9354700C71AE9 /* ClipboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardController.swift; sourceTree = "<group>"; };
 		38EFAFA820E93A2600C71AE9 /* FindBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindBarViewController.xib; sourceTree = "<group>"; };
 		38EFAFAA20E9CCE900C71AE9 /* TextFinderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinderClient.swift; sourceTree = "<group>"; };
 		38EFAFAC20E9D08D00C71AE9 /* PJScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJScrollView.swift; sourceTree = "<group>"; };
-		38FE436B21071EC80027606D /* PJPAutowrapButtonCellCA.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJPAutowrapButtonCellCA.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -174,6 +181,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				38295EAB210E3E2200854A1F /* Custom_Buttons.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,6 +205,7 @@
 		381B8A0A20E1DAC0008335E0 = {
 			isa = PBXGroup;
 			children = (
+				38295EA5210E3DF700854A1F /* Custom Buttons.xcodeproj */,
 				381B8A1520E1DAC0008335E0 /* Burmese Test V3 */,
 				3850BA2E20E4D59B00A7C7CF /* Burmese Test V3Tests */,
 				3850BA3C20E5203300A7C7CF /* Burmese Test V3UITests */,
@@ -253,6 +262,14 @@
 				3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */,
 			);
 			path = "Custom Functions";
+			sourceTree = "<group>";
+		};
+		38295EA6210E3DF700854A1F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				38295EAA210E3DF700854A1F /* Custom_Buttons.framework */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		384AB24120E3E75500D7E5D7 /* Main Menu */ = {
@@ -383,8 +400,8 @@
 				38AEC06520E2241E00E6529F /* WordsTabController.swift */,
 				38AEC07720E2391F00E6529F /* WordsTabController.xib */,
 				38AEC07520E2354800E6529F /* WordsTabViewController.swift */,
-				38AEC07920E23A3900E6529F /* BMTTabViewController.swift */,
-				38AEC07B20E23D6600E6529F /* BMTTabViewController.xib */,
+				38AEC07920E23A3900E6529F /* BMTViewController.swift */,
+				38AEC07B20E23D6600E6529F /* BMTViewController.xib */,
 				38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */,
 			);
 			path = WordsTab;
@@ -393,46 +410,10 @@
 		38AEC07D20E2417900E6529F /* Custom Controls */ = {
 			isa = PBXGroup;
 			children = (
-				38C5801321041F0500E2E961 /* PJPButton */,
 				38160EAE20E36F0200DA13F1 /* PJTextField.swift */,
 				3884FA7F20F60E67006EDF11 /* PJTextView.swift */,
 			);
 			path = "Custom Controls";
-			sourceTree = "<group>";
-		};
-		38C5801221041EDD00E2E961 /* PJPAutoWrapButtonCell */ = {
-			isa = PBXGroup;
-			children = (
-				3821C85020E242630045E5A8 /* PJPButtonConfig.swift */,
-				38C5801621041F8D00E2E961 /* SimpleButtonConfig.swift */,
-				38C580182104201400E2E961 /* ToggleButtonConfig.swift */,
-				38C5801421041F4300E2E961 /* GlassyButtonConfig.swift */,
-				3821C84E20E242530045E5A8 /* PJPAutoWrapButtonCell.swift */,
-				38FE436B21071EC80027606D /* PJPAutowrapButtonCellCA.swift */,
-				38E7B29B210039690052FC00 /* Button Types */,
-			);
-			path = PJPAutoWrapButtonCell;
-			sourceTree = "<group>";
-		};
-		38C5801321041F0500E2E961 /* PJPButton */ = {
-			isa = PBXGroup;
-			children = (
-				3821C84F20E242610045E5A8 /* PJPButton.swift */,
-				38C5801221041EDD00E2E961 /* PJPAutoWrapButtonCell */,
-			);
-			path = PJPButton;
-			sourceTree = "<group>";
-		};
-		38E7B29B210039690052FC00 /* Button Types */ = {
-			isa = PBXGroup;
-			children = (
-				389D7E3F2102A415009F794E /* GlassyButtons.swift */,
-				38E7B2992100395F0052FC00 /* SimpleButtons.swift */,
-				38E7B29C21005CD00052FC00 /* ToggleButtons.swift */,
-				389D7E4121036674009F794E /* MetallicButtons.swift */,
-				38C5801021041D5100E2E961 /* ButtonText.swift */,
-			);
-			path = "Button Types";
 			sourceTree = "<group>";
 		};
 		38EFAFA320E8C89200C71AE9 /* Extensions */ = {
@@ -468,10 +449,12 @@
 				381B8A0F20E1DAC0008335E0 /* Sources */,
 				381B8A1020E1DAC0008335E0 /* Frameworks */,
 				381B8A1120E1DAC0008335E0 /* Resources */,
+				38295EAF210E3E2200854A1F /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				38295EAE210E3E2200854A1F /* PBXTargetDependency */,
 			);
 			name = "Burmese Test V3";
 			productName = "Burmese Test V3";
@@ -553,6 +536,12 @@
 			mainGroup = 381B8A0A20E1DAC0008335E0;
 			productRefGroup = 381B8A1420E1DAC0008335E0 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 38295EA6210E3DF700854A1F /* Products */;
+					ProjectRef = 38295EA5210E3DF700854A1F /* Custom Buttons.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				381B8A1220E1DAC0008335E0 /* Burmese Test V3 */,
@@ -562,6 +551,16 @@
 		};
 /* End PBXProject section */
 
+/* Begin PBXReferenceProxy section */
+		38295EAA210E3DF700854A1F /* Custom_Buttons.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Custom_Buttons.framework;
+			remoteRef = 38295EA9210E3DF700854A1F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
+
 /* Begin PBXResourcesBuildPhase section */
 		381B8A1120E1DAC0008335E0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
@@ -570,7 +569,7 @@
 				38AEC06A20E224E500E6529F /* TestTabController.xib in Resources */,
 				38EFAFA920E93A2600C71AE9 /* FindBarViewController.xib in Resources */,
 				38AEC06C20E22C4200E6529F /* ResultsTabController.xib in Resources */,
-				38AEC07C20E23D6600E6529F /* BMTTabViewController.xib in Resources */,
+				38AEC07C20E23D6600E6529F /* BMTViewController.xib in Resources */,
 				38AEC07020E22C6F00E6529F /* ExportTabController.xib in Resources */,
 				38C71BC920E7D2FD00AC4B6E /* InfoPopupViewController.xib in Resources */,
 				381B8A1920E1DAC2008335E0 /* Assets.xcassets in Resources */,
@@ -606,12 +605,9 @@
 				38160EAD20E3599E00DA13F1 /* SearchDelegate.swift in Sources */,
 				386E33FF20F1AE2300763618 /* PrefsWindowController.swift in Sources */,
 				38AEC07620E2354800E6529F /* WordsTabViewController.swift in Sources */,
-				389D7E402102A415009F794E /* GlassyButtons.swift in Sources */,
 				38CBB93320FA415800C7CAA6 /* TextFinderClientProtocols.swift in Sources */,
 				38EFAFAB20E9CCE900C71AE9 /* TextFinderClient.swift in Sources */,
-				38C580192104201400E2E961 /* ToggleButtonConfig.swift in Sources */,
 				384AB23C20E3B26800D7E5D7 /* PJTableView.swift in Sources */,
-				3821C85120E25FFE0045E5A8 /* PJPAutoWrapButtonCell.swift in Sources */,
 				380C3C2620EA76950077C2BE /* TextFinder.swift in Sources */,
 				38AEC06420E2240700E6529F /* ResultsTabController.swift in Sources */,
 				38160EAF20E36F0200DA13F1 /* PJTextField.swift in Sources */,
@@ -623,17 +619,11 @@
 				38AEC06620E2241E00E6529F /* WordsTabController.swift in Sources */,
 				3821C85420E260100045E5A8 /* PJGlobalFunctions.swift in Sources */,
 				384AB24020E3E74400D7E5D7 /* PJFileManager.swift in Sources */,
-				38FE436C21071EC80027606D /* PJPAutowrapButtonCellCA.swift in Sources */,
 				38EFAFA520E9292A00C71AE9 /* PJWindow.swift in Sources */,
-				3821C85220E260060045E5A8 /* PJPButtonConfig.swift in Sources */,
 				386E340520F1BCF100763618 /* PrefsToolbarController.swift in Sources */,
 				38C71BC820E7D2FD00AC4B6E /* InfoPopupViewController.swift in Sources */,
-				38E7B29A2100395F0052FC00 /* SimpleButtons.swift in Sources */,
-				389D7E4221036674009F794E /* MetallicButtons.swift in Sources */,
 				38AEC06820E2243300E6529F /* ExportTabController.swift in Sources */,
-				38C5801521041F4300E2E961 /* GlassyButtonConfig.swift in Sources */,
 				38846B7D20E2903D00C0DB3C /* Words.swift in Sources */,
-				38C5801121041D5100E2E961 /* ButtonText.swift in Sources */,
 				38AEC06220E223ED00E6529F /* TestTabController.swift in Sources */,
 				3884FA8020F60E67006EDF11 /* PJTextView.swift in Sources */,
 				3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */,
@@ -642,18 +632,15 @@
 				381B8A2A20E1EDB0008335E0 /* ToolbarController.swift in Sources */,
 				381B8A1720E1DAC0008335E0 /* AppDelegate.swift in Sources */,
 				384AB23E20E3E0BB00D7E5D7 /* MainMenuController.swift in Sources */,
-				38E7B29D21005CD00052FC00 /* ToggleButtons.swift in Sources */,
 				381B8A2820E1EA10008335E0 /* GeneralFunctions.swift in Sources */,
-				38AEC07A20E23A3900E6529F /* BMTTabViewController.swift in Sources */,
+				38AEC07A20E23A3900E6529F /* BMTViewController.swift in Sources */,
 				384AB24620E47EFF00D7E5D7 /* MenuController.swift in Sources */,
 				386E33F920F1A3E600763618 /* PreferencesViewController.swift in Sources */,
-				38C5801721041F8D00E2E961 /* SimpleButtonConfig.swift in Sources */,
 				381F685020EB3DD50085E330 /* FindMenuDelegate.swift in Sources */,
 				38AEC05C20E21F9B00E6529F /* MainTabViewController.swift in Sources */,
 				3850BA2820E4AA0C00A7C7CF /* LanguageMenuController.swift in Sources */,
 				38846B8020E299C400C0DB3C /* TableViewDataSource.swift in Sources */,
 				38160EAB20E3580000DA13F1 /* TextFieldDelegate.swift in Sources */,
-				3821C85320E2600C0045E5A8 /* PJPButton.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -677,6 +664,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		38295EAE210E3E2200854A1F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = "Custom Buttons";
+			targetProxy = 38295EAD210E3E2200854A1F /* PBXContainerItemProxy */;
+		};
 		3850BA3320E4D59B00A7C7CF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 381B8A1220E1DAC0008335E0 /* Burmese Test V3 */;
@@ -817,6 +809,7 @@
 		381B8A2220E1DAC2008335E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -834,6 +827,7 @@
 		381B8A2320E1DAC2008335E0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
