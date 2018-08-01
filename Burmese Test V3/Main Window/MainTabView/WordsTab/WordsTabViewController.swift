@@ -160,8 +160,6 @@ class WordsTabViewController: NSTabViewController {
         performInitialSetup()
     }
     
-    
-    
     override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
         infoPrint(tabViewItem?.label, #function,self.className)
         super .tabView(tabView, willSelect: tabViewItem)
@@ -169,30 +167,37 @@ class WordsTabViewController: NSTabViewController {
     
     override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         infoPrint(tabViewItem?.label, #function,self.className)
-        if getCurrentIndex() != -1 {
-            let currentBMT = self.tabViewControllersList[getCurrentIndex()]
-            let view = currentBMT.view
-            if let tableView = view.viewWithTag(100) as? NSTableView {
-                currentBMT.tableView = tableView
-                tableView.dataSource = self.dataSources[getCurrentIndex()]
-                tableView.delegate = self.dataSources[getCurrentIndex()]
-                //self.dataSources[getCurrentIndex()].tableView = tableView
-                //self.dataSources[getCurrentIndex()].tableView.dataSource = dataSource
-                //self.dataSources[getCurrentIndex()].tableView.delegate = dataSource
-            }
-        }
         
-        if let mainWindow = getMainWindowController().window
-        {
-            let index = getCurrentIndex()
+        if let currentTabItem = self.tabView.selectedTabViewItem {
+            let index = self.tabView.indexOfTabViewItem(currentTabItem)
             if index != -1 {
-                if let url = self.dataSources[getCurrentIndex()].sourceFile {
-                    mainWindow.title = url.lastPathComponent
-                    mainWindow.representedURL = self.dataSources[index].sourceFile
+                let currentBMT = self.tabViewControllersList[index]
+                let view = currentBMT.view
+                if dataSources.count > 0 {
+                    let dataSource = self.dataSources[index]
+                    if let tableView = view.viewWithTag(100) as? NSTableView {
+                        currentBMT.tableView = tableView
+                        tableView.dataSource = dataSource
+                        tableView.delegate = dataSource
+                    }
+                    
+                    switch dataSource.needsSaving {
+                    case true:
+                        NotificationCenter.default.post(name: .enableRevert, object: nil)
+                    case false:
+                        NotificationCenter.default.post(name: .disableRevert, object: nil)
+                    }
+                    
+                    if let mainWindow = getMainWindowController().window
+                    {
+                        if let url = self.dataSources[getCurrentIndex()].sourceFile {
+                            mainWindow.title = url.lastPathComponent
+                            mainWindow.representedURL = self.dataSources[index].sourceFile
+                        }
+                    }
                 }
             }
         }
-        
         super .tabView(tabView, didSelect: tabViewItem)
     }
     

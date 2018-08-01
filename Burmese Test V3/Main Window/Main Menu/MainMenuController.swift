@@ -12,8 +12,17 @@ extension Notification.Name {
     static var enableFileMenuItems: Notification.Name {
         return .init(rawValue: "MainMenuController.enableFileMenuItems")
     }
+    
     static var disableFileMenuItems: Notification.Name {
         return .init(rawValue: "MainMenuController.disableFileMenuItems")
+    }
+    
+    static var enableRevert: Notification.Name {
+        return .init(rawValue: "ManMenuController.enableRevert")
+    }
+    
+    static var disableRevert: Notification.Name {
+        return .init(rawValue: "ManMenuController.disableRevert")
     }
 }
 
@@ -26,12 +35,23 @@ class MainMenuController: MenuController {
     @IBOutlet var closeWordsFileMenuItem : NSMenuItem!
     @IBOutlet var saveFileMenuItem : NSMenuItem!
     @IBOutlet var saveAsFileMenuItem : NSMenuItem!
+    @IBOutlet var revertMenuItem : NSMenuItem!
     
     var removingFirstItem = false
     
     func createObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.enableFileMenuItems(_:)), name: .enableFileMenuItems, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.disableFileMenuItems(_:)), name: .disableFileMenuItems, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.enableRevert(_:)), name: .enableRevert, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.disableRevert(_:)), name: .disableRevert, object: nil)
+    }
+    
+    @objc func enableRevert(_ notification: Notification) {
+        self.revertMenuItem.isEnabled = true
+    }
+    
+    @objc func disableRevert(_ notification: Notification) {
+        self.revertMenuItem.isEnabled = false
     }
     
     @objc func enableFileMenuItems(_ notification: Notification) {
@@ -44,12 +64,13 @@ class MainMenuController: MenuController {
         self.closeWordsFileMenuItem.isEnabled = false
         self.saveFileMenuItem.isEnabled = false
         self.saveAsFileMenuItem.isEnabled = false
+        self.revertMenuItem.isEnabled = false
     }
     
     
     
     @objc func openRecentFile(_ sender: NSMenuItem) {
-        NotificationCenter.default.post(name: .openRecentFile, object: nil, userInfo: ["menuItem":sender])
+        NotificationCenter.default.post(name: .openRecentFile, object: nil, userInfo: ["sender":sender])
     }
     
     func updateRecentsMenu(with url: URL)
@@ -175,6 +196,11 @@ extension MainMenuController {
                 self.saveDocumentAs(sender)
             }
         }
+    }
+    
+    @IBAction func revertDocumentToSaved(_ sender: Any?) {
+        infoPrint("", #function, self.className)
+        NotificationCenter.default.post(name: .revertToSaved, object: nil)
     }
     
     @IBAction func saveDocumentAs(_ sender: Any?) {

@@ -16,7 +16,7 @@ class testPJFileManager: XCTestCase {
     let nonExistentUrl = URL(string: "file:///users/peejpowell/BMTFiles/doesntexist")!
     let folderUrl = URL(string: "file:///users/peejpowell/BMTFiles")!
     
-    let fileManager = PJFileManager()
+    let fileManager = BMTFileManager(controller: getMainWindowController().mainTabViewController.wordsTabController)
     var newDataSource = TableViewDataSource()
     
     func testPJFileManagerIsDir() {

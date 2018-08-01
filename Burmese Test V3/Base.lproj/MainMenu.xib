@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14306.4" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14306.4"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -37,6 +37,7 @@
                 <outlet property="closeWordsFileMenuItem" destination="DVo-aG-piG" id="lCY-rQ-Onz"/>
                 <outlet property="mainMenu" destination="AYu-sK-qS6" id="pza-2X-Sb9"/>
                 <outlet property="recentFilesMenu" destination="RTi-RA-Bbp" id="jZ5-1U-xYO"/>
+                <outlet property="revertMenuItem" destination="KaW-ft-85H" id="LXY-Ax-n05"/>
                 <outlet property="saveAsFileMenuItem" destination="Bw7-FT-i3A" id="I6B-8P-pxT"/>
                 <outlet property="saveFileMenuItem" destination="pxx-59-PXV" id="fK2-3t-lkr"/>
             </connections>
@@ -839,7 +840,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="800" height="500"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
                 <autoresizingMask key="autoresizingMask"/>

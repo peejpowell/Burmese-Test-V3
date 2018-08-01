@@ -113,6 +113,11 @@ extension MainWindowController {
         
         self.mainMenuController.saveDocumentAs(sender)
     }
+    
+    @IBAction func revertDocumentToSaved(_ sender: Any?) {
+        infoPrint("",#function,self.className)
+        self.mainMenuController.revertDocumentToSaved(sender)
+    }
 }
 //MARK: Edit Menu First Responder Items
 

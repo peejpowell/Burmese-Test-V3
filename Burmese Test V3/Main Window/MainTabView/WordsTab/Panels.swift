@@ -10,6 +10,16 @@ import Cocoa
 
 class Panels: NSObject {
 
+    var openBMTDocPanel : NSOpenPanel {
+        let newOpenPanel = NSOpenPanel()
+        newOpenPanel.canChooseFiles = true
+        newOpenPanel.canChooseDirectories = true
+        newOpenPanel.canCreateDirectories = true
+        newOpenPanel.allowsMultipleSelection = true
+        newOpenPanel.prompt = "Select"
+        return newOpenPanel
+    }
+    
     var saveDocumentPanel : NSSavePanel {
         let saveDocumentPanel = NSSavePanel()
         saveDocumentPanel.canCreateDirectories = true

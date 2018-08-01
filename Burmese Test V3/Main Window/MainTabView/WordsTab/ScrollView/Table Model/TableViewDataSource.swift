@@ -32,7 +32,16 @@ class TableViewDataSource: NSObject {
     var filterRowsToDelete : IndexSet = IndexSet()
     var lessons: Dictionary<String,Int> = [:]
     var sourceFile : URL?
-    var needsSaving : Bool = false
+    var needsSaving : Bool = false {
+        didSet(oldValue) {
+            if needsSaving == true {
+                NotificationCenter.default.post(name: .enableRevert, object: nil)
+            }
+            else {
+                NotificationCenter.default.post(name: .disableRevert, object: nil)
+            }
+        }
+    }
     
     func delOrCut() {
         infoPrint("", #function, self.className)
