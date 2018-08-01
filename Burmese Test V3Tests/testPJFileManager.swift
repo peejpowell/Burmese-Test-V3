@@ -12,6 +12,8 @@ import XCTest
 class testPJFileManager: XCTestCase {
 
     let fileUrl = URL(string: "file:///users/peejpowell/BMTFiles/general.plist")!
+    let invalidFileUrl = URL(string: "file:///users/peejpowell/BMTFiles/.DS_Store")!
+    let nonExistentUrl = URL(string: "file:///users/peejpowell/BMTFiles/doesntexist")!
     let folderUrl = URL(string: "file:///users/peejpowell/BMTFiles")!
     
     let fileManager = PJFileManager()
@@ -29,7 +31,17 @@ class testPJFileManager: XCTestCase {
     
     func testPJFileManagerAskToRevertFile()
     {
+        let testAlert = NSAlert()
+        testAlert.messageText = "Click OK and then Revert the first time and Cancel the second."
+        testAlert.runModal()
         XCTAssert(fileManager.askToRevert(fileAtUrl: fileUrl) == .alertFirstButtonReturn)
         XCTAssert(fileManager.askToRevert(fileAtUrl: fileUrl) == .alertSecondButtonReturn)
+    }
+    
+    func testPJFileManagerFileIsInvalid() {
+        XCTAssert(fileManager.checkFileValidity(at: fileUrl) == .validFile)
+        XCTAssert(fileManager.checkFileValidity(at: folderUrl) == .validDir)
+        XCTAssert(fileManager.checkFileValidity(at: nonExistentUrl) == .invalidNotThere)
+        XCTAssert(fileManager.checkFileValidity(at: invalidFileUrl) == .invalidNotBMT)
     }
 }

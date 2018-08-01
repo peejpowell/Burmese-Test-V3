@@ -189,12 +189,10 @@ extension MainWindowController: NSWindowDelegate {
     
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         infoPrint("", #function, self.className)
-        for tabNum in (0..<getWordsTabViewDelegate().tabViewItems.count).reversed()
-        {
-            getWordsTabViewDelegate().tabView.selectTabViewItem(at:tabNum)
-            if !self.mainMenuController.performCloseWordsFile(self) {
-                return false
-            }
+        // Make sure all files are closed first
+        if let _ = self.mainTabViewController.wordsTabController.wordsTabViewController.dataSources[0].sourceFile {
+            NotificationCenter.default.post(name: .closeAllFiles, object: nil)
+            return false
         }
         return true
     }

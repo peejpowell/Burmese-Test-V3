@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		380634682111ACE400798D03 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380634672111ACE400798D03 /* Alerts.swift */; };
+		3806346A2111B16D00798D03 /* Panels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380634692111B16D00798D03 /* Panels.swift */; };
 		380C3C2620EA76950077C2BE /* TextFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C3C2520EA76950077C2BE /* TextFinder.swift */; };
 		38160EAB20E3580000DA13F1 /* TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */; };
 		38160EAD20E3599E00DA13F1 /* SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */; };
@@ -111,6 +113,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		380634672111ACE400798D03 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
+		380634692111B16D00798D03 /* Panels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panels.swift; sourceTree = "<group>"; };
 		380C3C2520EA76950077C2BE /* TextFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinder.swift; sourceTree = "<group>"; };
 		38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDelegate.swift; sourceTree = "<group>"; };
 		38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDelegate.swift; sourceTree = "<group>"; };
@@ -398,6 +402,8 @@
 				38EFAFAE20E9D60400C71AE9 /* ScrollView */,
 				38EFAFA620E9354700C71AE9 /* ClipboardController.swift */,
 				38AEC06520E2241E00E6529F /* WordsTabController.swift */,
+				380634672111ACE400798D03 /* Alerts.swift */,
+				380634692111B16D00798D03 /* Panels.swift */,
 				38AEC07720E2391F00E6529F /* WordsTabController.xib */,
 				38AEC07520E2354800E6529F /* WordsTabViewController.swift */,
 				38AEC07920E23A3900E6529F /* BMTViewController.swift */,
@@ -613,6 +619,7 @@
 				38160EAF20E36F0200DA13F1 /* PJTextField.swift in Sources */,
 				383797DD20EE4FF400125253 /* TableTextFinderClient.swift in Sources */,
 				381B8A2620E1DBC5008335E0 /* MainWindowController.swift in Sources */,
+				380634682111ACE400798D03 /* Alerts.swift in Sources */,
 				38EFAFA720E9354700C71AE9 /* ClipboardController.swift in Sources */,
 				384AB24320E466E600D7E5D7 /* WordTypeMenuController.swift in Sources */,
 				38EFAFAD20E9D08D00C71AE9 /* PJScrollView.swift in Sources */,
@@ -632,6 +639,7 @@
 				381B8A2A20E1EDB0008335E0 /* ToolbarController.swift in Sources */,
 				381B8A1720E1DAC0008335E0 /* AppDelegate.swift in Sources */,
 				384AB23E20E3E0BB00D7E5D7 /* MainMenuController.swift in Sources */,
+				3806346A2111B16D00798D03 /* Panels.swift in Sources */,
 				381B8A2820E1EA10008335E0 /* GeneralFunctions.swift in Sources */,
 				38AEC07A20E23A3900E6529F /* BMTViewController.swift in Sources */,
 				384AB24620E47EFF00D7E5D7 /* MenuController.swift in Sources */,

@@ -27,13 +27,9 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         
         infoPrint("", #function, self.className)
-        
-        for tabNum in (0..<getWordsTabViewDelegate().tabViewItems.count).reversed()
-        {
-            getWordsTabViewDelegate().tabView.selectTabViewItem(at:tabNum)
-            if !mainWindowController.mainMenuController.performCloseWordsFile(self) {
-                return .terminateCancel
-            }
+        if let _ = self.mainWindowController.mainTabViewController.wordsTabController.wordsTabViewController.dataSources[0].sourceFile {
+            NotificationCenter.default.post(name: .closeAllFiles, object: nil)
+            return .terminateCancel
         }
         return .terminateNow
     }
@@ -54,7 +50,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         self.currentInputSource = nil
         TISSelectInputSource(self.originalInputLanguage)
         self.originalInputLanguage = nil
-        
     }
 
     func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
@@ -81,7 +76,7 @@ extension AppDelegate {
     
     @IBAction func performClose(_ sender: Any?) {
         infoPrint("", #function, self.className)
-        _ = getMainMenuController().performCloseWordsFile(sender)
+        NotificationCenter.default.post(name: .closeDocument, object: nil)
     }
 
     /*@IBAction func performFindPanelAction(_ sender: Any?){

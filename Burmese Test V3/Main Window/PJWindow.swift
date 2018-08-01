@@ -12,7 +12,7 @@ class PJWindow: NSWindow {
 
     @IBAction override func performClose(_ sender: Any?) {
         infoPrint("", #function, self.className)
-        _ = getMainMenuController().performCloseWordsFile(sender)
+        NotificationCenter.default.post(name: .closeDocument, object: nil)
         //super.performClose(sender)
     }
 }

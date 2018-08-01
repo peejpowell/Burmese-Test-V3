@@ -51,7 +51,7 @@ class Burmese_Test_V3UITests: XCTestCase {
         menuBarsQuery.menuBarItems["Word Type"].click()
         let wordTypeMenuBarItem = menuBarsQuery.menuBarItems["Word Type"]
         wordTypeMenuBarItem.click()
-        menuBarsQuery.menuItems.matching(identifier: "General.bmt").menuItems["Select All"].click()
+        menuBarsQuery.menuItems.matching(identifier: "Alicia Lessons.bmt").menuItems["Select All"].click()
         
         //menuBarsQuery/*@START_MENU_TOKEN@*/.menuItems.matching(identifier: "general.plist").menuItems["Select All"]/*[[".menuBarItems[\"Word Type\"]",".menus.menuItems[\"general.plist\"]",".menus.menuItems[\"Select All\"]",".menuItems[\"Select All\"]",".menuItems[\"general.plist\"]",".menus.menuItems.matching(identifier: \"general.plist\")",".menuItems.matching(identifier: \"general.plist\")"],[[[-1,6,2],[-1,5,2],[-1,0,1]],[[-1,4,2],[-1,1,2]],[[-1,3],[-1,2]]],[0,0]]@END_MENU_TOKEN@*/.click()
         wordTypeMenuBarItem.click()
