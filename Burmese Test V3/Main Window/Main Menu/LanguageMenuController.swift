@@ -14,9 +14,8 @@ class LanguageMenuController: MenuController {
     
     func cancelTest()
     {
-        if let testTabController =  getMainWindowController().mainTabViewController.tabViewItems[0].viewController as? TestTabController
-        {
-            testTabController.multipleChoiceTest.testStarted = false
+        if let testTabController = getMainWindowController().mainTabViewController.tabViewItems[0].viewController as? TestTabController {
+            testTabController.testTabViewModel.updateTestStarted(state: false)
         }
     }
     

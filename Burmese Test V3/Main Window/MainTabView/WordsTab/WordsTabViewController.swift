@@ -13,19 +13,15 @@ extension Notification.Name {
     static var dataSourceNeedsSaving: Notification.Name {
         return .init(rawValue: "WordsTabViewController.dataSourceNeedsSaving")
     }
-    static var newDocument: Notification.Name {
-        return .init(rawValue: "WordsTabViewController.newDocument")
-    }
 }
 
 extension WordsTabViewController {
     
     fileprivate func createDataSourceObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.setDataSourceNeedsSaving(_:)), name: .dataSourceNeedsSaving, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.createNewDocument(_:)), name: .newDocument, object: nil)
     }
     
-    fileprivate func createEmptyBMT(named name: String, controlledBy viewController: BMTViewController) -> NSTabViewItem {
+    func createEmptyBMT(named name: String, controlledBy viewController: BMTViewController) -> NSTabViewItem {
         let dataSource = TableViewDataSource()
         dataSource.words.append(Words())
         self.dataSources.append(dataSource)
@@ -34,50 +30,13 @@ extension WordsTabViewController {
         return newTabItem
     }
     
-    fileprivate func editFirstColumnOf(_ tableView: NSTableView) {
+    func editFirstColumnOf(_ tableView: NSTableView) {
         for columnNum in 0..<tableView.tableColumns.count {
             let column = tableView.tableColumns[columnNum]
             if column.isEditable && !column.isHidden {
                 tableView.editColumn(columnNum, row: 0, with: nil, select: false)
                 break
             }
-        }
-    }
-    
-    fileprivate func fileIsLoaded()->Bool {
-        if let _ = self.dataSources[0].sourceFile {
-            return true
-        }
-        return false
-    }
-    
-    @objc func createNewDocument(_ notification: Notification) {
-        infoPrint("", #function, self.className)
-        if !fileIsLoaded() {
-            // Add a new tab and use that
-            let BMTvc = BMTViewController()
-            self.tabViewControllersList.append(BMTvc)
-            self.tabViewItems.append(createEmptyBMT(named: "Untitled", controlledBy: BMTvc))
-            self.tabView.selectTabViewItem(self.tabViewItems.last)
-            editFirstColumnOf(BMTvc.tableView)
-        }
-        else {
-            // Use the existing tab
-            let BMTvc = self.tabViewControllersList[0]
-            BMTvc.view.isHidden = false
-            self.tabViewItems.removeAll()
-            self.dataSources.removeAll()
-            self.tabViewItems.append(createEmptyBMT(named: "Untitled", controlledBy: BMTvc))
-            if let tableView = BMTvc.tableView {
-                tableView.dataSource = dataSources[0]
-                tableView.delegate = dataSources[0]
-                tableView.reloadData()
-                editFirstColumnOf(tableView)
-            }
-            NotificationCenter.default.post(name: .dataSourceNeedsSaving, object: nil)
-            getMainMenuController().closeWordsFileMenuItem.isEnabled = true
-            getMainMenuController().saveFileMenuItem.isEnabled = true
-            getMainMenuController().saveAsFileMenuItem.isEnabled = true
         }
     }
     

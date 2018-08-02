@@ -10,6 +10,11 @@
 		380634682111ACE400798D03 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380634672111ACE400798D03 /* Alerts.swift */; };
 		3806346A2111B16D00798D03 /* Panels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380634692111B16D00798D03 /* Panels.swift */; };
 		3806346C2111BA6600798D03 /* BMTFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806346B2111BA6600798D03 /* BMTFileManager.swift */; };
+		380B922421129CDD00F30B6B /* Custom_Buttons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B92232112240D00F30B6B /* Custom_Buttons.framework */; };
+		380B922521129CDD00F30B6B /* Custom_Buttons.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 380B92232112240D00F30B6B /* Custom_Buttons.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		380B92292112A12800F30B6B /* MainWindowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B92282112A12800F30B6B /* MainWindowViewModel.swift */; };
+		380B922B2112D9C500F30B6B /* TestTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B922A2112D9C500F30B6B /* TestTabViewModel.swift */; };
+		380B922D2112DC3200F30B6B /* WordsTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */; };
 		380C3C2620EA76950077C2BE /* TextFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C3C2520EA76950077C2BE /* TextFinder.swift */; };
 		38160EAB20E3580000DA13F1 /* TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */; };
 		38160EAD20E3599E00DA13F1 /* SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */; };
@@ -24,8 +29,6 @@
 		381F685020EB3DD50085E330 /* FindMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */; };
 		3821C85420E260100045E5A8 /* PJGlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */; };
 		3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84C20E242160045E5A8 /* PJExtensions.swift */; };
-		38295EAB210E3E2200854A1F /* Custom_Buttons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38295EAA210E3DF700854A1F /* Custom_Buttons.framework */; };
-		38295EAC210E3E2200854A1F /* Custom_Buttons.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38295EAA210E3DF700854A1F /* Custom_Buttons.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		383797DD20EE4FF400125253 /* TableTextFinderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383797DC20EE4FF400125253 /* TableTextFinderClient.swift */; };
 		384AB23C20E3B26800D7E5D7 /* PJTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384AB23B20E3B26800D7E5D7 /* PJTableView.swift */; };
 		384AB23E20E3E0BB00D7E5D7 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384AB23D20E3E0BB00D7E5D7 /* MainMenuController.swift */; };
@@ -49,13 +52,13 @@
 		38AEC05C20E21F9B00E6529F /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC05B20E21F9B00E6529F /* MainTabViewController.swift */; };
 		38AEC06220E223ED00E6529F /* TestTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC06120E223ED00E6529F /* TestTabController.swift */; };
 		38AEC06420E2240700E6529F /* ResultsTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC06320E2240700E6529F /* ResultsTabController.swift */; };
-		38AEC06620E2241E00E6529F /* WordsTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC06520E2241E00E6529F /* WordsTabController.swift */; };
+		38AEC06620E2241E00E6529F /* WordsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC06520E2241E00E6529F /* WordsViewController.swift */; };
 		38AEC06820E2243300E6529F /* ExportTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC06720E2243300E6529F /* ExportTabController.swift */; };
 		38AEC06A20E224E500E6529F /* TestTabController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC06920E224E500E6529F /* TestTabController.xib */; };
 		38AEC06C20E22C4200E6529F /* ResultsTabController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC06B20E22C4200E6529F /* ResultsTabController.xib */; };
 		38AEC07020E22C6F00E6529F /* ExportTabController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC06F20E22C6F00E6529F /* ExportTabController.xib */; };
 		38AEC07620E2354800E6529F /* WordsTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC07520E2354800E6529F /* WordsTabViewController.swift */; };
-		38AEC07820E2391F00E6529F /* WordsTabController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07720E2391F00E6529F /* WordsTabController.xib */; };
+		38AEC07820E2391F00E6529F /* WordsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07720E2391F00E6529F /* WordsViewController.xib */; };
 		38AEC07A20E23A3900E6529F /* BMTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC07920E23A3900E6529F /* BMTViewController.swift */; };
 		38AEC07C20E23D6600E6529F /* BMTViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07B20E23D6600E6529F /* BMTViewController.xib */; };
 		38C39454211216690021C717 /* BMTFileManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C39453211216690021C717 /* BMTFileManagerProtocol.swift */; };
@@ -70,16 +73,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		38295EA9210E3DF700854A1F /* PBXContainerItemProxy */ = {
+		380B92222112240D00F30B6B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 38295EA5210E3DF700854A1F /* Custom Buttons.xcodeproj */;
+			containerPortal = 380B921E2112240D00F30B6B /* Custom Buttons.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 38CFD59B210E3A5B00A01E35;
 			remoteInfo = "Custom Buttons";
 		};
-		38295EAD210E3E2200854A1F /* PBXContainerItemProxy */ = {
+		380B922621129CDD00F30B6B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 38295EA5210E3DF700854A1F /* Custom Buttons.xcodeproj */;
+			containerPortal = 380B921E2112240D00F30B6B /* Custom Buttons.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 38CFD59A210E3A5B00A01E35;
 			remoteInfo = "Custom Buttons";
@@ -107,7 +110,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				38295EAC210E3E2200854A1F /* Custom_Buttons.framework in Embed Frameworks */,
+				380B922521129CDD00F30B6B /* Custom_Buttons.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -118,6 +121,10 @@
 		380634672111ACE400798D03 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		380634692111B16D00798D03 /* Panels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panels.swift; sourceTree = "<group>"; };
 		3806346B2111BA6600798D03 /* BMTFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTFileManager.swift; sourceTree = "<group>"; };
+		380B921E2112240D00F30B6B /* Custom Buttons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Custom Buttons.xcodeproj"; path = "../Custom Buttons/Custom Buttons.xcodeproj"; sourceTree = "<group>"; };
+		380B92282112A12800F30B6B /* MainWindowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowViewModel.swift; sourceTree = "<group>"; };
+		380B922A2112D9C500F30B6B /* TestTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTabViewModel.swift; sourceTree = "<group>"; };
+		380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTabViewModel.swift; sourceTree = "<group>"; };
 		380C3C2520EA76950077C2BE /* TextFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinder.swift; sourceTree = "<group>"; };
 		38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDelegate.swift; sourceTree = "<group>"; };
 		38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDelegate.swift; sourceTree = "<group>"; };
@@ -135,7 +142,6 @@
 		381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMenuDelegate.swift; sourceTree = "<group>"; };
 		3821C84C20E242160045E5A8 /* PJExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJExtensions.swift; sourceTree = "<group>"; };
 		3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJGlobalFunctions.swift; sourceTree = "<group>"; };
-		38295EA5210E3DF700854A1F /* Custom Buttons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Custom Buttons.xcodeproj"; path = "../Custom Buttons/Custom Buttons.xcodeproj"; sourceTree = "<group>"; };
 		383797DC20EE4FF400125253 /* TableTextFinderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTextFinderClient.swift; sourceTree = "<group>"; };
 		384AB23B20E3B26800D7E5D7 /* PJTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJTableView.swift; sourceTree = "<group>"; };
 		384AB23D20E3E0BB00D7E5D7 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
@@ -163,13 +169,13 @@
 		38AEC05B20E21F9B00E6529F /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		38AEC06120E223ED00E6529F /* TestTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTabController.swift; sourceTree = "<group>"; };
 		38AEC06320E2240700E6529F /* ResultsTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultsTabController.swift; sourceTree = "<group>"; };
-		38AEC06520E2241E00E6529F /* WordsTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTabController.swift; sourceTree = "<group>"; };
+		38AEC06520E2241E00E6529F /* WordsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsViewController.swift; sourceTree = "<group>"; };
 		38AEC06720E2243300E6529F /* ExportTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportTabController.swift; sourceTree = "<group>"; };
 		38AEC06920E224E500E6529F /* TestTabController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestTabController.xib; sourceTree = "<group>"; };
 		38AEC06B20E22C4200E6529F /* ResultsTabController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultsTabController.xib; sourceTree = "<group>"; };
 		38AEC06F20E22C6F00E6529F /* ExportTabController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportTabController.xib; sourceTree = "<group>"; };
 		38AEC07520E2354800E6529F /* WordsTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTabViewController.swift; sourceTree = "<group>"; };
-		38AEC07720E2391F00E6529F /* WordsTabController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordsTabController.xib; sourceTree = "<group>"; };
+		38AEC07720E2391F00E6529F /* WordsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordsViewController.xib; sourceTree = "<group>"; };
 		38AEC07920E23A3900E6529F /* BMTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTViewController.swift; sourceTree = "<group>"; };
 		38AEC07B20E23D6600E6529F /* BMTViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BMTViewController.xib; sourceTree = "<group>"; };
 		38B7D5C920E87E9000B13ED1 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
@@ -189,7 +195,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				38295EAB210E3E2200854A1F /* Custom_Buttons.framework in Frameworks */,
+				380B922421129CDD00F30B6B /* Custom_Buttons.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -210,10 +216,18 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		380B921F2112240D00F30B6B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				380B92232112240D00F30B6B /* Custom_Buttons.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		381B8A0A20E1DAC0008335E0 = {
 			isa = PBXGroup;
 			children = (
-				38295EA5210E3DF700854A1F /* Custom Buttons.xcodeproj */,
+				380B921E2112240D00F30B6B /* Custom Buttons.xcodeproj */,
 				381B8A1520E1DAC0008335E0 /* Burmese Test V3 */,
 				3850BA2E20E4D59B00A7C7CF /* Burmese Test V3Tests */,
 				3850BA3C20E5203300A7C7CF /* Burmese Test V3UITests */,
@@ -254,6 +268,7 @@
 		381B8A2420E1DB8E008335E0 /* Main Window */ = {
 			isa = PBXGroup;
 			children = (
+				380B92282112A12800F30B6B /* MainWindowViewModel.swift */,
 				381B8A2520E1DBC5008335E0 /* MainWindowController.swift */,
 				38EFAFA420E9292A00C71AE9 /* PJWindow.swift */,
 				384AB24120E3E75500D7E5D7 /* Main Menu */,
@@ -270,14 +285,6 @@
 				3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */,
 			);
 			path = "Custom Functions";
-			sourceTree = "<group>";
-		};
-		38295EA6210E3DF700854A1F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				38295EAA210E3DF700854A1F /* Custom_Buttons.framework */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		384AB24120E3E75500D7E5D7 /* Main Menu */ = {
@@ -373,6 +380,7 @@
 		38AEC05D20E2237D00E6529F /* TestTab */ = {
 			isa = PBXGroup;
 			children = (
+				380B922A2112D9C500F30B6B /* TestTabViewModel.swift */,
 				38AEC06120E223ED00E6529F /* TestTabController.swift */,
 				386AF90E20E6882C009F9851 /* MultipleChoiceTest.swift */,
 				38AEC06920E224E500E6529F /* TestTabController.xib */,
@@ -406,10 +414,11 @@
 				38C39455211216CF0021C717 /* BMTFileManager */,
 				38EFAFAE20E9D60400C71AE9 /* ScrollView */,
 				38EFAFA620E9354700C71AE9 /* ClipboardController.swift */,
-				38AEC06520E2241E00E6529F /* WordsTabController.swift */,
+				380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */,
+				38AEC06520E2241E00E6529F /* WordsViewController.swift */,
+				38AEC07720E2391F00E6529F /* WordsViewController.xib */,
 				380634672111ACE400798D03 /* Alerts.swift */,
 				380634692111B16D00798D03 /* Panels.swift */,
-				38AEC07720E2391F00E6529F /* WordsTabController.xib */,
 				38AEC07520E2354800E6529F /* WordsTabViewController.swift */,
 				38AEC07920E23A3900E6529F /* BMTViewController.swift */,
 				38AEC07B20E23D6600E6529F /* BMTViewController.xib */,
@@ -474,7 +483,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				38295EAE210E3E2200854A1F /* PBXTargetDependency */,
+				380B922721129CDD00F30B6B /* PBXTargetDependency */,
 			);
 			name = "Burmese Test V3";
 			productName = "Burmese Test V3";
@@ -558,8 +567,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 38295EA6210E3DF700854A1F /* Products */;
-					ProjectRef = 38295EA5210E3DF700854A1F /* Custom Buttons.xcodeproj */;
+					ProductGroup = 380B921F2112240D00F30B6B /* Products */;
+					ProjectRef = 380B921E2112240D00F30B6B /* Custom Buttons.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -572,11 +581,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		38295EAA210E3DF700854A1F /* Custom_Buttons.framework */ = {
+		380B92232112240D00F30B6B /* Custom_Buttons.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Custom_Buttons.framework;
-			remoteRef = 38295EA9210E3DF700854A1F /* PBXContainerItemProxy */;
+			remoteRef = 380B92222112240D00F30B6B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -593,7 +602,7 @@
 				38AEC07020E22C6F00E6529F /* ExportTabController.xib in Resources */,
 				38C71BC920E7D2FD00AC4B6E /* InfoPopupViewController.xib in Resources */,
 				381B8A1920E1DAC2008335E0 /* Assets.xcassets in Resources */,
-				38AEC07820E2391F00E6529F /* WordsTabController.xib in Resources */,
+				38AEC07820E2391F00E6529F /* WordsViewController.xib in Resources */,
 				381B8A2C20E1F355008335E0 /* Images in Resources */,
 				386E340320F1B5AC00763618 /* PrefsWindowController.xib in Resources */,
 				381B8A1C20E1DAC2008335E0 /* MainMenu.xib in Resources */,
@@ -629,17 +638,19 @@
 				3806346C2111BA6600798D03 /* BMTFileManager.swift in Sources */,
 				38EFAFAB20E9CCE900C71AE9 /* TextFinderClient.swift in Sources */,
 				384AB23C20E3B26800D7E5D7 /* PJTableView.swift in Sources */,
+				380B922B2112D9C500F30B6B /* TestTabViewModel.swift in Sources */,
 				380C3C2620EA76950077C2BE /* TextFinder.swift in Sources */,
 				38AEC06420E2240700E6529F /* ResultsTabController.swift in Sources */,
 				38160EAF20E36F0200DA13F1 /* PJTextField.swift in Sources */,
 				383797DD20EE4FF400125253 /* TableTextFinderClient.swift in Sources */,
 				381B8A2620E1DBC5008335E0 /* MainWindowController.swift in Sources */,
+				380B922D2112DC3200F30B6B /* WordsTabViewModel.swift in Sources */,
 				380634682111ACE400798D03 /* Alerts.swift in Sources */,
 				38EFAFA720E9354700C71AE9 /* ClipboardController.swift in Sources */,
 				38C39454211216690021C717 /* BMTFileManagerProtocol.swift in Sources */,
 				384AB24320E466E600D7E5D7 /* WordTypeMenuController.swift in Sources */,
 				38EFAFAD20E9D08D00C71AE9 /* PJScrollView.swift in Sources */,
-				38AEC06620E2241E00E6529F /* WordsTabController.swift in Sources */,
+				38AEC06620E2241E00E6529F /* WordsViewController.swift in Sources */,
 				3821C85420E260100045E5A8 /* PJGlobalFunctions.swift in Sources */,
 				384AB24020E3E74400D7E5D7 /* PJFileManager.swift in Sources */,
 				38EFAFA520E9292A00C71AE9 /* PJWindow.swift in Sources */,
@@ -648,6 +659,7 @@
 				38AEC06820E2243300E6529F /* ExportTabController.swift in Sources */,
 				38846B7D20E2903D00C0DB3C /* Words.swift in Sources */,
 				38AEC06220E223ED00E6529F /* TestTabController.swift in Sources */,
+				380B92292112A12800F30B6B /* MainWindowViewModel.swift in Sources */,
 				3884FA8020F60E67006EDF11 /* PJTextView.swift in Sources */,
 				3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */,
 				386E33FC20F1A48D00763618 /* PreferencesController.swift in Sources */,
@@ -688,10 +700,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		38295EAE210E3E2200854A1F /* PBXTargetDependency */ = {
+		380B922721129CDD00F30B6B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Custom Buttons";
-			targetProxy = 38295EAD210E3E2200854A1F /* PBXContainerItemProxy */;
+			targetProxy = 380B922621129CDD00F30B6B /* PBXContainerItemProxy */;
 		};
 		3850BA3320E4D59B00A7C7CF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

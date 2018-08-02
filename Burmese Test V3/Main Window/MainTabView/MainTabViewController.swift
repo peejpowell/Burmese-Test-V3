@@ -8,13 +8,20 @@
 
 import Cocoa
 
+extension MainTabViewController {
+ 
+    func selectTab(at index: Int) {
+        self.tabView.selectTabViewItem(at: index)
+    }
+}
+
 class MainTabViewController: NSTabViewController {
 
     @IBOutlet var testTabController : TestTabController!
     @IBOutlet var resultsTabController : ResultsTabController!
-    @IBOutlet var wordsTabController : WordsTabController!
+    @IBOutlet var wordsTabController : WordsViewController!
     @IBOutlet var exportTabController : ExportTabController!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
@@ -29,7 +36,6 @@ class MainTabViewController: NSTabViewController {
                                             controlledBy: self.wordsTabController)
         let exportTabItem = setupTabViewItem(named: "Export",
                                              controlledBy: self.exportTabController)
-        
         self.tabViewItems = [testTabItem, resultsTabItem, wordsTabItem, exportTabItem]
         self.tabView.wantsLayer = true
         self.tabView.selectTabViewItem(at: 2)
@@ -53,7 +59,6 @@ class MainTabViewController: NSTabViewController {
         else {
             setTitleToSourceUrl()
         }
-        
         super .tabView(tabView, didSelect: tabViewItem)
     }
     

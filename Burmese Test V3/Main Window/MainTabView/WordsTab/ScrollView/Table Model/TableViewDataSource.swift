@@ -975,7 +975,7 @@ extension TableViewDataSource: NSTableViewDataSource {
             }
             else {
                 let data : Data = NSKeyedArchiver.archivedData(withRootObject: rowIndexes)
-                pboard.declareTypes([NSPasteboard.PasteboardType(rawValue: NSPasteboard.Name.dragPboard.rawValue)], owner: self)
+                pboard.declareTypes([NSPasteboard.PasteboardType(rawValue: NSPasteboard.Name.drag.rawValue)], owner: self)
                 pboard.setData(data, forType:NSPasteboard.PasteboardType(rawValue: "Words"))
                 
                 return true

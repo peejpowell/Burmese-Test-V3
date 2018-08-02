@@ -69,7 +69,7 @@
         </customObject>
         <customObject id="cIB-aA-S79" customClass="TestTabController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <customObject id="pxb-tu-Lwy" customClass="ResultsTabController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
-        <customObject id="z7V-Zk-tPS" customClass="WordsTabController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
+        <customObject id="z7V-Zk-tPS" customClass="WordsViewController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <customObject id="8Fv-wk-5t6" customClass="ExportTabController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>

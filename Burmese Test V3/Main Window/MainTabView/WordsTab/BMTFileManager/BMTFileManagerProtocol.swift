@@ -11,6 +11,10 @@ import Cocoa
 
 // MARK: BMTFileManager Protocols
 
+protocol BMTFileCreator {
+    func createNewDocument(_ notification: Notification)
+}
+
 protocol BMTFileCloser {
     
     /**

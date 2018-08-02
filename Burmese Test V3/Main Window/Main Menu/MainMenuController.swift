@@ -153,7 +153,7 @@ extension MainMenuController {
     @IBAction func newDocument(_ sender: Any?) {
         infoPrint("", #function, self.className)
         // Post a newDocument notification for the WordsTabViewController to respond to
-        NotificationCenter.default.post(name: .newDocument, object: nil)
+        NotificationCenter.default.post(name: .createNewDocument, object: nil)
     }
     
     @IBAction func openDocument(_ sender: Any?) {
@@ -161,41 +161,8 @@ extension MainMenuController {
     }
     
     
-    
     @IBAction func saveDocument(_ sender: Any?) {
-        infoPrint("", #function, self.className)
-        
-        let index = getCurrentIndex()
-        let wordsTabController = getWordsTabViewDelegate()
-        let dataSource = wordsTabController.dataSources[index]
-        
-        switch index {
-        case -1:
-            break
-        default:
-            if let url = dataSource.sourceFile {
-                if let fileManager = getMainWindowController().mainFileManager {
-                    let saveResult = fileManager.saveWordsToFile(url)
-                    switch saveResult.left(5) {
-                    case "Saved":
-                        break
-                    default:
-                        let alert = Alerts().warningAlert
-                        alert.messageText = saveResult
-                        alert.runModal()
-                        return
-                    }
-                    
-                    dataSource.needsSaving = false
-                    getMainMenuController().updateRecentsMenu(with: url)
-                    getMainWindowController().window?.title = url.lastPathComponent
-                    getMainWindowController().window?.representedURL = url
-                }
-            }
-            else {
-                self.saveDocumentAs(sender)
-            }
-        }
+        NotificationCenter.default.post(name: .saveDocument, object: nil)
     }
     
     @IBAction func revertDocumentToSaved(_ sender: Any?) {
@@ -204,64 +171,7 @@ extension MainMenuController {
     }
     
     @IBAction func saveDocumentAs(_ sender: Any?) {
-        infoPrint("", #function, self.className)
-        
-        let index = getCurrentIndex()
-        let wordsTabController = getWordsTabViewDelegate()
-        let dataSource = wordsTabController.dataSources[index]
-        
-        switch index {
-        case -1:
-            break
-        default:
-            //  FIXME: Stuff about searchfielddelegate
-            /*if let _ = appDelegate.dataSources![index].unfilteredWords
-            {
-                appDelegate.searchFieldDelegate.searchField.stringValue = ""
-                appDelegate.searchFieldDelegate.performFind(appDelegate.searchFieldDelegate.searchField)
-            }*/
-            
-            let savePanel = Panels().saveDocumentPanel
-            let fileNameToSave = wordsTabController.tabViewItems[index].label
-            if fileNameToSave.left(1) != "*" {
-                savePanel.nameFieldStringValue = fileNameToSave
-            }
-            else {
-                let fileNameToSave = fileNameToSave.minus(2)
-                savePanel.nameFieldStringValue = fileNameToSave
-            }
-            savePanel.directoryURL = wordsTabController.dataSources[index].sourceFile?.deletingLastPathComponent()
-            let saveDocumentResult = savePanel.runModal()
-            
-            switch saveDocumentResult {
-            case NSApplication.ModalResponse.OK:
-                // try to save the file
-                if let url = savePanel.url
-                {
-                    if let fileManager = getMainWindowController().mainFileManager {
-                        let saveResult = fileManager.saveWordsToFile(url)
-                        switch saveResult.left(5) {
-                        case "Saved":
-                            break
-                        default:
-                            let alert = Alerts().warningAlert
-                            alert.messageText = saveResult
-                            alert.runModal()
-                        return
-                        }
-                            
-                        dataSource.sourceFile = url
-                        dataSource.needsSaving = false
-                        getMainMenuController().updateRecentsMenu(with: url)
-                        getMainWindowController().window?.title = url.lastPathComponent
-                        getMainWindowController().window?.representedURL = url
-                    }
-                }
-            default:
-                print("Cancelled save as")
-                NotificationCenter.default.post(name: .dataSourceNeedsSaving, object: nil)
-            }
-        }
+        NotificationCenter.default.post(name: .saveDocumentAs, object: nil)
     }
     
     @IBAction func performClose(_ sender: Any?) {
@@ -269,10 +179,7 @@ extension MainMenuController {
         NotificationCenter.default.post(name: .closeDocument, object: nil)
     }
     
-    
-    
-    func buildRecentFilesMenu()
-    {
+    func buildRecentFilesMenu() {
         infoPrint("", #function, self.className)
         
         for url in self.recentFiles{

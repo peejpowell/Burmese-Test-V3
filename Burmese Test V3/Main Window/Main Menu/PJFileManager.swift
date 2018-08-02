@@ -8,25 +8,6 @@
 
 import Cocoa
 
-// MARK: Open File Functions
-
-extension PJFileManager {
-    enum OpenFileResponse : Int {
-        case invalidNotBMT
-        case invalidNotThere
-        case validDir
-        case validFile
-    }
-    
-    
-}
-
-// MARK: Save File Functions
-
-extension PJFileManager {
-    
-}
-
 class PJFileManager : FileManager {
     
     func checkFileValidity(at fileUrl: URL)->OpenFileResponse{
@@ -69,39 +50,6 @@ class PJFileManager : FileManager {
             }
         }
         return convertedArray
-    }
-    
-    func saveWordsToFile(_ fileURL: URL)->String
-    {
-        infoPrint("", #function, self.className)
-        
-        let index = getCurrentIndex()
-        let wordsTabController = getWordsTabViewDelegate()
-        switch index {
-        case -1:
-            break
-        default:
-            let dataSource = wordsTabController.dataSources[index]
-            let pListToSave : [Dictionary<NSString, NSString>] = self.convertToPlist(dataSource.words)
-            _ = PropertyListSerialization.propertyList(pListToSave, isValidFor: PropertyListSerialization.PropertyListFormat.binary)
-            
-            let plistData : Data?
-            do {
-                plistData = try PropertyListSerialization.data(fromPropertyList: pListToSave, format: PropertyListSerialization.PropertyListFormat.binary, options: 0)
-                do {
-                    try plistData!.write(to: fileURL, options: NSData.WritingOptions.atomicWrite)
-                        wordsTabController.tabViewItems[index].label = fileURL.path.lastPathComponent
-                    } catch let error as NSError {
-                        print("Could not write \(error), \(error.userInfo)")
-                        return "Failed to save file \(fileURL.path)"
-                    }
-            } catch let error as NSError {
-                NSAlert(error: error).runModal()
-                //plistData = nil
-                return "Failed to save file \(fileURL.path)"
-            }
-        }
-        return "Saved \(fileURL.path)"
     }
     
     override init() {

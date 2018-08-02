@@ -11,13 +11,11 @@ import Custom_Buttons
 
 class TestTabController: NSViewController {
     
-    var multipleChoiceTest : MultipleChoiceTest = MultipleChoiceTest()
+    var testTabViewModel : TestTabViewModel = TestTabViewModel()
     
     @IBOutlet weak var testButton: PJPButton!
     
     @IBAction func showNewVC(_ sender: Any) {
-        let index = getCurrentIndex()
-        
         self.present(InfoPopupViewController(), asPopoverRelativeTo: self.testButton.frame, of: self.view, preferredEdge: NSRectEdge.minY, behavior: NSPopover.Behavior.transient)
     }
     
@@ -26,7 +24,6 @@ class TestTabController: NSViewController {
         // Do view setup here.
         
         infoPrint("Test Tab",#function,self.className)
-        
     }
     
 }
