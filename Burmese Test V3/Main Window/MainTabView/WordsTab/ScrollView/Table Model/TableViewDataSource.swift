@@ -58,11 +58,11 @@ class TableViewDataSource: NSObject {
     
     override init() {
         super.init()
-        infoPrint("new Datasource created",#function,self.className)
+        infoPrint("new Datasource created - \(self)",#function,self.className)
     }
     
     deinit {
-        infoPrint("Datasource removed",#function,self.className)
+        infoPrint("Datasource removed - \(self)",#function,self.className)
         self.sourceFile = nil
     }
 }
@@ -134,9 +134,10 @@ extension TableViewDataSource {
 extension TableViewDataSource: NSTableViewDelegate {
     
     func tableView(_ tableView: NSTableView, didDrag tableColumn: NSTableColumn) {
-        let index = getCurrentIndex()
-        let textFinderClient = getWordsTabViewDelegate().tabViewControllersList[index].textFinderClient
-        textFinderClient?.resetSearch()
+        if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+            let bmtVC = currentTabItem.viewController as? BMTViewController {
+            bmtVC.textFinderClient.resetSearch()
+        }
     }
     
     func canDragRowsWithIndexes(_ rowIndexes: IndexSet, atPoint mouseDownPoint: NSPoint) -> Bool
@@ -147,6 +148,9 @@ extension TableViewDataSource: NSTableViewDelegate {
     }
     
     func tableView(_ tableView: NSTableView, isGroupRow row: Int) -> Bool {
+        if self.words.count == 0 {
+            return false
+        }
         if self.words[row].wordindex == "#" || self.words[row].istitle {
             return true
         }
@@ -204,12 +208,8 @@ extension TableViewDataSource: NSTableViewDelegate {
     func tableView(_ tableView: NSTableView, viewFor tableColumn: NSTableColumn?, row: Int) -> NSView?
     {
         //infoPrint("", #function, self.className)
-        
-        let index = getCurrentIndex()
-        
-        if index != -1
-        {
-            let dataSource = getWordsTabViewDelegate().dataSources[index]
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            
             if row >= dataSource.words.count {
                 return NSTableCellView()
             }
@@ -457,9 +457,8 @@ extension TableViewDataSource: NSTableViewDelegate {
 extension TableViewDataSource: NSTableViewDataSource {
     
     func numberOfRows(in tableView: NSTableView) -> Int {
-        let index = getCurrentIndex()
-        if index != -1 {
-            return getWordsTabViewDelegate().dataSources[index].words.count
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            return dataSource.words.count
         }
         return 0
     }
@@ -769,7 +768,11 @@ extension TableViewDataSource: NSTableViewDataSource {
     
     func tableView(_ tableView: NSTableView, draggingSession session: NSDraggingSession, willBeginAt screenPoint: NSPoint, forRowIndexes rowIndexes: IndexSet) {
         infoPrint("", #function, self.className)
-        getWordsTabViewDelegate().tabViewControllersList[getCurrentIndex()].indexLessonForRow(row: rowIndexes.first!)
+        if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+            let bmtVC = currentTabItem.viewController as? BMTViewController,
+            let firstIndex = rowIndexes.first {
+            bmtVC.indexLessonForRow(row: firstIndex)
+        }
         getWordsTabViewDelegate().draggingRows = true
     }
     
@@ -841,128 +844,136 @@ extension TableViewDataSource: NSTableViewDataSource {
     func tableView(_ tableView: NSTableView, acceptDrop info: NSDraggingInfo, row: Int, dropOperation: NSTableView.DropOperation) -> Bool {
         
         infoPrint("", #function, self.className)
-        
-        let wordsTabController = getWordsTabViewDelegate()
-        let index = getCurrentIndex()
-        let pasteBoard = info.draggingPasteboard
-        let dataSource = wordsTabController.dataSources[index]
-        if let rowData = pasteBoard.data(forType: NSPasteboard.PasteboardType(rawValue: "Words")) {
-            if let rowIndexes = NSKeyedUnarchiver.unarchiveObject(with: rowData) as? IndexSet {
-                var reIndexRowIndexes = IndexSet(rowIndexes)
-                
-                //var dataSource = appDelegate.mainDataController.data.dataSources[index] as [PJWords]
-                /*_ = dataSource
-                 _ = [Int]()
-                 _ = [PJWords]()
-                 */
-                // Work out how many rows were before the row to insert at
-                
-                var rowCount = 0
-                var rowToCheck = rowIndexes.first
-                
-                while rowToCheck! < row {
-                    rowCount = rowCount + 1
-                    rowToCheck = rowIndexes.integerGreaterThan(rowToCheck!)
-                    if rowToCheck == nil {break}
-                }
-                
-                // Make a new array of the data to copy and remove it from the datasource
-                
-                var wordsToInsert = [Words]()
-                for rowIndex in rowIndexes.reversed() {
-                    if let _ = dataSource.unfilteredWords {
-                        let word = dataSource.words[rowIndex]
-                        if word.filtertype != .add {
-                            if let filterIndex = word.filterindex {
-                                dataSource.filterRowsToDelete.insert(filterIndex)
-                            }
-                        }
+        if let dataSource = tableView.dataSource as? TableViewDataSource {
+            let wordsTabController = getWordsTabViewDelegate()
+            let pasteBoard = info.draggingPasteboard
+            if let rowData = pasteBoard.data(forType: NSPasteboard.PasteboardType(rawValue: "Words")) {
+                if let rowIndexes = NSKeyedUnarchiver.unarchiveObject(with: rowData) as? IndexSet {
+                    var reIndexRowIndexes = IndexSet(rowIndexes)
+                    
+                    //var dataSource = appDelegate.mainDataController.data.dataSources[index] as [PJWords]
+                    /*_ = dataSource
+                     _ = [Int]()
+                     _ = [PJWords]()
+                     */
+                    // Work out how many rows were before the row to insert at
+                    
+                    var rowCount = 0
+                    var rowToCheck = rowIndexes.first
+                    
+                    while rowToCheck! < row {
+                        rowCount = rowCount + 1
+                        rowToCheck = rowIndexes.integerGreaterThan(rowToCheck!)
+                        if rowToCheck == nil {break}
                     }
-                    if info.draggingSourceOperationMask.rawValue & NSDragOperation.move.rawValue == NSDragOperation.move.rawValue {
-                        wordsToInsert.append(dataSource.words.remove(at: rowIndex) as Words)
-                    }
-                    else {
-                        wordsToInsert.append(dataSource.words[rowIndex])
-                    }
-                }
-                /*var rowToCopy = rowIndexes.last
-                if rowToCopy != nil {
-                    repeat {
-                        // FIXME: Add unfiltered words functionality
-                        if let _ = dataSource.unfilteredWords
-                        {
-                            let word = dataSource.words[rowToCopy!]
-                            if word.filtertype != .add
-                            {
+                    
+                    // Make a new array of the data to copy and remove it from the datasource
+                    
+                    var wordsToInsert = [Words]()
+                    for rowIndex in rowIndexes.reversed() {
+                        if let _ = dataSource.unfilteredWords {
+                            let word = dataSource.words[rowIndex]
+                            if word.filtertype != .add {
                                 if let filterIndex = word.filterindex {
                                     dataSource.filterRowsToDelete.insert(filterIndex)
                                 }
                             }
                         }
                         if info.draggingSourceOperationMask.rawValue & NSDragOperation.move.rawValue == NSDragOperation.move.rawValue {
-                            wordsToInsert.append(dataSource.words.remove(at: rowToCopy!) as Words)
+                            wordsToInsert.append(dataSource.words.remove(at: rowIndex) as Words)
                         }
                         else {
-                            wordsToInsert.append(dataSource.words[rowToCopy!])
-                        }
-                        
-                        //wordsToInsert.append(dataSource[index].words.removeAtIndex(rowToCopy) as PJWords)
-                        rowToCopy = rowIndexes.integerLessThan(rowToCopy!)
-                        if rowToCopy == nil { break }
-                    } while rowToCopy! >= rowIndexes.first! && rowToCopy! <= rowIndexes.last!
-                }*/
-                // Calculate where we actually will insert the new rows
-                
-                var insertAtRow : Int = -1
-                
-                insertAtRow = row - rowCount
-                
-                for wordNum in 0 ..< wordsToInsert.count {
-                    let wordtoInsert = wordsToInsert[wordNum]
-                    if insertAtRow - 1 >= 0 {
-                        let prevWord = dataSource.words[insertAtRow-1]
-                        if let _ = dataSource.unfilteredWords {
-                            wordtoInsert.filtertype = .add
-                            wordtoInsert.filterindex = prevWord.filterindex
+                            wordsToInsert.append(dataSource.words[rowIndex])
                         }
                     }
-                    else {
-                        let nextWord = dataSource.words[insertAtRow]
-                        if let _ = dataSource.unfilteredWords {
-                            wordtoInsert.filtertype = .add
-                            wordtoInsert.filterindex = nextWord.filterindex
+                    /*var rowToCopy = rowIndexes.last
+                     if rowToCopy != nil {
+                     repeat {
+                     // FIXME: Add unfiltered words functionality
+                     if let _ = dataSource.unfilteredWords
+                     {
+                     let word = dataSource.words[rowToCopy!]
+                     if word.filtertype != .add
+                     {
+                     if let filterIndex = word.filterindex {
+                     dataSource.filterRowsToDelete.insert(filterIndex)
+                     }
+                     }
+                     }
+                     if info.draggingSourceOperationMask.rawValue & NSDragOperation.move.rawValue == NSDragOperation.move.rawValue {
+                     wordsToInsert.append(dataSource.words.remove(at: rowToCopy!) as Words)
+                     }
+                     else {
+                     wordsToInsert.append(dataSource.words[rowToCopy!])
+                     }
+                     
+                     //wordsToInsert.append(dataSource[index].words.removeAtIndex(rowToCopy) as PJWords)
+                     rowToCopy = rowIndexes.integerLessThan(rowToCopy!)
+                     if rowToCopy == nil { break }
+                     } while rowToCopy! >= rowIndexes.first! && rowToCopy! <= rowIndexes.last!
+                     }*/
+                    // Calculate where we actually will insert the new rows
+                    
+                    var insertAtRow : Int = -1
+                    
+                    insertAtRow = row - rowCount
+                    
+                    for wordNum in 0 ..< wordsToInsert.count {
+                        let wordtoInsert = wordsToInsert[wordNum]
+                        if insertAtRow - 1 >= 0 {
+                            let prevWord = dataSource.words[insertAtRow-1]
+                            if let _ = dataSource.unfilteredWords {
+                                wordtoInsert.filtertype = .add
+                                wordtoInsert.filterindex = prevWord.filterindex
+                            }
+                        }
+                        else {
+                            let nextWord = dataSource.words[insertAtRow]
+                            if let _ = dataSource.unfilteredWords {
+                                wordtoInsert.filtertype = .add
+                                wordtoInsert.filterindex = nextWord.filterindex
+                            }
+                        }
+                        dataSource.words.insert(wordtoInsert, at: insertAtRow)
+                    }
+                    
+                    let rowRange : NSRange = NSRange(location: insertAtRow, length: rowIndexes.count)
+                    
+                    reIndexRowIndexes.insert(insertAtRow)
+                    //self.reindexRows(reIndexRowIndexes, dropOnRow: row)
+                    wordsTabController.indexedRows.removeAll()
+                    //appDelegate.mainDataController.reindexRows(reIndexRowIndexes, tableView: tableView, inSource: dataSource, deleting: true,reIndexingAll: false, editingText: false)
+                    
+                    tableView.beginUpdates()
+                    if info.draggingSourceOperationMask.rawValue & NSDragOperation.move.rawValue == NSDragOperation.move.rawValue {
+                        tableView.removeRows(at: rowIndexes, withAnimation: NSTableView.AnimationOptions.slideUp)
+                    }
+                    tableView.insertRows(at: IndexSet(integersIn: Range(rowRange)!), withAnimation: .slideDown)
+                    tableView.selectRowIndexes(IndexSet(integersIn: Range(rowRange)!), byExtendingSelection: false)
+                    // FIXME: Implement reindex
+                    //appDelegate.menuController.reindexLesson(insertAtRow)
+                    if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+                        let bmtVC = currentTabItem.viewController as? BMTViewController,
+                        let firstIndex = rowIndexes.first {
+                        bmtVC.indexLessonForRow(row: insertAtRow)
+                    }
+                    if let rowCount = Range(rowRange)?.count {
+                        // FIXME: Implement reindex
+                        if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+                            let bmtVC = currentTabItem.viewController as? BMTViewController,
+                            let firstIndex = rowIndexes.first {
+                            bmtVC.indexLessonForRow(row: insertAtRow + rowCount)
                         }
                     }
-                    dataSource.words.insert(wordtoInsert, at: insertAtRow)
+                    tableView.endUpdates()
+                    
+                    NotificationCenter.default.post(name: .dataSourceNeedsSaving, object:nil)
                 }
-                
-                let rowRange : NSRange = NSRange(location: insertAtRow, length: rowIndexes.count)
-                
-                reIndexRowIndexes.insert(insertAtRow)
-                //self.reindexRows(reIndexRowIndexes, dropOnRow: row)
-                wordsTabController.indexedRows.removeAll()
-                //appDelegate.mainDataController.reindexRows(reIndexRowIndexes, tableView: tableView, inSource: dataSource, deleting: true,reIndexingAll: false, editingText: false)
-                
-                tableView.beginUpdates()
-                if info.draggingSourceOperationMask.rawValue & NSDragOperation.move.rawValue == NSDragOperation.move.rawValue {
-                    tableView.removeRows(at: rowIndexes, withAnimation: NSTableView.AnimationOptions.slideUp)
-                }
-                tableView.insertRows(at: IndexSet(integersIn: Range(rowRange)!), withAnimation: .slideDown)
-                tableView.selectRowIndexes(IndexSet(integersIn: Range(rowRange)!), byExtendingSelection: false)
-                // FIXME: Implement reindex
-                //appDelegate.menuController.reindexLesson(insertAtRow)
-                wordsTabController.tabViewControllersList[index].indexLessonForRow(row: insertAtRow)
-                if let rowCount = Range(rowRange)?.count {
-                // FIXME: Implement reindex
-                   wordsTabController.tabViewControllersList[index].indexLessonForRow(row: insertAtRow + rowCount)
-                }
-                tableView.endUpdates()
-                
-                NotificationCenter.default.post(name: .dataSourceNeedsSaving, object:nil)
+                wordsTabController.draggingRows = false
+                return true
             }
-            wordsTabController.draggingRows = false
-            return true
         }
+        
         //wordsTabController.draggingRows = false
         return false
     }

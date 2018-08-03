@@ -150,13 +150,12 @@ class WordTypeMenuController: MenuController {
         }
         
         // Check if there is a sourceFile
-        
-        for dataSource in getWordsTabViewDelegate().dataSources {
-            if let sourceFile = dataSource.sourceFile {
-                // Create a menu item for the file
+        for tabItem in getWordsTabViewDelegate().tabViewItems {
+            if  let bmtVC = tabItem.viewController as? BMTViewController,
+                let dataSource = bmtVC.dataSource,
+                let sourceFile = dataSource.sourceFile {
                 
                 let newMenuItem = NSMenuItem()
-                
                 newMenuItem.title = sourceFile.lastPathComponent
                 newMenuItem.action = #selector(self.toggleCurrent(_:))
                 newMenuItem.target = self

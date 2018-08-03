@@ -298,8 +298,13 @@ func getAppDelegate() -> AppDelegate
 
 func getCurrentTableView()->NSTableView
 {
-    let currentBMTView = getWordsTabViewDelegate().tabViewControllersList[getCurrentIndex()].view
-    return currentBMTView.viewWithTag(100) as! NSTableView
+    if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+        let bmtVC = currentTabItem.viewController as? BMTViewController {
+        return bmtVC.tableView
+    }
+    return NSTableView()
+    //let currentBMTView = getWordsTabViewDelegate().tabViewControllersList[getCurrentIndex()].view
+    //return currentBMTView.viewWithTag(100) as! NSTableView
 }
 
 func getWordTypeMenuController()->WordTypeMenuController?
@@ -329,17 +334,11 @@ func getMainWindowController()->MainWindowController
 
 func getCurrentIndex()->Int
 {
-    let wordTabController = getWordsTabViewDelegate()
-    if wordTabController.dataSources.count != 0
-    {
-        if wordTabController.removingFirstItem
-        {
+    if let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem {
+        if getWordsTabViewDelegate().removingFirstItem {
             return 0
         }
-        if let selectedItem = wordTabController.tabView.selectedTabViewItem
-        {
-            return wordTabController.tabView.indexOfTabViewItem(selectedItem)
-        }
+        return getWordsTabViewDelegate().tabView.indexOfTabViewItem(currentTabItem)
     }
     return -1
 }
@@ -348,29 +347,29 @@ func increaseLessonCount(_ lessonName: String) {
     
     infoPrint("", #function, nil)
     
-    let index = getCurrentIndex()
-    if index == -1 {return}
-    
-    if let value = getWordsTabViewDelegate().dataSources[index].lessons[lessonName] {
-        getWordsTabViewDelegate().dataSources[index].lessons[lessonName] = value + 1
-    }
-    else {
-        getWordsTabViewDelegate().dataSources[index].lessons[lessonName] = 1
+    if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+        let bmtVC = currentTabItem.viewController as? BMTViewController,
+        let dataSource = bmtVC.dataSource {
+        if let value = dataSource.lessons[lessonName] {
+            dataSource.lessons[lessonName] = value + 1
+        }
+        else {
+            dataSource.lessons[lessonName] = 1
+        }
     }
 }
 
 func decreaseLessonCount(_ lessonName: String)
 {
     infoPrint("", #function, nil)
-    
-    let index = getCurrentIndex()
-    if index == -1 {return}
-    
-    if let value = getWordsTabViewDelegate().dataSources[index].lessons[lessonName] {
-        getWordsTabViewDelegate().dataSources[index].lessons[lessonName] = value - 1
-        if value == 1
-        {
-            getWordsTabViewDelegate().dataSources[index].lessons[lessonName] = nil
+    if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+        let bmtVC = currentTabItem.viewController as? BMTViewController,
+        let dataSource = bmtVC.dataSource {
+        if let value = dataSource.lessons[lessonName] {
+            dataSource.lessons[lessonName] = value - 1
+            if value == 1 {
+                dataSource.lessons[lessonName] = nil
+            }
         }
     }
 }

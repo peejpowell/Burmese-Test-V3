@@ -32,11 +32,11 @@ extension PJScrollView {
     
     @IBAction override func performTextFinderAction(_ sender: Any?) {
         infoPrint("", #function, self.className)
-        let index = getCurrentIndex()
-        let wordsTabController = getWordsTabViewDelegate()
-        if let textFinderClient = wordsTabController.tabViewControllersList[index].textFinderClient {
+        if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+            let bmtVC = currentTabItem.viewController as? BMTViewController,
+            let textFinderClient = bmtVC.textFinderClient {
             textFinderClient.client = textFinderClient
-            textFinderClient.findBarContainer = wordsTabController.tabViewControllersList[index].scrollView
+            textFinderClient.findBarContainer = bmtVC.scrollView
             textFinderClient.isIncrementalSearchingEnabled = false
             textFinderClient.incrementalSearchingShouldDimContentView = true
             textFinderClient.allowsMultipleSelection = true
@@ -49,10 +49,11 @@ extension PJScrollView {
     
     @IBAction func performFindPanelAction(_ sender: NSMenuItem){
         infoPrint("", #function, self.className)
-        
-        let index = getCurrentIndex()
-        
-        getWordsTabViewDelegate().tabViewControllersList[index].textFinderClient.performTextFinderAction(sender)
+        if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+            let bmtVC = currentTabItem.viewController as? BMTViewController,
+            let textFinderClient = bmtVC.textFinderClient {
+            textFinderClient.performTextFinderAction(sender)
+        }
     }
 }
 

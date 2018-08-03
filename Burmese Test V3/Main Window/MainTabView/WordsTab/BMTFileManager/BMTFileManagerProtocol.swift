@@ -47,7 +47,7 @@ protocol BMTFileCloser {
 
 protocol BMTFileSaver {
     
-    func saveFileForDataSource(_ dataSource : TableViewDataSource, at index: Int)
+    func saveFileForDataSource(_ dataSource : TableViewDataSource, tableView: NSTableView)
     
     /**
      Shows a save document panel and asks for a file name before attempting to save the file.
@@ -66,7 +66,7 @@ protocol BMTFileLoader {
     
     func requestToRevertDataSource(dataSource: TableViewDataSource)->NSApplication.ModalResponse
     
-    func fileAlreadyLoaded(_ url: URL)-> (Bool, Int)
+    func tabOfFileWithURL(_ url: URL)->NSTabViewItem?
     
     /**
      If url is a file, calls the loadBMTFromURL function to load it.
@@ -79,17 +79,15 @@ protocol BMTFileLoader {
     
     func openRecentFiles()
     
-    func loadedIndexForUrl(_ url: URL)->Int
+    //func loadedIndexForUrl(_ url: URL)->Int
     
-    func loadDataSource(_ dataSource: TableViewDataSource, at index: Int)
+    func loadDataSource(_ dataSource: TableViewDataSource, into tabItem: NSTabViewItem)
     
     func loadWordsFromFile(_ fileURL: URL, into dataSource: TableViewDataSource)->TableViewDataSource?
     
     func loadFileAtURL(_ url: URL, reverting: Bool)
     
     func loadBMTFromURL(_ url: URL)
-    
-    func loadFileFromURL(_ url: URL)
     
     /**
      Shows an open document panel and tries to load the resulting file/folder.

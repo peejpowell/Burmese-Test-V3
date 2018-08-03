@@ -164,7 +164,11 @@ extension MainWindowController: NSWindowDelegate {
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         infoPrint("", #function, self.className)
         // Make sure all files are closed first
-        if let _ = mainTabViewController.wordsTabController.wordsTabViewController.dataSources[0].sourceFile {
+        // Check if the first tab's dataSource is empty
+        if  let firstTabItem = mainTabViewController.wordsTabController.wordsTabViewController.tabView.selectedTabViewItem,
+            let bmtVC = firstTabItem.viewController as? BMTViewController,
+            let dataSource = bmtVC.dataSource,
+            let _ = dataSource.sourceFile {
             NotificationCenter.default.post(name: .closeAllFiles, object: nil)
             return false
         }

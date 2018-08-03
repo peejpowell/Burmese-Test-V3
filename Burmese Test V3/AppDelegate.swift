@@ -27,9 +27,20 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationShouldTerminate(_ sender: NSApplication) -> NSApplication.TerminateReply {
         
         infoPrint("", #function, self.className)
-        if let _ = self.mainWindowController.mainTabViewController.wordsTabController.wordsTabViewController.dataSources[0].sourceFile {
-            NotificationCenter.default.post(name: .closeAllFiles, object: nil)
-            return .terminateCancel
+//        if  let firstTabItem = mainWindowController.mainTabViewController.wordsTabController.wordsTabViewController.tabView.selectedTabViewItem,
+//            let bmtVC = firstTabItem.viewController as? BMTViewController,
+//            let dataSource = bmtVC.dataSource,
+//            let _ = dataSource.sourceFile {
+//            if firstTabItem.label != "Nothing Loaded" {
+//                NotificationCenter.default.post(name: .closeAllFiles, object: nil)
+//                return .terminateCancel
+//            }
+//        }
+        if  let firstTabItem = mainWindowController.mainTabViewController.wordsTabController.wordsTabViewController.tabView.selectedTabViewItem{
+            if firstTabItem.label != "Nothing Loaded" {
+                NotificationCenter.default.post(name: .closeAllFiles, object: nil)
+                return .terminateCancel
+            }
         }
         return .terminateNow
     }
@@ -40,13 +51,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         // Close all active documents
        
-        for controller in getWordsTabViewDelegate().tabViewControllersList {
+        /*for controller in getWordsTabViewDelegate().tabViewControllersList {
             controller.tableView = nil
-        }
+        }*/
         
-        getWordsTabViewDelegate().tabViewControllersList.removeAll()
-        getWordsTabViewDelegate().dataSources.removeAll()
+        //getWordsTabViewDelegate().tabViewControllersList.removeAll()
         getWordsTabViewDelegate().tabViewItems.removeAll()
+        //getWordsTabViewDelegate().dataSources.removeAll()
         self.currentInputSource = nil
         TISSelectInputSource(self.originalInputLanguage)
         self.originalInputLanguage = nil

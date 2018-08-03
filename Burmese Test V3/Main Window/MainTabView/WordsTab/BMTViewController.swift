@@ -50,10 +50,29 @@ class BMTViewController: NSViewController {
     @IBOutlet weak var tableView : NSTableView!
     @IBOutlet var textFinderClient: TextFinderClient!
     @IBOutlet weak var scrollView: PJScrollView!
+    @IBOutlet var dataSource: TableViewDataSource!
     
     // MARK: Vars
     
     //var textFinderController: NSTextFinder = NSTextFinder()
+    
+    func performInitialSetup() {
+        let view = self.view
+        if let tableView = view.viewWithTag(100) as? NSTableView {
+            tableView.wantsLayer = true
+            //self.tableView = tableView
+            //self.dataSource = TableViewDataSource()
+            tableView.dataSource = self.dataSource
+            tableView.delegate = self.dataSource
+            view.isHidden = true
+            
+            // Set up the textfinder
+            
+            self.textFinderClient.tableView = self.tableView
+            self.textFinderClient.findBarContainer = self.scrollView
+            self.textFinderClient.client = textFinderClient
+        }
+    }
     
     // MARK: View Controller Functions
     
@@ -61,21 +80,16 @@ class BMTViewController: NSViewController {
         super.viewDidLoad()
         // Do view setup here.
         
+        performInitialSetup()
         infoPrint("New BMT Tab",#function,self.className)
-        
-        let view = self.view
-        if let tableView = view.viewWithTag(100) as? NSTableView {
-            tableView.wantsLayer = true
-            self.tableView = tableView
-            self.textFinderClient.tableView = self.tableView
-        }
-        // Set up the textfinder
-        
-        self.textFinderClient.findBarContainer = self.scrollView
-        self.textFinderClient.client = textFinderClient
-        //self.textFinderController.client = self.textFinderClient
-        //self.textFinderController.findBarContainer = self.scrollView
-        //self.textFinderController.isIncrementalSearchingEnabled = true
+    }
+    
+    override init(nibName nibNameOrNil: NSNib.Name?, bundle nibBundleOrNil: Bundle?) {
+        super.init(nibName: nibNameOrNil, bundle: nibBundleOrNil)
+    }
+    
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
     }
     
     override func viewDidAppear() {

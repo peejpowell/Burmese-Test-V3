@@ -21,12 +21,14 @@ extension WordsTabViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.setDataSourceNeedsSaving(_:)), name: .dataSourceNeedsSaving, object: nil)
     }
     
-    func createEmptyBMT(named name: String, controlledBy viewController: BMTViewController) -> NSTabViewItem {
+    func createEmptyBMT(named name: String, controlledBy bmtVC: BMTViewController) -> NSTabViewItem {
         let dataSource = TableViewDataSource()
         dataSource.words.append(Words())
-        self.dataSources.append(dataSource)
-        let newTabItem = setupTabViewItem(named: "Untitled", controlledBy: viewController)
+        let newTabItem = setupTabViewItem(named: "Untitled", controlledBy: bmtVC)
         getMainWindowController().window?.title = "Untitled"
+        if let tableView = bmtVC.tableView {
+            tableView.dataSource = dataSource
+        }
         return newTabItem
     }
     
@@ -42,14 +44,16 @@ extension WordsTabViewController {
     
     @objc func setDataSourceNeedsSaving(_ notification: Notification) {
         infoPrint("", #function, self.className)
-        let index = getCurrentIndex()
-        if dataSources[index].needsSaving {
-            return
-        }
-        self.dataSources[index].needsSaving = true
-        let item = self.tabViewItems[index]
-        if item.label.left(1) != "*" {
-            item.label = "* \(self.tabViewItems[index].label)"
+        if  let currentTabItem = tabView.selectedTabViewItem,
+            let bmtVC = currentTabItem.viewController as? BMTViewController,
+            let dataSource = bmtVC.dataSource {
+            if dataSource.needsSaving {
+                return
+            }
+            dataSource.needsSaving = true
+            if currentTabItem.label.left(1) != "*" {
+                currentTabItem.label = "* \(currentTabItem.label)"
+            }
         }
     }
 }
@@ -59,8 +63,8 @@ class WordsTabViewController: NSTabViewController {
     // This holds all the information about the datasources for the tables
     // inside the tabs.
     
-    var tabViewControllersList  : [BMTViewController] = []
-    var dataSources             : [TableViewDataSource] = []
+    //var tabViewControllersList  : [BMTViewController] = []
+    //var dataSources             : [TableViewDataSource] = []
     var removingFirstItem       : Bool  = false
     var originalInputLanguage = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
     var draggingRows = false
@@ -83,11 +87,12 @@ class WordsTabViewController: NSTabViewController {
     
     fileprivate func performInitialSetup() {
         infoPrint("", #function, self.className)
-        let BMTvc = BMTViewController()
-        self.tabViewControllersList.append(BMTvc)
+        let bmtVC = BMTViewController(nibName: "BMTViewController", bundle: Bundle.main)
+        //self.tabViewControllersList.append(BMTvc)
         self.tabViewItems.removeAll()
-        self.tabViewItems.append(setupTabViewItem(named:"Nothing Loaded", controlledBy: BMTvc))
-
+        self.tabViewItems.append(setupTabViewItem(named:"Nothing Loaded", controlledBy: bmtVC))
+        print("dataSource: \(bmtVC.dataSource), tableView: \(bmtVC.tableView)")
+        /*
         if self.dataSources.count == 0 {
             if  let tableView = BMTvc.tableView,
                 let dataSource = tableView.dataSource as? TableViewDataSource{
@@ -97,15 +102,15 @@ class WordsTabViewController: NSTabViewController {
             {
                 self.dataSources.append(TableViewDataSource())
             }
-        }
-        let view = BMTvc.view
+        }*/
+        /*let view = BMTvc.view
         let tableView = view.viewWithTag(100)
         if let tableView = tableView as? PJTableView {
             tableView.dataSource = self.dataSources[0]
             tableView.delegate = self.dataSources[0]
             tableView.registerTableForDrag()
             view.isHidden = true
-        }
+        }*/
         NotificationCenter.default.post(name: .loadRecentFiles, object: nil)
     }
     
@@ -113,7 +118,7 @@ class WordsTabViewController: NSTabViewController {
         super.viewDidLoad()
         // Do view setup here.
         infoPrint("Words Tab",#function,self.className)
-        if tabViewControllersList.count > 0 {
+        if self.tabViewItems.count > 0 {
             return
         }
         performInitialSetup()
@@ -127,33 +132,21 @@ class WordsTabViewController: NSTabViewController {
     override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         infoPrint(tabViewItem?.label, #function,self.className)
         
-        if let currentTabItem = self.tabView.selectedTabViewItem {
-            let index = self.tabView.indexOfTabViewItem(currentTabItem)
-            if index != -1 {
-                let currentBMT = self.tabViewControllersList[index]
-                let view = currentBMT.view
-                if dataSources.count > 0 {
-                    let dataSource = self.dataSources[index]
-                    if let tableView = view.viewWithTag(100) as? NSTableView {
-                        currentBMT.tableView = tableView
-                        tableView.dataSource = dataSource
-                        tableView.delegate = dataSource
-                    }
-                    
-                    switch dataSource.needsSaving {
-                    case true:
-                        NotificationCenter.default.post(name: .enableRevert, object: nil)
-                    case false:
-                        NotificationCenter.default.post(name: .disableRevert, object: nil)
-                    }
-                    
-                    if let mainWindow = getMainWindowController().window
-                    {
-                        if let url = self.dataSources[getCurrentIndex()].sourceFile {
-                            mainWindow.title = url.lastPathComponent
-                            mainWindow.representedURL = self.dataSources[index].sourceFile
-                        }
-                    }
+        if  let currentTabItem = self.tabView.selectedTabViewItem,
+            let bmtVC = currentTabItem.viewController as? BMTViewController,
+            let dataSource = bmtVC.dataSource {
+            switch dataSource.needsSaving {
+            case true:
+                NotificationCenter.default.post(name: .enableRevert, object: nil)
+            case false:
+                NotificationCenter.default.post(name: .disableRevert, object: nil)
+            }
+            
+            if let mainWindow = getMainWindowController().window
+            {
+                if let url = dataSource.sourceFile {
+                    mainWindow.title = url.lastPathComponent
+                    mainWindow.representedURL = url
                 }
             }
         }

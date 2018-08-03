@@ -17,19 +17,21 @@ class InfoPopupViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-        
-        let index = getCurrentIndex()
-        let tableView = getWordsTabViewDelegate().tabViewControllersList[index].tableView
-        if let row = tableView?.selectedRow {
-            if row == -1 {return}
-            if let burmeseWord = getWordsTabViewDelegate().dataSources[index].words[row].burmese {
-                self.burmeseWord.stringValue = burmeseWord
-            }
-            if let romanWord = getWordsTabViewDelegate().dataSources[index].words[row].roman {
-                self.romanWord.stringValue = romanWord
-            }
-            if let englishWord = getWordsTabViewDelegate().dataSources[index].words[row].english {
-                self.romanWord.stringValue = englishWord
+        if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+            let bmtVC = currentTabItem.viewController as? BMTViewController,
+            let dataSource = bmtVC.tableView.dataSource as? TableViewDataSource{
+            let tableView = bmtVC.tableView
+            if let row = tableView?.selectedRow {
+                if row == -1 {return}
+                if let burmeseWord = dataSource.words[row].burmese {
+                    self.burmeseWord.stringValue = burmeseWord
+                }
+                if let romanWord = dataSource.words[row].roman {
+                    self.romanWord.stringValue = romanWord
+                }
+                if let englishWord = dataSource.words[row].english {
+                    self.romanWord.stringValue = englishWord
+                }
             }
         }
     }

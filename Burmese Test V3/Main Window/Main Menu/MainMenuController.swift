@@ -232,9 +232,10 @@ extension MainMenuController {
     
     @IBAction func performFindPanelAction(_ sender: Any?){
         infoPrint("", #function, self.className)
-       
-        let index = getCurrentIndex()
-        getWordsTabViewDelegate().tabViewControllersList[index].textFinderClient.performTextFinderAction(sender)
+        if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+            let bmtVC = currentTabItem.viewController as? BMTViewController {
+            bmtVC.textFinderClient.performTextFinderAction(sender)
+        }
     }
     
     @IBAction func openPreferences(_ sender: NSMenuItem) {

@@ -29,15 +29,13 @@ func setTitleToDefault()
 }
 
 func setTitleToSourceUrl() {
-    if let mainWindow = getMainWindowController().window {
-        let index = getCurrentIndex()
-        let tabViewController = getWordsTabViewDelegate()
-        if index != -1 {
-            if let url = tabViewController.dataSources[index].sourceFile {
-                mainWindow.title = url.lastPathComponent
-                mainWindow.representedURL = url
-            }
-        }
+    if  let mainWindow = getMainWindowController().window,
+        let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+        let bmtVC = currentTabItem.viewController as? BMTViewController,
+        let dataSource = bmtVC.dataSource,
+        let url = dataSource.sourceFile {
+        mainWindow.title = url.lastPathComponent
+        mainWindow.representedURL = url
     }
 }
 
@@ -49,11 +47,10 @@ func selectWordsTab()
     }
 }
 
-func selectTabForExistingFile(at index: Int) {
+func selectTabForExistingFile(tabItem: NSTabViewItem) {
     
-    if let wordsTabView = getWordsTabViewDelegate().tabViewItems[index].tabView {
-        wordsTabView.selectTabViewItem(at: index)
-    }
+    let wordsTabView = getWordsTabViewDelegate().tabView
+    wordsTabView.selectTabViewItem(tabItem)
 }
 
 func setupTabViewItem(named label: String, controlledBy viewController: NSViewController)->NSTabViewItem
