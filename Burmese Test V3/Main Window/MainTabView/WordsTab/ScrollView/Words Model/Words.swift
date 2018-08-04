@@ -99,10 +99,15 @@ class Words: NSObject, NSCoding
             {
                 //self.wordKeys["KLesson"] = self.lesson as AnyObject
                 self.setEdited()
-                increaseLessonCount(self.lesson!)
+                if let lesson = self.lesson {
+                    NotificationCenter.default.post(name: .increaseLessonCount, object: nil, userInfo: ["lesson" : lesson])
+                    NotificationCenter.default.post(name: .startPopulateLessonsPopup, object: nil)
+                }
+                //increaseLessonCount(self.lesson!)
                 if oldValue != nil
                 {
-                    decreaseLessonCount(oldValue!)
+                    NotificationCenter.default.post(name: .decreaseLessonCount, object: nil, userInfo: ["lesson" : lesson])
+                    NotificationCenter.default.post(name: .startPopulateLessonsPopup, object: nil)
                 }
             }
         }

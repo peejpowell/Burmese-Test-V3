@@ -50,8 +50,11 @@ class BMTViewController: NSViewController {
     @IBOutlet weak var tableView : NSTableView!
     @IBOutlet var textFinderClient: TextFinderClient!
     @IBOutlet weak var scrollView: PJScrollView!
-    @IBOutlet var dataSource: TableViewDataSource!
     
+    var bmtViewModel : BMTViewModel = BMTViewModel()
+    var dataSource : TableViewDataSource? {
+        return bmtViewModel.dataSource
+    }
     // MARK: Vars
     
     //var textFinderController: NSTextFinder = NSTextFinder()
@@ -62,8 +65,10 @@ class BMTViewController: NSViewController {
             tableView.wantsLayer = true
             //self.tableView = tableView
             //self.dataSource = TableViewDataSource()
-            tableView.dataSource = self.dataSource
-            tableView.delegate = self.dataSource
+            self.bmtViewModel.dataSource = TableViewDataSource()
+            
+            tableView.dataSource = self.bmtViewModel.dataSource
+            tableView.delegate = self.bmtViewModel.dataSource
             view.isHidden = true
             
             // Set up the textfinder
@@ -94,7 +99,7 @@ class BMTViewController: NSViewController {
     
     override func viewDidAppear() {
         super.viewDidAppear()
-        infoPrint("", #function, self.className)
+        infoPrint("\(self)", #function, self.className)
         self.createTableViewObservers()
         /*self.textFinderClient = TextFinderClient()
         self.textFinderClient.client = textFinderClient
@@ -118,9 +123,7 @@ class BMTViewController: NSViewController {
                 column.isHidden = false
             }
         }
-        if let dataSource = tableView.dataSource as? TableViewDataSource {
-            dataSource.populateLessons()
-        }
+        NotificationCenter.default.post(name: .startPopulateLessonsPopup, object: nil, userInfo:["dataSource" : self.dataSource])
     }
     
     override func viewDidDisappear() {
@@ -248,6 +251,8 @@ extension BMTViewController {
     }
     
     func createTableViewObservers() {
+        // Check if the observers already exist
+        NotificationCenter.default.removeObserver(self)
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable(_:)), name: .tableNeedsReloading, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableRows(_:)), name: .tableRowsNeedReloading, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.removeTableRow), name: .removeTableRow, object: nil)
@@ -279,27 +284,39 @@ extension BMTViewController {
     
     @objc func jumpToLesson(_ notification: Notification) {
         infoPrint("", #function, self.className)
-        if let userInfo = notification.userInfo {
-            if let senderTag = userInfo["senderTag"] as? Int {
-                self.tableView.selectRowIndexes(IndexSet(integer: senderTag), byExtendingSelection: false)
-                let visibleRowRange = tableView.rows(in: tableView.visibleRect)
-                let topRow = visibleRowRange.location
-                let numberOfVisibleRows = visibleRowRange.length - 2
-                if senderTag > topRow {
-                    self.tableView.scrollRowToVisible(senderTag + numberOfVisibleRows)
-                }
-                else {
-                    self.tableView.scrollRowToVisible(senderTag)
-                }
-                getMainWindowController().window?.makeFirstResponder(tableView)
+        if  let userInfo = notification.userInfo,
+            let senderTag = userInfo["senderTag"] as? Int,
+            let title = userInfo["title"] as? String {
+            self.tableView.selectRowIndexes(IndexSet(integer: senderTag), byExtendingSelection: false)
+            let visibleRowRange = tableView.rows(in: tableView.visibleRect)
+            let topRow = visibleRowRange.location
+            let numberOfVisibleRows = visibleRowRange.length - 2
+            if senderTag > topRow {
+                self.tableView.scrollRowToVisible(senderTag + numberOfVisibleRows)
             }
+            else {
+                self.tableView.scrollRowToVisible(senderTag)
+            }
+            getMainWindowController().window?.makeFirstResponder(tableView)
         }
     }
     
     @objc func populateLessonsPopup(_ notification: Notification) {
         infoPrint("", #function, self.className)
-        if let dataSource = self.tableView.dataSource as? TableViewDataSource {
-            dataSource.populateLessons()
+        
+        if  let currenTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+            let bmtVC = currenTabItem.viewController as? BMTViewController {
+            if bmtVC != self {
+                print("Wrong viewcontroller observing!")
+                return
+            }
+        }
+        // Make sure we are populating the lessonspopup with the right information
+        if  let userInfo = notification.userInfo,
+            let lessonsPopup = userInfo["lessonsPopup"] as? NSPopUpButton {
+            if let dataSource = self.dataSource {
+                dataSource.populateLessons(in: lessonsPopup)
+            }
         }
     }
     

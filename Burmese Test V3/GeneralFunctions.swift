@@ -48,7 +48,12 @@ func selectWordsTab()
 }
 
 func selectTabForExistingFile(tabItem: NSTabViewItem) {
-    
+
+    if let selectedTabView = getMainWindowController().mainTabViewController.tabView.selectedTabViewItem {
+        if selectedTabView.label != "Words" {
+            getMainWindowController().mainTabViewController.tabView.selectTabViewItem(at: 2)
+        }
+    }
     let wordsTabView = getWordsTabViewDelegate().tabView
     wordsTabView.selectTabViewItem(tabItem)
 }

@@ -44,4 +44,11 @@ class testPJFileManager: XCTestCase {
         XCTAssert(fileManager.checkFileValidity(at: nonExistentUrl) == .invalidNotThere)
         XCTAssert(fileManager.checkFileValidity(at: invalidFileUrl) == .invalidNotBMT)
     }
+    
+    func testLoadWordsFromFile() {
+        if let dataSource = fileManager.loadWordsFromFile(fileUrl, into: newDataSource) {
+            XCTAssert(dataSource.words.count > 0)
+        }
+        
+    }
 }

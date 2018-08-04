@@ -845,7 +845,7 @@
                 <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
                 <autoresizingMask key="autoresizingMask"/>
                 <subviews>
-                    <tabView type="bottomTabsBezelBorder" translatesAutoresizingMaskIntoConstraints="NO" id="WwX-7h-K8S" userLabel="Main Tab View">
+                    <tabView wantsLayer="YES" type="bottomTabsBezelBorder" translatesAutoresizingMaskIntoConstraints="NO" id="WwX-7h-K8S" userLabel="Main Tab View">
                         <rect key="frame" x="-7" y="-1" width="814" height="505"/>
                         <font key="font" metaFont="system"/>
                         <tabViewItems>

@@ -14,6 +14,8 @@ public var logLevel = 1
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
 
+    var autoOpenUrl : URL?
+    
     @IBOutlet weak var mainWindowController : MainWindowController!
     
     var currentInputSource : TISInputSource?    = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
@@ -36,7 +38,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 //                return .terminateCancel
 //            }
 //        }
-        if  let firstTabItem = mainWindowController.mainTabViewController.wordsTabController.wordsTabViewController.tabView.selectedTabViewItem{
+        if  let firstTabItem = mainWindowController.mainTabViewController.wordsTabController.wordsTabViewController.tabView.selectedTabViewItem {
             if firstTabItem.label != "Nothing Loaded" {
                 NotificationCenter.default.post(name: .closeAllFiles, object: nil)
                 return .terminateCancel
@@ -48,7 +50,14 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
         infoPrint("", #function, self.className)
-        
+        if  let firstTabItem = mainWindowController.mainTabViewController.wordsTabController.wordsTabViewController.tabView.selectedTabViewItem {
+            if let bmtVC = firstTabItem.viewController as? BMTViewController {
+                bmtVC.bmtViewModel.dataSource = nil
+                bmtVC.bmtViewModel.tableView = nil
+                bmtVC.tableView = nil
+                bmtVC.scrollView = nil
+            }
+        }
         // Close all active documents
        
         /*for controller in getWordsTabViewDelegate().tabViewControllersList {
@@ -81,6 +90,18 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         TISSelectInputSource(originalInputLanguage)
     }
     
+    func application(_ sender: NSApplication, openFile filename: String) -> Bool {
+        infoPrint("", #function, self.className)
+        let fileUrl = URL(fileURLWithPath: filename)
+        self.autoOpenUrl = fileUrl
+        /*if let wordsTabVC = mainWindowController.mainTabViewController.wordsTabController,
+            let fileManager = wordsTabVC.wordsTabViewModel.fileManager {
+            mainWindowController.mainTabViewController!.tabView.selectTabViewItem(at:2)
+            getWordsTabViewDelegate().tabView.selectTabViewItem(at: 0)
+            fileManager.loadRequestedUrl(fileUrl)
+        }*/
+        return true
+    }
 }
 
 extension AppDelegate {

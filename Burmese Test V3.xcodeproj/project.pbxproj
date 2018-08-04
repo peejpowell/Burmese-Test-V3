@@ -29,6 +29,7 @@
 		381F685020EB3DD50085E330 /* FindMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */; };
 		3821C85420E260100045E5A8 /* PJGlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */; };
 		3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84C20E242160045E5A8 /* PJExtensions.swift */; };
+		3833873821143238008EE0B3 /* BMTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3833873721143238008EE0B3 /* BMTViewModel.swift */; };
 		383797DD20EE4FF400125253 /* TableTextFinderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383797DC20EE4FF400125253 /* TableTextFinderClient.swift */; };
 		384AB23C20E3B26800D7E5D7 /* PJTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384AB23B20E3B26800D7E5D7 /* PJTableView.swift */; };
 		384AB23E20E3E0BB00D7E5D7 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384AB23D20E3E0BB00D7E5D7 /* MainMenuController.swift */; };
@@ -142,6 +143,7 @@
 		381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMenuDelegate.swift; sourceTree = "<group>"; };
 		3821C84C20E242160045E5A8 /* PJExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJExtensions.swift; sourceTree = "<group>"; };
 		3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJGlobalFunctions.swift; sourceTree = "<group>"; };
+		3833873721143238008EE0B3 /* BMTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTViewModel.swift; sourceTree = "<group>"; };
 		383797DC20EE4FF400125253 /* TableTextFinderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTextFinderClient.swift; sourceTree = "<group>"; };
 		384AB23B20E3B26800D7E5D7 /* PJTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJTableView.swift; sourceTree = "<group>"; };
 		384AB23D20E3E0BB00D7E5D7 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
@@ -287,6 +289,16 @@
 			path = "Custom Functions";
 			sourceTree = "<group>";
 		};
+		383387362114321E008EE0B3 /* BMTView */ = {
+			isa = PBXGroup;
+			children = (
+				38AEC07920E23A3900E6529F /* BMTViewController.swift */,
+				38AEC07B20E23D6600E6529F /* BMTViewController.xib */,
+				3833873721143238008EE0B3 /* BMTViewModel.swift */,
+			);
+			path = BMTView;
+			sourceTree = "<group>";
+		};
 		384AB24120E3E75500D7E5D7 /* Main Menu */ = {
 			isa = PBXGroup;
 			children = (
@@ -303,7 +315,6 @@
 			isa = PBXGroup;
 			children = (
 				384AB23B20E3B26800D7E5D7 /* PJTableView.swift */,
-				38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */,
 				38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */,
 			);
 			path = "Table Model";
@@ -414,14 +425,14 @@
 				38C39455211216CF0021C717 /* BMTFileManager */,
 				38EFAFAE20E9D60400C71AE9 /* ScrollView */,
 				38EFAFA620E9354700C71AE9 /* ClipboardController.swift */,
+				38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */,
 				380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */,
 				38AEC06520E2241E00E6529F /* WordsViewController.swift */,
 				38AEC07720E2391F00E6529F /* WordsViewController.xib */,
 				380634672111ACE400798D03 /* Alerts.swift */,
 				380634692111B16D00798D03 /* Panels.swift */,
 				38AEC07520E2354800E6529F /* WordsTabViewController.swift */,
-				38AEC07920E23A3900E6529F /* BMTViewController.swift */,
-				38AEC07B20E23D6600E6529F /* BMTViewController.xib */,
+				383387362114321E008EE0B3 /* BMTView */,
 				38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */,
 			);
 			path = WordsTab;
@@ -674,6 +685,7 @@
 				386E33F920F1A3E600763618 /* PreferencesViewController.swift in Sources */,
 				381F685020EB3DD50085E330 /* FindMenuDelegate.swift in Sources */,
 				38AEC05C20E21F9B00E6529F /* MainTabViewController.swift in Sources */,
+				3833873821143238008EE0B3 /* BMTViewModel.swift in Sources */,
 				3850BA2820E4AA0C00A7C7CF /* LanguageMenuController.swift in Sources */,
 				38846B8020E299C400C0DB3C /* TableViewDataSource.swift in Sources */,
 				38160EAB20E3580000DA13F1 /* TextFieldDelegate.swift in Sources */,

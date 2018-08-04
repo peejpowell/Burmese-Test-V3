@@ -13,12 +13,88 @@ extension Notification.Name {
     static var dataSourceNeedsSaving: Notification.Name {
         return .init(rawValue: "WordsTabViewController.dataSourceNeedsSaving")
     }
+    
+    static var increaseLessonCount: Notification.Name {
+        return .init(rawValue: "WordsTabViewController.increaseLessonCount")
+    }
+    
+    static var decreaseLessonCount: Notification.Name {
+        return .init(rawValue: "WordsTabViewController.decreaseLessonCount")
+    }
+    
+    static var buildWordTypeMenu: Notification.Name {
+        return .init(rawValue: "WordsTabViewController.buildWordTypeMenu")
+    }
+}
+
+// MARK: Observation Functions
+
+extension WordsTabViewController {
+    
+    @objc func increaseLessonCount(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        if  let userInfo = notification.userInfo,
+            let lessonName = userInfo[userInfoLesson] as? String,
+            let currentTabItem = self.tabView.selectedTabViewItem,
+            let bmtVC = currentTabItem.viewController as? BMTViewController,
+            let dataSource = bmtVC.dataSource {
+            if let value = dataSource.lessons[lessonName] {
+                dataSource.lessons[lessonName] = value + 1
+            }
+            else {
+                dataSource.lessons[lessonName] = 1
+            }
+        }
+    }
+    
+    @objc func decreaseLessonCount(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        if  let userInfo = notification.userInfo,
+            let lessonName = userInfo[userInfoLesson] as? String,
+            let currentTabItem = self.tabView.selectedTabViewItem,
+            let bmtVC = currentTabItem.viewController as? BMTViewController,
+            let dataSource = bmtVC.dataSource {
+            if let value = dataSource.lessons[lessonName] {
+                dataSource.lessons[lessonName] = value - 1
+                if value == 1 {
+                    dataSource.lessons[lessonName] = nil
+                }
+            }
+        }
+    }
+    
+    @objc func buildWordTypeMenu(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        if  let userInfo = notification.userInfo,
+            let wordTypeMenu = userInfo[userInfoMenu] as? NSMenu {
+            
+            while wordTypeMenu.items.count>3 {
+                wordTypeMenu.removeItem(at: 0)
+            }
+            
+            for tabItem in getWordsTabViewDelegate().tabViewItems {
+                NotificationCenter.default.post(name: .buildWordTypeMenuForTab, object: nil, userInfo: [userInfoTab : tabItem])
+            }
+        }
+    }
+
 }
 
 extension WordsTabViewController {
     
     fileprivate func createDataSourceObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.setDataSourceNeedsSaving(_:)), name: .dataSourceNeedsSaving, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.increaseLessonCount(_:)), name: .increaseLessonCount, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.decreaseLessonCount(_:)), name: .decreaseLessonCount, object: nil)
+        
+        print ("creating buildwtm observer")
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.buildWordTypeMenu(_:)), name: .buildWordTypeMenu, object: nil)
+        
+        NotificationCenter.default.post(name: .startBuildWordTypeMenu, object:nil)
+        
     }
     
     func createEmptyBMT(named name: String, controlledBy bmtVC: BMTViewController) -> NSTabViewItem {
@@ -60,11 +136,16 @@ extension WordsTabViewController {
 
 class WordsTabViewController: NSTabViewController {
 
-    // This holds all the information about the datasources for the tables
-    // inside the tabs.
+    enum UserInfoKey : String {
+        case lesson = "lesson"
+        case menu = "menu"
+        case tabItem = "tabItem"
+    }
     
-    //var tabViewControllersList  : [BMTViewController] = []
-    //var dataSources             : [TableViewDataSource] = []
+    let userInfoLesson  = UserInfoKey.lesson.rawValue
+    let userInfoMenu = UserInfoKey.menu.rawValue
+    let userInfoTab = UserInfoKey.tabItem.rawValue
+
     var removingFirstItem       : Bool  = false
     var originalInputLanguage = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
     var draggingRows = false

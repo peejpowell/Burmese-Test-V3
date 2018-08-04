@@ -26,18 +26,9 @@ extension Notification.Name {
     }
 }
 
-class MainMenuController: MenuController {
-    
-    var recentFiles: [URL] = []
-    
-    @IBOutlet var mainMenu : NSMenu!
-    @IBOutlet var recentFilesMenu : NSMenu!
-    @IBOutlet var closeWordsFileMenuItem : NSMenuItem!
-    @IBOutlet var saveFileMenuItem : NSMenuItem!
-    @IBOutlet var saveAsFileMenuItem : NSMenuItem!
-    @IBOutlet var revertMenuItem : NSMenuItem!
-    
-    var removingFirstItem = false
+// MARK: Notification Observers
+
+extension MainMenuController {
     
     func createObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.enableFileMenuItems(_:)), name: .enableFileMenuItems, object: nil)
@@ -66,11 +57,33 @@ class MainMenuController: MenuController {
         self.saveAsFileMenuItem.isEnabled = false
         self.revertMenuItem.isEnabled = false
     }
+}
+
+class MainMenuController: MenuController {
     
+    var recentFiles: [URL] = []
     
+    @IBOutlet var mainMenu : NSMenu!
+    @IBOutlet var recentFilesMenu : NSMenu!
+    @IBOutlet var closeWordsFileMenuItem : NSMenuItem!
+    @IBOutlet var saveFileMenuItem : NSMenuItem!
+    @IBOutlet var saveAsFileMenuItem : NSMenuItem!
+    @IBOutlet var revertMenuItem : NSMenuItem!
+    
+    var removingFirstItem = false
     
     @objc func openRecentFile(_ sender: NSMenuItem) {
-        NotificationCenter.default.post(name: .openRecentFile, object: nil, userInfo: ["sender":sender])
+        var count = 0
+        if let menu = sender.menu {
+            for menuItem in menu.items {
+                if menuItem == sender {
+                    break
+                }
+                count = count + 1
+            }
+            let url = recentFiles[count]
+            NotificationCenter.default.post(name: .openRecentFile, object: nil, userInfo: ["url" : url])
+        }
     }
     
     func updateRecentsMenu(with url: URL)

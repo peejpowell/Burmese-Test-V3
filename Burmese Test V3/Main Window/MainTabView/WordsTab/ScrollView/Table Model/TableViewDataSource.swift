@@ -81,50 +81,48 @@ extension TableViewDataSource {
     
     @objc func jumpToLesson(_ sender: NSMenuItem) {
         infoPrint("", #function, self.className)
-        NotificationCenter.default.post(name: .jumpToLesson, object: nil, userInfo:["senderTag" : sender.tag])
+        NotificationCenter.default.post(name: .jumpToLesson, object: nil, userInfo:["senderTag" : sender.tag, "title" : sender.title])
     }
     
-    func populateLessons() {
+    func populateLessons(in lessonPopup: NSPopUpButton) {
         infoPrint("", #function, self.className)
         // Populate the Lessons in the list
-        if let lessonPopup = getMainWindowController().toolbarController.lessonsPopup {
-            // First remove all but the top and bottom items
-            for _ in 1 ..< lessonPopup.itemArray.count-1 {
-                lessonPopup.removeItem(at: 1)
-            }
+        // First remove all but the top and bottom items
+        for _ in 1 ..< lessonPopup.itemArray.count-1 {
+            lessonPopup.removeItem(at: 1)
+        }
+        
+        var rowNum = -1
+        var prevLesson = ""
+        
+        if let menu = lessonPopup.menu,
+            let lastMenuItem = menu.items.last,
+            let firstMenuItem = menu.items.first
+        {
+            firstMenuItem.action = #selector(jumpToFirstRow(_:))
+            lastMenuItem.action = #selector(jumpToLastRow(_:))
+            firstMenuItem.target = self
+            lastMenuItem.target = self
             
-            var rowNum = -1
-            var prevLesson = ""
+            menu.removeAllItems()
+            menu.addItem(firstMenuItem)
             
-            if let menu = lessonPopup.menu,
-                let lastMenuItem = menu.items.last,
-                let firstMenuItem = menu.items.first
-            {
-                firstMenuItem.action = #selector(jumpToFirstRow(_:))
-                lastMenuItem.action = #selector(jumpToLastRow(_:))
-                firstMenuItem.target = self
-                lastMenuItem.target = self
+            for word in self.words {
+                rowNum += 1
                 
-                menu.removeAllItems()
-                menu.addItem(firstMenuItem)
-                
-                for word in self.words {
-                    rowNum += 1
-                    
-                    if let lesson = word.lesson {
-                        if lesson != prevLesson {
-                            // New Lesson reached, add to the popup menu with the rownum as the tag
-                            
-                            let newMenuItem = NSMenuItem(title: lesson, action: #selector(self.jumpToLesson(_:)), keyEquivalent: "")
-                            newMenuItem.tag = rowNum
-                            newMenuItem.target = self
-                            menu.addItem(newMenuItem)
-                        }
-                        prevLesson = lesson
+                if let lesson = word.lesson {
+                    if lesson != prevLesson {
+                        // New Lesson reached, add to the popup menu with the rownum as the tag
+                        
+                        let newMenuItem = NSMenuItem(title: lesson, action: #selector(self.jumpToLesson(_:)), keyEquivalent: "")
+                        newMenuItem.tag = rowNum
+                        newMenuItem.target = self
+                        menu.addItem(newMenuItem)
                     }
+                    prevLesson = lesson
                 }
-                menu.addItem(lastMenuItem)
             }
+            menu.addItem(lastMenuItem)
         }
     }
 }

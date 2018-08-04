@@ -18,179 +18,104 @@ class TextFieldDelegate: NSObject, NSTextFieldDelegate {
         case unknown
     }
     
+    func findTableView(for view: NSView)->NSTableView? {
+        var viewToCheck = view
+        
+        while viewToCheck.superview != nil {
+            if let tableView = viewToCheck as? PJTableView {
+                return tableView
+            }
+            if let superview = viewToCheck.superview {
+                viewToCheck = superview
+            }
+            else {
+                return nil
+            }
+        }
+        return nil
+    }
+    
     override func controlTextDidEndEditing(_ obj: Notification)
     {
         infoPrint("", #function, self.className)
-        if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
-            let bmtVC = currentTabItem.viewController as? BMTViewController,
-            let tableView = bmtVC.tableView,
-            let dataSource = bmtVC.dataSource {
-            if let textField = obj.object as? NSTextField {
-                var oldValue : String?
-            
-                let row = tableView.row(for: textField)
-                if row == -1 {
-                    //print("No row found")
-                    return
-                }
-                let column = tableView.column(for: textField)
-                if column == -1 && !dataSource.words[row].istitle &&
-                    dataSource.words[row].wordindex != "#" {
-                    return
-                }
-                else if column == -1 {
-                    oldValue = dataSource.words[row].lesson
-                    dataSource.words[row].lesson = textField.stringValue
-                }
-                else {
-                    //print("Editing word in tab \(index), row: \(row), column: \(column)")
-                    if dataSource.words.count != 0 {
-                        let id = tableView.tableColumns[column].identifier.rawValue
-                        
-                        switch id {
-                        case "KBurmeseCol":
-                            oldValue = dataSource.words[row].burmese
-                            dataSource.words[row].burmese = textField.stringValue
-                        case "KRomanCol":
-                            oldValue = dataSource.words[row].roman
-                            dataSource.words[row].roman = textField.stringValue
-                        case "KEnglishCol":
-                            oldValue = dataSource.words[row].english
-                            dataSource.words[row].english = textField.stringValue
-                        case "KLessonCol":
-                            oldValue = dataSource.words[row].lesson
-                            dataSource.words[row].lesson = textField.stringValue
-                        case "KCategoryCol":
-                            oldValue = dataSource.words[row].category
-                            dataSource.words[row].category = textField.stringValue
-                        case "KWordCategoryCol":
-                            oldValue = dataSource.words[row].wordcategory
-                            dataSource.words[row].wordcategory = textField.stringValue
-                        default:
-                            //print("Unhandled column: \(tableView.tableColumns[column].identifier.rawValue)")
-                            break
-                        }
-                    }
-                    else {
-                        return
-                    }
-                }
-                if let _ = dataSource.unfilteredWords {
-                    if let value = oldValue {
-                        if value != textField.stringValue {
-                            if dataSource.words[row].filtertype != .add {
-                                dataSource.words[row].filtertype = .change
-                            }
-                        }
-                    }
-                }
-                switch tableView.tableColumns[column].identifier.rawValue {
-                case "KLessonCol", "KCategoryCol", "KWordCategoryCol":
-                    // Check if the value changed
-                    if let oldValue = oldValue {
-                        if textField.stringValue != oldValue {
-                            //let bmtController = bmtVC
-                            //bmtController.indexAll(nil)
-                            
-                            //bmtController.indexLessonForRow(row: row)
-                            //bmtController.indexLessonForRow(row: row + 1)
-                            
-                            // FIXME: Write reindexLesson function
-                            //delegate.menuController.reindexLesson(row)
-                            //delegate.menuController.reindexLesson(row+1)
-                        }
-                        else {
-                            //Swift.print("No need to reindex as no change in value of \(tableView.tableColumns[column].identifier.rawValue).")
-                        }
-                    }
-                    
-                default:
-                    break
-                }
-                //tableView.reloadData()
-                tableView.reloadData(forRowIndexes: IndexSet(integer:tableView.row(for: textField)), columnIndexes: IndexSet(integersIn: NSRange(location:0,length:tableView.numberOfColumns).toRange() ?? 0..<0))
-                //NotificationCenter.default.post(name: .tableNeedsReloading, object: nil)
-            }
-        }
         
-        //Swift.print(#function)
-        /*let delegate = getWordsTabViewDelegate()
-        
-        if let textField = obj.object as? NSTextField
-        {
-            let index = getCurrentIndex()
+        if  let textField = obj.object as? NSTextField,
+            let tableView = findTableView(for: textField),
+            let dataSource = tableView.dataSource as? TableViewDataSource {
             var oldValue : String?
+            
             let row = tableView.row(for: textField)
-            if row == -1
-            {
+            if row == -1 {
                 //print("No row found")
                 return
             }
             let column = tableView.column(for: textField)
             if column == -1 && !dataSource.words[row].istitle &&
-                dataSource.words[row].wordindex != "#"
-            {
+                dataSource.words[row].wordindex != "#" {
                 return
             }
-            else if column == -1
-            {
+            else if column == -1 {
                 oldValue = dataSource.words[row].lesson
                 dataSource.words[row].lesson = textField.stringValue
             }
-            else
-            {
+            else {
                 //print("Editing word in tab \(index), row: \(row), column: \(column)")
-                switch tableView.tableColumns[column].identifier.rawValue
-                {
-                case "KBurmeseCol":
-                    oldValue = dataSource.words[row].burmese
-                    dataSource.words[row].burmese = textField.stringValue
-                case "KRomanCol":
-                    oldValue = dataSource.words[row].roman
-                    dataSource.words[row].roman = textField.stringValue
-                case "KEnglishCol":
-                    oldValue = dataSource.words[row].english
-                    dataSource.words[row].english = textField.stringValue
-                case "KLessonCol":
-                    oldValue = dataSource.words[row].lesson
-                    dataSource.words[row].lesson = textField.stringValue
-                case "KCategoryCol":
-                    oldValue = dataSource.words[row].category
-                    dataSource.words[row].category = textField.stringValue
-                case "KWordCategoryCol":
-                    oldValue = dataSource.words[row].wordcategory
-                    dataSource.words[row].wordcategory = textField.stringValue
-                default:
-                    //print("Unhandled column: \(tableView.tableColumns[column].identifier.rawValue)")
-                    break
+                if dataSource.words.count != 0 {
+                    let id = tableView.tableColumns[column].identifier.rawValue
+                    
+                    switch id {
+                    case "KBurmeseCol":
+                        oldValue = dataSource.words[row].burmese
+                        dataSource.words[row].burmese = textField.stringValue
+                    case "KRomanCol":
+                        oldValue = dataSource.words[row].roman
+                        dataSource.words[row].roman = textField.stringValue
+                    case "KEnglishCol":
+                        oldValue = dataSource.words[row].english
+                        dataSource.words[row].english = textField.stringValue
+                    case "KLessonCol":
+                        oldValue = dataSource.words[row].lesson
+                        dataSource.words[row].lesson = textField.stringValue
+                    case "KCategoryCol":
+                        oldValue = dataSource.words[row].category
+                        dataSource.words[row].category = textField.stringValue
+                    case "KWordCategoryCol":
+                        oldValue = dataSource.words[row].wordcategory
+                        dataSource.words[row].wordcategory = textField.stringValue
+                    default:
+                        //print("Unhandled column: \(tableView.tableColumns[column].identifier.rawValue)")
+                        break
+                    }
+                }
+                else {
+                    return
                 }
             }
-            if let _ = dataSource.unfilteredWords
-            {
-                if let value = oldValue
-                {
-                    if value != textField.stringValue
-                    {
-                        if dataSource.words[row].filtertype != .add
-                        {
+            if let _ = dataSource.unfilteredWords {
+                if let value = oldValue {
+                    if value != textField.stringValue {
+                        if dataSource.words[row].filtertype != .add {
                             dataSource.words[row].filtertype = .change
                         }
                     }
                 }
             }
-            switch tableView.tableColumns[column].identifier.rawValue
-            {
+            switch tableView.tableColumns[column].identifier.rawValue {
             case "KLessonCol", "KCategoryCol", "KWordCategoryCol":
                 // Check if the value changed
-                if let oldValue = oldValue
-                {
-                    if textField.stringValue != oldValue
-                    {
-                        delegate.menuController.reindexLesson(row)
-                        delegate.menuController.reindexLesson(row+1)
+                if let oldValue = oldValue {
+                    if textField.stringValue != oldValue {
+                        //let bmtController = bmtVC
+                        //bmtController.indexAll(nil)
+                        
+                        //bmtController.indexLessonForRow(row: row)
+                        //bmtController.indexLessonForRow(row: row + 1)
+                        
+                        // FIXME: Write reindexLesson function
+                        //delegate.menuController.reindexLesson(row)
+                        //delegate.menuController.reindexLesson(row+1)
                     }
-                    else
-                    {
+                    else {
                         //Swift.print("No need to reindex as no change in value of \(tableView.tableColumns[column].identifier.rawValue).")
                     }
                 }
@@ -198,10 +123,10 @@ class TextFieldDelegate: NSObject, NSTextFieldDelegate {
             default:
                 break
             }
-            //tableView.reloadData(forRowIndexes: IndexSet(integer:tableView.row(for: textField)), columnIndexes: IndexSet(integersIn: NSRange(location:0,length:tableView.numberOfColumns).toRange() ?? 0..<0))
-            tableView.reloadData()
-            
-        }*/
+            //tableView.reloadData()
+            tableView.reloadData(forRowIndexes: IndexSet(integer:tableView.row(for: textField)), columnIndexes: IndexSet(integersIn: NSRange(location:0,length:tableView.numberOfColumns).toRange() ?? 0..<0))
+            //NotificationCenter.default.post(name: .tableNeedsReloading, object: nil)
+        }
     }
     
     func control(_ control: NSControl, textView: NSTextView, doCommandBy commandSelector: Selector) -> Bool

@@ -8,7 +8,6 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="BMTViewController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
-                <outlet property="dataSource" destination="N6n-tN-f9o" id="iYV-0D-HXM"/>
                 <outlet property="scrollView" destination="0iF-hh-ZQY" id="c4X-hc-jOM"/>
                 <outlet property="tableView" destination="aAj-Up-qFP" id="yFF-il-KUc"/>
                 <outlet property="textFinderClient" destination="1g7-sm-uRE" id="UfW-Uc-n24"/>
@@ -563,7 +562,7 @@
                         </subviews>
                         <nil key="backgroundColor"/>
                     </clipView>
-                    <scroller key="horizontalScroller" verticalHuggingPriority="750" doubleValue="0.73256704980842913" horizontal="YES" id="KdF-4E-WdZ">
+                    <scroller key="horizontalScroller" verticalHuggingPriority="750" horizontal="YES" id="KdF-4E-WdZ">
                         <rect key="frame" x="1" y="256" width="478" height="15"/>
                         <autoresizingMask key="autoresizingMask"/>
                     </scroller>
@@ -586,7 +585,6 @@
             <point key="canvasLocation" x="63" y="113"/>
         </customView>
         <customObject id="1g7-sm-uRE" customClass="TextFinderClient" customModule="Burmese_Test_V3" customModuleProvider="target"/>
-        <customObject id="N6n-tN-f9o" customClass="TableViewDataSource" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <menu id="oHQ-Bv-DKn" userLabel="TableView menu">
             <items>
                 <menuItem title="Cut" keyEquivalent="x" id="3gb-hO-E7V">

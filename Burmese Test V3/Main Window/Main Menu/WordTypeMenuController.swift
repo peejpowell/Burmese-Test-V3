@@ -7,6 +7,67 @@
 //
 
 import Cocoa
+extension Notification.Name {
+
+    static var buildWordTypeMenuForTab: Notification.Name {
+        return .init(rawValue: "WordTypeMenuController.buildWordTypeMenuForTab")
+    }
+    
+    static var startBuildWordTypeMenu: Notification.Name {
+        return .init(rawValue: "WordTypeMenuController.startBuildWordTypeMenu")
+    }
+}
+
+// MARK: Observation Functions
+
+extension WordTypeMenuController {
+    
+    func createObservers() {
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(buildWordTypeMenuForTab(_:)), name: .buildWordTypeMenuForTab, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(startBuildWordTypeMenu(_:)), name: .startBuildWordTypeMenu, object: nil)
+    }
+    
+    @objc func startBuildWordTypeMenu(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        NotificationCenter.default.post(name: .buildWordTypeMenu, object:nil, userInfo: [userInfoMenu : self.wordTypeMenu])
+    }
+    
+    @objc func buildWordTypeMenuForTab(_ notification: Notification) {
+        infoPrint("", #function, self.className)
+        if  let userInfo = notification.userInfo,
+            let tabItem = userInfo[userInfoTab] as? NSTabViewItem,
+            let bmtVC = tabItem.viewController as? BMTViewController,
+            let dataSource = bmtVC.dataSource,
+            let sourceFile = dataSource.sourceFile {
+            
+            let newMenuItem = NSMenuItem()
+            newMenuItem.title = sourceFile.lastPathComponent
+            newMenuItem.action = #selector(self.toggleCurrent(_:))
+            newMenuItem.target = self
+            wordTypeMenu.insertItem(newMenuItem, at: wordTypeMenu.items.count-3)
+            newMenuItem.submenu = self.populateWordTypes(dataSource)
+            
+            // Set the words by the list of selectedWords
+            
+            for item in self.wordTypeMenu.items {
+                // Find the item in the list of selectedWords
+                for selectedWordType in self.selectedWordTypes {
+                    if selectedWordType.lessonName == item.title {
+                        for item in item.submenu!.items {
+                            for word in selectedWordType.selectedWords {
+                                if word == item.title {
+                                    item.state = .on
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
 
 class SelectedWordTypes : NSObject, NSCoding {
     var lessonName : String = "" // Lesson name
@@ -29,6 +90,14 @@ class SelectedWordTypes : NSObject, NSCoding {
 
 class WordTypeMenuController: MenuController {
 
+    enum UserInfoKey : String {
+        case menu       = "menu"
+        case tabItem    = "tabItem"
+    }
+    
+    let userInfoTab = UserInfoKey.tabItem.rawValue
+    let userInfoMenu = UserInfoKey.menu.rawValue
+    
     @IBOutlet var wordTypeMenu : NSMenu!
     var selectedWordTypes : [SelectedWordTypes] = []
     
@@ -40,23 +109,18 @@ class WordTypeMenuController: MenuController {
         let newMenu = NSMenu()
         newMenu.title = dataSource.sourceFile!.lastPathComponent
         
-        for word in dataSource.words
-        {
-            if lastLesson != word.lesson
-            {
-                if let name = word.lesson
-                {
+        for word in dataSource.words {
+            if lastLesson != word.lesson {
+                if let name = word.lesson {
                     let newMenuItem = NSMenuItem(title: name, action: #selector(self.toggleCurrentWordType(_:)), keyEquivalent: "")
                     newMenuItem.target = self
                     newMenu.addItem(newMenuItem)
                 }
             }
-            if let name = word.lesson
-            {
+            if let name = word.lesson {
                 lastLesson = name
             }
-            else
-            {
+            else {
                 lastLesson = ""
             }
         }
@@ -137,48 +201,13 @@ class WordTypeMenuController: MenuController {
         }
     }
     
-        
-    func buildWordTypeMenu()
-    {
-        Swift.print(#function)
-        
-        // Remove all Word Types first leaving the last two menuitems for selecting all/none
-        
-        while self.wordTypeMenu.items.count>3
-        {
-            self.wordTypeMenu.removeItem(at: 0)
-        }
-        
-        // Check if there is a sourceFile
-        for tabItem in getWordsTabViewDelegate().tabViewItems {
-            if  let bmtVC = tabItem.viewController as? BMTViewController,
-                let dataSource = bmtVC.dataSource,
-                let sourceFile = dataSource.sourceFile {
-                
-                let newMenuItem = NSMenuItem()
-                newMenuItem.title = sourceFile.lastPathComponent
-                newMenuItem.action = #selector(self.toggleCurrent(_:))
-                newMenuItem.target = self
-                self.wordTypeMenu.insertItem(newMenuItem, at: self.wordTypeMenu.items.count-3)
-                newMenuItem.submenu = self.populateWordTypes(dataSource)
-                
-                // Set the words by the list of selectedWords
-                
-                for item in self.wordTypeMenu.items {
-                    // Find the item in the list of selectedWords
-                    for selectedWordType in self.selectedWordTypes {
-                        if selectedWordType.lessonName == item.title {
-                            for item in item.submenu!.items {
-                                for word in selectedWordType.selectedWords {
-                                    if word == item.title {
-                                        item.state = .on
-                                    }
-                                }
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    override func awakeFromNib() {
+        infoPrint("", #function, self.className)
+        super.awakeFromNib()
+        self.createObservers()
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }

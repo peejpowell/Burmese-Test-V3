@@ -13,10 +13,6 @@ extension Notification.Name {
         return .init(rawValue: "BMTFileManager.loadRecentFiles")
     }
     
-    static var openRecentFile: Notification.Name {
-        return .init(rawValue: "BMTFileManager.openRecentFile")
-    }
-    
     static var openDocument: Notification.Name {
         return .init(rawValue: "BMTFileManager.openDocument")
     }
@@ -194,6 +190,10 @@ extension BMTFileManager: BMTFileCloser {
                         let view = first.view {
                         view.isHidden = true
                         first.label = "Nothing Loaded"
+                        if let bmtVC = first.viewController as? BMTViewController {
+                            bmtVC.bmtViewModel.dataSource = nil
+                            bmtVC.bmtViewModel.dataSource = TableViewDataSource()
+                        }
                     }
                     NotificationCenter.default.post(name: .disableFileMenuItems, object: nil)
                     }
@@ -234,9 +234,11 @@ extension BMTFileManager: BMTFileCloser {
             else {
                 cleanUpAfterClose(dataSource)
             }
-            if let menuController = getWordTypeMenuController() {
+            NotificationCenter.default.post(name: .startBuildWordTypeMenu, object:nil)
+            
+            /*if let menuController = getWordTypeMenuController() {
                 menuController.buildWordTypeMenu()
-            }
+            }*/
             if let currentTabItem = wordsTabVC.tabView.selectedTabViewItem {
                 if currentTabItem.label == "Nothing Loaded" {
                     NotificationCenter.default.post(name: .disableFileMenuItems, object: nil)
@@ -444,7 +446,7 @@ extension BMTFileManager: BMTFileSaver {
 
 extension BMTFileManager: BMTFileLoader {
     
-    @objc func revertToSaved(_ aNotificstion : Notification) {
+    @objc func revertToSaved(_ aNotification : Notification) {
         if  let controller = self.controller,
             let currentTabItem = controller.wordsTabViewController.tabView.selectedTabViewItem,
             let bmtVC = currentTabItem.viewController as? BMTViewController,
@@ -491,6 +493,118 @@ extension BMTFileManager: BMTFileLoader {
         return nil
     }
     
+    func loadFileAtURL(_ url: URL, reverting: Bool) {
+        infoPrint("", #function, self.className)
+        
+        // Check each tab to see if datasource with the same url exists already loads it if not
+        
+        var invalidFile = false
+        let tabItem = tabOfFileWithURL(url)
+        let fileAlreadyLoaded = tabItem !=  nil
+        
+        // Check if the first dataSource has no valid url
+        
+        if  let controller = self.controller,
+            let firstTabItem = getWordsTabViewDelegate().tabViewItems.first,
+            let bmtVC = firstTabItem.viewController as? BMTViewController,
+            let dataSource = bmtVC.dataSource {
+            
+            // Check if it's the first time to load a dataSource and load it into the existing tab.
+            if dataSource.sourceFile == nil {
+                if let newDataSource = self.loadWordsFromFile(url, into: dataSource) {
+                    loadDataSource(newDataSource, into: firstTabItem)
+                    selectWordsTab()
+                    NotificationCenter.default.post(name: .enableFileMenuItems, object: nil)
+                }
+                else {
+                    // TODO: Something went wrong so we should report what it was
+                    invalidFile = true
+                }
+            }
+            else {
+                // If the file is already loaded and we aren't reverting then no need to do anything else.
+                
+                if fileAlreadyLoaded && reverting == false {
+                    return
+                }
+                else {
+                    // Not the first time to load a dataSource so load the dataSource into the existing tabItem or create a new tab for the datasource
+                    let wordsTabView = controller.wordsTabViewController.tabView
+                    if let newDataSource = self.loadWordsFromFile(url, into: TableViewDataSource()) {
+                        switch reverting {
+                        case true:
+                            //Revert the file
+                            if let tabItem = tabItem {
+                                loadDataSource(newDataSource, into: tabItem)
+                                selectTabForExistingFile(tabItem: tabItem)
+                            }
+                        case false:
+                            //Create a new tab, BMTView and dataSource
+                            
+                            controller.setUpNewBMTFor(newDataSource, with: url)
+                            wordsTabView.selectLastTabViewItem(self)
+                            controller.view.wantsLayer = true
+                            selectWordsTab()
+                            NotificationCenter.default.post(name: .enableFileMenuItems, object: nil)
+                        }
+                    }
+                }
+            }
+            // Add the new url to the open files list and update the window to show the name with file location and icon
+            if !controller.wordsTabViewModel.openFiles.contains(url) && invalidFile == false
+            {
+                controller.wordsTabViewModel.addOpenFile(url)
+                getMainMenuController().updateRecentsMenu(with: url)
+                
+                if let mainWindow = getMainWindowController().window {
+                    mainWindow.title = url.lastPathComponent
+                    mainWindow.representedURL = url
+                    return
+                }
+            }
+        }
+    }
+    
+    /**
+     Checks if the dataSource for the provided tab needs saving and prompts to save if so.
+     Then selects the existing tab if the file requested was loaded already.
+    */
+    func checkIfFileNeedsSaving(in tabItem: NSTabViewItem?) {
+        if  let bmtVC = tabItem?.viewController as? BMTViewController,
+            let dataSource = bmtVC.dataSource {
+            switch dataSource.needsSaving {
+            case true:
+                saveFileForDataSource(dataSource, tableView: bmtVC.tableView)
+            case false:
+                break
+            }
+            if let tabItem = tabItem {
+                selectTabForExistingFile(tabItem: tabItem)
+            }
+        }
+    }
+    
+    /**
+     Loads a valid BMT file from a URL
+     */
+    @objc func loadBMTFromURL(_ url: URL)
+    {
+        infoPrint("", #function, self.className)
+        let tabItem = tabOfFileWithURL(url)
+        let fileIsLoaded = tabItem != nil
+        if !fileIsLoaded {
+            loadFileAtURL(url, reverting: false)
+        }
+        else {
+            checkIfFileNeedsSaving(in: tabItem)
+        }
+        if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
+            let bmtVC = currentTabItem.viewController as? BMTViewController {
+            let view = bmtVC.view
+            view.isHidden = false
+        }
+    }
+    
     /**
      If url is a file, calls the loadBMTFromURL function to load it.
      If url is a directory it recurses through each file in it calling itself to load it or continue into the directory and repeat.
@@ -518,39 +632,42 @@ extension BMTFileManager: BMTFileLoader {
         }
     }
     
-    @objc func openRecentFile(_ aNotification : Notification) {
+    @objc func openRecentFile(url: URL) {
         infoPrint(nil,#function, self.className)
-        if  let userInfo = aNotification.userInfo,
-            let sender = userInfo["sender"] as? NSMenuItem {
-            var count = 0
-            if let menu = sender.menu {
-                for menuItem in menu.items {
-                    if menuItem == sender {
-                        break
-                    }
-                    count = count + 1
-                }
-            }
-            
-            let url = getMainMenuController().recentFiles[count]
-            loadRequestedUrl(url)
-            if let menuController = getWordTypeMenuController() {
-                menuController.buildWordTypeMenu()
-            }
-            NotificationCenter.default.post(name: .populateLessonsPopup, object: nil)
-        }
+        loadRequestedUrl(url)
+        NotificationCenter.default.post(name: .startBuildWordTypeMenu, object:nil)
+        
+        /*if let menuController = getWordTypeMenuController() {
+            menuController.buildWordTypeMenu()
+        }*/
+        //NotificationCenter.default.post(name: .startPopulateLessonsPopup, object: nil)
     }
     
     @objc func openRecentFiles() {
+        if let appDelegate = NSApplication.shared.delegate as? AppDelegate {
+            if let url = appDelegate.autoOpenUrl {
+                loadRequestedUrl(url)
+                NotificationCenter.default.post(name: .buildWordTypeMenu, object:nil)
+                
+                /*if let menuController = getWordTypeMenuController() {
+                    menuController.buildWordTypeMenu()
+                }*/
+                NotificationCenter.default.post(name: .populateLessonsPopup, object: nil)
+                return
+            }
+        }
         let userDefaults = UserDefaults.standard
         let openMostRecent = userDefaults.bool(forKey: "OpenMostRecentAtStart")
         if openMostRecent {
             // Open the most recent file in the recent files menu
             let fileToOpen = getMainWindowController().mainMenuController.recentFiles[0]
             loadRequestedUrl(fileToOpen)
-            if let menuController = getWordTypeMenuController() {
+            print ("posting buildwtm")
+            NotificationCenter.default.post(name: .startBuildWordTypeMenu, object:nil)
+            
+            /*if let menuController = getWordTypeMenuController() {
                 menuController.buildWordTypeMenu()
-            }
+            }*/
             NotificationCenter.default.post(name: .populateLessonsPopup, object: nil)
             
         }
@@ -588,7 +705,7 @@ extension BMTFileManager: BMTFileLoader {
         }
         if  let bmtVC = tabItem.viewController as? BMTViewController,
             let tableView = bmtVC.tableView as? PJTableView {
-            bmtVC.dataSource = dataSource
+            bmtVC.bmtViewModel.dataSource = dataSource
             tableView.dataSource = dataSource
             tableView.delegate = dataSource
             tableView.registerTableForDrag()
@@ -627,107 +744,6 @@ extension BMTFileManager: BMTFileLoader {
         return dataSource
     }
     
-    func loadFileAtURL(_ url: URL, reverting: Bool) {
-        infoPrint("", #function, self.className)
-        // Check each datasource to see if it's already loaded and load if not
-        var invalidFile = false
-        
-        let tabItem = tabOfFileWithURL(url)
-        //let dataSourceIndex = loadedIndexForUrl(url)
-        let fileAlreadyLoaded = tabItem !=  nil
-        // Check if the first dataSource has no valid url
-        if  let controller = self.controller,
-            let firstTabItem = getWordsTabViewDelegate().tabViewItems.first,
-            let bmtVC = firstTabItem.viewController as? BMTViewController,
-            let dataSource = bmtVC.tableView.dataSource as? TableViewDataSource {
-            if dataSource.sourceFile == nil {
-                if let newDataSource = self.loadWordsFromFile(url, into: dataSource) {
-                    loadDataSource(newDataSource, into: firstTabItem)
-                    selectWordsTab()
-                    NotificationCenter.default.post(name: .enableFileMenuItems, object: nil)
-                }
-                else
-                {
-                    invalidFile = true
-                }
-            }
-            else {
-                if fileAlreadyLoaded && reverting == false {
-                    return
-                }
-                else {
-                    let wordsTabView = controller.wordsTabViewController.tabView
-                    if let newDataSource = self.loadWordsFromFile(url, into: TableViewDataSource()) {
-                        switch reverting {
-                        case true:
-                            //Revert the file
-                            if let tabItem = tabItem {
-                                loadDataSource(newDataSource, into: tabItem)
-                                selectTabForExistingFile(tabItem: tabItem)
-                            }
-                        case false:
-                            //Create a new tab, BMTView and dataSource
-                                
-                            controller.setUpNewBMTFor(newDataSource, with: url)
-                            wordsTabView.selectLastTabViewItem(self)
-                            selectWordsTab()
-                            NotificationCenter.default.post(name: .enableFileMenuItems, object: nil)
-                        }
-                    }
-                }
-            }
-            
-            if !controller.wordsTabViewModel.openFiles.contains(url) && invalidFile == false
-            {
-                controller.wordsTabViewModel.addOpenFile(url)
-                getMainMenuController().updateRecentsMenu(with: url)
-                
-                if let mainWindow = getMainWindowController().window {
-                    mainWindow.title = url.lastPathComponent
-                    mainWindow.representedURL = url
-                    
-                    /*if !self.openFiles.contains(url)
-                     {
-                     self.openFiles.append(url)
-                     }*/
-                    return
-                }
-            }
-        }
-    }
-    
-    @objc func loadBMTFromURL(_ url: URL)
-    {
-        infoPrint("", #function, self.className)
-        
-        let tabItem = tabOfFileWithURL(url)
-        let loaded = tabItem != nil
-        if !loaded {
-            loadFileAtURL(url, reverting: false)
-        }
-        else {
-            // If the file needs saving ask the user to confirm the save before loading the file
-            
-            if  let bmtVC = tabItem?.viewController as? BMTViewController,
-                let dataSource = bmtVC.dataSource {
-                switch dataSource.needsSaving {
-                case true:
-                    saveFileForDataSource(dataSource, tableView: bmtVC.tableView)
-                    fallthrough
-                case false:
-                    if let tabItem = tabItem {
-                        selectTabForExistingFile(tabItem: tabItem)
-                    }
-                }
-            }
-        }
-        if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
-            let bmtVC = currentTabItem.viewController as? BMTViewController {
-            let view = bmtVC.view
-            view.isHidden = false
-        }
-    }
-    
     @objc func openDocument(_ aNotification: Notification) {
         
         infoPrint(nil,#function, self.className)
@@ -746,9 +762,11 @@ extension BMTFileManager: BMTFileLoader {
         default:
             return
         }
-        if let menuController = getWordTypeMenuController() {
+        NotificationCenter.default.post(name: .startBuildWordTypeMenu, object:nil)
+        
+        /*if let menuController = getWordTypeMenuController() {
             menuController.buildWordTypeMenu()
-        }
+        }*/
         // Populate the lessons popup menu
         NotificationCenter.default.post(name: .populateLessonsPopup, object:nil)
         
@@ -766,7 +784,6 @@ class BMTFileManager: PJFileManager {
     
     fileprivate func createObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.openRecentFiles), name: .loadRecentFiles, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.openRecentFile(_:)), name: .openRecentFile, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.openDocument(_:)), name: .openDocument, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.closeDocument(_:)), name: .closeDocument, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.saveDocument(_:)), name: .saveDocument, object: nil)

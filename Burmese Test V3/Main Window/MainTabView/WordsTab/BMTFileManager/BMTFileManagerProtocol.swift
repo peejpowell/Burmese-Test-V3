@@ -60,7 +60,7 @@ protocol BMTFileSaver {
 
 protocol BMTFileLoader {
     
-    func revertToSaved(_ aNotificstion : Notification)
+    func revertToSaved(_ aNotification : Notification)
     
     func askToRevert(fileAtUrl: URL)->NSApplication.ModalResponse
     
@@ -75,7 +75,7 @@ protocol BMTFileLoader {
      */
     func loadRequestedUrl(_ url: URL)
     
-    func openRecentFile(_ aNotification : Notification)
+    func openRecentFile(url: URL)
     
     func openRecentFiles()
     
