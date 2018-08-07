@@ -49,7 +49,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
-        infoPrint("", #function, self.className)
+        infoPrint("Tearing Down Application Before Quit", #function, self.className)
         if  let firstTabItem = mainWindowController.mainTabViewController.wordsTabController.wordsTabViewController.tabView.selectedTabViewItem {
             if let bmtVC = firstTabItem.viewController as? BMTViewController {
                 bmtVC.bmtViewModel.dataSource = nil
@@ -58,15 +58,16 @@ class AppDelegate: NSObject, NSApplicationDelegate {
                 bmtVC.scrollView = nil
             }
         }
-        // Close all active documents
-       
-        /*for controller in getWordsTabViewDelegate().tabViewControllersList {
-            controller.tableView = nil
-        }*/
         
-        //getWordsTabViewDelegate().tabViewControllersList.removeAll()
-        getWordsTabViewDelegate().tabViewItems.removeAll()
-        //getWordsTabViewDelegate().dataSources.removeAll()
+        mainWindowController.mainTabViewController.wordsTabController?.wordsTabViewController.tabViewItems.removeAll()
+        mainWindowController.mainTabViewController.tabViewItems.removeAll()
+        mainWindowController.toolbarController = nil
+        mainWindowController.mainTabViewController = nil
+        mainWindowController.mainMenuController = nil
+        mainWindowController.mainFileManager = nil
+        mainWindowController.mainClipboardController = nil
+        mainWindowController.prefsWindowController = nil
+        
         self.currentInputSource = nil
         TISSelectInputSource(self.originalInputLanguage)
         self.originalInputLanguage = nil

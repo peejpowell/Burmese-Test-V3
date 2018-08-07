@@ -7,7 +7,6 @@
 //
 
 import Cocoa
-import Carbon
 
 class PJTextField: NSTextField {
     
@@ -19,18 +18,11 @@ class PJTextField: NSTextField {
     
     override func mouseDown(with theEvent: NSEvent)
     {
-        infoPrint("", #function, self.className)
+        //infoPrint("", #function, self.className)
         
         super.mouseDown(with: theEvent)
         if let id = self.identifier?.rawValue {
-            switch id {
-            case "burmese":
-                setKeyboardByName("Myanmar", type: .all)
-            case "avalaser":
-                setKeyboardByName("British", type: .ascii)
-            default:
-                TISSelectInputSource(getWordsTabViewDelegate().originalInputLanguage)
-            }
+            NotificationCenter.default.post(name: .changeKeyboard, object:nil, userInfo: ["id" : id])
         }
     }
     

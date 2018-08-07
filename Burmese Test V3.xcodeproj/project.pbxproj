@@ -12,7 +12,6 @@
 		3806346C2111BA6600798D03 /* BMTFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806346B2111BA6600798D03 /* BMTFileManager.swift */; };
 		380B922421129CDD00F30B6B /* Custom_Buttons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B92232112240D00F30B6B /* Custom_Buttons.framework */; };
 		380B922521129CDD00F30B6B /* Custom_Buttons.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 380B92232112240D00F30B6B /* Custom_Buttons.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
-		380B92292112A12800F30B6B /* MainWindowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B92282112A12800F30B6B /* MainWindowViewModel.swift */; };
 		380B922B2112D9C500F30B6B /* TestTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B922A2112D9C500F30B6B /* TestTabViewModel.swift */; };
 		380B922D2112DC3200F30B6B /* WordsTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */; };
 		380C3C2620EA76950077C2BE /* TextFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C3C2520EA76950077C2BE /* TextFinder.swift */; };
@@ -29,6 +28,8 @@
 		381F685020EB3DD50085E330 /* FindMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */; };
 		3821C85420E260100045E5A8 /* PJGlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */; };
 		3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84C20E242160045E5A8 /* PJExtensions.swift */; };
+		38221F372116058200A86E99 /* MainWindowControllerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38221F362116058200A86E99 /* MainWindowControllerObservers.swift */; };
+		38221F3921168FE700A86E99 /* TableViewDataSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38221F3821168FE700A86E99 /* TableViewDataSourceViewModel.swift */; };
 		3833873821143238008EE0B3 /* BMTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3833873721143238008EE0B3 /* BMTViewModel.swift */; };
 		383797DD20EE4FF400125253 /* TableTextFinderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383797DC20EE4FF400125253 /* TableTextFinderClient.swift */; };
 		384AB23C20E3B26800D7E5D7 /* PJTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384AB23B20E3B26800D7E5D7 /* PJTableView.swift */; };
@@ -46,9 +47,9 @@
 		386E33FF20F1AE2300763618 /* PrefsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E33FE20F1AE2300763618 /* PrefsWindowController.swift */; };
 		386E340320F1B5AC00763618 /* PrefsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 386E340220F1B5AC00763618 /* PrefsWindowController.xib */; };
 		386E340520F1BCF100763618 /* PrefsToolbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E340420F1BCF100763618 /* PrefsToolbarController.swift */; };
-		38846B7D20E2903D00C0DB3C /* Words.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7C20E2903D00C0DB3C /* Words.swift */; };
+		38846B7D20E2903D00C0DB3C /* LessonEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7C20E2903D00C0DB3C /* LessonEntry.swift */; };
 		38846B8020E299C400C0DB3C /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */; };
-		3884FA8020F60E67006EDF11 /* PJTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3884FA7F20F60E67006EDF11 /* PJTextView.swift */; };
+		3884FA8020F60E67006EDF11 /* FieldEditorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3884FA7F20F60E67006EDF11 /* FieldEditorTextView.swift */; };
 		38AEC05720E21F0100E6529F /* FindBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC05620E21F0100E6529F /* FindBarViewController.swift */; };
 		38AEC05C20E21F9B00E6529F /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC05B20E21F9B00E6529F /* MainTabViewController.swift */; };
 		38AEC06220E223ED00E6529F /* TestTabController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC06120E223ED00E6529F /* TestTabController.swift */; };
@@ -62,6 +63,16 @@
 		38AEC07820E2391F00E6529F /* WordsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07720E2391F00E6529F /* WordsViewController.xib */; };
 		38AEC07A20E23A3900E6529F /* BMTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC07920E23A3900E6529F /* BMTViewController.swift */; };
 		38AEC07C20E23D6600E6529F /* BMTViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07B20E23D6600E6529F /* BMTViewController.xib */; };
+		38B0FC87211562D600E89019 /* WordTypeMenuControllerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC86211562D600E89019 /* WordTypeMenuControllerObservers.swift */; };
+		38B0FC892115636F00E89019 /* SelectedWordTypes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC882115636F00E89019 /* SelectedWordTypes.swift */; };
+		38B0FC8B211568C900E89019 /* UserDefault Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC8A211568C900E89019 /* UserDefault Extensions.swift */; };
+		38B0FC8D21156BB900E89019 /* String Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC8C21156BB900E89019 /* String Extensions.swift */; };
+		38B0FC9021156F1000E89019 /* MainMenuControllerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC8F21156F1000E89019 /* MainMenuControllerObservers.swift */; };
+		38B0FC93211572C200E89019 /* NSBezierPathExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC92211572C200E89019 /* NSBezierPathExtensions.swift */; };
+		38B0FC952115732500E89019 /* NSTextViewExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC942115732500E89019 /* NSTextViewExtensions.swift */; };
+		38B0FC99211573A000E89019 /* TISInputSourceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC98211573A000E89019 /* TISInputSourceExtensions.swift */; };
+		38B0FC9B211573D000E89019 /* FileManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC9A211573D000E89019 /* FileManagerExtensions.swift */; };
+		38B0FC9E2115E59A00E89019 /* BMTViewControllerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC9D2115E59A00E89019 /* BMTViewControllerObservers.swift */; };
 		38C39454211216690021C717 /* BMTFileManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C39453211216690021C717 /* BMTFileManagerProtocol.swift */; };
 		38C71BC820E7D2FD00AC4B6E /* InfoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */; };
 		38C71BC920E7D2FD00AC4B6E /* InfoPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38C71BC720E7D2FD00AC4B6E /* InfoPopupViewController.xib */; };
@@ -123,7 +134,6 @@
 		380634692111B16D00798D03 /* Panels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panels.swift; sourceTree = "<group>"; };
 		3806346B2111BA6600798D03 /* BMTFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTFileManager.swift; sourceTree = "<group>"; };
 		380B921E2112240D00F30B6B /* Custom Buttons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Custom Buttons.xcodeproj"; path = "../Custom Buttons/Custom Buttons.xcodeproj"; sourceTree = "<group>"; };
-		380B92282112A12800F30B6B /* MainWindowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowViewModel.swift; sourceTree = "<group>"; };
 		380B922A2112D9C500F30B6B /* TestTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTabViewModel.swift; sourceTree = "<group>"; };
 		380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTabViewModel.swift; sourceTree = "<group>"; };
 		380C3C2520EA76950077C2BE /* TextFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinder.swift; sourceTree = "<group>"; };
@@ -143,6 +153,8 @@
 		381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMenuDelegate.swift; sourceTree = "<group>"; };
 		3821C84C20E242160045E5A8 /* PJExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJExtensions.swift; sourceTree = "<group>"; };
 		3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJGlobalFunctions.swift; sourceTree = "<group>"; };
+		38221F362116058200A86E99 /* MainWindowControllerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowControllerObservers.swift; sourceTree = "<group>"; };
+		38221F3821168FE700A86E99 /* TableViewDataSourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceViewModel.swift; sourceTree = "<group>"; };
 		3833873721143238008EE0B3 /* BMTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTViewModel.swift; sourceTree = "<group>"; };
 		383797DC20EE4FF400125253 /* TableTextFinderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTextFinderClient.swift; sourceTree = "<group>"; };
 		384AB23B20E3B26800D7E5D7 /* PJTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJTableView.swift; sourceTree = "<group>"; };
@@ -164,9 +176,9 @@
 		386E33FE20F1AE2300763618 /* PrefsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWindowController.swift; sourceTree = "<group>"; };
 		386E340220F1B5AC00763618 /* PrefsWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrefsWindowController.xib; sourceTree = "<group>"; };
 		386E340420F1BCF100763618 /* PrefsToolbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsToolbarController.swift; sourceTree = "<group>"; };
-		38846B7C20E2903D00C0DB3C /* Words.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Words.swift; sourceTree = "<group>"; };
+		38846B7C20E2903D00C0DB3C /* LessonEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEntry.swift; sourceTree = "<group>"; };
 		38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
-		3884FA7F20F60E67006EDF11 /* PJTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJTextView.swift; sourceTree = "<group>"; };
+		3884FA7F20F60E67006EDF11 /* FieldEditorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldEditorTextView.swift; sourceTree = "<group>"; };
 		38AEC05620E21F0100E6529F /* FindBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindBarViewController.swift; sourceTree = "<group>"; };
 		38AEC05B20E21F9B00E6529F /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		38AEC06120E223ED00E6529F /* TestTabController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTabController.swift; sourceTree = "<group>"; };
@@ -180,6 +192,16 @@
 		38AEC07720E2391F00E6529F /* WordsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordsViewController.xib; sourceTree = "<group>"; };
 		38AEC07920E23A3900E6529F /* BMTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTViewController.swift; sourceTree = "<group>"; };
 		38AEC07B20E23D6600E6529F /* BMTViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BMTViewController.xib; sourceTree = "<group>"; };
+		38B0FC86211562D600E89019 /* WordTypeMenuControllerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordTypeMenuControllerObservers.swift; sourceTree = "<group>"; };
+		38B0FC882115636F00E89019 /* SelectedWordTypes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectedWordTypes.swift; sourceTree = "<group>"; };
+		38B0FC8A211568C900E89019 /* UserDefault Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefault Extensions.swift"; sourceTree = "<group>"; };
+		38B0FC8C21156BB900E89019 /* String Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String Extensions.swift"; sourceTree = "<group>"; };
+		38B0FC8F21156F1000E89019 /* MainMenuControllerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuControllerObservers.swift; sourceTree = "<group>"; };
+		38B0FC92211572C200E89019 /* NSBezierPathExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSBezierPathExtensions.swift; sourceTree = "<group>"; };
+		38B0FC942115732500E89019 /* NSTextViewExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTextViewExtensions.swift; sourceTree = "<group>"; };
+		38B0FC98211573A000E89019 /* TISInputSourceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TISInputSourceExtensions.swift; sourceTree = "<group>"; };
+		38B0FC9A211573D000E89019 /* FileManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtensions.swift; sourceTree = "<group>"; };
+		38B0FC9D2115E59A00E89019 /* BMTViewControllerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTViewControllerObservers.swift; sourceTree = "<group>"; };
 		38B7D5C920E87E9000B13ED1 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		38C39453211216690021C717 /* BMTFileManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTFileManagerProtocol.swift; sourceTree = "<group>"; };
 		38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPopupViewController.swift; sourceTree = "<group>"; };
@@ -250,14 +272,16 @@
 		381B8A1520E1DAC0008335E0 /* Burmese Test V3 */ = {
 			isa = PBXGroup;
 			children = (
-				38EFAFA320E8C89200C71AE9 /* Extensions */,
+				3821C84C20E242160045E5A8 /* PJExtensions.swift */,
+				38B0FC962115733D00E89019 /* Carbon Type Extensions */,
+				38B0FC91211572A200E89019 /* Cocoa Type Extensions */,
+				38EFAFA320E8C89200C71AE9 /* Swift Type Extensions */,
 				3821C84B20E242070045E5A8 /* Custom Functions */,
 				38AEC07D20E2417900E6529F /* Custom Controls */,
 				381B8A1620E1DAC0008335E0 /* AppDelegate.swift */,
 				381B8A2720E1EA10008335E0 /* GeneralFunctions.swift */,
 				381B8A1A20E1DAC2008335E0 /* MainMenu.xib */,
-				381B8A2420E1DB8E008335E0 /* Main Window */,
-				386E33FD20F1ADDD00763618 /* Prefs Window */,
+				38B0FC9C2115B13000E89019 /* Project View Model */,
 				381B8A1820E1DAC2008335E0 /* Assets.xcassets */,
 				381B8A2B20E1F354008335E0 /* Images */,
 				381B8A1D20E1DAC2008335E0 /* Info.plist */,
@@ -270,8 +294,8 @@
 		381B8A2420E1DB8E008335E0 /* Main Window */ = {
 			isa = PBXGroup;
 			children = (
-				380B92282112A12800F30B6B /* MainWindowViewModel.swift */,
 				381B8A2520E1DBC5008335E0 /* MainWindowController.swift */,
+				38221F362116058200A86E99 /* MainWindowControllerObservers.swift */,
 				38EFAFA420E9292A00C71AE9 /* PJWindow.swift */,
 				384AB24120E3E75500D7E5D7 /* Main Menu */,
 				38AEC05920E21F3100E6529F /* MainToolBar */,
@@ -293,6 +317,7 @@
 			isa = PBXGroup;
 			children = (
 				38AEC07920E23A3900E6529F /* BMTViewController.swift */,
+				38B0FC9D2115E59A00E89019 /* BMTViewControllerObservers.swift */,
 				38AEC07B20E23D6600E6529F /* BMTViewController.xib */,
 				3833873721143238008EE0B3 /* BMTViewModel.swift */,
 			);
@@ -303,8 +328,7 @@
 			isa = PBXGroup;
 			children = (
 				384AB24520E47EFF00D7E5D7 /* MenuController.swift */,
-				384AB23D20E3E0BB00D7E5D7 /* MainMenuController.swift */,
-				384AB24220E466E600D7E5D7 /* WordTypeMenuController.swift */,
+				38B0FC8E21156ECF00E89019 /* Main Menu Controller */,
 				3850BA2720E4AA0C00A7C7CF /* LanguageMenuController.swift */,
 				384AB23F20E3E74400D7E5D7 /* PJFileManager.swift */,
 			);
@@ -316,6 +340,7 @@
 			children = (
 				384AB23B20E3B26800D7E5D7 /* PJTableView.swift */,
 				38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */,
+				38221F3821168FE700A86E99 /* TableViewDataSourceViewModel.swift */,
 			);
 			path = "Table Model";
 			sourceTree = "<group>";
@@ -351,12 +376,12 @@
 			path = "Prefs Window";
 			sourceTree = "<group>";
 		};
-		38846B7E20E2905600C0DB3C /* Words Model */ = {
+		38846B7E20E2905600C0DB3C /* LessonEntry Model */ = {
 			isa = PBXGroup;
 			children = (
-				38846B7C20E2903D00C0DB3C /* Words.swift */,
+				38846B7C20E2903D00C0DB3C /* LessonEntry.swift */,
 			);
-			path = "Words Model";
+			path = "LessonEntry Model";
 			sourceTree = "<group>";
 		};
 		38AEC05820E21F1400E6529F /* FindBar */ = {
@@ -442,9 +467,55 @@
 			isa = PBXGroup;
 			children = (
 				38160EAE20E36F0200DA13F1 /* PJTextField.swift */,
-				3884FA7F20F60E67006EDF11 /* PJTextView.swift */,
+				3884FA7F20F60E67006EDF11 /* FieldEditorTextView.swift */,
 			);
 			path = "Custom Controls";
+			sourceTree = "<group>";
+		};
+		38B0FC85211562AC00E89019 /* Word Type Menu Controller */ = {
+			isa = PBXGroup;
+			children = (
+				38B0FC882115636F00E89019 /* SelectedWordTypes.swift */,
+				384AB24220E466E600D7E5D7 /* WordTypeMenuController.swift */,
+				38B0FC86211562D600E89019 /* WordTypeMenuControllerObservers.swift */,
+			);
+			path = "Word Type Menu Controller";
+			sourceTree = "<group>";
+		};
+		38B0FC8E21156ECF00E89019 /* Main Menu Controller */ = {
+			isa = PBXGroup;
+			children = (
+				384AB23D20E3E0BB00D7E5D7 /* MainMenuController.swift */,
+				38B0FC8F21156F1000E89019 /* MainMenuControllerObservers.swift */,
+				38B0FC85211562AC00E89019 /* Word Type Menu Controller */,
+			);
+			path = "Main Menu Controller";
+			sourceTree = "<group>";
+		};
+		38B0FC91211572A200E89019 /* Cocoa Type Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				38B0FC92211572C200E89019 /* NSBezierPathExtensions.swift */,
+				38B0FC942115732500E89019 /* NSTextViewExtensions.swift */,
+			);
+			path = "Cocoa Type Extensions";
+			sourceTree = "<group>";
+		};
+		38B0FC962115733D00E89019 /* Carbon Type Extensions */ = {
+			isa = PBXGroup;
+			children = (
+				38B0FC98211573A000E89019 /* TISInputSourceExtensions.swift */,
+			);
+			path = "Carbon Type Extensions";
+			sourceTree = "<group>";
+		};
+		38B0FC9C2115B13000E89019 /* Project View Model */ = {
+			isa = PBXGroup;
+			children = (
+				386E33FD20F1ADDD00763618 /* Prefs Window */,
+				381B8A2420E1DB8E008335E0 /* Main Window */,
+			);
+			path = "Project View Model";
 			sourceTree = "<group>";
 		};
 		38C39455211216CF0021C717 /* BMTFileManager */ = {
@@ -456,12 +527,14 @@
 			path = BMTFileManager;
 			sourceTree = "<group>";
 		};
-		38EFAFA320E8C89200C71AE9 /* Extensions */ = {
+		38EFAFA320E8C89200C71AE9 /* Swift Type Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				3821C84C20E242160045E5A8 /* PJExtensions.swift */,
+				38B0FC8A211568C900E89019 /* UserDefault Extensions.swift */,
+				38B0FC8C21156BB900E89019 /* String Extensions.swift */,
+				38B0FC9A211573D000E89019 /* FileManagerExtensions.swift */,
 			);
-			path = Extensions;
+			path = "Swift Type Extensions";
 			sourceTree = "<group>";
 		};
 		38EFAFAE20E9D60400C71AE9 /* ScrollView */ = {
@@ -473,7 +546,7 @@
 				38EFAFAA20E9CCE900C71AE9 /* TextFinderClient.swift */,
 				38CBB93220FA415800C7CAA6 /* TextFinderClientProtocols.swift */,
 				381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */,
-				38846B7E20E2905600C0DB3C /* Words Model */,
+				38846B7E20E2905600C0DB3C /* LessonEntry Model */,
 				384AB24420E4754400D7E5D7 /* Table Model */,
 			);
 			path = ScrollView;
@@ -643,11 +716,14 @@
 			files = (
 				38AEC05720E21F0100E6529F /* FindBarViewController.swift in Sources */,
 				38160EAD20E3599E00DA13F1 /* SearchDelegate.swift in Sources */,
+				38B0FC99211573A000E89019 /* TISInputSourceExtensions.swift in Sources */,
 				386E33FF20F1AE2300763618 /* PrefsWindowController.swift in Sources */,
+				38221F372116058200A86E99 /* MainWindowControllerObservers.swift in Sources */,
 				38AEC07620E2354800E6529F /* WordsTabViewController.swift in Sources */,
 				38CBB93320FA415800C7CAA6 /* TextFinderClientProtocols.swift in Sources */,
 				3806346C2111BA6600798D03 /* BMTFileManager.swift in Sources */,
 				38EFAFAB20E9CCE900C71AE9 /* TextFinderClient.swift in Sources */,
+				38B0FC87211562D600E89019 /* WordTypeMenuControllerObservers.swift in Sources */,
 				384AB23C20E3B26800D7E5D7 /* PJTableView.swift in Sources */,
 				380B922B2112D9C500F30B6B /* TestTabViewModel.swift in Sources */,
 				380C3C2620EA76950077C2BE /* TextFinder.swift in Sources */,
@@ -655,9 +731,13 @@
 				38160EAF20E36F0200DA13F1 /* PJTextField.swift in Sources */,
 				383797DD20EE4FF400125253 /* TableTextFinderClient.swift in Sources */,
 				381B8A2620E1DBC5008335E0 /* MainWindowController.swift in Sources */,
+				38B0FC9E2115E59A00E89019 /* BMTViewControllerObservers.swift in Sources */,
 				380B922D2112DC3200F30B6B /* WordsTabViewModel.swift in Sources */,
+				38221F3921168FE700A86E99 /* TableViewDataSourceViewModel.swift in Sources */,
+				38B0FC952115732500E89019 /* NSTextViewExtensions.swift in Sources */,
 				380634682111ACE400798D03 /* Alerts.swift in Sources */,
 				38EFAFA720E9354700C71AE9 /* ClipboardController.swift in Sources */,
+				38B0FC892115636F00E89019 /* SelectedWordTypes.swift in Sources */,
 				38C39454211216690021C717 /* BMTFileManagerProtocol.swift in Sources */,
 				384AB24320E466E600D7E5D7 /* WordTypeMenuController.swift in Sources */,
 				38EFAFAD20E9D08D00C71AE9 /* PJScrollView.swift in Sources */,
@@ -668,10 +748,9 @@
 				386E340520F1BCF100763618 /* PrefsToolbarController.swift in Sources */,
 				38C71BC820E7D2FD00AC4B6E /* InfoPopupViewController.swift in Sources */,
 				38AEC06820E2243300E6529F /* ExportTabController.swift in Sources */,
-				38846B7D20E2903D00C0DB3C /* Words.swift in Sources */,
+				38846B7D20E2903D00C0DB3C /* LessonEntry.swift in Sources */,
 				38AEC06220E223ED00E6529F /* TestTabController.swift in Sources */,
-				380B92292112A12800F30B6B /* MainWindowViewModel.swift in Sources */,
-				3884FA8020F60E67006EDF11 /* PJTextView.swift in Sources */,
+				3884FA8020F60E67006EDF11 /* FieldEditorTextView.swift in Sources */,
 				3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */,
 				386E33FC20F1A48D00763618 /* PreferencesController.swift in Sources */,
 				386AF90F20E6882C009F9851 /* MultipleChoiceTest.swift in Sources */,
@@ -681,12 +760,17 @@
 				3806346A2111B16D00798D03 /* Panels.swift in Sources */,
 				381B8A2820E1EA10008335E0 /* GeneralFunctions.swift in Sources */,
 				38AEC07A20E23A3900E6529F /* BMTViewController.swift in Sources */,
+				38B0FC9B211573D000E89019 /* FileManagerExtensions.swift in Sources */,
+				38B0FC8B211568C900E89019 /* UserDefault Extensions.swift in Sources */,
 				384AB24620E47EFF00D7E5D7 /* MenuController.swift in Sources */,
 				386E33F920F1A3E600763618 /* PreferencesViewController.swift in Sources */,
 				381F685020EB3DD50085E330 /* FindMenuDelegate.swift in Sources */,
+				38B0FC9021156F1000E89019 /* MainMenuControllerObservers.swift in Sources */,
 				38AEC05C20E21F9B00E6529F /* MainTabViewController.swift in Sources */,
+				38B0FC93211572C200E89019 /* NSBezierPathExtensions.swift in Sources */,
 				3833873821143238008EE0B3 /* BMTViewModel.swift in Sources */,
 				3850BA2820E4AA0C00A7C7CF /* LanguageMenuController.swift in Sources */,
+				38B0FC8D21156BB900E89019 /* String Extensions.swift in Sources */,
 				38846B8020E299C400C0DB3C /* TableViewDataSource.swift in Sources */,
 				38160EAB20E3580000DA13F1 /* TextFieldDelegate.swift in Sources */,
 			);
