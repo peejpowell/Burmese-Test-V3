@@ -503,7 +503,7 @@ extension TableViewDataSource: NSTableViewDataSource {
                 
                 let lessonColumn    = tableView.tableColumns[tableView.column(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "KLessonCol"))]
                 let categoryColumn  = tableView.tableColumns[tableView.column(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "KCategoryCol"))]
-                let lessonEntryIndexColumn  = tableView.tableColumns[tableView.column(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "KWordIndexCol"))]
+                let lessonEntryIndexColumn  = tableView.tableColumns[tableView.column(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: "KLessonEntryIndexCol"))]
                 
                 tableView.setIndicatorImage(sortIndicatorImage, in: lessonColumn)
                 
@@ -824,7 +824,7 @@ extension TableViewDataSource: NSTableViewDataSource {
             }
             else
             {
-                for rowNum in firstDropRow ... lastDropRow
+                for _ in firstDropRow ... lastDropRow
                 {
                     //FIXME: write function to reindex
                     //appDelegate.menuController.reindexLesson(rowNum)
@@ -950,14 +950,14 @@ extension TableViewDataSource: NSTableViewDataSource {
                     //appDelegate.menuController.reindexLesson(insertAtRow)
                     if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
                         let bmtVC = currentTabItem.viewController as? BMTViewController,
-                        let firstIndex = rowIndexes.first {
+                        let _ = rowIndexes.first {
                         bmtVC.indexLessonForRow(row: insertAtRow)
                     }
                     if let rowCount = Range(rowRange)?.count {
                         // FIXME: Implement reindex
                         if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
                             let bmtVC = currentTabItem.viewController as? BMTViewController,
-                            let firstIndex = rowIndexes.first {
+                            let _ = rowIndexes.first {
                             bmtVC.indexLessonForRow(row: insertAtRow + rowCount)
                         }
                     }

@@ -22,7 +22,9 @@ class FieldEditorTextView: NSTextView {
             }
         case 3:
             if myEvent.modifierFlags.contains(NSEvent.ModifierFlags.command) {
-                self.performFindPanelAction(self)
+                let newMenuItem = NSMenuItem()
+                newMenuItem.tag = 1
+                self.performFindPanelAction(newMenuItem)
                 myEvent = event
             }
         default:

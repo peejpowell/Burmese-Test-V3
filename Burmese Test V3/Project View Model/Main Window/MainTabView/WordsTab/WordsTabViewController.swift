@@ -34,7 +34,7 @@ extension WordsTabViewController {
     @objc func increaseLessonCount(_ notification: Notification) {
         infoPrint("", #function, self.className)
         if  let userInfo = notification.userInfo,
-            let lessonName = userInfo[userInfoLesson] as? String,
+            let lessonName = userInfo[UserInfo.Keys.lesson] as? String,
             let currentTabItem = self.tabView.selectedTabViewItem,
             let bmtVC = currentTabItem.viewController as? BMTViewController,
             let dataSource = bmtVC.dataSource {
@@ -50,7 +50,7 @@ extension WordsTabViewController {
     @objc func decreaseLessonCount(_ notification: Notification) {
         infoPrint("", #function, self.className)
         if  let userInfo = notification.userInfo,
-            let lessonName = userInfo[userInfoLesson] as? String,
+            let lessonName = userInfo[UserInfo.Keys.lesson] as? String,
             let currentTabItem = self.tabView.selectedTabViewItem,
             let bmtVC = currentTabItem.viewController as? BMTViewController,
             let dataSource = bmtVC.dataSource {
@@ -66,18 +66,17 @@ extension WordsTabViewController {
     @objc func buildWordTypeMenu(_ notification: Notification) {
         infoPrint("", #function, self.className)
         if  let userInfo = notification.userInfo,
-            let wordTypeMenu = userInfo[userInfoMenu] as? NSMenu {
+            let wordTypeMenu = userInfo[UserInfo.Keys.menu] as? NSMenu {
             
             while wordTypeMenu.items.count>3 {
                 wordTypeMenu.removeItem(at: 0)
             }
             
             for tabItem in getWordsTabViewDelegate().tabViewItems {
-                NotificationCenter.default.post(name: .buildWordTypeMenuForTab, object: nil, userInfo: [userInfoTab : tabItem])
+                NotificationCenter.default.post(name: .buildWordTypeMenuForTab, object: nil, userInfo: [UserInfo.Keys.tabItem : tabItem])
             }
         }
     }
-
 }
 
 extension WordsTabViewController {
@@ -135,17 +134,8 @@ extension WordsTabViewController {
 }
 
 class WordsTabViewController: NSTabViewController {
-
-    enum UserInfoKey : String {
-        case lesson = "lesson"
-        case menu = "menu"
-        case tabItem = "tabItem"
-    }
     
-    let userInfoLesson  = UserInfoKey.lesson.rawValue
-    let userInfoMenu = UserInfoKey.menu.rawValue
-    let userInfoTab = UserInfoKey.tabItem.rawValue
-
+    var openedFromCmdLine = false
     var removingFirstItem       : Bool  = false
     var originalInputLanguage = TISCopyCurrentKeyboardInputSource().takeRetainedValue()
     var draggingRows = false
@@ -172,27 +162,6 @@ class WordsTabViewController: NSTabViewController {
         //self.tabViewControllersList.append(BMTvc)
         self.tabViewItems.removeAll()
         self.tabViewItems.append(setupTabViewItem(named:"Nothing Loaded", controlledBy: bmtVC))
-        print("dataSource: \(bmtVC.dataSource), tableView: \(bmtVC.tableView)")
-        /*
-        if self.dataSources.count == 0 {
-            if  let tableView = BMTvc.tableView,
-                let dataSource = tableView.dataSource as? TableViewDataSource{
-                self.dataSources.append(dataSource)
-            }
-            else
-            {
-                self.dataSources.append(TableViewDataSource())
-            }
-        }*/
-        /*let view = BMTvc.view
-        let tableView = view.viewWithTag(100)
-        if let tableView = tableView as? PJTableView {
-            tableView.dataSource = self.dataSources[0]
-            tableView.delegate = self.dataSources[0]
-            tableView.registerTableForDrag()
-            view.isHidden = true
-        }*/
-        NotificationCenter.default.post(name: .loadRecentFiles, object: nil)
     }
     
     override func viewDidLoad() {

@@ -15,45 +15,65 @@ extension MainTabViewController {
     }
 }
 
-class MainTabViewController: NSTabViewController {
+enum tabNames {
+    static let test     = "Test"
+    static let results  = "Results"
+    static let lessons  = "Lessons"
+    static let export   = "Export"
+}
 
-    @IBOutlet var testTabController : TestTabController!
-    @IBOutlet var resultsTabController : ResultsTabController!
-    @IBOutlet var wordsTabController : WordsViewController!
-    @IBOutlet var exportTabController : ExportTabController!
+class MainTabViewController: NSTabViewController {
+    
+    @IBOutlet var testViewController : TestViewController!
+    @IBOutlet var resultsViewController : ResultsViewController!
+    @IBOutlet var wordsViewController : WordsViewController!
+    @IBOutlet var exportViewController : ExportViewController!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
         
         infoPrint("",#function,self.className)
-        
-        let testTabItem = setupTabViewItem(named: "Test",
-                                                    controlledBy: self.testTabController)
-        let resultsTabItem = setupTabViewItem(named: "Results",
-                                              controlledBy: self.resultsTabController)
-        let wordsTabItem = setupTabViewItem(named: "Words",
-                                            controlledBy: self.wordsTabController)
-        let exportTabItem = setupTabViewItem(named: "Export",
-                                             controlledBy: self.exportTabController)
-        self.tabViewItems = [testTabItem, resultsTabItem, wordsTabItem, exportTabItem]
+        configureTabView(with: [[tabNames.test       : testViewController],
+                                [tabNames.results    : resultsViewController],
+                                [tabNames.lessons    : wordsViewController],
+                                [tabNames.export     : exportViewController]])
+    }
+}
+
+// Initial Setup
+
+extension MainTabViewController {
+    
+    func setUpInitalTabItems(_ items: [[String:NSViewController]]) {
+        for item in items {
+            for key in item.keys {
+                if let viewController = item[key] {
+                    self.tabViewItems.append(setupTabViewItem(named: key, controlledBy: viewController))
+                }
+            }
+        }
+    }
+    
+    func configureTabView(with items: [[String : NSViewController]]) {
+        setUpInitalTabItems(items)
         self.tabView.wantsLayer = true
         self.tabView.selectTabViewItem(at: 2)
         self.tabView.selectTabViewItem(at: 0)
-        
     }
+}
+
+extension MainTabViewController {
     
     override func tabView(_ tabView: NSTabView, willSelect tabViewItem: NSTabViewItem?) {
-        
         infoPrint(tabViewItem?.label, #function,self.className)
-        
         super .tabView(tabView, willSelect: tabViewItem)
     }
     
     override func tabView(_ tabView: NSTabView, didSelect tabViewItem: NSTabViewItem?) {
         infoPrint(tabViewItem?.label, #function,self.className)
         
-        if tabViewItem?.label != "Words" {
+        if tabViewItem?.label != tabNames.lessons {
             setTitleToDefault()
         }
         else {

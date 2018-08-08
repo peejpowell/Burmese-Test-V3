@@ -143,7 +143,7 @@ extension MainWindowController: NSWindowDelegate {
         infoPrint("", #function, self.className)
         // Make sure all files are closed first
         // Check if the first tab's dataSource is empty
-        if  let firstTabItem = mainTabViewController.wordsTabController.wordsTabViewController.tabView.selectedTabViewItem,
+        if  let firstTabItem = mainTabViewController.wordsViewController.wordsTabViewController.tabView.selectedTabViewItem,
             let bmtVC = firstTabItem.viewController as? BMTViewController,
             let dataSource = bmtVC.dataSource,
             let _ = dataSource.sourceFile {

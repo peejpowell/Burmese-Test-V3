@@ -1,5 +1,5 @@
 //
-//  ExportTabViewController.swift
+//  ResultsTabViewController.swift
 //  Burmese Test V3
 //
 //  Created by Philip Powell on 26/06/2018.
@@ -8,13 +8,13 @@
 
 import Cocoa
 
-class ExportTabController: NSViewController {
+class ResultsViewController: NSViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
         
-        infoPrint("Export Tab",#function,self.className)
+        infoPrint("Results Tab",#function,self.className)
     }
     
 }

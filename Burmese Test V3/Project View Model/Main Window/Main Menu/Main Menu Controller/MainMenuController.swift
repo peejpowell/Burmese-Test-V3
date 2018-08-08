@@ -11,8 +11,25 @@ import Cocoa
 class MainMenuController: MenuController {
     
     // MARK: Properties
+    let totalRecentFiles = 5
     
-    var recentFiles: [URL] = []
+    var recentFiles: [URL] = [] {
+        didSet(oldValue) {
+            if recentFiles.count > totalRecentFiles {
+                trimRecentFiles(to: totalRecentFiles)
+            }
+            if recentFiles.count > 0 {
+                recentFilesMenu.items.last?.isEnabled = true
+                recentFilesMenu.items.last?.target = self
+                recentFilesMenu.items.last?.action = #selector(clearRecentFiles)
+            }
+            else {
+                recentFilesMenu.items.last?.isEnabled = false
+                clearRecentFilesMenu()
+            }
+        }
+    }
+    
     var removingFirstItem = false
     
     // MARK: Outlets
@@ -29,8 +46,8 @@ class MainMenuController: MenuController {
     override func awakeFromNib() {
         infoPrint("", #function, self.className)
         super.awakeFromNib()
-        loadRecentFiles(UserDefaults.standard)
-        NotificationCenter.default.post(name: .loadRecentFiles, object: nil)
+        //loadRecentFiles(UserDefaults.standard)
+        //NotificationCenter.default.post(name: .loadRecentFiles, object: nil)
         self.createObservers()
     }
     
@@ -39,7 +56,20 @@ class MainMenuController: MenuController {
     }
 }
 
+// MARK: Recent Files Menu
 extension MainMenuController {
+    
+    @objc func clearRecentFilesMenu() {
+        for _ in 0..<recentFilesMenu.items.count-2 {
+            recentFilesMenu.removeItem(at: 0)
+        }
+        recentFilesMenu.items.last?.isEnabled = false
+    }
+    
+    @objc func clearRecentFiles() {
+        recentFiles.removeAll()
+        saveRecentFiles()
+    }
     
     @objc func openRecentFile(_ sender: NSMenuItem) {
         var count = 0
@@ -55,69 +85,82 @@ extension MainMenuController {
         }
     }
     
+    func recentFilesContainsUrl(_ url: URL)->Int {
+        var foundAtIndex = -1
+        for recentUrl in self.recentFiles {
+            foundAtIndex += 1
+            if recentUrl == url {
+                return foundAtIndex
+            }
+        }
+        return -1
+    }
+    
+    func moveFoundUrlToTop(at index: Int) {
+        let url = self.recentFiles.remove(at: index)
+        self.recentFiles.insert(url, at: 0)
+        let menuItem = self.recentFilesMenu.items[index]
+        menuItem.image = loadIconFrom(url.path)
+        if let image = menuItem.image {
+            image.size = NSSize(width: 16,height: 16)
+        }
+        self.recentFilesMenu.removeItem(at: index)
+        self.recentFilesMenu.insertItem(menuItem, at:0)
+    }
+    
+    func insertNewUrlAtTop(_ url: URL) {
+        self.recentFiles.insert(url, at: 0)
+        let newMenuItem = NSMenuItem(title: "\(url.lastPathComponent)", action: #selector(self.openRecentFile(_:)), keyEquivalent: "")
+        newMenuItem.target = self
+        newMenuItem.image = loadIconFrom(url.path)
+        if let image = newMenuItem.image {
+            image.size = NSSize(width: 16,height: 16)
+        }
+        self.recentFilesMenu.insertItem(newMenuItem, at: 0)
+    }
+    
+    func trimRecentFiles(to totalUrls: Int) {
+        if self.recentFilesMenu.items.count > totalUrls {
+            self.recentFilesMenu.removeItem(at: self.recentFilesMenu.items.count-3)
+            self.recentFiles.remove(at: self.recentFiles.count-1)
+        }
+    }
+    
+    func saveRecentFiles() {
+        let userDefaults = UserDefaults.standard
+        let recentData = NSKeyedArchiver.archivedData(withRootObject: self.recentFiles)
+        userDefaults.set(recentData, forKey: UserDefaults.Keys.RecentFiles)
+    }
+    
     func updateRecentsMenu(with url: URL)
     {
         infoPrint(nil,#function, self.className)
-        
-        let userDefaults = UserDefaults.standard
-        
-        // Is the url already in recents?
-        
-        var foundUrl = false
-        var foundAt = 0
-        for recentUrl in self.recentFiles {
-            if recentUrl == url {
-                foundUrl = true
-                break
-            }
-            foundAt = foundAt + 1
+        let indexOfUrl = recentFilesContainsUrl(url)
+        switch indexOfUrl > -1 {
+        case true:
+            moveFoundUrlToTop(at: indexOfUrl)
+        case false:
+            insertNewUrlAtTop(url)
         }
-        if !foundUrl {
-            self.recentFiles.insert(url, at: 0)
-            let newMenuItem = NSMenuItem(title: "\(url.lastPathComponent)", action: #selector(self.openRecentFile(_:)), keyEquivalent: "")
-            newMenuItem.target = self
-            let iconPath = url.path
-            
-            newMenuItem.image = loadIconFrom(iconPath)
-            if let image = newMenuItem.image {
-                image.size = NSSize(width: 16,height: 16)
-            }
-        
-            self.recentFilesMenu.insertItem(newMenuItem, at: 0)
-            if self.recentFilesMenu.items.count > 12 {
-                self.recentFilesMenu.removeItem(at: self.recentFilesMenu.items.count-3)
-                self.recentFiles.remove(at: self.recentFiles.count-1)
-            //print("\(self.recentFiles)")
-            }
+        saveRecentFiles()
+    }
+    
+    func rebuildRecentFilesMenu() {
+        let numItems = recentFilesMenu.items.count
+        var bottomItems : [NSMenuItem] = []
+        for itemNum in numItems-2..<numItems {
+            bottomItems.append(recentFilesMenu.items[itemNum])
         }
-        else
-        {
-            // move the found url to the top
-            let url = self.recentFiles.remove(at: foundAt)
-            self.recentFiles.insert(url, at: 0)
-            let menuItem = self.recentFilesMenu.items[foundAt]
-            
-            let iconPath = url.path
-            
-            menuItem.image = loadIconFrom(iconPath)
-            if let image = menuItem.image
-            {
-                image.size = NSSize(width: 16,height: 16)
-            }
-            
-            self.recentFilesMenu.removeItem(at: foundAt)
-            self.recentFilesMenu.insertItem(menuItem, at:0)
+        recentFilesMenu.removeAllItems()
+        for item in bottomItems {
+            recentFilesMenu.addItem(item)
         }
-        
-        let recentData = NSKeyedArchiver.archivedData(withRootObject: self.recentFiles)
-        userDefaults.set(recentData, forKey: UserDefaults.Keys.RecentFiles)
-        //userDefaults.set((appDelegate.prefsWindow.delegate as! PJPrefsWindowDelegate).openMostRecent.state, forKey: "OpenMostRecent")
+        buildRecentFilesMenu()
     }
     
     func buildRecentFilesMenu() {
         infoPrint("", #function, self.className)
-        
-        for url in self.recentFiles{
+        for url in self.recentFiles {
             let newMenuItem = NSMenuItem(title: "\(url.lastPathComponent)", action: #selector(MainMenuController.openRecentFile(_:)), keyEquivalent: "")
             newMenuItem.target = self
             let iconPath = url.path
@@ -133,8 +176,7 @@ extension MainMenuController {
         
     }
     
-    func loadRecentFiles(_ userDefaults: UserDefaults)
-    {
+    func loadRecentFiles(_ userDefaults: UserDefaults) {
         infoPrint("", #function, self.className)
         
         if let savedRecentFiles = userDefaults.value(forKey: UserDefaults.Keys.RecentFiles) as? Data {

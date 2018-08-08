@@ -19,7 +19,6 @@ class PJTextField: NSTextField {
     override func mouseDown(with theEvent: NSEvent)
     {
         //infoPrint("", #function, self.className)
-        
         super.mouseDown(with: theEvent)
         if let id = self.identifier?.rawValue {
             NotificationCenter.default.post(name: .changeKeyboard, object:nil, userInfo: ["id" : id])
@@ -38,5 +37,9 @@ class PJTextField: NSTextField {
     
     deinit {
         //infoPrint("\(self)", #function, self.className)
+    }
+    
+    override func performTextFinderAction(_ sender: Any?) {
+        infoPrint("", #function, self.className)
     }
 }

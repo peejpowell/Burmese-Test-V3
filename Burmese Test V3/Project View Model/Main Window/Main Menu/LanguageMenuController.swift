@@ -14,15 +14,12 @@ class LanguageMenuController: MenuController {
     
     func cancelTest()
     {
-        if let testTabController = getMainWindowController().mainTabViewController.tabViewItems[0].viewController as? TestTabController {
+        if let testTabController = getMainWindowController().mainTabViewController.tabViewItems[0].viewController as? TestViewController {
             testTabController.testTabViewModel.updateTestStarted(state: false)
         }
     }
     
-    @IBAction func languageChosen(sender:NSMenuItem)
-    {
-        let appDelegate = NSApplication.shared.delegate as! AppDelegate
-        
+    @IBAction func languageChosen(sender:NSMenuItem) {
         let menuItemClicked = sender
         let menuClicked = menuItemClicked.menu
         
@@ -116,7 +113,7 @@ class LanguageMenuController: MenuController {
         switch menuClicked?.title
         {
         case "Language":
-            var langArray: NSMutableArray = NSMutableArray()
+            let langArray: NSMutableArray = NSMutableArray()
             if let items = menuClicked?.items {
                 for item in items {
                     let state = item.state.rawValue

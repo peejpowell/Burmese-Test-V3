@@ -124,7 +124,7 @@ class TextFieldDelegate: NSObject, NSTextFieldDelegate {
                 break
             }
             //tableView.reloadData()
-            tableView.reloadData(forRowIndexes: IndexSet(integer:tableView.row(for: textField)), columnIndexes: IndexSet(integersIn: NSRange(location:0,length:tableView.numberOfColumns).toRange() ?? 0..<0))
+            tableView.reloadData(forRowIndexes: IndexSet(integer:tableView.row(for: textField)), columnIndexes: IndexSet(integersIn: 0..<tableView.numberOfColumns))
             //NotificationCenter.default.post(name: .tableNeedsReloading, object: nil)
         }
     }

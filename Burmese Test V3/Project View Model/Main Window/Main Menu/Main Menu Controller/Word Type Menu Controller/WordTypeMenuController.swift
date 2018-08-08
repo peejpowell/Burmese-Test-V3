@@ -10,16 +10,6 @@ import Cocoa
 
 class WordTypeMenuController: MenuController {
 
-    // MARK: Enums
-    fileprivate enum UserInfoKey : String {
-        case menu       = "menu"
-        case tabItem    = "tabItem"
-    }
-    
-    // MARK: Properties
-    let userInfoTab     = UserInfoKey.tabItem.rawValue
-    let userInfoMenu    = UserInfoKey.menu.rawValue
-    
     // MARK: Outlets
     @IBOutlet var wordTypeMenu : NSMenu!
     var selectedWordTypes : [SelectedWordTypes] = []

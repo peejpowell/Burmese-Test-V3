@@ -240,7 +240,7 @@ extension BMTViewController {
         }
         // Make sure we are populating the lessonspopup with the right information
         if  let userInfo = notification.userInfo,
-            let lessonsPopup = userInfo["lessonsPopup"] as? NSPopUpButton {
+            let lessonsPopup = userInfo[UserInfo.Keys.lessonPopup] as? NSPopUpButton {
             if let dataSource = self.dataSource {
                 dataSource.populateLessons(in: lessonsPopup)
             }
@@ -250,8 +250,7 @@ extension BMTViewController {
     @objc func jumpToLesson(_ notification: Notification) {
         infoPrint("", #function, self.className)
         if  let userInfo = notification.userInfo,
-            let senderTag = userInfo["senderTag"] as? Int,
-            let title = userInfo["title"] as? String {
+            let senderTag = userInfo[UserInfo.Keys.tag] as? Int {
             self.tableView.selectRowIndexes(IndexSet(integer: senderTag), byExtendingSelection: false)
             let visibleRowRange = tableView.rows(in: tableView.visibleRect)
             let topRow = visibleRowRange.location

@@ -8,33 +8,10 @@
 
 import Cocoa
 
-extension NSButton {
-    func setStateFromBool(_ boolValue: Bool?) {
-        if let boolValue = boolValue {
-            switch boolValue {
-            case true:
-                self.state = .on
-            case false:
-                self.state = .off
-            }
-        }
-    }
-}
-
-extension Notification.Name {
-    static var selectPrefsGeneralTab: Notification.Name {
-        return .init(rawValue: "PreferencesViewController.selectGeneralTab")
-    }
-    
-    static var selectPrefsTableTab: Notification.Name {
-        return .init(rawValue: "PreferencesViewController.selectTableTab")
-    }
-}
-
 class PreferencesViewController: NSViewController {
 
+    // MARK: Outlets
     @IBOutlet var prefsToolbarController : PrefsToolbarController!
-    
     @IBOutlet weak var openMostRecentBtn: NSButton!
     @IBOutlet weak var useDelForCutBtn: NSButton!
     @IBOutlet weak var reIndexOnPasteBtn: NSButton!
@@ -43,50 +20,21 @@ class PreferencesViewController: NSViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
         setPrefsFromLoadedPrefs()
-        setInitialVisibilityButtonStates()
+        setColumnVisibilityButtonStates()
     }
     
     override func viewDidAppear() {
         createObservers()
-        // Set defaults for table btns
-        
     }
  
     override func viewDidDisappear() {
         infoPrint("Removing Observers", #function, self.className)
-        
         NotificationCenter.default.removeObserver(self)
-    }
-    
-    func createObservers() {
-        infoPrint("Creating Observers", #function, self.className)
-        
-        NotificationCenter.default.addObserver(self, selector: #selector(selectGeneralTab(_:)),
-                                               name: .selectPrefsGeneralTab, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(selectTableTab(_:)),
-                                               name: .selectPrefsTableTab, object: nil)
     }
 }
 
-// MARK: Notification Functions
-
 extension PreferencesViewController {
-    
-    // MARK: Prefs Tabs
-    
-    @objc func selectGeneralTab(_ sender: NSToolbarItem) {
-        infoPrint("", #function, self.className)
-        self.prefsTabView.selectTabViewItem(at: 0)
-        self.view.window?.title = "General"
-    }
-    
-    @objc func selectTableTab(_ sender: NSToolbarItem) {
-        infoPrint("", #function, self.className)
-        self.prefsTabView.selectTabViewItem(at: 1)
-        self.view.window?.title = "Table"
-    }
 
     // MARK: General Tab
 
@@ -103,7 +51,7 @@ extension PreferencesViewController {
     }
     // MARK: Table Tab
 
-    func setInitialVisibilityButtonStates () {
+    func setColumnVisibilityButtonStates () {
         infoPrint("", #function, self.className)
         if let view = prefsTabView.tabViewItem(at: 1).view {
             for view in view.subviews {

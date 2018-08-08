@@ -14,19 +14,38 @@ enum LessonEntryType : String {
     case english = "KEnglish"
     case roman = "KRoman"
     case lesson = "KLesson"
-    case lessonEntryIndex = "KWordIndex"
+    case lessonEntryIndex = "KLessonEntryIndex"
     case category = "KCategory"
     case categoryindex = "KCategoryIndex"
     case insertion = "KInsertion"
     case filterindex = "KFilterIndex"
     case filtertype = "KFilterType"
-    case lessonEntryCategory = "KWordCategory"
+    case lessonEntryCategory = "KLessonEntryCategory"
     case correct = "KCorrect"
     case incorrect = "KIncorrect"
     case istitle = "KIstitle"
 }
 
 extension LessonEntryType: CaseIterable {}
+
+extension LessonEntry {
+    enum LessonDictionaryKey {
+        static let burmese  = "Burmese"
+        static let english  = "English"
+        static let roman    = "Roman"
+        static let lesson   = "Lesson"
+        static let lessonEntryIndex = "lessonEntryIndex"
+        static let category = "category"
+        static let categoryindex = "categoryIndex"
+        static let insertion = "insertion"
+        static let filterindex = "filterIndex"
+        static let filtertype = "filterType"
+        static let lessonEntryCategory = "lessonEntryCategory"
+        static let correct = "Correct"
+        static let incorrect = "Incorrect"
+        static let istitle = "isTitle"
+    }
+}
 
 class LessonEntry: NSObject, NSCoding {
     override var description: String {
@@ -65,131 +84,75 @@ class LessonEntry: NSObject, NSCoding {
         case change
     }
     
-    @objc  var burmese: String? {
+    var burmese: String? {
         didSet(oldValue) {
             if oldValue != self.burmese {
-                //self.lessonEntryKeys["KBurmese"] = self.burmese as AnyObject
                 self.setEdited()
             }
         }
     }
     
-    @objc var roman: String? {
+    var roman: String? {
         didSet(oldValue) {
-            if oldValue != self.roman
-            {
-                //self.lessonEntryKeys["KRoman"] = self.roman as AnyObject
+            if oldValue != self.roman {
                 self.setEdited()
             }
         }
     }
-    @objc var english: String? {
+    var english: String? {
         didSet(oldValue) {
             if oldValue != self.english
             {
-                //self.lessonEntryKeys["KEnglish"] = self.english as AnyObject
                 self.setEdited()
             }
         }
     }
-    @objc var lesson: String? {
+    var lesson: String? {
         didSet(oldValue) {
-            if oldValue != self.lesson
-            {
-                //self.lessonEntryKeys["KLesson"] = self.lesson as AnyObject
+            if oldValue != self.lesson {
                 self.setEdited()
                 if let lesson = self.lesson {
-                    NotificationCenter.default.post(name: .increaseLessonCount, object: nil, userInfo: ["lesson" : lesson])
+                    NotificationCenter.default.post(name: .increaseLessonCount,
+                                                    object: nil,
+                                                    userInfo: [UserInfo.Keys.lesson : lesson])
                     NotificationCenter.default.post(name: .startPopulateLessonsPopup, object: nil)
                 }
-                //increaseLessonCount(self.lesson!)
-                if oldValue != nil
-                {
-                    NotificationCenter.default.post(name: .decreaseLessonCount, object: nil, userInfo: ["lesson" : lesson])
+                if oldValue != nil {
+                    if let lesson = self.lesson {
+                        NotificationCenter.default.post(name: .decreaseLessonCount,
+                                                        object: nil,
+                                                        userInfo: [UserInfo.Keys.lesson : lesson])
+                    }
                     NotificationCenter.default.post(name: .startPopulateLessonsPopup, object: nil)
                 }
             }
         }
     }
     
-    @objc var lessonEntryIndex: String? /*{
-        /*didSet(oldValue) {
-            if oldValue != self.lessonEntryindex
-            {
-                self.lessonEntryKeys["KWordIndex"] = self.lessonEntryindex as AnyObject
-                self.setEdited()
-            }
-        }*/
-    }*/
-    
-    @objc var category: String? {
+    var lessonEntryIndex: String?
+    var category: String? {
         didSet(oldValue) {
-            if oldValue != self.category
-            {
-                //self.lessonEntryKeys["KCategory"] = self.category as AnyObject
+            if oldValue != self.category {
                 self.setEdited()
             }
         }
     }
-    
-    
-    @objc var categoryindex: String?/* {
-        didSet(oldValue) {
-            self.lessonEntryKeys["KCategoryIndex"] = self.categoryindex as AnyObject
-        }
-    } */
-    
-    @objc var insertion: String? {
-        didSet(oldValue) {
-            //self.lessonEntryKeys["KInsertion"] = self.insertion as AnyObject
-        }
-    }
-    
-    var filterindex: Int? {
-        didSet(oldValue) {
-            //self.lessonEntryKeys["KFilterIndex"] = self.filterindex as AnyObject
-        }
-    }
-    
+    var categoryindex: String?
+    var insertion: String?
+    var filterindex: Int?
     var filtertype: LessonEntryFilterType?
-    
-    @objc var lessonEntryCategory: String? {
+    var lessonEntryCategory: String? {
         didSet(oldValue) {
-            //self.lessonEntryKeys["KWordCategory"] = self.lessonEntrycategory as AnyObject
             setEdited()
         }
     }
-    
-    @objc var correct: String?
-    @objc var incorrect:      String?
-    
+    var correct:   String?
+    var incorrect: String?
     var unfilteredRow: Int?
-    
     var filtered: Bool = false
     var istitle: Bool = false
     
-    func unwrapped(_ lessonEntry: String?)->String {
-        if let unwrappedLessonEntry = lessonEntry {
-            return unwrappedLessonEntry
-        }
-        return ""
-    }
-    
-    func unwrapped(_ lessonEntry: Int?)->String {
-        if let unwrappedLessonEntry = lessonEntry {
-            return "\(unwrappedLessonEntry)"
-        }
-        return ""
-    }
-    
-    func unwrapped(_ lessonEntry: Bool?)->String {
-        if let unwrappedLessonEntry = lessonEntry {
-            return "\(unwrappedLessonEntry)"
-        }
-        return ""
-    }
-    
-    func unwrapped(_ lessonEntry: LessonEntryFilterType?)->String {
+    func unwrapped(_ lessonEntry: Any?)->String {
         if let unwrappedLessonEntry = lessonEntry {
             return "\(unwrappedLessonEntry)"
         }
@@ -232,12 +195,11 @@ class LessonEntry: NSObject, NSCoding {
         return nil
     }
     
-    func encode(with aCoder: NSCoder)
-    {
+    func encode(with aCoder: NSCoder) {
         LessonEntryType.allCases.forEach {
             let key = $0.rawValue
             if let encodeString = self.lessonEntryForKey(key) {
-                if ["KFilterType", "KFilterIndex"].contains(key) {
+                if [LessonEntryType.filtertype.rawValue, LessonEntryType.filterindex.rawValue].contains(key) {
                     if let encodeInt = Int(encodeString) {
                         aCoder.encode(encodeInt, forKey: key)
                     }
@@ -249,14 +211,12 @@ class LessonEntry: NSObject, NSCoding {
         }
     }
     
-    func setEdited()
-    {
+    func setEdited() {
         infoPrint("", #function, self.className)
         NotificationCenter.default.post(name: .dataSourceNeedsSaving, object: nil)
     }
     
-    required init?(coder aDecoder: NSCoder)
-    {
+    required init?(coder aDecoder: NSCoder) {
         var burmeseToDecode = ""
         var romanToDecode = ""
         var englishToDecode = ""
@@ -270,39 +230,39 @@ class LessonEntry: NSObject, NSCoding {
         var filtertypeToDecode : Int?
         var correctToDecode = ""
         var incorrectToDecode = ""
-        var istitleToDecode = false
+        let istitleToDecode = false
         
         LessonEntryType.allCases.forEach {
             let key = $0.rawValue
             if let decodedValue = aDecoder.decodeObject(forKey: key) as? String {
                 switch key {
-                case "KBurmese":
+                case LessonEntryType.burmese.rawValue:
                     burmeseToDecode = decodedValue
-                case "KRoman":
+                case LessonEntryType.roman.rawValue:
                     romanToDecode = decodedValue
-                case "KEnglish":
+                case LessonEntryType.english.rawValue:
                     englishToDecode = decodedValue
-                case "KLesson":
+                case LessonEntryType.lesson.rawValue:
                     lessonToDecode = decodedValue
-                case "KWordIndex":
+                case LessonEntryType.lessonEntryIndex.rawValue:
                     lessonEntryindexToDecode = decodedValue
-                case "KCategory":
+                case LessonEntryType.category.rawValue:
                     categoryToDecode = decodedValue
-                case "KCategoryIndex":
+                case LessonEntryType.categoryindex.rawValue:
                     categoryindexToDecode = decodedValue
-                case "KInsertion":
+                case LessonEntryType.insertion.rawValue:
                     insertionToDecode = decodedValue
-                case "KWordCategory":
+                case LessonEntryType.lessonEntryCategory.rawValue:
                     lessonEntrycategoryToDecode = decodedValue
-                case "KCorrect":
+                case LessonEntryType.correct.rawValue:
                     correctToDecode = decodedValue
-                case "KIncorrect":
+                case LessonEntryType.incorrect.rawValue:
                     incorrectToDecode = decodedValue
-                case "KFilterType":
+                case LessonEntryType.filtertype.rawValue:
                     if let intValue = Int(decodedValue) {
                         filtertypeToDecode = intValue
                     }
-                case "KFilterIndex":
+                case LessonEntryType.filterindex.rawValue:
                     if let intValue = Int(decodedValue) {
                         filterindexToDecode = intValue
                     }
@@ -330,13 +290,7 @@ class LessonEntry: NSObject, NSCoding {
         self.istitle = istitleToDecode
     }
     
-    func copyWithZone(_ zone: NSZone?)->LessonEntry
-    {
-        return self
-    }
-    
-    override func copy() -> Any
-    {
+    override func copy() -> Any {
         let lessonEntryCopy = LessonEntry()
         
         lessonEntryCopy.burmese = self.burmese
@@ -359,7 +313,6 @@ class LessonEntry: NSObject, NSCoding {
     
     init(lessonEntryDictionary:Dictionary<String,String>) {
         for key in lessonEntryDictionary.keys {
-            if key.containsString("word") { print ("\(key)") }
             switch key {
             case "wordIndex":
                 self.lessonEntryIndex = lessonEntryDictionary[key]
@@ -379,13 +332,13 @@ class LessonEntry: NSObject, NSCoding {
                 //self.lessonEntryKeys["KLesson"] = self.lesson as AnyObject
             case "lessonEntryIndex":
                 self.lessonEntryIndex = lessonEntryDictionary[key]
-                //self.lessonEntryKeys["KWordIndex"] = self.lessonEntryindex as AnyObject
+                //self.lessonEntryKeys["KLessonEntryIndex"] = self.lessonEntryindex as AnyObject
             case "category":
                 self.category = lessonEntryDictionary[key]
                 //self.lessonEntryKeys["KCategory"] = self.category as AnyObject
             case "lessonEntryCategory":
                 self.category = lessonEntryDictionary[key]
-                //self.lessonEntryKeys["KWordCategory"] = self.category as AnyObject
+                //self.lessonEntryKeys["KLessonEntryCategory"] = self.category as AnyObject
             case "categoryIndex":
                 self.categoryindex = lessonEntryDictionary[key]
                 //self.lessonEntryKeys["KCategoryIndex"] = self.categoryindex as AnyObject
@@ -412,8 +365,5 @@ class LessonEntry: NSObject, NSCoding {
         self.burmese = burmese
         self.english = english
         self.roman = roman
-        //self.lessonEntryKeys["KBurmese"] = burmese as AnyObject
-        //self.lessonEntryKeys["KEnglish"] = english as AnyObject
-        //self.lessonEntryKeys["KRoman"] = roman as AnyObject
     }
 }

@@ -84,7 +84,7 @@ class TextFinderClient: NSTextFinder {
     var precountedStringLength = -1
     var foundFrame = NSRect(x: 0,y: 0,width: 10,height: 10)
     var diacriticInsensitive = false
-    let wordsKeys = ["KBurmeseCol","KEnglishCol","KRomanCol","KLessonCol","KCategoryCol","KWordCategoryCol"]
+    let wordsKeys = ["KBurmeseCol","KEnglishCol","KRomanCol","KLessonCol","KCategoryCol","KLessonEntryCategoryCol"]
     
     var visibleCharacterRanges: [NSValue] {
         // Determine the visible rows in the tableview to work out what ranges to use for the search when using incremental searching

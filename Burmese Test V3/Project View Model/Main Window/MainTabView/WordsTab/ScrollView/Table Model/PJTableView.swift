@@ -43,6 +43,11 @@ class PJTableView: NSTableView {
         }
     }
 
+    override func awakeFromNib() {
+        registerTableForDrag()
+        //registerForDraggedTypes([NSPasteboard.PasteboardType.fileURL])
+    }
+    
     override init(frame frameRect: NSRect) {
         super.init(frame: frameRect)
         infoPrint("TableView Created", #function, self.className)
@@ -68,6 +73,5 @@ extension PJTableView {
         infoPrint("", #function, self.className)
         
         self.registerForDraggedTypes([NSPasteboard.PasteboardType(rawValue: NSPasteboard.Name.drag.rawValue)])
-        
     }
 }

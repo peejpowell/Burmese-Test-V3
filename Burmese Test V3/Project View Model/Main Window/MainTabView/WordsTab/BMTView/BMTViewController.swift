@@ -67,7 +67,7 @@ class BMTViewController: NSViewController {
                 column.isHidden = false
             }
         }
-        NotificationCenter.default.post(name: .startPopulateLessonsPopup, object: nil, userInfo:["dataSource" : self.dataSource])
+        NotificationCenter.default.post(name: .startPopulateLessonsPopup, object: nil, userInfo:[UserInfo.Keys.datasource : self.dataSource as Any])
     }
     
     override func viewDidDisappear() {

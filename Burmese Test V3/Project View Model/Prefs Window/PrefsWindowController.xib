@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14269.12" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
+<document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14306.4" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14269.12"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14306.4"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <objects>
@@ -17,7 +17,7 @@
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="eUk-2z-PNo" userLabel="Prefs Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="109" y="131" width="480" height="270"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" wantsLayer="YES" id="Ylt-RO-BWp">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -28,230 +28,335 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Tab" identifier="1" id="dry-K5-xUS">
-                                <view key="view" id="abW-TL-UZe">
+                                <view key="view" ambiguous="YES" id="abW-TL-UZe">
                                     <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tkH-fO-2Ag">
-                                            <rect key="frame" x="18" y="236" width="202" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Open most recent file(s) at start" bezelStyle="regularSquare" imagePosition="left" inset="2" id="sus-dl-lXN">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleOpenMostRecent:" target="3xV-tc-hyp" id="daO-8u-uFe"/>
-                                            </connections>
-                                        </button>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HGh-Am-Fa6">
-                                            <rect key="frame" x="18" y="216" width="132" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Use delete for cut" bezelStyle="regularSquare" imagePosition="left" inset="2" id="zNM-ws-r3P">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleUseDelForCut:" target="3xV-tc-hyp" id="fRT-YZ-QyO"/>
-                                            </connections>
-                                        </button>
-                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="aSQ-RY-prC">
-                                            <rect key="frame" x="18" y="196" width="136" height="18"/>
-                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <buttonCell key="cell" type="check" title="Re-index on Paste" bezelStyle="regularSquare" imagePosition="left" inset="2" id="BYK-pU-6dg">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleReIndexOnPaste:" target="3xV-tc-hyp" id="WHY-eU-ZMQ"/>
-                                            </connections>
-                                        </button>
+                                        <gridView fixedFrame="YES" xPlacement="leading" yPlacement="bottom" rowAlignment="lastBaseline" rowSpacing="5" columnSpacing="9" translatesAutoresizingMaskIntoConstraints="NO" id="oe8-Lu-d0C">
+                                            <rect key="frame" x="100" y="185" width="302" height="68"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <rows>
+                                                <gridRow bottomPadding="10" id="v9c-sx-udi"/>
+                                                <gridRow yPlacement="top" id="zDY-jr-5Lx"/>
+                                                <gridRow id="lef-lA-Rdx"/>
+                                            </rows>
+                                            <columns>
+                                                <gridColumn xPlacement="trailing" width="80" id="nr3-VA-r9W"/>
+                                                <gridColumn xPlacement="leading" id="bbN-9G-YEf"/>
+                                            </columns>
+                                            <gridCells>
+                                                <gridCell row="v9c-sx-udi" column="nr3-VA-r9W" id="qEX-sZ-YXv">
+                                                    <textField key="contentView" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="SZh-5U-FEl">
+                                                        <rect key="frame" x="-2" y="51" width="84" height="17"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="width" constant="80" id="7XI-TF-uW0"/>
+                                                            <constraint firstAttribute="height" constant="17" id="Zui-9a-YB5"/>
+                                                        </constraints>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Startup:" id="fq2-r4-UzC">
+                                                            <font key="font" usesAppearanceFont="YES"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </gridCell>
+                                                <gridCell row="v9c-sx-udi" column="bbN-9G-YEf" id="dc9-dL-jPS">
+                                                    <button key="contentView" translatesAutoresizingMaskIntoConstraints="NO" id="qi5-pC-D5b">
+                                                        <rect key="frame" x="87" y="50" width="217" height="18"/>
+                                                        <constraints>
+                                                            <constraint firstAttribute="height" constant="14" id="Eun-jq-qi1"/>
+                                                            <constraint firstAttribute="width" constant="213" id="FUa-1f-sFr"/>
+                                                        </constraints>
+                                                        <buttonCell key="cell" type="check" title="Open most recent file(s) at start" bezelStyle="regularSquare" imagePosition="left" inset="2" id="xRQ-o0-CbC">
+                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="toggleOpenMostRecent:" target="3xV-tc-hyp" id="Lyy-7s-cbO"/>
+                                                        </connections>
+                                                    </button>
+                                                </gridCell>
+                                                <gridCell row="zDY-jr-5Lx" column="nr3-VA-r9W" id="PbS-Gw-QCW">
+                                                    <textField key="contentView" horizontalHuggingPriority="248" verticalHuggingPriority="750" horizontalCompressionResistancePriority="749" translatesAutoresizingMaskIntoConstraints="NO" id="CVD-Sp-YYm">
+                                                        <rect key="frame" x="15" y="19" width="67" height="17"/>
+                                                        <textFieldCell key="cell" lineBreakMode="clipping" alignment="right" title="Clipboard:" id="UVy-r7-cGk">
+                                                            <font key="font" metaFont="system"/>
+                                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                        </textFieldCell>
+                                                    </textField>
+                                                </gridCell>
+                                                <gridCell row="zDY-jr-5Lx" column="bbN-9G-YEf" id="F7A-Ft-ttJ">
+                                                    <button key="contentView" translatesAutoresizingMaskIntoConstraints="NO" id="fmY-uq-lMC">
+                                                        <rect key="frame" x="87" y="18" width="131" height="18"/>
+                                                        <buttonCell key="cell" type="check" title="Use delete for cut" bezelStyle="regularSquare" imagePosition="left" alignment="center" inset="2" id="fi0-xs-lmS">
+                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="toggleUseDelForCut:" target="3xV-tc-hyp" id="hv2-rd-1b2"/>
+                                                        </connections>
+                                                    </button>
+                                                </gridCell>
+                                                <gridCell row="lef-lA-Rdx" column="nr3-VA-r9W" xPlacement="trailing" id="AsO-gg-s9a"/>
+                                                <gridCell row="lef-lA-Rdx" column="bbN-9G-YEf" id="WhM-TO-Dtg">
+                                                    <button key="contentView" translatesAutoresizingMaskIntoConstraints="NO" id="ELc-DD-E2r">
+                                                        <rect key="frame" x="87" y="-2" width="132" height="18"/>
+                                                        <buttonCell key="cell" type="check" title="Re-index on Paste" bezelStyle="regularSquare" imagePosition="left" inset="2" id="MC8-qv-KeF">
+                                                            <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                            <font key="font" metaFont="system"/>
+                                                        </buttonCell>
+                                                        <connections>
+                                                            <action selector="toggleReIndexOnPaste:" target="3xV-tc-hyp" id="hnk-KO-22M"/>
+                                                        </connections>
+                                                    </button>
+                                                </gridCell>
+                                            </gridCells>
+                                        </gridView>
                                     </subviews>
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="View" identifier="2" id="mqk-E7-mIJ">
-                                <view key="view" ambiguous="YES" id="eXS-O0-mQI">
+                                <view key="view" id="eXS-O0-mQI">
                                     <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
-                                        <button identifier="KRomanCheck" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3wf-S7-0CV">
-                                            <rect key="frame" x="18" y="216" width="66" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Roman" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="F8A-Oc-LvL">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="lSS-cy-cu8"/>
-                                            </connections>
-                                        </button>
-                                        <button identifier="KEnglishCheck" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BkO-BD-zSN">
-                                            <rect key="frame" x="18" y="196" width="67" height="18"/>
-                                            <buttonCell key="cell" type="check" title="English" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="o1c-6D-CrC">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="gSO-NR-GYx"/>
-                                            </connections>
-                                        </button>
-                                        <button identifier="KLessonCheck" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HkN-5B-ZMx">
-                                            <rect key="frame" x="99" y="236" width="67" height="18"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="63" id="wvw-Zp-yHp"/>
-                                            </constraints>
-                                            <buttonCell key="cell" type="check" title="Lesson" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0Ie-F1-lC4">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="OZw-dT-lVD"/>
-                                            </connections>
-                                        </button>
-                                        <button identifier="KWordIndexCheck" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Ibq-L3-ETW">
-                                            <rect key="frame" x="99" y="216" width="88" height="18"/>
-                                            <buttonCell key="cell" type="check" title="WordIndex" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="jYN-gm-faj">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="35t-2g-ibg"/>
-                                            </connections>
-                                        </button>
-                                        <button identifier="KCategoryCheck" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="3Xh-TN-R3O">
-                                            <rect key="frame" x="99" y="196" width="79" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Category" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Wmz-Q2-NN5">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="dlh-Za-b82"/>
-                                            </connections>
-                                        </button>
-                                        <button identifier="KCategoryIndexCheck" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="VDd-so-jsK">
-                                            <rect key="frame" x="99" y="176" width="113" height="18"/>
-                                            <buttonCell key="cell" type="check" title="CategoryIndex" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="vPb-6g-SSN">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="0ob-EK-bqx"/>
-                                            </connections>
-                                        </button>
-                                        <button identifier="KFilterTypeCheck" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="7o7-c5-dQQ">
-                                            <rect key="frame" x="216" y="216" width="82" height="18"/>
-                                            <buttonCell key="cell" type="check" title="FilterType" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="re2-pw-IbK">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="wqd-wT-iqc"/>
-                                            </connections>
-                                        </button>
-                                        <button identifier="KFilterIndexCheck" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="IAD-dN-Ww6">
-                                            <rect key="frame" x="216" y="196" width="87" height="18"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="83" id="1mg-aN-9sV"/>
-                                            </constraints>
-                                            <buttonCell key="cell" type="check" title="FilterIndex" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Z0L-Oj-9j4">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="Wwd-j4-QMk"/>
-                                            </connections>
-                                        </button>
-                                        <button identifier="KWordCategoryCheck" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="qhq-ra-Izx">
-                                            <rect key="frame" x="216" y="236" width="111" height="18"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="107" id="NEP-Ab-knE"/>
-                                            </constraints>
-                                            <buttonCell key="cell" type="check" title="WordCategory" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="COQ-hz-Q1h">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="M2Q-hn-kH5"/>
-                                            </connections>
-                                        </button>
-                                        <button identifier="KBurmeseCheck" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Akz-5U-U8j">
-                                            <rect key="frame" x="18" y="236" width="77" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Burmese" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="d5i-4T-Hkn">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="oiS-sE-cal"/>
-                                            </connections>
-                                        </button>
-                                        <button identifier="KInsertionCheck" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="MsQ-zV-AyK">
-                                            <rect key="frame" x="18" y="176" width="76" height="18"/>
-                                            <buttonCell key="cell" type="check" title="Insertion" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8lC-sT-eP9">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="6wW-zN-aXm"/>
-                                            </connections>
-                                        </button>
-                                        <button identifier="KAvalaserCheck" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fiZ-yq-7BQ">
-                                            <rect key="frame" x="216" y="176" width="75" height="18"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="71" id="2IP-e9-9T9"/>
-                                            </constraints>
-                                            <buttonCell key="cell" type="check" title="Avalaser" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cqe-ke-acq">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="Adf-fE-6zp"/>
-                                            </connections>
-                                        </button>
-                                        <button identifier="KRowNumberCheck" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8xL-me-5kH">
-                                            <rect key="frame" x="18" y="156" width="103" height="18"/>
-                                            <constraints>
-                                                <constraint firstAttribute="width" constant="99" id="IXn-Xk-74f"/>
-                                            </constraints>
-                                            <buttonCell key="cell" type="check" title="Row Number" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="vYP-hZ-5O0">
-                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
-                                                <font key="font" metaFont="system"/>
-                                            </buttonCell>
-                                            <connections>
-                                                <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="H7j-wW-ZcD"/>
-                                            </connections>
-                                        </button>
+                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="104-tg-et4">
+                                            <rect key="frame" x="20" y="20" width="440" height="232"/>
+                                            <subviews>
+                                                <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qpa-Jg-gZ0">
+                                                    <rect key="frame" x="-2" y="215" width="130" height="17"/>
+                                                    <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Hide/Show Columns:" id="N99-33-0AN">
+                                                        <font key="font" usesAppearanceFont="YES"/>
+                                                        <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                                    </textFieldCell>
+                                                </textField>
+                                                <stackView distribution="fillProportionally" orientation="horizontal" alignment="top" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XfW-Aq-jXS">
+                                                    <rect key="frame" x="0.0" y="0.0" width="408" height="205"/>
+                                                    <subviews>
+                                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sct-uD-u2y">
+                                                            <rect key="frame" x="0.0" y="111" width="99" height="94"/>
+                                                            <subviews>
+                                                                <button identifier="KBurmeseCheck" translatesAutoresizingMaskIntoConstraints="NO" id="Akz-5U-U8j">
+                                                                    <rect key="frame" x="-2" y="78" width="76" height="18"/>
+                                                                    <buttonCell key="cell" type="check" title="Burmese" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="d5i-4T-Hkn">
+                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="oiS-sE-cal"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button identifier="KRomanCheck" translatesAutoresizingMaskIntoConstraints="NO" id="3wf-S7-0CV">
+                                                                    <rect key="frame" x="-2" y="58" width="64" height="18"/>
+                                                                    <buttonCell key="cell" type="check" title="Roman" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="F8A-Oc-LvL">
+                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="lSS-cy-cu8"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button identifier="KEnglishCheck" translatesAutoresizingMaskIntoConstraints="NO" id="BkO-BD-zSN">
+                                                                    <rect key="frame" x="-2" y="38" width="66" height="18"/>
+                                                                    <buttonCell key="cell" type="check" title="English" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="o1c-6D-CrC">
+                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="gSO-NR-GYx"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button identifier="KInsertionCheck" translatesAutoresizingMaskIntoConstraints="NO" id="MsQ-zV-AyK">
+                                                                    <rect key="frame" x="-2" y="18" width="76" height="18"/>
+                                                                    <buttonCell key="cell" type="check" title="Insertion" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="8lC-sT-eP9">
+                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="6wW-zN-aXm"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button identifier="KRowNumberCheck" translatesAutoresizingMaskIntoConstraints="NO" id="8xL-me-5kH">
+                                                                    <rect key="frame" x="-2" y="-2" width="103" height="18"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="99" id="IXn-Xk-74f"/>
+                                                                    </constraints>
+                                                                    <buttonCell key="cell" type="check" title="Row Number" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="vYP-hZ-5O0">
+                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="H7j-wW-ZcD"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <visibilityPriorities>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                            </visibilityPriorities>
+                                                            <customSpacing>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                            </customSpacing>
+                                                        </stackView>
+                                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tLn-et-GDb">
+                                                            <rect key="frame" x="109" y="131" width="133" height="74"/>
+                                                            <subviews>
+                                                                <button identifier="KLessonCheck" translatesAutoresizingMaskIntoConstraints="NO" id="HkN-5B-ZMx">
+                                                                    <rect key="frame" x="-2" y="58" width="67" height="18"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="63" id="wvw-Zp-yHp"/>
+                                                                    </constraints>
+                                                                    <buttonCell key="cell" type="check" title="Lesson" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="0Ie-F1-lC4">
+                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="OZw-dT-lVD"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button identifier="KLessonEntryIndexCheck" translatesAutoresizingMaskIntoConstraints="NO" id="Ibq-L3-ETW">
+                                                                    <rect key="frame" x="-2" y="38" width="137" height="18"/>
+                                                                    <buttonCell key="cell" type="check" title="Lesson Entry Index" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="jYN-gm-faj">
+                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="35t-2g-ibg"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button identifier="KCategoryCheck" translatesAutoresizingMaskIntoConstraints="NO" id="3Xh-TN-R3O">
+                                                                    <rect key="frame" x="-2" y="18" width="78" height="18"/>
+                                                                    <buttonCell key="cell" type="check" title="Category" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Wmz-Q2-NN5">
+                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="dlh-Za-b82"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button identifier="KCategoryIndexCheck" translatesAutoresizingMaskIntoConstraints="NO" id="VDd-so-jsK">
+                                                                    <rect key="frame" x="-2" y="-2" width="111" height="18"/>
+                                                                    <buttonCell key="cell" type="check" title="CategoryIndex" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="vPb-6g-SSN">
+                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="0ob-EK-bqx"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <visibilityPriorities>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                            </visibilityPriorities>
+                                                            <customSpacing>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                            </customSpacing>
+                                                        </stackView>
+                                                        <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fmM-wp-Zmv">
+                                                            <rect key="frame" x="252" y="131" width="156" height="74"/>
+                                                            <subviews>
+                                                                <button identifier="KLessonEntryCategoryCheck" translatesAutoresizingMaskIntoConstraints="NO" id="qhq-ra-Izx">
+                                                                    <rect key="frame" x="-2" y="58" width="160" height="18"/>
+                                                                    <buttonCell key="cell" type="check" title="Lesson Entry Category" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="COQ-hz-Q1h">
+                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="M2Q-hn-kH5"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button identifier="KFilterTypeCheck" translatesAutoresizingMaskIntoConstraints="NO" id="7o7-c5-dQQ">
+                                                                    <rect key="frame" x="-2" y="38" width="82" height="18"/>
+                                                                    <buttonCell key="cell" type="check" title="FilterType" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="re2-pw-IbK">
+                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="wqd-wT-iqc"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button identifier="KFilterIndexCheck" translatesAutoresizingMaskIntoConstraints="NO" id="IAD-dN-Ww6">
+                                                                    <rect key="frame" x="-2" y="18" width="87" height="18"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="83" id="1mg-aN-9sV"/>
+                                                                    </constraints>
+                                                                    <buttonCell key="cell" type="check" title="FilterIndex" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="Z0L-Oj-9j4">
+                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="Wwd-j4-QMk"/>
+                                                                    </connections>
+                                                                </button>
+                                                                <button identifier="KAvalaserCheck" translatesAutoresizingMaskIntoConstraints="NO" id="fiZ-yq-7BQ">
+                                                                    <rect key="frame" x="-2" y="-2" width="75" height="18"/>
+                                                                    <constraints>
+                                                                        <constraint firstAttribute="width" constant="71" id="2IP-e9-9T9"/>
+                                                                    </constraints>
+                                                                    <buttonCell key="cell" type="check" title="Avalaser" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="cqe-ke-acq">
+                                                                        <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                                        <font key="font" metaFont="system"/>
+                                                                    </buttonCell>
+                                                                    <connections>
+                                                                        <action selector="toggleColumnVisibilityBtn:" target="3xV-tc-hyp" id="Adf-fE-6zp"/>
+                                                                    </connections>
+                                                                </button>
+                                                            </subviews>
+                                                            <visibilityPriorities>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                                <integer value="1000"/>
+                                                            </visibilityPriorities>
+                                                            <customSpacing>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                                <real value="3.4028234663852886e+38"/>
+                                                            </customSpacing>
+                                                        </stackView>
+                                                    </subviews>
+                                                    <visibilityPriorities>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                        <integer value="1000"/>
+                                                    </visibilityPriorities>
+                                                    <customSpacing>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                        <real value="3.4028234663852886e+38"/>
+                                                    </customSpacing>
+                                                </stackView>
+                                            </subviews>
+                                            <visibilityPriorities>
+                                                <integer value="1000"/>
+                                                <integer value="1000"/>
+                                            </visibilityPriorities>
+                                            <customSpacing>
+                                                <real value="3.4028234663852886e+38"/>
+                                                <real value="3.4028234663852886e+38"/>
+                                            </customSpacing>
+                                        </stackView>
                                     </subviews>
                                     <constraints>
-                                        <constraint firstItem="3Xh-TN-R3O" firstAttribute="leading" secondItem="VDd-so-jsK" secondAttribute="leading" id="0aY-ab-2ir"/>
-                                        <constraint firstItem="Akz-5U-U8j" firstAttribute="top" secondItem="eXS-O0-mQI" secondAttribute="top" constant="20" symbolic="YES" id="2Ds-PV-ymX"/>
-                                        <constraint firstItem="qhq-ra-Izx" firstAttribute="leading" secondItem="HkN-5B-ZMx" secondAttribute="trailing" constant="54" id="2Ef-3H-4eU"/>
-                                        <constraint firstItem="BkO-BD-zSN" firstAttribute="baseline" secondItem="3Xh-TN-R3O" secondAttribute="baseline" id="3xY-BP-Gp3"/>
-                                        <constraint firstItem="Ibq-L3-ETW" firstAttribute="leading" secondItem="3Xh-TN-R3O" secondAttribute="leading" id="5Db-bE-bx2"/>
-                                        <constraint firstItem="MsQ-zV-AyK" firstAttribute="top" secondItem="BkO-BD-zSN" secondAttribute="bottom" constant="6" symbolic="YES" id="75X-5D-pjs"/>
-                                        <constraint firstItem="MsQ-zV-AyK" firstAttribute="baseline" secondItem="VDd-so-jsK" secondAttribute="baseline" id="7jd-oz-j59"/>
-                                        <constraint firstItem="Akz-5U-U8j" firstAttribute="leading" secondItem="eXS-O0-mQI" secondAttribute="leading" constant="20" symbolic="YES" id="91r-wQ-GDf"/>
-                                        <constraint firstItem="BkO-BD-zSN" firstAttribute="leading" secondItem="MsQ-zV-AyK" secondAttribute="leading" id="EUs-Cr-jMe"/>
-                                        <constraint firstItem="3Xh-TN-R3O" firstAttribute="leading" secondItem="BkO-BD-zSN" secondAttribute="trailing" constant="18" id="I4s-MZ-LI3"/>
-                                        <constraint firstItem="HkN-5B-ZMx" firstAttribute="baseline" secondItem="qhq-ra-Izx" secondAttribute="baseline" id="J90-bu-TvI"/>
-                                        <constraint firstItem="3wf-S7-0CV" firstAttribute="top" secondItem="Akz-5U-U8j" secondAttribute="bottom" constant="6" symbolic="YES" id="LBG-nQ-Afn"/>
-                                        <constraint firstItem="7o7-c5-dQQ" firstAttribute="leading" secondItem="Ibq-L3-ETW" secondAttribute="trailing" constant="33" id="M6I-kU-jRW"/>
-                                        <constraint firstItem="IAD-dN-Ww6" firstAttribute="leading" secondItem="fiZ-yq-7BQ" secondAttribute="leading" id="M8J-nn-sHO"/>
-                                        <constraint firstItem="qhq-ra-Izx" firstAttribute="leading" secondItem="7o7-c5-dQQ" secondAttribute="leading" id="Qc0-80-Go4"/>
-                                        <constraint firstItem="IAD-dN-Ww6" firstAttribute="leading" secondItem="3Xh-TN-R3O" secondAttribute="trailing" constant="42" id="SPY-vj-vYc"/>
-                                        <constraint firstItem="3Xh-TN-R3O" firstAttribute="baseline" secondItem="IAD-dN-Ww6" secondAttribute="baseline" id="Tww-z0-gfV"/>
-                                        <constraint firstItem="HkN-5B-ZMx" firstAttribute="leading" secondItem="Akz-5U-U8j" secondAttribute="trailing" constant="8" symbolic="YES" id="Vev-8k-XPP"/>
-                                        <constraint firstItem="Akz-5U-U8j" firstAttribute="leading" secondItem="3wf-S7-0CV" secondAttribute="leading" id="aaI-U3-R0t"/>
-                                        <constraint firstItem="3wf-S7-0CV" firstAttribute="leading" secondItem="BkO-BD-zSN" secondAttribute="leading" id="bXd-PK-vUE"/>
-                                        <constraint firstItem="BkO-BD-zSN" firstAttribute="top" secondItem="3wf-S7-0CV" secondAttribute="bottom" constant="6" symbolic="YES" id="cwZ-vV-CB1"/>
-                                        <constraint firstItem="VDd-so-jsK" firstAttribute="baseline" secondItem="fiZ-yq-7BQ" secondAttribute="baseline" id="e1l-8k-448"/>
-                                        <constraint firstItem="HkN-5B-ZMx" firstAttribute="leading" secondItem="Ibq-L3-ETW" secondAttribute="leading" id="gHH-pj-2fS"/>
-                                        <constraint firstItem="MsQ-zV-AyK" firstAttribute="leading" secondItem="8xL-me-5kH" secondAttribute="leading" id="gVM-xX-zOQ"/>
-                                        <constraint firstItem="3wf-S7-0CV" firstAttribute="centerX" secondItem="BkO-BD-zSN" secondAttribute="centerX" id="gvQ-UY-z0I"/>
-                                        <constraint firstItem="Ibq-L3-ETW" firstAttribute="baseline" secondItem="7o7-c5-dQQ" secondAttribute="baseline" id="h9u-7x-dlh"/>
-                                        <constraint firstItem="fiZ-yq-7BQ" firstAttribute="leading" secondItem="VDd-so-jsK" secondAttribute="trailing" constant="8" symbolic="YES" id="ja5-gX-e0l"/>
-                                        <constraint firstItem="3wf-S7-0CV" firstAttribute="baseline" secondItem="Ibq-L3-ETW" secondAttribute="baseline" id="kAM-TV-6ja"/>
-                                        <constraint firstItem="8xL-me-5kH" firstAttribute="top" secondItem="MsQ-zV-AyK" secondAttribute="bottom" constant="6" symbolic="YES" id="tdt-sT-1QF"/>
-                                        <constraint firstItem="Akz-5U-U8j" firstAttribute="baseline" secondItem="HkN-5B-ZMx" secondAttribute="baseline" id="uYD-lp-Af5"/>
-                                        <constraint firstItem="Akz-5U-U8j" firstAttribute="centerX" secondItem="MsQ-zV-AyK" secondAttribute="centerX" id="vxb-hu-QZh"/>
-                                        <constraint firstItem="7o7-c5-dQQ" firstAttribute="leading" secondItem="IAD-dN-Ww6" secondAttribute="leading" id="zpu-VQ-f7G"/>
+                                        <constraint firstAttribute="bottom" secondItem="104-tg-et4" secondAttribute="bottom" constant="20" symbolic="YES" id="76D-52-aeR"/>
+                                        <constraint firstItem="104-tg-et4" firstAttribute="leading" secondItem="eXS-O0-mQI" secondAttribute="leading" constant="20" symbolic="YES" id="7Rg-aA-iLH"/>
+                                        <constraint firstItem="104-tg-et4" firstAttribute="top" secondItem="eXS-O0-mQI" secondAttribute="top" constant="20" symbolic="YES" id="sll-vE-jB1"/>
+                                        <constraint firstAttribute="trailing" secondItem="104-tg-et4" secondAttribute="trailing" constant="20" symbolic="YES" id="tcD-5x-wWU"/>
                                     </constraints>
                                 </view>
                             </tabViewItem>
@@ -291,12 +396,12 @@
         </window>
         <viewController id="3xV-tc-hyp" customClass="PreferencesViewController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
-                <outlet property="openMostRecentBtn" destination="tkH-fO-2Ag" id="duN-0C-Crq"/>
+                <outlet property="openMostRecentBtn" destination="qi5-pC-D5b" id="zaJ-6i-Nn2"/>
                 <outlet property="preferencesController" destination="blO-a4-e17" id="f15-jx-LDJ"/>
                 <outlet property="prefsTabView" destination="L5T-Vj-Tir" id="M1J-Zg-t7G"/>
                 <outlet property="prefsToolbarController" destination="47G-N3-pCC" id="FKV-Jq-gtX"/>
-                <outlet property="reIndexOnPasteBtn" destination="aSQ-RY-prC" id="3Fh-ym-HFr"/>
-                <outlet property="useDelForCutBtn" destination="HGh-Am-Fa6" id="oUS-31-2uV"/>
+                <outlet property="reIndexOnPasteBtn" destination="ELc-DD-E2r" id="ack-23-CpZ"/>
+                <outlet property="useDelForCutBtn" destination="fmY-uq-lMC" id="gMv-53-5lF"/>
                 <outlet property="view" destination="Ylt-RO-BWp" id="QTN-5F-ef3"/>
             </connections>
         </viewController>

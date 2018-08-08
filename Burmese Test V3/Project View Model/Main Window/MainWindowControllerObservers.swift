@@ -47,7 +47,7 @@ extension MainWindowController {
     
     @objc func changeKeyboard(_ notification: Notification) {
         if  let userInfo = notification.userInfo,
-            let id = userInfo["id"] as? String {
+            let id = userInfo[UserInfo.Keys.id] as? String {
             switch id {
             case "burmese":
                 setKeyboardByName("Myanmar", type: .all)

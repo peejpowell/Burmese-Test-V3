@@ -128,7 +128,7 @@ func getWordTypeMenuController()->WordTypeMenuController?
 
 func getWordsTabViewDelegate()->WordsTabViewController
 {
-    return getMainWindowController().mainTabViewController.wordsTabController.wordsTabViewController
+    return getMainWindowController().mainTabViewController.wordsViewController.wordsTabViewController
 }
 
 func getMainMenuController()->MainMenuController

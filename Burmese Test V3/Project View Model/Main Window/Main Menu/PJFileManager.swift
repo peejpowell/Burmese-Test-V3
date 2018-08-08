@@ -54,7 +54,7 @@ class PJFileManager : FileManager {
     
     override init() {
         super.init()
-        infoPrint("Created new filemanager", #function, self.className)
+        infoPrint("Created new filemanager)", #function, self.className)
     }
     
     deinit {

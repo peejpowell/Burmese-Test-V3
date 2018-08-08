@@ -9,7 +9,7 @@
 import Cocoa
 import Custom_Buttons
 
-class TestTabController: NSViewController {
+class TestViewController: NSViewController {
     
     var testTabViewModel : TestTabViewModel = TestTabViewModel()
     

@@ -12,33 +12,29 @@ extension Notification.Name {
     static var loadRecentFiles: Notification.Name {
         return .init(rawValue: "BMTFileManager.loadRecentFiles")
     }
-    
     static var openDocument: Notification.Name {
         return .init(rawValue: "BMTFileManager.openDocument")
     }
-    
     static var closeDocument: Notification.Name {
         return .init(rawValue: "BMTFileManager.closeDocument")
     }
-    
     static var saveDocument: Notification.Name {
         return .init(rawValue: "BMTFileManager.saveDocument")
     }
-    
     static var saveDocumentAs: Notification.Name {
         return .init(rawValue: "BMTFileManager.saveDocumentAs")
     }
-    
     static var closeAllFiles: Notification.Name {
         return .init(rawValue: "BMTFileManager.closeAllFiles")
     }
-    
     static var revertToSaved: Notification.Name {
         return .init(rawValue: "BMTFileManager.revertToSaved")
     }
-    
     static var createNewDocument: Notification.Name {
         return .init(rawValue: "BMTFileManager.createNewDocument")
+    }
+    static var loadRequestedFromDrag: Notification.Name {
+        return .init(rawValue: "BMTFileManager.loadRequestedFromDrag")
     }
 }
 
@@ -83,7 +79,7 @@ extension BMTFileManager: BMTFileCloser {
         //var closeResponse: CloseResponse = .noneNeeded
         let alert = Alerts().saveAlert
         if let filetoSave = dataSource.sourceFile?.path.lastPathComponent {
-            alert.messageText = "Do you want to save the changes to \(filetoSave)?"
+            alert.messageText = "Do you want to save the changes to: \n\(filetoSave)?"
         }
         else {
             alert.messageText = "Do you want to save the new file?"
@@ -543,7 +539,8 @@ extension BMTFileManager: BMTFileLoader {
                             //Create a new tab, BMTView and dataSource
                             
                             controller.setUpNewBMTFor(newDataSource, with: url)
-                            wordsTabView.selectLastTabViewItem(self)
+                            wordsTabView.selectFirstTabViewItem(self)
+                            //wordsTabView.selectLastTabViewItem(self)
                             controller.view.wantsLayer = true
                             selectWordsTab()
                             NotificationCenter.default.post(name: .enableFileMenuItems, object: nil)
@@ -633,6 +630,15 @@ extension BMTFileManager: BMTFileLoader {
         }
     }
     
+    @objc func loadRequestedFromDrag(_ notification: Notification) {
+        if let userInfo = notification.userInfo,
+            let urls = userInfo[UserInfo.Keys.urls] as? [URL] {
+            for url in urls {
+                loadRequestedUrl(url)
+            }
+        }
+    }
+    
     @objc func openRecentFile(url: URL) {
         infoPrint(nil,#function, self.className)
         loadRequestedUrl(url)
@@ -656,21 +662,6 @@ extension BMTFileManager: BMTFileLoader {
                 NotificationCenter.default.post(name: .populateLessonsPopup, object: nil)
                 return
             }
-        }
-        let userDefaults = UserDefaults.standard
-        let openMostRecent = userDefaults.bool(forKey: UserDefaults.Keys.OpenMostRecentAtStart)
-        if openMostRecent {
-            // Open the most recent file in the recent files menu
-            let fileToOpen = getMainWindowController().mainMenuController.recentFiles[0]
-            loadRequestedUrl(fileToOpen)
-            print ("posting buildwtm")
-            NotificationCenter.default.post(name: .startBuildWordTypeMenu, object:nil)
-            
-            /*if let menuController = getWordTypeMenuController() {
-                menuController.buildWordTypeMenu()
-            }*/
-            NotificationCenter.default.post(name: .populateLessonsPopup, object: nil)
-            
         }
     }
     
@@ -792,6 +783,8 @@ class BMTFileManager: PJFileManager {
         NotificationCenter.default.addObserver(self, selector: #selector(self.closeAllFiles(_:)), name: .closeAllFiles, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.revertToSaved(_:)), name: .revertToSaved, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.createNewDocument(_:)), name: .createNewDocument, object: nil)
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.loadRequestedFromDrag(_:)), name: .loadRequestedFromDrag, object: nil)
     }
     
     init(controller: WordsViewController) {
@@ -800,6 +793,10 @@ class BMTFileManager: PJFileManager {
         createObservers()
     }
     
+    override init() {
+        super.init()
+        infoPrint(#file, #function, self.className)
+    }
     deinit {
         NotificationCenter.default.removeObserver(self)
     }

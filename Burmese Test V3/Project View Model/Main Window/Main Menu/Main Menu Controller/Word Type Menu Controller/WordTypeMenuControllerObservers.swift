@@ -28,13 +28,13 @@ extension WordTypeMenuController {
     
     @objc func startBuildWordTypeMenu(_ notification: Notification) {
         infoPrint("", #function, self.className)
-        NotificationCenter.default.post(name: .buildWordTypeMenu, object:nil, userInfo: [userInfoMenu : self.wordTypeMenu])
+        NotificationCenter.default.post(name: .buildWordTypeMenu, object:nil, userInfo: [UserInfo.Keys.menu : self.wordTypeMenu])
     }
     
     @objc func buildWordTypeMenuForTab(_ notification: Notification) {
         infoPrint("", #function, self.className)
         if  let userInfo = notification.userInfo,
-            let tabItem = userInfo[userInfoTab] as? NSTabViewItem,
+            let tabItem = userInfo[UserInfo.Keys.tabItem] as? NSTabViewItem,
             let bmtVC = tabItem.viewController as? BMTViewController,
             let dataSource = bmtVC.dataSource,
             let sourceFile = dataSource.sourceFile {

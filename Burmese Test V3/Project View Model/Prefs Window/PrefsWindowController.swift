@@ -19,7 +19,7 @@ class PrefsWindowController: NSWindowController {
     }
     
     override func awakeFromNib() {
-        infoPrint("\(self.window)", #function, self.className)
+        infoPrint("", #function, self.className)
     }
     
     override init(window: NSWindow?) {
@@ -27,7 +27,6 @@ class PrefsWindowController: NSWindowController {
             
         /* Load window from xib file */
         Bundle.main.loadNibNamed("PrefsWindowController", owner: self, topLevelObjects: nil)
-        print(self.preferencesViewController)
     }
     
     required init?(coder: NSCoder) {
@@ -35,6 +34,7 @@ class PrefsWindowController: NSWindowController {
     }
     
     deinit {
+        infoPrint("", #function, self.className)
     }
 }
 

@@ -42,7 +42,7 @@ func setTitleToSourceUrl() {
 func selectWordsTab()
 {
     let mainTabView = getMainWindowController().mainTabViewController.tabView
-    if mainTabView.selectedTabViewItem?.label != "Words" {
+    if mainTabView.selectedTabViewItem?.label != tabNames.lessons {
         mainTabView.selectTabViewItem(at: 2)
     }
 }
@@ -50,7 +50,7 @@ func selectWordsTab()
 func selectTabForExistingFile(tabItem: NSTabViewItem) {
 
     if let selectedTabView = getMainWindowController().mainTabViewController.tabView.selectedTabViewItem {
-        if selectedTabView.label != "Words" {
+        if selectedTabView.label != tabNames.lessons {
             getMainWindowController().mainTabViewController.tabView.selectTabViewItem(at: 2)
         }
     }
@@ -89,6 +89,7 @@ extension String {
 
 func infoPrint(_ info: String?, _ funcName: String?, _ className: String? )
 {
+    #if DEBUG
     switch logLevel {
     case 1:
         // Find the first . and then extract the remainder
@@ -111,4 +112,5 @@ func infoPrint(_ info: String?, _ funcName: String?, _ className: String? )
     default:
         return
     }
+    #endif
 }

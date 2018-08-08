@@ -17,14 +17,12 @@ class PreferencesController: NSObject {
         didSet(oldValue) {
             if let hiddenColumns = hiddenColumns {
                 writeArrayPref(for: UserDefaults.Keys.HiddenColumns, array: hiddenColumns)
-                //NotificationCenter.default.post(name: .columnVisibilityChanged, object: nil, userInfo: ["columnVisibilityChanged":hiddenColumns])
             }
         }
     }
     
     override init() {
         super.init()
-        // Read the values from the default Userpreferences
         loadPreferences()
     }
 }
@@ -52,10 +50,10 @@ extension PreferencesController {
     }
     
     func loadPreferences() {
-        self.useDelForCut = getBoolPref(for: UserDefaults.Keys.UseDeleteForCut)
-        self.openMostRecentAtStart = getBoolPref(for: UserDefaults.Keys.OpenMostRecentAtStart)
-        self.reIndexOnPaste = getBoolPref(for: UserDefaults.Keys.ReIndexOnPaste)
-        self.hiddenColumns = getArrayPref(for: UserDefaults.Keys.HiddenColumns)
+        self.useDelForCut           = getBoolPref(for: UserDefaults.Keys.UseDeleteForCut)
+        self.openMostRecentAtStart  = getBoolPref(for: UserDefaults.Keys.OpenMostRecentAtStart)
+        self.reIndexOnPaste         = getBoolPref(for: UserDefaults.Keys.ReIndexOnPaste)
+        self.hiddenColumns          = getArrayPref(for: UserDefaults.Keys.HiddenColumns)
     }
     
 }

@@ -59,18 +59,18 @@
         <customObject id="8TO-bv-S1P" customClass="FindBarViewController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <customObject id="X2E-rt-W8L" customClass="MainTabViewController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
-                <outlet property="exportTabController" destination="8Fv-wk-5t6" id="S21-mN-r6k"/>
-                <outlet property="resultsTabController" destination="pxb-tu-Lwy" id="dyh-e5-GC5"/>
+                <outlet property="exportViewController" destination="8Fv-wk-5t6" id="S21-mN-r6k"/>
+                <outlet property="resultsViewController" destination="pxb-tu-Lwy" id="dyh-e5-GC5"/>
                 <outlet property="tabView" destination="WwX-7h-K8S" id="ZUL-Zd-Ogm"/>
-                <outlet property="testTabController" destination="cIB-aA-S79" id="O1x-DL-mCg"/>
+                <outlet property="testViewController" destination="cIB-aA-S79" id="O1x-DL-mCg"/>
                 <outlet property="view" destination="WwX-7h-K8S" id="oMq-QM-nIH"/>
-                <outlet property="wordsTabController" destination="z7V-Zk-tPS" id="cyK-8Q-LRx"/>
+                <outlet property="wordsViewController" destination="z7V-Zk-tPS" id="cyK-8Q-LRx"/>
             </connections>
         </customObject>
-        <customObject id="cIB-aA-S79" customClass="TestTabController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
-        <customObject id="pxb-tu-Lwy" customClass="ResultsTabController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
+        <customObject id="cIB-aA-S79" customClass="TestViewController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
+        <customObject id="pxb-tu-Lwy" customClass="ResultsViewController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <customObject id="z7V-Zk-tPS" customClass="WordsViewController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
-        <customObject id="8Fv-wk-5t6" customClass="ExportTabController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
+        <customObject id="8Fv-wk-5t6" customClass="ExportViewController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <menu title="Main Menu" systemMenu="main" id="AYu-sK-qS6">
             <items>
                 <menuItem title="Burmese Test V3" id="1Xt-HY-uBw">
@@ -137,7 +137,7 @@
                             </menuItem>
                             <menuItem title="Open Recent" id="Awc-Ju-d5D">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <menu key="submenu" title="Recent Files Menu" id="RTi-RA-Bbp" userLabel="Recent Files">
+                                <menu key="submenu" title="Recent Files Menu" autoenablesItems="NO" id="RTi-RA-Bbp" userLabel="Recent Files">
                                     <items>
                                         <menuItem isSeparatorItem="YES" id="sbl-hb-v6P"/>
                                         <menuItem title="Clear Menu" id="MYO-Hc-CIs">
@@ -840,7 +840,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="800" height="500"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -951,7 +951,7 @@
                                 <rect key="frame" x="1" y="1" width="598" height="42"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" misplaced="YES" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNl-Bk-EvP">
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" allowsCharacterPickerTouchBarItem="YES" translatesAutoresizingMaskIntoConstraints="NO" id="cNl-Bk-EvP">
                                         <rect key="frame" x="-2" y="28" width="496" height="14"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="14" id="k4z-W0-SOf"/>
@@ -962,14 +962,14 @@
                                             <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                                         </textFieldCell>
                                     </textField>
-                                    <slider hidden="YES" verticalHuggingPriority="750" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="P9O-gA-iey">
+                                    <slider hidden="YES" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="P9O-gA-iey">
                                         <rect key="frame" x="5" y="4" width="482" height="21"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="20" id="Tbt-nb-z00"/>
                                         </constraints>
                                         <sliderCell key="cell" controlSize="small" continuous="YES" state="on" alignment="left" maxValue="8" doubleValue="6.8571428571428568" tickMarkPosition="above" numberOfTickMarks="8" allowsTickMarkValuesOnly="YES" sliderType="linear" id="Bqz-dF-RXE"/>
                                     </slider>
-                                    <progressIndicator wantsLayer="YES" misplaced="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="tnS-og-qg8">
+                                    <progressIndicator wantsLayer="YES" maxValue="100" style="bar" translatesAutoresizingMaskIntoConstraints="NO" id="tnS-og-qg8">
                                         <rect key="frame" x="5" y="9" width="482" height="20"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="18" id="0f6-7W-5hy"/>
@@ -978,14 +978,14 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="P9O-gA-iey" firstAttribute="leading" secondItem="4lR-i0-KRc" secondAttribute="leading" constant="5" id="261-vY-uXr"/>
-                                    <constraint firstAttribute="trailing" secondItem="P9O-gA-iey" secondAttribute="trailing" constant="5" id="2bw-ar-stl"/>
+                                    <constraint firstAttribute="trailing" secondItem="P9O-gA-iey" secondAttribute="trailing" constant="111" id="2bw-ar-stl"/>
                                     <constraint firstItem="tnS-og-qg8" firstAttribute="leading" secondItem="4lR-i0-KRc" secondAttribute="leading" constant="5" id="8Up-pF-yIv"/>
                                     <constraint firstAttribute="bottom" secondItem="tnS-og-qg8" secondAttribute="bottom" constant="10" id="Cgy-gw-GaL"/>
-                                    <constraint firstAttribute="trailing" secondItem="cNl-Bk-EvP" secondAttribute="trailing" id="JeI-iX-eaA"/>
+                                    <constraint firstAttribute="trailing" secondItem="cNl-Bk-EvP" secondAttribute="trailing" constant="106" id="JeI-iX-eaA"/>
                                     <constraint firstAttribute="bottom" secondItem="P9O-gA-iey" secondAttribute="bottom" constant="5" id="eIT-UC-XZY"/>
                                     <constraint firstItem="cNl-Bk-EvP" firstAttribute="top" secondItem="4lR-i0-KRc" secondAttribute="top" id="flQ-dB-je6"/>
                                     <constraint firstItem="cNl-Bk-EvP" firstAttribute="leading" secondItem="4lR-i0-KRc" secondAttribute="leading" id="hPT-dY-Drc"/>
-                                    <constraint firstAttribute="trailing" secondItem="tnS-og-qg8" secondAttribute="trailing" constant="5" id="sHw-U0-r0J"/>
+                                    <constraint firstAttribute="trailing" secondItem="tnS-og-qg8" secondAttribute="trailing" constant="111" id="sHw-U0-r0J"/>
                                 </constraints>
                             </view>
                             <color key="borderColor" name="gridColor" catalog="System" colorSpace="catalog"/>
