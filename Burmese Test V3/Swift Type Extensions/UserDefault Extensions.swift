@@ -20,10 +20,3 @@ extension UserDefaults {
         static let HiddenColumns            = "HiddenColumns"
     }
 }
-
-enum Preferences : String {
-    case UseDeleteForCut = "UseDelForCut"
-    case OpenMostRecentAtStart = "OpenMostRecentAtStart"
-    case ReIndexOnPaste = "ReIndexOnPaste"
-    case HiddenColumns = "HiddenColumns"
-}

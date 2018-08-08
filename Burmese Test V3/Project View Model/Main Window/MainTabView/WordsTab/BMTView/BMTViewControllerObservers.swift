@@ -75,7 +75,7 @@ extension BMTViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable(_:)), name: .tableNeedsReloading, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableRows(_:)), name: .tableRowsNeedReloading, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.removeTableRow), name: .removeTableRow, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.toggleColumnWithId(_:)),name: .toggleColumn, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.toggleColumnsWithIds(_:)),name: .toggleColumn, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.cutRows(_:)),name: .cutRows, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.copyRows(_:)),name: .copyRows, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.pasteRows(_:)),name: .pasteRows, object: nil)
@@ -179,31 +179,35 @@ extension BMTViewController {
         }
     }
     
-    @objc func toggleColumnWithId(_ notification: Notification) {
+    @objc func toggleColumnsWithIds(_ notification: Notification) {
         infoPrint("", #function, self.className)
-        
-        var colToChange = ""
-        var hideColumn = false
-        if let tableView = self.tableView,
-            let dict = notification.userInfo as? [String:String] {
-            if let colToHide = dict["HideColumn"] {
-                colToChange = colToHide
-                hideColumn = true
-            }
-            if let colToShow = dict["ShowColumn"] {
-                colToChange = colToShow
-                hideColumn = false
-            }
+        guard let tableView = self.tableView else { return }
+        guard let hiddenColumns = notification.userInfo?[UserInfo.Keys.column] as? [String] else { return }
+        let mainQueue = DispatchQueue.main
+        mainQueue.async {
             for tableColumn in tableView.tableColumns {
-                let id = tableColumn.identifier.rawValue
-                let colName = id.minus(3)
-                if colName == colToChange {
-                    tableColumn.isHidden = hideColumn
-                    resizeAllColumns()
-                    break
+                let columnName = tableColumn.identifier.rawValue.minus(3)
+                if hiddenColumns.contains(columnName) {
+                    if !tableColumn.isHidden {
+                        tableColumn.isHidden = true
+                    }
+                }
+                else {
+                    if tableColumn.isHidden {
+                        tableColumn.isHidden = false
+                    }
                 }
             }
+            //if !Thread.current.isMainThread {
+             //   DispatchQueue.(main).sync {
+             //   }
+            //}
         }
+        let backQueue = DispatchQueue.global(qos: .background)
+        backQueue.async {
+            self.resizeAllColumns()
+        }
+        
     }
     
     @objc func putTableRowsOnPasteboard(rowIndexes: IndexSet) {
@@ -245,6 +249,7 @@ extension BMTViewController {
                 dataSource.populateLessons(in: lessonsPopup)
             }
         }
+        NotificationCenter.default.post(name: .startBuildWordTypeMenu, object:nil)
     }
     
     @objc func jumpToLesson(_ notification: Notification) {

@@ -117,6 +117,12 @@ extension AppDelegate {
     }
     
     func openFirstUrl() {
+        // Check if openMostRecent is enabled
+        if  let prefsViewModel = mainWindowController.prefsWindowController.preferencesViewController?.preferencesViewModel {
+            if !prefsViewModel.mostRecentIsEnabled {
+                return
+            }
+        }
         if let firstUrl = mainWindowController.mainMenuController.recentFiles.first {
             openUrl(firstUrl)
         }

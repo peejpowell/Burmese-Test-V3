@@ -27,7 +27,6 @@
 		381B8A2C20E1F355008335E0 /* Images in Resources */ = {isa = PBXBuildFile; fileRef = 381B8A2B20E1F354008335E0 /* Images */; };
 		381F685020EB3DD50085E330 /* FindMenuDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */; };
 		3821C85420E260100045E5A8 /* PJGlobalFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */; };
-		3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3821C84C20E242160045E5A8 /* PJExtensions.swift */; };
 		38221F372116058200A86E99 /* MainWindowControllerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38221F362116058200A86E99 /* MainWindowControllerObservers.swift */; };
 		38221F3921168FE700A86E99 /* TableViewDataSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38221F3821168FE700A86E99 /* TableViewDataSourceViewModel.swift */; };
 		3833873821143238008EE0B3 /* BMTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3833873721143238008EE0B3 /* BMTViewModel.swift */; };
@@ -43,11 +42,10 @@
 		385EA199211A13C200364161 /* PreferencesViewControllerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385EA198211A13C200364161 /* PreferencesViewControllerObservers.swift */; };
 		385EA19B211A13F500364161 /* NSButtonExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385EA19A211A13F500364161 /* NSButtonExtensions.swift */; };
 		385EA19F211A84AA00364161 /* SystemWideConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385EA19E211A84AA00364161 /* SystemWideConstants.swift */; };
-		385EA1A1211A85FF00364161 /* NSToolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385EA1A0211A85FF00364161 /* NSToolbar.swift */; };
+		385EA1A1211A85FF00364161 /* NSToolbarExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 385EA1A0211A85FF00364161 /* NSToolbarExtensions.swift */; };
 		386AF90D20E65BFA009F9851 /* testPJFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF90C20E65BFA009F9851 /* testPJFileManager.swift */; };
 		386AF90F20E6882C009F9851 /* MultipleChoiceTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386AF90E20E6882C009F9851 /* MultipleChoiceTest.swift */; };
 		386E33F920F1A3E600763618 /* PreferencesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E33F720F1A3E600763618 /* PreferencesViewController.swift */; };
-		386E33FC20F1A48D00763618 /* PreferencesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E33FB20F1A48D00763618 /* PreferencesController.swift */; };
 		386E33FF20F1AE2300763618 /* PrefsWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E33FE20F1AE2300763618 /* PrefsWindowController.swift */; };
 		386E340320F1B5AC00763618 /* PrefsWindowController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 386E340220F1B5AC00763618 /* PrefsWindowController.xib */; };
 		386E340520F1BCF100763618 /* PrefsToolbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 386E340420F1BCF100763618 /* PrefsToolbarController.swift */; };
@@ -77,6 +75,8 @@
 		38B0FC99211573A000E89019 /* TISInputSourceExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC98211573A000E89019 /* TISInputSourceExtensions.swift */; };
 		38B0FC9B211573D000E89019 /* FileManagerExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC9A211573D000E89019 /* FileManagerExtensions.swift */; };
 		38B0FC9E2115E59A00E89019 /* BMTViewControllerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC9D2115E59A00E89019 /* BMTViewControllerObservers.swift */; };
+		38B1DB94211AE07C001A5A5E /* testMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B1DB93211AE07C001A5A5E /* testMenuController.swift */; };
+		38B1DB96211AE5B6001A5A5E /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B1DB95211AE5B6001A5A5E /* PreferencesViewModel.swift */; };
 		38C39454211216690021C717 /* BMTFileManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C39453211216690021C717 /* BMTFileManagerProtocol.swift */; };
 		38C71BC820E7D2FD00AC4B6E /* InfoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */; };
 		38C71BC920E7D2FD00AC4B6E /* InfoPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38C71BC720E7D2FD00AC4B6E /* InfoPopupViewController.xib */; };
@@ -156,7 +156,6 @@
 		381B8A2920E1EDB0008335E0 /* ToolbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarController.swift; sourceTree = "<group>"; };
 		381B8A2B20E1F354008335E0 /* Images */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Images; sourceTree = SOURCE_ROOT; };
 		381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindMenuDelegate.swift; sourceTree = "<group>"; };
-		3821C84C20E242160045E5A8 /* PJExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJExtensions.swift; sourceTree = "<group>"; };
 		3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJGlobalFunctions.swift; sourceTree = "<group>"; };
 		38221F362116058200A86E99 /* MainWindowControllerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowControllerObservers.swift; sourceTree = "<group>"; };
 		38221F3821168FE700A86E99 /* TableViewDataSourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceViewModel.swift; sourceTree = "<group>"; };
@@ -177,11 +176,10 @@
 		385EA198211A13C200364161 /* PreferencesViewControllerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewControllerObservers.swift; sourceTree = "<group>"; };
 		385EA19A211A13F500364161 /* NSButtonExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSButtonExtensions.swift; sourceTree = "<group>"; };
 		385EA19E211A84AA00364161 /* SystemWideConstants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SystemWideConstants.swift; sourceTree = "<group>"; };
-		385EA1A0211A85FF00364161 /* NSToolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSToolbar.swift; sourceTree = "<group>"; };
+		385EA1A0211A85FF00364161 /* NSToolbarExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSToolbarExtensions.swift; sourceTree = "<group>"; };
 		386AF90C20E65BFA009F9851 /* testPJFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testPJFileManager.swift; sourceTree = "<group>"; };
 		386AF90E20E6882C009F9851 /* MultipleChoiceTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MultipleChoiceTest.swift; sourceTree = "<group>"; };
 		386E33F720F1A3E600763618 /* PreferencesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewController.swift; sourceTree = "<group>"; };
-		386E33FB20F1A48D00763618 /* PreferencesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesController.swift; sourceTree = "<group>"; };
 		386E33FE20F1AE2300763618 /* PrefsWindowController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsWindowController.swift; sourceTree = "<group>"; };
 		386E340220F1B5AC00763618 /* PrefsWindowController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PrefsWindowController.xib; sourceTree = "<group>"; };
 		386E340420F1BCF100763618 /* PrefsToolbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrefsToolbarController.swift; sourceTree = "<group>"; };
@@ -211,6 +209,8 @@
 		38B0FC98211573A000E89019 /* TISInputSourceExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TISInputSourceExtensions.swift; sourceTree = "<group>"; };
 		38B0FC9A211573D000E89019 /* FileManagerExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileManagerExtensions.swift; sourceTree = "<group>"; };
 		38B0FC9D2115E59A00E89019 /* BMTViewControllerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTViewControllerObservers.swift; sourceTree = "<group>"; };
+		38B1DB93211AE07C001A5A5E /* testMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testMenuController.swift; sourceTree = "<group>"; };
+		38B1DB95211AE5B6001A5A5E /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
 		38B7D5C920E87E9000B13ED1 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		38C39453211216690021C717 /* BMTFileManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTFileManagerProtocol.swift; sourceTree = "<group>"; };
 		38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPopupViewController.swift; sourceTree = "<group>"; };
@@ -283,14 +283,12 @@
 			isa = PBXGroup;
 			children = (
 				385EA19D211A849800364161 /* System Wide */,
-				3821C84C20E242160045E5A8 /* PJExtensions.swift */,
 				38B0FC962115733D00E89019 /* Carbon Type Extensions */,
 				38B0FC91211572A200E89019 /* Cocoa Type Extensions */,
 				38EFAFA320E8C89200C71AE9 /* Swift Type Extensions */,
 				3821C84B20E242070045E5A8 /* Custom Functions */,
 				38AEC07D20E2417900E6529F /* Custom Controls */,
 				381B8A1620E1DAC0008335E0 /* AppDelegate.swift */,
-				381B8A2720E1EA10008335E0 /* GeneralFunctions.swift */,
 				381B8A1A20E1DAC2008335E0 /* MainMenu.xib */,
 				38B0FC9C2115B13000E89019 /* Project View Model */,
 				381B8A1820E1DAC2008335E0 /* Assets.xcassets */,
@@ -319,7 +317,6 @@
 		3821C84B20E242070045E5A8 /* Custom Functions */ = {
 			isa = PBXGroup;
 			children = (
-				3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */,
 			);
 			path = "Custom Functions";
 			sourceTree = "<group>";
@@ -362,6 +359,7 @@
 				3850BA2F20E4D59B00A7C7CF /* Burmese_Test_V3Tests.swift */,
 				3850BA3120E4D59B00A7C7CF /* Info.plist */,
 				386AF90C20E65BFA009F9851 /* testPJFileManager.swift */,
+				38B1DB93211AE07C001A5A5E /* testMenuController.swift */,
 			);
 			path = "Burmese Test V3Tests";
 			sourceTree = "<group>";
@@ -379,8 +377,8 @@
 			isa = PBXGroup;
 			children = (
 				386E33F720F1A3E600763618 /* PreferencesViewController.swift */,
+				38B1DB95211AE5B6001A5A5E /* PreferencesViewModel.swift */,
 				385EA198211A13C200364161 /* PreferencesViewControllerObservers.swift */,
-				386E33FB20F1A48D00763618 /* PreferencesController.swift */,
 				386E340420F1BCF100763618 /* PrefsToolbarController.swift */,
 			);
 			path = PreferencesViewController;
@@ -389,6 +387,8 @@
 		385EA19D211A849800364161 /* System Wide */ = {
 			isa = PBXGroup;
 			children = (
+				3821C84D20E242190045E5A8 /* PJGlobalFunctions.swift */,
+				381B8A2720E1EA10008335E0 /* GeneralFunctions.swift */,
 				385EA19E211A84AA00364161 /* SystemWideConstants.swift */,
 			);
 			path = "System Wide";
@@ -525,7 +525,7 @@
 				38B0FC92211572C200E89019 /* NSBezierPathExtensions.swift */,
 				38B0FC942115732500E89019 /* NSTextViewExtensions.swift */,
 				385EA19A211A13F500364161 /* NSButtonExtensions.swift */,
-				385EA1A0211A85FF00364161 /* NSToolbar.swift */,
+				385EA1A0211A85FF00364161 /* NSToolbarExtensions.swift */,
 			);
 			path = "Cocoa Type Extensions";
 			sourceTree = "<group>";
@@ -793,18 +793,17 @@
 				38846B7D20E2903D00C0DB3C /* LessonEntry.swift in Sources */,
 				38AEC06220E223ED00E6529F /* TestViewController.swift in Sources */,
 				3884FA8020F60E67006EDF11 /* FieldEditorTextView.swift in Sources */,
-				3821C85520E260130045E5A8 /* PJExtensions.swift in Sources */,
 				385EA19B211A13F500364161 /* NSButtonExtensions.swift in Sources */,
-				386E33FC20F1A48D00763618 /* PreferencesController.swift in Sources */,
 				386AF90F20E6882C009F9851 /* MultipleChoiceTest.swift in Sources */,
 				381B8A2A20E1EDB0008335E0 /* ToolbarController.swift in Sources */,
-				385EA1A1211A85FF00364161 /* NSToolbar.swift in Sources */,
+				385EA1A1211A85FF00364161 /* NSToolbarExtensions.swift in Sources */,
 				381B8A1720E1DAC0008335E0 /* AppDelegate.swift in Sources */,
 				384AB23E20E3E0BB00D7E5D7 /* MainMenuController.swift in Sources */,
 				3806346A2111B16D00798D03 /* Panels.swift in Sources */,
 				381B8A2820E1EA10008335E0 /* GeneralFunctions.swift in Sources */,
 				38AEC07A20E23A3900E6529F /* BMTViewController.swift in Sources */,
 				38B0FC9B211573D000E89019 /* FileManagerExtensions.swift in Sources */,
+				38B1DB96211AE5B6001A5A5E /* PreferencesViewModel.swift in Sources */,
 				38B0FC8B211568C900E89019 /* UserDefault Extensions.swift in Sources */,
 				384AB24620E47EFF00D7E5D7 /* MenuController.swift in Sources */,
 				386E33F920F1A3E600763618 /* PreferencesViewController.swift in Sources */,
@@ -826,6 +825,7 @@
 			files = (
 				3850BA3020E4D59B00A7C7CF /* Burmese_Test_V3Tests.swift in Sources */,
 				386AF90D20E65BFA009F9851 /* testPJFileManager.swift in Sources */,
+				38B1DB94211AE07C001A5A5E /* testMenuController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

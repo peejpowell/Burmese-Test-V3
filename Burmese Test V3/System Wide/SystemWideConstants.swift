@@ -8,18 +8,17 @@
 
 typealias UserInfo = String
 
-extension String {
-    
-    enum Keys {
-        static let id           = "id"
-        static let menu         = "menu"
-        static let tabItem      = "tabItem"
-        static let urls         = "urls"
-        static let url          = "url"
-        static let lesson       = "lesson"
-        static let datasource   = "datasource"
-        static let lessonPopup  = "lessonsPopup"
-        static let tag          = "tag"
-    }
+enum SortKeys: String {
+    case Burmese    = "KBurmese"
+    case Roman      = "KRoman"
+    case English    = "KEnglish"
+    case Lesson     = "KLesson"
+    case Category   = "KCategory"
 }
 
+enum PreferencesKeys : String {
+    case UseDeleteForCut = "UseDelForCut"
+    case OpenMostRecentAtStart = "OpenMostRecentAtStart"
+    case ReIndexOnPaste = "ReIndexOnPaste"
+    case HiddenColumns = "HiddenColumns"
+}

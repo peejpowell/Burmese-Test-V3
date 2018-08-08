@@ -12,26 +12,14 @@ class MainMenuController: MenuController {
     
     // MARK: Properties
     let totalRecentFiles = 5
-    
+    var updatingRecentsMenu = false
+    var removingFirstItem = false
     var recentFiles: [URL] = [] {
         didSet(oldValue) {
-            if recentFiles.count > totalRecentFiles {
-                trimRecentFiles(to: totalRecentFiles)
-            }
-            if recentFiles.count > 0 {
-                recentFilesMenu.items.last?.isEnabled = true
-                recentFilesMenu.items.last?.target = self
-                recentFilesMenu.items.last?.action = #selector(clearRecentFiles)
-            }
-            else {
-                recentFilesMenu.items.last?.isEnabled = false
-                clearRecentFilesMenu()
-            }
+            cleanupRecentFilesMenu()
         }
     }
-    
-    var removingFirstItem = false
-    
+ 
     // MARK: Outlets
     
     @IBOutlet var mainMenu : NSMenu!
@@ -46,8 +34,6 @@ class MainMenuController: MenuController {
     override func awakeFromNib() {
         infoPrint("", #function, self.className)
         super.awakeFromNib()
-        //loadRecentFiles(UserDefaults.standard)
-        //NotificationCenter.default.post(name: .loadRecentFiles, object: nil)
         self.createObservers()
     }
     
@@ -58,6 +44,27 @@ class MainMenuController: MenuController {
 
 // MARK: Recent Files Menu
 extension MainMenuController {
+    
+    func cleanupRecentFilesMenu() {
+        if !updatingRecentsMenu {
+            infoPrint("", #function, self.className)
+        }
+        if updatingRecentsMenu {
+           return
+        }
+        if recentFiles.count > totalRecentFiles {
+            trimRecentFiles(to: totalRecentFiles)
+        }
+        if recentFiles.count > 0 {
+            recentFilesMenu.items.last?.isEnabled = true
+            recentFilesMenu.items.last?.target = self
+            recentFilesMenu.items.last?.action = #selector(clearRecentFiles)
+        }
+        else {
+            recentFilesMenu.items.last?.isEnabled = false
+            clearRecentFilesMenu()
+        }
+    }
     
     @objc func clearRecentFilesMenu() {
         for _ in 0..<recentFilesMenu.items.count-2 {
@@ -135,6 +142,7 @@ extension MainMenuController {
     func updateRecentsMenu(with url: URL)
     {
         infoPrint(nil,#function, self.className)
+        updatingRecentsMenu = true
         let indexOfUrl = recentFilesContainsUrl(url)
         switch indexOfUrl > -1 {
         case true:
@@ -143,6 +151,8 @@ extension MainMenuController {
             insertNewUrlAtTop(url)
         }
         saveRecentFiles()
+        updatingRecentsMenu = false
+        cleanupRecentFilesMenu()
     }
     
     func rebuildRecentFilesMenu() {
@@ -166,8 +176,7 @@ extension MainMenuController {
             let iconPath = url.path
             
             newMenuItem.image = loadIconFrom(iconPath)
-            if let image = newMenuItem.image
-            {
+            if let image = newMenuItem.image {
                 image.size = NSSize(width: 16, height: 16)
             }
             

@@ -11,16 +11,6 @@ import Cocoa
 class PrefsWindowController: NSWindowController {
 
     @IBOutlet var preferencesViewController : PreferencesViewController!
-
-    override func windowDidLoad() {
-        super.windowDidLoad()
-    
-        // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
-    }
-    
-    override func awakeFromNib() {
-        infoPrint("", #function, self.className)
-    }
     
     override init(window: NSWindow?) {
         super.init(window: nil)
@@ -31,10 +21,6 @@ class PrefsWindowController: NSWindowController {
     
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-    }
-    
-    deinit {
-        infoPrint("", #function, self.className)
     }
 }
 

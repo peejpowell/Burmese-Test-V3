@@ -11,17 +11,18 @@ import Cocoa
 class PreferencesViewController: NSViewController {
 
     // MARK: Outlets
-    @IBOutlet var prefsToolbarController : PrefsToolbarController!
     @IBOutlet weak var openMostRecentBtn: NSButton!
     @IBOutlet weak var useDelForCutBtn: NSButton!
     @IBOutlet weak var reIndexOnPasteBtn: NSButton!
-    @IBOutlet var preferencesController: PreferencesController!
     @IBOutlet weak var prefsTabView : NSTabView!
+    @IBOutlet var preferencesViewModel : PreferencesViewModel!
     
+    // MARK: Functions
     override func viewDidLoad() {
         super.viewDidLoad()
-        setPrefsFromLoadedPrefs()
-        setColumnVisibilityButtonStates()
+        preferencesViewModel?.controller = self
+        preferencesViewModel?.loadPreferences()
+        preferencesViewModel?.initialiseColumnVisibility()
     }
     
     override func viewDidAppear() {
@@ -29,101 +30,40 @@ class PreferencesViewController: NSViewController {
     }
  
     override func viewDidDisappear() {
-        infoPrint("Removing Observers", #function, self.className)
         NotificationCenter.default.removeObserver(self)
     }
 }
 
+// MARK: General Tab
 extension PreferencesViewController {
-
-    // MARK: General Tab
-
+    
     @IBAction func toggleOpenMostRecent(_ sender: NSButton) {
-        UserDefaults.standard.set(sender.state == .on, forKey: Preferences.OpenMostRecentAtStart.rawValue)
-    }
-    
-    @IBAction func toggleUseDelForCut(_ sender: NSButton) {
-        UserDefaults.standard.set(sender.state == .on, forKey: Preferences.UseDeleteForCut.rawValue)
-    }
-    
-    @IBAction func toggleReIndexOnPaste(_ sender: NSButton) {
-        UserDefaults.standard.set(sender.state == .on, forKey: Preferences.ReIndexOnPaste.rawValue)
-    }
-    // MARK: Table Tab
-
-    func setColumnVisibilityButtonStates () {
-        infoPrint("", #function, self.className)
-        if let view = prefsTabView.tabViewItem(at: 1).view {
-            for view in view.subviews {
-                if  let btn = view as? NSButton,
-                    let checkId = btn.identifier?.rawValue {
-                    let checkBtnName = checkId.minus(5)
-                    if preferencesController.hiddenColumns != nil {
-                        if preferencesController.hiddenColumns!.contains(checkBtnName) {
-                            btn.state = .off
-                        }
-                    }
-                }
-            }
-        }
-    }
-    
-    @IBAction func toggleColumnVisibilityBtn(_ sender: NSButton) {
-        infoPrint("", #function, self.className)
         switch sender.state {
         case .on:
-            if let checkId = sender.identifier?.rawValue {
-                let btnName = checkId.minus(5)
-                if let hiddenColumns = preferencesController.hiddenColumns {
-                    let removedId = hiddenColumns.filter { (someString) -> Bool in
-                        someString != btnName
-                    }
-                    preferencesController.hiddenColumns = removedId
-                    showColumnForBtn(sender)
-                }
-            }
+            preferencesViewModel?.enableOpenMostRecent()
         case .off:
-            if let checkId = sender.identifier?.rawValue {
-                let btnName = checkId.minus(5)
-                if let hiddenColumns = preferencesController.hiddenColumns {
-                    if !hiddenColumns.contains(btnName) {
-                        preferencesController.hiddenColumns!.append(btnName)
-                        hideColumnForBtn(sender)
-                    }
-                }
-            }
+            preferencesViewModel?.disableOpenMostRecent()
         default:
             break
         }
     }
     
-    func hideColumnForBtn(_ button: NSButton) {
-        infoPrint("", #function, self.className)
-        if  let id = button.identifier?.rawValue {
-            let btnName = id.minus(5)
-            NotificationCenter.default.post(name: .toggleColumn, object: nil, userInfo: ["HideColumn" : btnName])
-        }
+    @IBAction func toggleUseDelForCut(_ sender: NSButton) {
+        UserDefaults.standard.set(sender.state == .on, forKey: PreferencesKeys.UseDeleteForCut.rawValue)
     }
     
-    func showColumnForBtn(_ button: NSButton) {
-        infoPrint("", #function, self.className)
-        if  let id = button.identifier?.rawValue {
-            let btnName = id.minus(5)
-            NotificationCenter.default.post(name: .toggleColumn, object: nil, userInfo: ["ShowColumn" : btnName])
-        }
+    @IBAction func toggleReIndexOnPaste(_ sender: NSButton) {
+        UserDefaults.standard.set(sender.state == .on, forKey: PreferencesKeys.ReIndexOnPaste.rawValue)
     }
 }
 
+// MARK: Table Tab
 extension PreferencesViewController {
     
-    func setPrefsFromLoadedPrefs() {
-        if let prefs = self.preferencesController {
-            self.openMostRecentBtn.setStateFromBool(
-                prefs.openMostRecentAtStart)
-            self.useDelForCutBtn.setStateFromBool(
-                prefs.useDelForCut)
-            self.reIndexOnPasteBtn.setStateFromBool(
-                prefs.reIndexOnPaste)
-        }
+    @IBAction func toggleColumnVisibilityBtn(_ sender: NSButton) {
+        guard let preferencesViewModel = self.preferencesViewModel else { return }
+        preferencesViewModel.didToggleVisibility(for: sender)
+        //preferencesViewModel.toggleColumnVisibilityBtn(sender)
     }
+        
 }

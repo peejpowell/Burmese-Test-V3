@@ -16,6 +16,7 @@
         <customObject id="Voe-Tx-rLC" customClass="AppDelegate" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
                 <outlet property="mainWindowController" destination="vod-uV-yc1" id="4Fl-Y9-Oih"/>
+                <outlet property="prefsWindowController" destination="PtB-I6-Doa" id="9Vy-oJ-9US"/>
             </connections>
         </customObject>
         <customObject id="YLy-65-1bz" customClass="NSFontManager"/>
@@ -25,7 +26,7 @@
                 <outlet property="mainFileManager" destination="OqY-he-gAA" id="607-cQ-Atg"/>
                 <outlet property="mainMenuController" destination="a1q-4L-Wmq" id="pe6-88-dXW"/>
                 <outlet property="mainTabViewController" destination="X2E-rt-W8L" id="yqD-P3-Mkc"/>
-                <outlet property="prefsWindowController" destination="PtB-I6-Doa" id="vYp-OQ-2bE"/>
+                <outlet property="prefsWindowController" destination="PtB-I6-Doa" id="F8B-HC-wNU"/>
                 <outlet property="toolbarController" destination="cZX-Hr-rWv" id="VJp-JS-5k5"/>
                 <outlet property="window" destination="QvC-M9-y7g" id="vbq-yb-gr7"/>
             </connections>

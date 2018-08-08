@@ -26,7 +26,7 @@ class testPJFileManager: XCTestCase {
     
     func testPJFileManagerLoadWordsFromFile() {
         newDataSource = fileManager.loadWordsFromFile(fileUrl, into: newDataSource)!
-        XCTAssert(newDataSource.words.count > 0, "Datasource is empty.")
+        XCTAssert(newDataSource.lessonEntries.count > 0, "Datasource is empty.")
     }
     
     func testPJFileManagerAskToRevertFile()
@@ -47,7 +47,7 @@ class testPJFileManager: XCTestCase {
     
     func testLoadWordsFromFile() {
         if let dataSource = fileManager.loadWordsFromFile(fileUrl, into: newDataSource) {
-            XCTAssert(dataSource.words.count > 0)
+            XCTAssert(dataSource.lessonEntries.count > 0)
         }
         
     }

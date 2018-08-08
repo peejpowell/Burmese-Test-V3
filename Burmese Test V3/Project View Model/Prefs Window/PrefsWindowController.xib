@@ -17,7 +17,7 @@
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="eUk-2z-PNo" userLabel="Prefs Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="109" y="131" width="480" height="270"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
             <view key="contentView" wantsLayer="YES" id="Ylt-RO-BWp">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -66,12 +66,12 @@
                                                             <constraint firstAttribute="height" constant="14" id="Eun-jq-qi1"/>
                                                             <constraint firstAttribute="width" constant="213" id="FUa-1f-sFr"/>
                                                         </constraints>
-                                                        <buttonCell key="cell" type="check" title="Open most recent file(s) at start" bezelStyle="regularSquare" imagePosition="left" inset="2" id="xRQ-o0-CbC">
+                                                        <buttonCell key="cell" type="check" title="Open most recent file at start" bezelStyle="regularSquare" imagePosition="left" inset="2" id="xRQ-o0-CbC">
                                                             <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
                                                             <font key="font" metaFont="system"/>
                                                         </buttonCell>
                                                         <connections>
-                                                            <action selector="toggleOpenMostRecent:" target="3xV-tc-hyp" id="Lyy-7s-cbO"/>
+                                                            <action selector="toggleOpenMostRecent:" target="3xV-tc-hyp" id="yqN-Nw-XBB"/>
                                                         </connections>
                                                     </button>
                                                 </gridCell>
@@ -394,18 +394,21 @@
                 <outlet property="delegate" destination="-2" id="VKo-pV-UBQ"/>
             </connections>
         </window>
+        <customObject id="UmW-Dy-PJ0" customClass="PreferencesViewModel" customModule="Burmese_Test_V3" customModuleProvider="target">
+            <connections>
+                <outlet property="prefsToolbarController" destination="47G-N3-pCC" id="0EN-CM-aFn"/>
+            </connections>
+        </customObject>
         <viewController id="3xV-tc-hyp" customClass="PreferencesViewController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
-                <outlet property="openMostRecentBtn" destination="qi5-pC-D5b" id="zaJ-6i-Nn2"/>
-                <outlet property="preferencesController" destination="blO-a4-e17" id="f15-jx-LDJ"/>
+                <outlet property="openMostRecentBtn" destination="qi5-pC-D5b" id="Eom-CY-A10"/>
+                <outlet property="preferencesViewModel" destination="UmW-Dy-PJ0" id="zQK-7V-hde"/>
                 <outlet property="prefsTabView" destination="L5T-Vj-Tir" id="M1J-Zg-t7G"/>
-                <outlet property="prefsToolbarController" destination="47G-N3-pCC" id="FKV-Jq-gtX"/>
                 <outlet property="reIndexOnPasteBtn" destination="ELc-DD-E2r" id="ack-23-CpZ"/>
                 <outlet property="useDelForCutBtn" destination="fmY-uq-lMC" id="gMv-53-5lF"/>
                 <outlet property="view" destination="Ylt-RO-BWp" id="QTN-5F-ef3"/>
             </connections>
         </viewController>
-        <customObject id="blO-a4-e17" customClass="PreferencesController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <customObject id="47G-N3-pCC" customClass="PrefsToolbarController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
                 <outlet property="prefsToolbar" destination="9cq-wx-qGM" id="zlc-a9-9Qt"/>

@@ -48,7 +48,7 @@ class BMTViewController: NSViewController {
         /*self.textFinderClient = TextFinderClient()
         self.textFinderClient.client = textFinderClient
         self.textFinderClient.tableView = self.tableView*/
-        func getArrayPref(for key: Preferences)->[String] {
+        func getArrayPref(for key: PreferencesKeys)->[String] {
             let userDefaults = UserDefaults.standard
             if let array = userDefaults.array(forKey: key.rawValue) as? [String] {
                 return array
@@ -56,7 +56,7 @@ class BMTViewController: NSViewController {
             return []
         }
         
-        let hiddenColumns = getArrayPref(for: Preferences.HiddenColumns)
+        let hiddenColumns = getArrayPref(for: PreferencesKeys.HiddenColumns)
         for column in self.tableView.tableColumns {
             let id = column.identifier.rawValue
             let colId = id.minus(3)
@@ -237,15 +237,23 @@ extension BMTViewController {
         // Get the width of the tableview
         // Divide by the number of columns
         // Set each column width to the new width
-        
+        let mainQueue = DispatchQueue.main
         var numberOfVisibleColumns = 0
-        if let tableViewWidth = self.tableView.superview?.frame.width {
-            for column in tableView.tableColumns {
-                if !column.isHidden {
-                    numberOfVisibleColumns += 1
-                }
+        var tableViewWidth : CGFloat = 0
+        var localColumns : [NSTableColumn] = []
+        mainQueue.sync {
+            if let tableViewWidthLocal = self.tableView.superview?.frame.width {
+                tableViewWidth = tableViewWidthLocal
             }
-            let newColumnWidth = tableViewWidth / CGFloat(numberOfVisibleColumns)
+            localColumns = tableView.tableColumns
+        }
+        for column in localColumns {
+            if !column.isHidden {
+                numberOfVisibleColumns += 1
+            }
+        }
+        let newColumnWidth = tableViewWidth / CGFloat(numberOfVisibleColumns)
+        mainQueue.sync {
             for column in tableView.tableColumns {
                 if !column.isHidden {
                     column.width = newColumnWidth

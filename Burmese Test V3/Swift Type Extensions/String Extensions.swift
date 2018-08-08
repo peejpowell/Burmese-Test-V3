@@ -10,6 +10,19 @@ import Foundation
 
 extension String {
     
+    enum Keys {
+        static let id           = "id"
+        static let menu         = "menu"
+        static let tabItem      = "tabItem"
+        static let urls         = "urls"
+        static let url          = "url"
+        static let lesson       = "lesson"
+        static let datasource   = "datasource"
+        static let lessonPopup  = "lessonsPopup"
+        static let tag          = "tag"
+        static let column       = "column"
+    }
+    
     func minus(_ upTo: Int)-> String {
         switch upTo >= 0 {
         case true:

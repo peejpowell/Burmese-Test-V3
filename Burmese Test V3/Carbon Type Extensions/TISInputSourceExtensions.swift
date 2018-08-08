@@ -10,6 +10,11 @@ import Carbon
 
 extension TISInputSource {
     
+    enum KeyboardLanguage {
+        static let english = "en"
+        static let myanmar = "my"
+    }
+    
     var id: String {
         let unsafeID = TISGetInputSourceProperty(self, kTISPropertyInputSourceID).assumingMemoryBound(to: CFString.self)
         let name = Unmanaged<CFString>.fromOpaque(unsafeID).takeUnretainedValue()

@@ -9,19 +9,7 @@
 import Cocoa
 import Carbon
 
-// Global Enums
-
 // MARK: Global Functions
-
-
-enum SortKeys: String
-{
-    case Burmese = "KBurmese"
-    case Roman = "KRoman"
-    case English = "KEnglish"
-    case Lesson = "KLesson"
-    case Category = "KCategory"
-}
 
 func getLowerOrBlank(_ string: String?)->String
 {
@@ -90,12 +78,10 @@ func setKeyboardByName(_ name: String, type: keyboardType)
 func changeInputLanguage(_ inputLanguage: NSString, originalLang: TISInputSource)
 {
     Swift.print(#function)
-    if ["en", "my"].contains(inputLanguage)
-    {
+    if [TISInputSource.KeyboardLanguage.english, TISInputSource.KeyboardLanguage.myanmar].contains(inputLanguage as String) {
         TISSelectInputSource(TISCopyInputSourceForLanguage(inputLanguage).takeRetainedValue())
     }
-    else
-    {
+    else {
         TISSelectInputSource(originalLang)
     }
 }

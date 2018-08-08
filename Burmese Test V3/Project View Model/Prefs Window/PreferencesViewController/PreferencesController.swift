@@ -23,37 +23,11 @@ class PreferencesController: NSObject {
     
     override init() {
         super.init()
-        loadPreferences()
+        
     }
 }
 
-extension PreferencesController {
-    
-    func writeArrayPref(for key: String, array: [String]) {
-        let userDefaults = UserDefaults.standard
-        if let hiddenColumns = hiddenColumns {
-            userDefaults.setValue(hiddenColumns, forKey: key)
-        }
-    }
-        
-    func getBoolPref(for key: String)->Bool {
-        let userDefaults = UserDefaults.standard
-        return userDefaults.bool(forKey: key)
-    }
-    
-    func getArrayPref(for key: String)->[String] {
-        let userDefaults = UserDefaults.standard
-        if let array = userDefaults.array(forKey: key) as? [String] {
-            return array
-        }
-        return []
-    }
-    
-    func loadPreferences() {
-        self.useDelForCut           = getBoolPref(for: UserDefaults.Keys.UseDeleteForCut)
-        self.openMostRecentAtStart  = getBoolPref(for: UserDefaults.Keys.OpenMostRecentAtStart)
-        self.reIndexOnPaste         = getBoolPref(for: UserDefaults.Keys.ReIndexOnPaste)
-        self.hiddenColumns          = getArrayPref(for: UserDefaults.Keys.HiddenColumns)
-    }
+
+extension PreferencesViewController {
     
 }

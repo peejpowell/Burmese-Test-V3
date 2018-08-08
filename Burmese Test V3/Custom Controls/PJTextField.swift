@@ -21,7 +21,7 @@ class PJTextField: NSTextField {
         //infoPrint("", #function, self.className)
         super.mouseDown(with: theEvent)
         if let id = self.identifier?.rawValue {
-            NotificationCenter.default.post(name: .changeKeyboard, object:nil, userInfo: ["id" : id])
+            NotificationCenter.default.post(name: .changeKeyboard, object:nil, userInfo: [UserInfo.Keys.id : id])
         }
     }
     

@@ -21,8 +21,6 @@ class PJWindow: NSWindow, NSDraggingDestination {
         registerForDraggedTypes([NSPasteboard.PasteboardType.fileURL])
     }
     
-    
-    
     func draggingEntered(_ sender: NSDraggingInfo) -> NSDragOperation {
         infoPrint("", #function, self.className)
         let sourceDragMask = sender.draggingSourceOperationMask
