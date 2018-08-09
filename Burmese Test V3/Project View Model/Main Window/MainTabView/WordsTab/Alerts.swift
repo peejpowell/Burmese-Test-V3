@@ -8,6 +8,9 @@
 
 import Cocoa
 
+/**
+ Class to provide a number of alerts for use in the project.
+ */
 class Alerts: NSObject {
     
     /**
