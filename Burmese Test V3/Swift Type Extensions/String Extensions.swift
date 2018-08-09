@@ -21,6 +21,8 @@ extension String {
         static let lessonPopup  = "lessonsPopup"
         static let tag          = "tag"
         static let column       = "column"
+        static let title        = "title"
+        static let menuItem     = "menuItem"
     }
     
     func minus(_ upTo: Int)-> String {

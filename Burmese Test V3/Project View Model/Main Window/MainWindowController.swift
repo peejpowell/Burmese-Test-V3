@@ -11,13 +11,12 @@ import Cocoa
 class MainWindowController: NSWindowController {
     
     // MARK: Outlets
-    
-    @IBOutlet weak var toolbarController : ToolbarController!
     @IBOutlet weak var mainTabViewController : MainTabViewController!
-    @IBOutlet weak var mainMenuController : MainMenuController!
     @IBOutlet weak var mainFileManager : PJFileManager!
     @IBOutlet weak var mainClipboardController : ClipboardController!
     @IBOutlet weak var prefsWindowController : PrefsWindowController!
+    
+    @IBOutlet var mainWindowViewModel : MainWindowViewModel!
     
     // MARK: Properties
     let fieldEditor = FieldEditorTextView()
@@ -29,6 +28,7 @@ class MainWindowController: NSWindowController {
     
     override func awakeFromNib() {
         infoPrint("",#function,self.className)
+        mainWindowViewModel.controller = self
         self.window?.minSize = NSSize(width: 800, height: 500)
         NotificationCenter.default.post(name: .disableFileMenuItems, object: nil)
         createObservers()
@@ -57,35 +57,27 @@ class MainWindowController: NSWindowController {
 extension MainWindowController {
     
     @IBAction func newDocument(_ sender: Any?) {
-        infoPrint("",#function,self.className)
-        mainTabViewController.selectTab(at: 2)
-        //selectTabForExistingFile(at: 0)
-        mainMenuController.newDocument(sender)
+        mainWindowViewModel.createNewDocument(sender)
     }
     
     @IBAction func openDocument(_ sender: Any?) {
-        infoPrint("",#function,self.className)
-        mainMenuController.openDocument(sender)
+        mainWindowViewModel.openDocument(sender)
     }
     
     func performClose(_ sender: Any?) {
-        infoPrint("",#function,self.className)
-        mainMenuController.performClose(sender)
+        mainWindowViewModel.closeDocument(sender)
     }
     
     @IBAction func saveDocument(_ sender: Any?) {
-        infoPrint("",#function,self.className)
-        mainMenuController.saveDocument(sender)
+        mainWindowViewModel.saveDocument(sender)
     }
     
     @IBAction func saveDocumentAs(_ sender: Any?) {
-        infoPrint("",#function,self.className)
-        mainMenuController.saveDocumentAs(sender)
+        mainWindowViewModel.saveDocumentAs(sender)
     }
     
     @IBAction func revertDocumentToSaved(_ sender: Any?) {
-        infoPrint("",#function,self.className)
-        mainMenuController.revertDocumentToSaved(sender)
+        mainWindowViewModel.revertDocumentToSaved(sender)
     }
 }
 
@@ -95,17 +87,17 @@ extension MainWindowController {
     
     @IBAction func cut(_ sender: Any?) {
         infoPrint("", #function, self.className)
-        mainMenuController.cut(sender)
+        mainWindowViewModel.cut(sender)
     }
     
     @IBAction func copy(_ sender: Any?) {
         infoPrint("", #function, self.className)
-        mainMenuController.copy(sender)
+        mainWindowViewModel.copy(sender)
     }
     
     @IBAction func paste(_ sender: Any?) {
         infoPrint("", #function, self.className)
-        mainMenuController.paste(sender)
+        mainWindowViewModel.paste(sender)
     }
     
 }
@@ -117,9 +109,8 @@ extension MainWindowController: NSWindowDelegate {
         
         if let textField = client as? PJTextField {
             switch textField.identifier?.rawValue {
-            case "english":
-                return nil
-            case "avalaser":
+            case NSTextField.IdentifierKeys.english,
+                 NSTextField.IdentifierKeys.avalaser:
                 return nil
             default:
                 break
@@ -130,7 +121,7 @@ extension MainWindowController: NSWindowDelegate {
         fieldEditor.identifier = NSUserInterfaceItemIdentifier(rawValue: "test")
         
         if let id: String = (fieldEditor.identifier).map({ $0.rawValue }) {
-            if id == "new" {
+            if id == NSTextField.IdentifierKeys.new {
                 fieldEditor.isFieldEditor = true
                 fieldEditor.identifier = NSUserInterfaceItemIdentifier(rawValue: "configured")
             }

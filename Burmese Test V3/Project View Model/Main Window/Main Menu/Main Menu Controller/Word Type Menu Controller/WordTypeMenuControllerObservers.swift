@@ -39,6 +39,13 @@ extension WordTypeMenuController {
             let dataSource = bmtVC.dataSource,
             let sourceFile = dataSource.sourceFile {
             
+            let title = sourceFile.lastPathComponent
+            for item in wordTypeMenu.items {
+                if item.title == title {
+                    wordTypeMenu.removeItem(item)
+                    break
+                }
+            }
             let newMenuItem = NSMenuItem()
             newMenuItem.title = sourceFile.lastPathComponent
             newMenuItem.action = #selector(self.toggleCurrent(_:))
@@ -50,10 +57,10 @@ extension WordTypeMenuController {
             
             for item in self.wordTypeMenu.items {
                 // Find the item in the list of selectedWords
-                for selectedWordType in self.selectedWordTypes {
+                for selectedWordType in self.selectedLessonTypes {
                     if selectedWordType.lessonName == item.title {
                         for item in item.submenu!.items {
-                            for word in selectedWordType.selectedWords {
+                            for word in selectedWordType.selectedLessons {
                                 if word == item.title {
                                     item.state = .on
                                 }

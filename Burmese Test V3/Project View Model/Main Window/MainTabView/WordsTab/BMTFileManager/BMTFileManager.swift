@@ -231,7 +231,7 @@ extension BMTFileManager: BMTFileCloser {
             else {
                 cleanUpAfterClose(dataSource)
             }
-            NotificationCenter.default.post(name: .startBuildWordTypeMenu, object:nil)
+            //NotificationCenter.default.post(name: .startBuildWordTypeMenu, object:nil)
             
             /*if let menuController = getWordTypeMenuController() {
                 menuController.buildWordTypeMenu()
@@ -302,9 +302,7 @@ extension BMTFileManager: BMTFileCreator {
                         wordsTabVC.editFirstColumnOf(tableView)
                     }
                     NotificationCenter.default.post(name: .dataSourceNeedsSaving, object: nil)
-                    getMainMenuController().closeWordsFileMenuItem.isEnabled = true
-                    getMainMenuController().saveFileMenuItem.isEnabled = true
-                    getMainMenuController().saveAsFileMenuItem.isEnabled = true
+                    NotificationCenter.default.post(name: .enableFileMenuItems, object: nil)
                 }
             }
         }
@@ -382,9 +380,7 @@ extension BMTFileManager: BMTFileSaver {
                 return
             }
             dataSource.needsSaving = false
-            getMainMenuController().updateRecentsMenu(with: url)
-            getMainWindowController().window?.title = url.lastPathComponent
-            getMainWindowController().window?.representedURL = url
+            NotificationCenter.default.post(name: .newUrlAdded, object:nil, userInfo: [UserInfo.Keys.url:url])
         }
         else {
             _ = self.saveDocumentAs(Notification(name: .saveDocumentAs))
@@ -427,9 +423,7 @@ extension BMTFileManager: BMTFileSaver {
                     }
                     dataSource.sourceFile = url
                     dataSource.needsSaving = false
-                    getMainMenuController().updateRecentsMenu(with: url)
-                    getMainWindowController().window?.title = url.lastPathComponent
-                    getMainWindowController().window?.representedURL = url
+                    NotificationCenter.default.post(name: .newUrlAdded, object: nil, userInfo: [UserInfo.Keys.url:url])
                 }
             default:
                 print("Cancelled save as")
@@ -549,10 +543,9 @@ extension BMTFileManager: BMTFileLoader {
                 }
             }
             // Add the new url to the open files list and update the window to show the name with file location and icon
-            if !controller.wordsTabViewModel.openFiles.contains(url) && invalidFile == false
-            {
+            if !controller.wordsTabViewModel.openFiles.contains(url) && invalidFile == false {
                 controller.wordsTabViewModel.addOpenFile(url)
-                getMainMenuController().updateRecentsMenu(with: url)
+                NotificationCenter.default.post(name: .updateRecentsMenuWithUrl, object:nil, userInfo: [UserInfo.Keys.url:url])
                 
                 if let mainWindow = getMainWindowController().window {
                     mainWindow.title = url.lastPathComponent
@@ -642,7 +635,7 @@ extension BMTFileManager: BMTFileLoader {
     @objc func openRecentFile(url: URL) {
         infoPrint(nil,#function, self.className)
         loadRequestedUrl(url)
-        NotificationCenter.default.post(name: .startBuildWordTypeMenu, object:nil)
+        //NotificationCenter.default.post(name: .startBuildWordTypeMenu, object:nil)
         
         /*if let menuController = getWordTypeMenuController() {
             menuController.buildWordTypeMenu()
@@ -754,7 +747,7 @@ extension BMTFileManager: BMTFileLoader {
         default:
             return
         }
-        NotificationCenter.default.post(name: .startBuildWordTypeMenu, object:nil)
+        //NotificationCenter.default.post(name: .startBuildWordTypeMenu, object:nil)
         
         /*if let menuController = getWordTypeMenuController() {
             menuController.buildWordTypeMenu()

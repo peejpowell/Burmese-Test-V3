@@ -87,7 +87,7 @@ extension TableViewDataSource {
     
     @objc func jumpToLesson(_ sender: NSMenuItem) {
         infoPrint("", #function, self.className)
-        NotificationCenter.default.post(name: .jumpToLesson, object: nil, userInfo:["senderTag" : sender.tag, "title" : sender.title])
+        NotificationCenter.default.post(name: .jumpToLesson, object: nil, userInfo:[UserInfo.Keys.tag : sender.tag, UserInfo.Keys.title : sender.title])
     }
     
     func populateLessons(in lessonPopup: NSPopUpButton) {

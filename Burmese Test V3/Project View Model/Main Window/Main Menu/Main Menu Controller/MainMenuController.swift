@@ -29,6 +29,9 @@ class MainMenuController: MenuController {
     @IBOutlet var saveAsFileMenuItem : NSMenuItem!
     @IBOutlet var revertMenuItem : NSMenuItem!
     
+    @IBOutlet var languageMenuController : LanguageMenuController!
+    @IBOutlet var lessonTypeMenuController : WordTypeMenuController!
+    
     // MARK: Functions
     
     override func awakeFromNib() {

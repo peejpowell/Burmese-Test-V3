@@ -9,6 +9,30 @@
 import Foundation
 import Cocoa
 
+private protocol PreferencesGeneralTab {
+    
+    func switchOpenMostRecent(_ state: NSControl.StateValue)
+    
+    func switchUseDelForCutBtn(_ stateIsOn: Bool)
+    
+    func switchUseDelForCut(_ state: NSControl.StateValue)
+    
+    func switchOpenMostRecentBtn(_ stateIsOn: Bool)
+    
+    func switchReIndexOnPaste(_ state: NSControl.StateValue)
+    
+    func switchReIndexOnPasteBtn(_ stateIsOn: Bool)
+    
+}
+
+private protocol PreferencesTableTab {
+    
+    func updateHiddenColumnsBtns()
+    
+    func updateHiddenColumns()
+    
+}
+
 private protocol PreferencesToUserDefaults {
     
     func loadPreferences()
@@ -23,88 +47,112 @@ private protocol PreferencesToUserDefaults {
 class PreferencesViewModel: NSObject {
     
     @IBOutlet private var prefsToolbarController : PrefsToolbarController!
-    var controller : PreferencesViewController?
     
+    private var openMostRecentAtStart : Bool? {
+        didSet(oldValue) {
+            guard let openMostRecent = self.openMostRecentAtStart else { return }
+            self.switchOpenMostRecentBtn(openMostRecent)
+            UserDefaults.standard.set(openMostRecentAtStart, forKey: PreferencesKeys.OpenMostRecentAtStart.rawValue)
+        }
+    }
+    private var useDelForCut : Bool? {
+        didSet(oldValue) {
+            guard let useDelForCut = self.useDelForCut else { return }
+            self.switchUseDelForCutBtn(useDelForCut)
+            UserDefaults.standard.set(useDelForCut, forKey: PreferencesKeys.UseDeleteForCut.rawValue)
+        }
+    }
+    private var reIndexOnPaste : Bool? {
+        didSet(oldValue) {
+            guard let reIndexOnPaste = self.useDelForCut else { return }
+            self.switchReIndexOnPasteBtn(reIndexOnPaste)
+            UserDefaults.standard.set(reIndexOnPaste, forKey: PreferencesKeys.ReIndexOnPaste.rawValue)
+        }
+    }
+    private var hiddenColumns : [String]? {
+        didSet(oldValue) {
+            updateHiddenColumnsBtns()
+            updateHiddenColumns()
+        }
+    }
     var mostRecentIsEnabled : Bool {
         if let openMostRecent = self.openMostRecentAtStart {
             return openMostRecent
         }
         return false
     }
+    var useDelIsEnabled : Bool {
+        if let useDelForCut = self.useDelForCut {
+            return useDelForCut
+        }
+        return false
+    }
+    var reIndexOnPasteIsEnabled : Bool {
+        if let reIndexOnPaste = self.reIndexOnPaste {
+            return reIndexOnPaste
+        }
+        return false
+    }
+    var controller : PreferencesViewController?
     
-    private var openMostRecentAtStart : Bool? {
-        didSet(oldValue) {
-            guard let openMostRecent = self.openMostRecentAtStart else { return }
-            if openMostRecent {
-                enableOpenMostRecent()
+}
+
+// MARK: Protocol: PreferencesGeneralTab
+extension PreferencesViewModel: PreferencesGeneralTab {
+    
+    func switchOpenMostRecent(_ state: NSControl.StateValue) {
+        self.openMostRecentAtStart = state == .on
+    }
+    
+    func switchUseDelForCutBtn(_ stateIsOn: Bool) {
+        controller?.useDelForCutBtn.setStateFromBool(stateIsOn)
+    }
+    
+    func switchUseDelForCut(_ state: NSControl.StateValue) {
+        self.useDelForCut = state == .on
+    }
+    
+    func switchOpenMostRecentBtn(_ stateIsOn: Bool) {
+        controller?.openMostRecentBtn.setStateFromBool(stateIsOn)
+    }
+    
+    func switchReIndexOnPaste(_ state: NSControl.StateValue) {
+        self.reIndexOnPaste = state == .on
+    }
+    
+    func switchReIndexOnPasteBtn(_ stateIsOn: Bool) {
+        controller?.reIndexOnPasteBtn.setStateFromBool(stateIsOn)
+    }
+    
+}
+
+// MARK: Protocol: PreferencesTableTab
+extension PreferencesViewModel: PreferencesTableTab {
+    
+    fileprivate func updateHiddenColumnsBtns() {
+        if let stackView = controller?.columnVisibilityStackView {
+            // Find all the checkboxes
+            for subview in stackView.subviews {
+                for btn in subview.subviews{
+                    if  let btn = btn as? NSButton,
+                        let id = btn.identifier?.rawValue,
+                        let hiddenColumns = self.hiddenColumns {
+                        if hiddenColumns.contains(id.minus(5)) {
+                            btn.state = .off
+                        }
+                        else {
+                            btn.state = .on
+                        }
+                    }
+                }
             }
-            else {
-                disableOpenMostRecent()
-            }
-            UserDefaults.standard.set(openMostRecentAtStart, forKey: PreferencesKeys.OpenMostRecentAtStart.rawValue)
         }
     }
     
-    private var useDelForCut : Bool? {
-        didSet(oldValue) {
-            guard let useDelForCut = self.useDelForCut else { return }
-            if useDelForCut {
-                enableUseDelForCut()
-            }
-            else {
-                disableUseDelForCut()
-            }
-            UserDefaults.standard.set(useDelForCut, forKey: PreferencesKeys.UseDeleteForCut.rawValue)
-        }
-    }
-    
-    private var reIndexOnPaste : Bool? {
-        didSet(oldValue) {
-            guard let reIndexOnPaste = self.useDelForCut else { return }
-            if reIndexOnPaste {
-                enableReIndexOnPaste()
-            }
-            else {
-                disableReIndexOnPaste()
-            }
-            UserDefaults.standard.set(reIndexOnPaste, forKey: PreferencesKeys.ReIndexOnPaste.rawValue)
-        }
-    }
-    
-    private var hiddenColumns : [String]? {
-        didSet(oldValue) {
-            updateHiddenColumns()
-        }
-    }
-    
-    private func updateHiddenColumns() {
+    fileprivate func updateHiddenColumns() {
         guard let hiddenColumns = self.hiddenColumns else { return }
         writeArrayPref(for: UserDefaults.Keys.HiddenColumns, array: hiddenColumns)
         NotificationCenter.default.post(name: .toggleColumn, object: nil, userInfo: [UserInfo.Keys.column : hiddenColumns])
-    }
-    
-    func enableOpenMostRecent() {
-        controller?.openMostRecentBtn.state = .on
-    }
-    
-    func disableOpenMostRecent() {
-        controller?.openMostRecentBtn.state = .off
-    }
-        
-    func enableUseDelForCut() {
-        controller?.useDelForCutBtn.state = .on
-    }
-    
-    func disableUseDelForCut() {
-        controller?.useDelForCutBtn.state = .off
-    }
-    
-    func enableReIndexOnPaste() {
-        controller?.reIndexOnPasteBtn.state = .on
-    }
-    
-    func disableReIndexOnPaste() {
-        controller?.reIndexOnPasteBtn.state = .off
     }
     
     func initialiseColumnVisibility () {
@@ -125,7 +173,7 @@ class PreferencesViewModel: NSObject {
         }
     }
     
-    func didToggleVisibility(for columnBtn: NSButton) {
+    func toggleVisibility(for columnBtn: NSButton) {
         infoPrint("", #function, "\(self)")
         guard let BtnId = columnBtn.identifier?.rawValue    else { return }
         guard let hiddenColumns = self.hiddenColumns        else { return }
@@ -145,11 +193,9 @@ class PreferencesViewModel: NSObject {
         }
     }
     
-    override init() {
-        super.init()
-    }
 }
 
+// MARK: Protocol: PreferencesToUserDefaults
 extension PreferencesViewModel : PreferencesToUserDefaults {
     
     func loadPreferences() {
@@ -157,6 +203,11 @@ extension PreferencesViewModel : PreferencesToUserDefaults {
         self.openMostRecentAtStart  = getBoolPref(for: UserDefaults.Keys.OpenMostRecentAtStart)
         self.reIndexOnPaste         = getBoolPref(for: UserDefaults.Keys.ReIndexOnPaste)
         self.hiddenColumns          = getArrayPref(for: UserDefaults.Keys.HiddenColumns)
+        DispatchQueue.main.asyncAfter(deadline: .now() + 5) {
+            if let hiddenColumns = self.hiddenColumns {
+                NotificationCenter.default.post(name: .toggleColumn, object: nil, userInfo: [UserInfo.Keys.column : hiddenColumns])
+            }
+        }
     }
     
     fileprivate func writeArrayPref(for key: String, array: [String]) {

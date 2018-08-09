@@ -17,7 +17,7 @@
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" releasedWhenClosed="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="eUk-2z-PNo" userLabel="Prefs Window">
             <windowStyleMask key="styleMask" titled="YES" closable="YES"/>
             <rect key="contentRect" x="109" y="131" width="480" height="270"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
             <view key="contentView" wantsLayer="YES" id="Ylt-RO-BWp">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -124,7 +124,7 @@
                                             <rect key="frame" x="20" y="20" width="440" height="232"/>
                                             <subviews>
                                                 <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="qpa-Jg-gZ0">
-                                                    <rect key="frame" x="-2" y="215" width="130" height="17"/>
+                                                    <rect key="frame" x="-2" y="326" width="130" height="17"/>
                                                     <textFieldCell key="cell" lineBreakMode="clipping" alignment="left" title="Hide/Show Columns:" id="N99-33-0AN">
                                                         <font key="font" usesAppearanceFont="YES"/>
                                                         <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -132,10 +132,10 @@
                                                     </textFieldCell>
                                                 </textField>
                                                 <stackView distribution="fillProportionally" orientation="horizontal" alignment="top" spacing="10" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XfW-Aq-jXS">
-                                                    <rect key="frame" x="0.0" y="0.0" width="408" height="205"/>
+                                                    <rect key="frame" x="0.0" y="111" width="408" height="205"/>
                                                     <subviews>
                                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Sct-uD-u2y">
-                                                            <rect key="frame" x="0.0" y="111" width="99" height="94"/>
+                                                            <rect key="frame" x="0.0" y="222" width="99" height="94"/>
                                                             <subviews>
                                                                 <button identifier="KBurmeseCheck" translatesAutoresizingMaskIntoConstraints="NO" id="Akz-5U-U8j">
                                                                     <rect key="frame" x="-2" y="78" width="76" height="18"/>
@@ -207,7 +207,7 @@
                                                             </customSpacing>
                                                         </stackView>
                                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="tLn-et-GDb">
-                                                            <rect key="frame" x="109" y="131" width="133" height="74"/>
+                                                            <rect key="frame" x="109" y="242" width="133" height="74"/>
                                                             <subviews>
                                                                 <button identifier="KLessonCheck" translatesAutoresizingMaskIntoConstraints="NO" id="HkN-5B-ZMx">
                                                                     <rect key="frame" x="-2" y="58" width="67" height="18"/>
@@ -267,7 +267,7 @@
                                                             </customSpacing>
                                                         </stackView>
                                                         <stackView distribution="fill" orientation="vertical" alignment="leading" spacing="6" horizontalStackHuggingPriority="249.99998474121094" verticalStackHuggingPriority="249.99998474121094" detachesHiddenViews="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fmM-wp-Zmv">
-                                                            <rect key="frame" x="252" y="131" width="156" height="74"/>
+                                                            <rect key="frame" x="252" y="242" width="156" height="74"/>
                                                             <subviews>
                                                                 <button identifier="KLessonEntryCategoryCheck" translatesAutoresizingMaskIntoConstraints="NO" id="qhq-ra-Izx">
                                                                     <rect key="frame" x="-2" y="58" width="160" height="18"/>
@@ -401,6 +401,7 @@
         </customObject>
         <viewController id="3xV-tc-hyp" customClass="PreferencesViewController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
+                <outlet property="columnVisibilityStackView" destination="XfW-Aq-jXS" id="FFH-0S-HF0"/>
                 <outlet property="openMostRecentBtn" destination="qi5-pC-D5b" id="Eom-CY-A10"/>
                 <outlet property="preferencesViewModel" destination="UmW-Dy-PJ0" id="zQK-7V-hde"/>
                 <outlet property="prefsTabView" destination="L5T-Vj-Tir" id="M1J-Zg-t7G"/>

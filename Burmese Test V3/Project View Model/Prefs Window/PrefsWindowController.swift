@@ -11,12 +11,13 @@ import Cocoa
 class PrefsWindowController: NSWindowController {
 
     @IBOutlet var preferencesViewController : PreferencesViewController!
-    
+    //var topLevelObjects : NSArray? = NSArray()
     override init(window: NSWindow?) {
         super.init(window: nil)
             
         /* Load window from xib file */
-        Bundle.main.loadNibNamed("PrefsWindowController", owner: self, topLevelObjects: nil)
+        Bundle.main.loadNibNamed("PrefsWindowController", owner: self, topLevelObjects: nil) //&topLevelObjects)
+        //print("top level: \(topLevelObjects)")
     }
     
     required init?(coder: NSCoder) {

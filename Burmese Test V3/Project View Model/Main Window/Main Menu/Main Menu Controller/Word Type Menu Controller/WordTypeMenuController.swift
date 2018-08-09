@@ -12,7 +12,7 @@ class WordTypeMenuController: MenuController {
 
     // MARK: Outlets
     @IBOutlet var wordTypeMenu : NSMenu!
-    var selectedWordTypes : [SelectedWordTypes] = []
+    var selectedLessonTypes : [SelectedWordTypes] = []
     
     //MARK: Functions
     override func awakeFromNib() {
@@ -70,20 +70,20 @@ extension WordTypeMenuController {
             case .on:
                 
                 var lessonExists = false
-                for wordType in self.selectedWordTypes {
+                for wordType in self.selectedLessonTypes {
                     if wordType.lessonName == newLesson {
                         lessonExists = true
                         // Now add the new word type to the list
                         
                         var foundWord = false
-                        for word in wordType.selectedWords {
+                        for word in wordType.selectedLessons {
                             if word == sender.title {
                                 foundWord = true
                                 break
                             }
                         }
                         if foundWord == false {
-                            wordType.selectedWords.append(sender.title)
+                            wordType.selectedLessons.append(sender.title)
                         }
                     }
                 }
@@ -91,8 +91,8 @@ extension WordTypeMenuController {
                 {
                     let newSelectedWordType = SelectedWordTypes()
                     newSelectedWordType.lessonName = newLesson
-                    newSelectedWordType.selectedWords.append(sender.title)
-                    self.selectedWordTypes.append(newSelectedWordType)
+                    newSelectedWordType.selectedLessons.append(sender.title)
+                    self.selectedLessonTypes.append(newSelectedWordType)
                 }
             case .off:
                 break

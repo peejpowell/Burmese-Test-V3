@@ -8,7 +8,7 @@
 
 import Cocoa
 
-class PJWindow: NSWindow, NSDraggingDestination {
+class MainWindow: NSWindow, NSDraggingDestination {
 
     @IBAction override func performClose(_ sender: Any?) {
         infoPrint("", #function, self.className)

@@ -128,59 +128,57 @@ class LanguageMenuController: MenuController {
         }
     }
     
-    override func selectAll(_ sender: NSMenuItem) {
+    func selectAllLanguages(_ sender: NSMenuItem, lessonController: WordTypeMenuController) {
+        infoPrint("", #function, self.className)
+        
         let menu = sender.menu
         if let menu = menu {
             for menuItemNum in 6 ..< menu.items.count-3 {
                 menu.items[menuItemNum].state = .on
-                //self.toggleCurrent(menu.items[menuItemNum])
             }
         }
         
-        if let newLesson = sender.menu?.title,
-           let wordTypeMenuController = getWordTypeMenuController() {
+        if let newLesson = sender.menu?.title {
             switch sender.state {
             case .on:
                 var lessonExists = false
-                if let wordTypeMenuController = getWordTypeMenuController() {
-                    for wordType in wordTypeMenuController.selectedWordTypes {
-                        if wordType.lessonName == newLesson {
-                            lessonExists = true
-                            // Now add the new word type to the list
+                for lessonType in lessonController.selectedLessonTypes {
+                    if lessonType.lessonName == newLesson {
+                        lessonExists = true
+                        // Now add the new lesson type to the list
                         
-                            var foundWord = false
-                            for word in wordType.selectedWords {
-                                if word == sender.title {
-                                    foundWord = true
-                                    break
-                                }
-                            }
-                            if foundWord == false {
-                                wordType.selectedWords.append(sender.title)
+                        var foundLesson = false
+                        for lesson in lessonType.selectedLessons {
+                            if lesson == sender.title {
+                                foundLesson = true
+                                break
                             }
                         }
+                        if foundLesson == false {
+                            lessonType.selectedLessons.append(sender.title)
+                        }
                     }
-                    if !lessonExists {
-                        let newSelectedWordType = SelectedWordTypes()
-                        newSelectedWordType.lessonName = newLesson
-                        newSelectedWordType.selectedWords.append(sender.title)
-                        wordTypeMenuController.selectedWordTypes.append(newSelectedWordType)
-                    }
+                }
+                if !lessonExists {
+                    let newSelectedWordType = SelectedWordTypes()
+                    newSelectedWordType.lessonName = newLesson
+                    newSelectedWordType.selectedLessons.append(sender.title)
+                    lessonController.selectedLessonTypes.append(newSelectedWordType)
                 }
             case .off:
                 // Check if the lesson already exists in the list of lessons
                 //var lessonExists = false
-                for wordType in wordTypeMenuController.selectedWordTypes {
-                    if wordType.lessonName == newLesson {
+                for lessonType in lessonController.selectedLessonTypes {
+                    if lessonType.lessonName == newLesson {
                         //lessonExists = true
                         // Now remove the word type from the list
                         
                         //var foundWord = false
                         var wordCount = 0
-                        for word in wordType.selectedWords {
-                            if word == sender.title {
+                        for lesson in lessonType.selectedLessons {
+                            if lesson == sender.title {
                                 //foundWord = true
-                                wordType.selectedWords.remove(at: wordCount)
+                                lessonType.selectedLessons.remove(at: wordCount)
                                 break
                             }
                             wordCount = wordCount + 1
@@ -191,6 +189,11 @@ class LanguageMenuController: MenuController {
                 break
             }
         }
+    }
+    
+    override func selectAll(_ sender: NSMenuItem) {
+        infoPrint("", #function, self.className)
+        NotificationCenter.default.post(name: .selectAllLanguages, object: nil, userInfo: [UserInfo.Keys.menuItem:sender])
     }
     
     override func selectNone(_ sender: NSMenuItem) {

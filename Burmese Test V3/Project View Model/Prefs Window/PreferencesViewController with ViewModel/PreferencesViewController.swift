@@ -15,6 +15,8 @@ class PreferencesViewController: NSViewController {
     @IBOutlet weak var useDelForCutBtn: NSButton!
     @IBOutlet weak var reIndexOnPasteBtn: NSButton!
     @IBOutlet weak var prefsTabView : NSTabView!
+    @IBOutlet weak var columnVisibilityStackView: NSStackView!
+    
     @IBOutlet var preferencesViewModel : PreferencesViewModel!
     
     // MARK: Functions
@@ -38,22 +40,15 @@ class PreferencesViewController: NSViewController {
 extension PreferencesViewController {
     
     @IBAction func toggleOpenMostRecent(_ sender: NSButton) {
-        switch sender.state {
-        case .on:
-            preferencesViewModel?.enableOpenMostRecent()
-        case .off:
-            preferencesViewModel?.disableOpenMostRecent()
-        default:
-            break
-        }
+        preferencesViewModel?.switchOpenMostRecent(sender.state)
     }
     
     @IBAction func toggleUseDelForCut(_ sender: NSButton) {
-        UserDefaults.standard.set(sender.state == .on, forKey: PreferencesKeys.UseDeleteForCut.rawValue)
+        preferencesViewModel?.switchUseDelForCut(sender.state)
     }
     
     @IBAction func toggleReIndexOnPaste(_ sender: NSButton) {
-        UserDefaults.standard.set(sender.state == .on, forKey: PreferencesKeys.ReIndexOnPaste.rawValue)
+        preferencesViewModel?.switchReIndexOnPaste(sender.state)
     }
 }
 
@@ -62,7 +57,7 @@ extension PreferencesViewController {
     
     @IBAction func toggleColumnVisibilityBtn(_ sender: NSButton) {
         guard let preferencesViewModel = self.preferencesViewModel else { return }
-        preferencesViewModel.didToggleVisibility(for: sender)
+        preferencesViewModel.toggleVisibility(for: sender)
         //preferencesViewModel.toggleColumnVisibilityBtn(sender)
     }
         

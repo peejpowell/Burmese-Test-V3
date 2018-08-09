@@ -24,6 +24,11 @@ extension Notification.Name {
     static var disableRevert: Notification.Name {
         return .init(rawValue: "ManMenuController.disableRevert")
     }
+    
+    static var updateRecentsMenuWithUrl: Notification.Name {
+        return .init(rawValue: "ManMenuController.updateRecentsMenuWithUrl")
+    }
+    
 }
 
 // MARK: Notification Observers
@@ -51,10 +56,16 @@ extension MainMenuController {
         self.revertMenuItem.isEnabled = false
     }
     
+    @objc func updateRecentsMenuWithUrl(_ notification: Notification) {
+        guard let url = notification.userInfo?[UserInfo.Keys.url] as? URL else { return }
+        self.updateRecentsMenu(with: url)
+    }
+    
     func createObservers() {
         NotificationCenter.default.addObserver(self, selector: #selector(self.enableFileMenuItems(_:)), name: .enableFileMenuItems, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.disableFileMenuItems(_:)), name: .disableFileMenuItems, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.enableRevert(_:)), name: .enableRevert, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.disableRevert(_:)), name: .disableRevert, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.updateRecentsMenuWithUrl(_:)), name: .updateRecentsMenuWithUrl, object: nil)
     }
 }

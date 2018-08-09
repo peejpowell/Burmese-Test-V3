@@ -133,7 +133,6 @@ class TextFieldDelegate: NSObject, NSTextFieldDelegate {
     {
         infoPrint("", #function, self.className)
         
-        let index = getCurrentIndex()
         var insertRowAt: Int?
         var returnValue = false
         

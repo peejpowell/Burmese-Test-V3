@@ -20,6 +20,12 @@ extension Notification.Name {
     static var changeKeyboard: Notification.Name {
         return .init(rawValue: "MainWindowController.changeKeyboard")
     }
+    static var newUrlAdded: Notification.Name {
+        return .init(rawValue: "MainWindowController.newUrlAdded")
+    }
+    static var selectAllLanguages: Notification.Name {
+        return .init(rawValue: "MainWindowController.selectAllLanguages")
+    }
 }
 
 // MARK: Notification Observers
@@ -29,10 +35,23 @@ extension MainWindowController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.openPrefsWindow), name: .openPrefsWindow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.closeMainWindow(_:)), name: .closeMainWindow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.changeKeyboard(_:)), name: .changeKeyboard, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.newUrlAdded(_:)), name: .newUrlAdded, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.selectAllLanguages(_:)), name: .selectAllLanguages, object: nil)
     }
 }
 
 extension MainWindowController {
+    
+    @objc func selectAllLanguages(_ notification: Notification) {
+        mainWindowViewModel.selectAllLanguages(notification)
+    }
+    
+    @objc func newUrlAdded(_ notification : Notification) {
+        guard let url = notification.userInfo?[UserInfo.Keys.url] as? URL else { return }
+        mainWindowViewModel.addUrlToRecentsMenu(url)
+        mainWindowViewModel.windowTitleUrl = url
+        mainWindowViewModel.windowUrl = url
+    }
     
     @objc func openPrefsWindow() {
         if let prefsWindow = self.prefsWindowController.window {

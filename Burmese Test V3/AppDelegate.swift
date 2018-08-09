@@ -47,8 +47,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
     
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         infoPrint("", #function, self.className)
-        guard let mainMenuController = mainWindowController.mainMenuController else { return }
-        mainMenuController.loadRecentFiles(UserDefaults.standard)
+        guard let mainWindowViewModel = mainWindowController.mainWindowViewModel else { return }
+        mainWindowViewModel.loadRecentFiles()
         openFirstUrl()
         openAutoOpenUrl()
         openAutoOpenUrls()
@@ -93,12 +93,13 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         
         mainWindowController.mainTabViewController.wordsViewController?.wordsTabViewController.tabViewItems.removeAll()
         mainWindowController.mainTabViewController.tabViewItems.removeAll()
-        mainWindowController.toolbarController = nil
         mainWindowController.mainTabViewController = nil
-        mainWindowController.mainMenuController = nil
         mainWindowController.mainFileManager = nil
         mainWindowController.mainClipboardController = nil
         mainWindowController.prefsWindowController = nil
+        
+        //mainWindowController.mainWindowViewModel.mainMenuController = nil
+        mainWindowController.mainWindowViewModel = nil
         
         self.currentInputSource = nil
         TISSelectInputSource(self.originalInputLanguage)
@@ -123,7 +124,7 @@ extension AppDelegate {
                 return
             }
         }
-        if let firstUrl = mainWindowController.mainMenuController.recentFiles.first {
+        if let firstUrl = mainWindowController.mainWindowViewModel.firstRecentFile {
             openUrl(firstUrl)
         }
     }

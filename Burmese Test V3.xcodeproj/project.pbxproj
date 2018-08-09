@@ -52,6 +52,7 @@
 		38846B7D20E2903D00C0DB3C /* LessonEntry.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7C20E2903D00C0DB3C /* LessonEntry.swift */; };
 		38846B8020E299C400C0DB3C /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */; };
 		3884FA8020F60E67006EDF11 /* FieldEditorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3884FA7F20F60E67006EDF11 /* FieldEditorTextView.swift */; };
+		38983FB3211C2D0F0055CE1C /* NSTextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38983FB2211C2D0F0055CE1C /* NSTextFieldExtensions.swift */; };
 		38AEC05720E21F0100E6529F /* FindBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC05620E21F0100E6529F /* FindBarViewController.swift */; };
 		38AEC05C20E21F9B00E6529F /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC05B20E21F9B00E6529F /* MainTabViewController.swift */; };
 		38AEC06220E223ED00E6529F /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC06120E223ED00E6529F /* TestViewController.swift */; };
@@ -77,12 +78,13 @@
 		38B0FC9E2115E59A00E89019 /* BMTViewControllerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B0FC9D2115E59A00E89019 /* BMTViewControllerObservers.swift */; };
 		38B1DB94211AE07C001A5A5E /* testMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B1DB93211AE07C001A5A5E /* testMenuController.swift */; };
 		38B1DB96211AE5B6001A5A5E /* PreferencesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B1DB95211AE5B6001A5A5E /* PreferencesViewModel.swift */; };
+		38B1DB9A211BDF1F001A5A5E /* MainWindowViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38B1DB99211BDF1F001A5A5E /* MainWindowViewModel.swift */; };
 		38C39454211216690021C717 /* BMTFileManagerProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C39453211216690021C717 /* BMTFileManagerProtocol.swift */; };
 		38C71BC820E7D2FD00AC4B6E /* InfoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */; };
 		38C71BC920E7D2FD00AC4B6E /* InfoPopupViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38C71BC720E7D2FD00AC4B6E /* InfoPopupViewController.xib */; };
 		38CBB93320FA415800C7CAA6 /* TextFinderClientProtocols.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38CBB93220FA415800C7CAA6 /* TextFinderClientProtocols.swift */; };
 		38DA1C5C21197B5F00971B7A /* WordsViewControllerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38DA1C5B21197B5F00971B7A /* WordsViewControllerObservers.swift */; };
-		38EFAFA520E9292A00C71AE9 /* PJWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFA420E9292A00C71AE9 /* PJWindow.swift */; };
+		38EFAFA520E9292A00C71AE9 /* MainWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFA420E9292A00C71AE9 /* MainWindow.swift */; };
 		38EFAFA720E9354700C71AE9 /* ClipboardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFA620E9354700C71AE9 /* ClipboardController.swift */; };
 		38EFAFA920E93A2600C71AE9 /* FindBarViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38EFAFA820E93A2600C71AE9 /* FindBarViewController.xib */; };
 		38EFAFAB20E9CCE900C71AE9 /* TextFinderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38EFAFAA20E9CCE900C71AE9 /* TextFinderClient.swift */; };
@@ -186,6 +188,7 @@
 		38846B7C20E2903D00C0DB3C /* LessonEntry.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonEntry.swift; sourceTree = "<group>"; };
 		38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 		3884FA7F20F60E67006EDF11 /* FieldEditorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldEditorTextView.swift; sourceTree = "<group>"; };
+		38983FB2211C2D0F0055CE1C /* NSTextFieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTextFieldExtensions.swift; sourceTree = "<group>"; };
 		38AEC05620E21F0100E6529F /* FindBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindBarViewController.swift; sourceTree = "<group>"; };
 		38AEC05B20E21F9B00E6529F /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		38AEC06120E223ED00E6529F /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -211,13 +214,14 @@
 		38B0FC9D2115E59A00E89019 /* BMTViewControllerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTViewControllerObservers.swift; sourceTree = "<group>"; };
 		38B1DB93211AE07C001A5A5E /* testMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = testMenuController.swift; sourceTree = "<group>"; };
 		38B1DB95211AE5B6001A5A5E /* PreferencesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferencesViewModel.swift; sourceTree = "<group>"; };
+		38B1DB99211BDF1F001A5A5E /* MainWindowViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindowViewModel.swift; sourceTree = "<group>"; };
 		38B7D5C920E87E9000B13ED1 /* MyPlayground.playground */ = {isa = PBXFileReference; lastKnownFileType = file.playground; path = MyPlayground.playground; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.swift; };
 		38C39453211216690021C717 /* BMTFileManagerProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTFileManagerProtocol.swift; sourceTree = "<group>"; };
 		38C71BC620E7D2FD00AC4B6E /* InfoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoPopupViewController.swift; sourceTree = "<group>"; };
 		38C71BC720E7D2FD00AC4B6E /* InfoPopupViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = InfoPopupViewController.xib; sourceTree = "<group>"; };
 		38CBB93220FA415800C7CAA6 /* TextFinderClientProtocols.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinderClientProtocols.swift; sourceTree = "<group>"; };
 		38DA1C5B21197B5F00971B7A /* WordsViewControllerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsViewControllerObservers.swift; sourceTree = "<group>"; };
-		38EFAFA420E9292A00C71AE9 /* PJWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJWindow.swift; sourceTree = "<group>"; };
+		38EFAFA420E9292A00C71AE9 /* MainWindow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainWindow.swift; sourceTree = "<group>"; };
 		38EFAFA620E9354700C71AE9 /* ClipboardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClipboardController.swift; sourceTree = "<group>"; };
 		38EFAFA820E93A2600C71AE9 /* FindBarViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = FindBarViewController.xib; sourceTree = "<group>"; };
 		38EFAFAA20E9CCE900C71AE9 /* TextFinderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinderClient.swift; sourceTree = "<group>"; };
@@ -305,7 +309,8 @@
 			children = (
 				381B8A2520E1DBC5008335E0 /* MainWindowController.swift */,
 				38221F362116058200A86E99 /* MainWindowControllerObservers.swift */,
-				38EFAFA420E9292A00C71AE9 /* PJWindow.swift */,
+				38EFAFA420E9292A00C71AE9 /* MainWindow.swift */,
+				38B1DB99211BDF1F001A5A5E /* MainWindowViewModel.swift */,
 				384AB24120E3E75500D7E5D7 /* Main Menu */,
 				38AEC05920E21F3100E6529F /* MainToolBar */,
 				38AEC05820E21F1400E6529F /* FindBar */,
@@ -337,7 +342,7 @@
 			children = (
 				384AB24520E47EFF00D7E5D7 /* MenuController.swift */,
 				38B0FC8E21156ECF00E89019 /* Main Menu Controller */,
-				3850BA2720E4AA0C00A7C7CF /* LanguageMenuController.swift */,
+				38B81A06211C126500B18725 /* Language Menu Controller */,
 				384AB23F20E3E74400D7E5D7 /* PJFileManager.swift */,
 			);
 			path = "Main Menu";
@@ -373,7 +378,7 @@
 			path = "Burmese Test V3UITests";
 			sourceTree = "<group>";
 		};
-		385EA19C211A153200364161 /* PreferencesViewController */ = {
+		385EA19C211A153200364161 /* PreferencesViewController with ViewModel */ = {
 			isa = PBXGroup;
 			children = (
 				386E33F720F1A3E600763618 /* PreferencesViewController.swift */,
@@ -381,7 +386,7 @@
 				385EA198211A13C200364161 /* PreferencesViewControllerObservers.swift */,
 				386E340420F1BCF100763618 /* PrefsToolbarController.swift */,
 			);
-			path = PreferencesViewController;
+			path = "PreferencesViewController with ViewModel";
 			sourceTree = "<group>";
 		};
 		385EA19D211A849800364161 /* System Wide */ = {
@@ -399,7 +404,7 @@
 			children = (
 				386E33FE20F1AE2300763618 /* PrefsWindowController.swift */,
 				386E340220F1B5AC00763618 /* PrefsWindowController.xib */,
-				385EA19C211A153200364161 /* PreferencesViewController */,
+				385EA19C211A153200364161 /* PreferencesViewController with ViewModel */,
 			);
 			path = "Prefs Window";
 			sourceTree = "<group>";
@@ -526,6 +531,7 @@
 				38B0FC942115732500E89019 /* NSTextViewExtensions.swift */,
 				385EA19A211A13F500364161 /* NSButtonExtensions.swift */,
 				385EA1A0211A85FF00364161 /* NSToolbarExtensions.swift */,
+				38983FB2211C2D0F0055CE1C /* NSTextFieldExtensions.swift */,
 			);
 			path = "Cocoa Type Extensions";
 			sourceTree = "<group>";
@@ -545,6 +551,14 @@
 				381B8A2420E1DB8E008335E0 /* Main Window */,
 			);
 			path = "Project View Model";
+			sourceTree = "<group>";
+		};
+		38B81A06211C126500B18725 /* Language Menu Controller */ = {
+			isa = PBXGroup;
+			children = (
+				3850BA2720E4AA0C00A7C7CF /* LanguageMenuController.swift */,
+			);
+			path = "Language Menu Controller";
 			sourceTree = "<group>";
 		};
 		38C39455211216CF0021C717 /* BMTFileManager */ = {
@@ -783,10 +797,11 @@
 				384AB24320E466E600D7E5D7 /* WordTypeMenuController.swift in Sources */,
 				38EFAFAD20E9D08D00C71AE9 /* PJScrollView.swift in Sources */,
 				385EA199211A13C200364161 /* PreferencesViewControllerObservers.swift in Sources */,
+				38983FB3211C2D0F0055CE1C /* NSTextFieldExtensions.swift in Sources */,
 				38AEC06620E2241E00E6529F /* WordsViewController.swift in Sources */,
 				3821C85420E260100045E5A8 /* PJGlobalFunctions.swift in Sources */,
 				384AB24020E3E74400D7E5D7 /* PJFileManager.swift in Sources */,
-				38EFAFA520E9292A00C71AE9 /* PJWindow.swift in Sources */,
+				38EFAFA520E9292A00C71AE9 /* MainWindow.swift in Sources */,
 				386E340520F1BCF100763618 /* PrefsToolbarController.swift in Sources */,
 				38C71BC820E7D2FD00AC4B6E /* InfoPopupViewController.swift in Sources */,
 				38AEC06820E2243300E6529F /* ExportViewController.swift in Sources */,
@@ -814,6 +829,7 @@
 				3833873821143238008EE0B3 /* BMTViewModel.swift in Sources */,
 				3850BA2820E4AA0C00A7C7CF /* LanguageMenuController.swift in Sources */,
 				38B0FC8D21156BB900E89019 /* String Extensions.swift in Sources */,
+				38B1DB9A211BDF1F001A5A5E /* MainWindowViewModel.swift in Sources */,
 				38846B8020E299C400C0DB3C /* TableViewDataSource.swift in Sources */,
 				38160EAB20E3580000DA13F1 /* TextFieldDelegate.swift in Sources */,
 			);
@@ -987,8 +1003,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 5VYJ7F254M;
 				INFOPLIST_FILE = "Burmese Test V3/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -996,6 +1014,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "PJP.Burmese-Test-V3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_VERSION = 4.2;
 			};
@@ -1006,8 +1025,10 @@
 			buildSettings = {
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = 5VYJ7F254M;
 				INFOPLIST_FILE = "Burmese Test V3/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1015,6 +1036,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "PJP.Burmese-Test-V3";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_VERSION = 4.2;
 			};
 			name = Release;

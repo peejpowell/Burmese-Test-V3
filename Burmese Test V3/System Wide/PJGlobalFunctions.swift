@@ -102,7 +102,7 @@ func getCurrentTableView()->NSTableView
     //return currentBMTView.viewWithTag(100) as! NSTableView
 }
 
-func getWordTypeMenuController()->WordTypeMenuController?
+/*func getWordTypeMenuController()->WordTypeMenuController?
 {
     if let wordTypeMenu = getMainMenuController().mainMenu.item(withTitle: "Word Type")?.submenu {
         if let delegate = wordTypeMenu.delegate as? WordTypeMenuController {
@@ -110,24 +110,24 @@ func getWordTypeMenuController()->WordTypeMenuController?
         }
     }
     return nil
-}
+}*/
 
 func getWordsTabViewDelegate()->WordsTabViewController
 {
     return getMainWindowController().mainTabViewController.wordsViewController.wordsTabViewController
 }
 
-func getMainMenuController()->MainMenuController
+/*func getMainMenuController()->MainMenuController
 {
-    return getMainWindowController().mainMenuController
-}
+    return getMainWindowController().mainWindowViewModel.mainMenuController
+}*/
 
 func getMainWindowController()->MainWindowController
 {
     return getAppDelegate().mainWindowController
 }
 
-func getCurrentIndex()->Int
+/*func getCurrentIndex()->Int
 {
     if let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem {
         if getWordsTabViewDelegate().removingFirstItem {
@@ -136,7 +136,7 @@ func getCurrentIndex()->Int
         return getWordsTabViewDelegate().tabView.indexOfTabViewItem(currentTabItem)
     }
     return -1
-}
+}*/
 
 func increaseLessonCount(_ lessonName: String) {
     

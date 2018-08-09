@@ -11,16 +11,16 @@ import Cocoa
 
 class SelectedWordTypes : NSObject, NSCoding {
     var lessonName      : String = "" // Lesson name
-    var selectedWords   : [String] = [String]() // Checked items in the list
+    var selectedLessons   : [String] = [String]() // Checked items in the list
     
     func encode(with aCoder: NSCoder) {
         aCoder.encode(lessonName, forKey: "KLessonName")
-        aCoder.encode(selectedWords, forKey: "KSelectedWords")
+        aCoder.encode(selectedLessons, forKey: "KSelectedWords")
     }
     
     required init?(coder aDecoder: NSCoder) {
         self.lessonName = aDecoder.decodeObject(forKey: "KLessonName") as! String
-        self.selectedWords = aDecoder.decodeObject(forKey: "KSelectedWords") as! [String]
+        self.selectedLessons = aDecoder.decodeObject(forKey: "KSelectedWords") as! [String]
     }
     
     override init() {
