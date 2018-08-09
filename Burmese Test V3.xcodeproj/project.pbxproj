@@ -10,12 +10,12 @@
 		380634682111ACE400798D03 /* Alerts.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380634672111ACE400798D03 /* Alerts.swift */; };
 		3806346A2111B16D00798D03 /* Panels.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380634692111B16D00798D03 /* Panels.swift */; };
 		3806346C2111BA6600798D03 /* BMTFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3806346B2111BA6600798D03 /* BMTFileManager.swift */; };
-		380B922421129CDD00F30B6B /* Custom_Buttons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 380B92232112240D00F30B6B /* Custom_Buttons.framework */; };
-		380B922521129CDD00F30B6B /* Custom_Buttons.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 380B92232112240D00F30B6B /* Custom_Buttons.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		380B922B2112D9C500F30B6B /* TestTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B922A2112D9C500F30B6B /* TestTabViewModel.swift */; };
 		380B922D2112DC3200F30B6B /* WordsTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */; };
 		380C3C2620EA76950077C2BE /* TextFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C3C2520EA76950077C2BE /* TextFinder.swift */; };
 		3815F2A6211C67AD0062652B /* Documentation in Resources */ = {isa = PBXBuildFile; fileRef = 3815F2A5211C67AD0062652B /* Documentation */; };
+		3815F2AD211C944D0062652B /* Custom_Buttons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3815F2AC211C92D90062652B /* Custom_Buttons.framework */; };
+		3815F2AE211C944D0062652B /* Custom_Buttons.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3815F2AC211C92D90062652B /* Custom_Buttons.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38160EAB20E3580000DA13F1 /* TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */; };
 		38160EAD20E3599E00DA13F1 /* SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */; };
 		38160EAF20E36F0200DA13F1 /* PJTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAE20E36F0200DA13F1 /* PJTextField.swift */; };
@@ -93,16 +93,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		380B92222112240D00F30B6B /* PBXContainerItemProxy */ = {
+		3815F2AB211C92D90062652B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 380B921E2112240D00F30B6B /* Custom Buttons.xcodeproj */;
+			containerPortal = 3815F2A7211C92D80062652B /* Custom Buttons.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 38CFD59B210E3A5B00A01E35;
 			remoteInfo = "Custom Buttons";
 		};
-		380B922621129CDD00F30B6B /* PBXContainerItemProxy */ = {
+		3815F2AF211C944D0062652B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 380B921E2112240D00F30B6B /* Custom Buttons.xcodeproj */;
+			containerPortal = 3815F2A7211C92D80062652B /* Custom Buttons.xcodeproj */;
 			proxyType = 1;
 			remoteGlobalIDString = 38CFD59A210E3A5B00A01E35;
 			remoteInfo = "Custom Buttons";
@@ -130,7 +130,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				380B922521129CDD00F30B6B /* Custom_Buttons.framework in Embed Frameworks */,
+				3815F2AE211C944D0062652B /* Custom_Buttons.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -141,11 +141,11 @@
 		380634672111ACE400798D03 /* Alerts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alerts.swift; sourceTree = "<group>"; };
 		380634692111B16D00798D03 /* Panels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Panels.swift; sourceTree = "<group>"; };
 		3806346B2111BA6600798D03 /* BMTFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTFileManager.swift; sourceTree = "<group>"; };
-		380B921E2112240D00F30B6B /* Custom Buttons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Custom Buttons.xcodeproj"; path = "../Custom Buttons/Custom Buttons.xcodeproj"; sourceTree = "<group>"; };
 		380B922A2112D9C500F30B6B /* TestTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTabViewModel.swift; sourceTree = "<group>"; };
 		380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTabViewModel.swift; sourceTree = "<group>"; };
 		380C3C2520EA76950077C2BE /* TextFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinder.swift; sourceTree = "<group>"; };
 		3815F2A5211C67AD0062652B /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
+		3815F2A7211C92D80062652B /* Custom Buttons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Custom Buttons.xcodeproj"; path = "../Custom Buttons/Custom Buttons.xcodeproj"; sourceTree = "<group>"; };
 		38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDelegate.swift; sourceTree = "<group>"; };
 		38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDelegate.swift; sourceTree = "<group>"; };
 		38160EAE20E36F0200DA13F1 /* PJTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJTextField.swift; sourceTree = "<group>"; };
@@ -235,7 +235,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				380B922421129CDD00F30B6B /* Custom_Buttons.framework in Frameworks */,
+				3815F2AD211C944D0062652B /* Custom_Buttons.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,10 +256,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		380B921F2112240D00F30B6B /* Products */ = {
+		3815F2A8211C92D80062652B /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				380B92232112240D00F30B6B /* Custom_Buttons.framework */,
+				3815F2AC211C92D90062652B /* Custom_Buttons.framework */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -267,7 +267,7 @@
 		381B8A0A20E1DAC0008335E0 = {
 			isa = PBXGroup;
 			children = (
-				380B921E2112240D00F30B6B /* Custom Buttons.xcodeproj */,
+				3815F2A7211C92D80062652B /* Custom Buttons.xcodeproj */,
 				381B8A1520E1DAC0008335E0 /* Burmese Test V3 */,
 				3850BA2E20E4D59B00A7C7CF /* Burmese Test V3Tests */,
 				3850BA3C20E5203300A7C7CF /* Burmese Test V3UITests */,
@@ -623,7 +623,7 @@
 			buildRules = (
 			);
 			dependencies = (
-				380B922721129CDD00F30B6B /* PBXTargetDependency */,
+				3815F2B0211C944D0062652B /* PBXTargetDependency */,
 			);
 			name = "Burmese Test V3";
 			productName = "Burmese Test V3";
@@ -707,8 +707,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = 380B921F2112240D00F30B6B /* Products */;
-					ProjectRef = 380B921E2112240D00F30B6B /* Custom Buttons.xcodeproj */;
+					ProductGroup = 3815F2A8211C92D80062652B /* Products */;
+					ProjectRef = 3815F2A7211C92D80062652B /* Custom Buttons.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -721,11 +721,11 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		380B92232112240D00F30B6B /* Custom_Buttons.framework */ = {
+		3815F2AC211C92D90062652B /* Custom_Buttons.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = Custom_Buttons.framework;
-			remoteRef = 380B92222112240D00F30B6B /* PBXContainerItemProxy */;
+			remoteRef = 3815F2AB211C92D90062652B /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -860,10 +860,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		380B922721129CDD00F30B6B /* PBXTargetDependency */ = {
+		3815F2B0211C944D0062652B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "Custom Buttons";
-			targetProxy = 380B922621129CDD00F30B6B /* PBXContainerItemProxy */;
+			targetProxy = 3815F2AF211C944D0062652B /* PBXContainerItemProxy */;
 		};
 		3850BA3320E4D59B00A7C7CF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
