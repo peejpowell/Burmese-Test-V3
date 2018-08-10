@@ -87,7 +87,7 @@ extension TableViewDataSourceViewModel {
             let dataSource = tableView.dataSource {
             let colId = column.identifier.rawValue.minus(3)
             if let field = tableView.makeView(withIdentifier: NSUserInterfaceItemIdentifier(rawValue: colId),
-                                    owner: dataSource) as? NSTableCellView {
+                                              owner: dataSource) as? NSTableCellView {
                 if let value = lessonEntries[row].lessonEntryForKey(colId) {
                     field.textField?.textColor = NSColor.textColor
                     if let lessonType = LessonEntryType(rawValue: colId) {
@@ -271,18 +271,8 @@ extension TableViewDataSourceViewModel {
                             burmeseDict["မေ့"] = "em."
                             burmeseDict["န့"] = "n."
                             
-                            for key in burmeseDict.keys
-                            {
-                                //let burmChar = burmeseChars[characterNum]
-                                //let avaChar = avalaserChars[characterNum]
-                                
+                            for key in burmeseDict.keys {
                                 newString.replaceString(key, withString: burmeseDict[key]!)
-                                /*if newString.containsString(burmeseChars[characterNum])
-                                 {
-                                 //print("Word \(row), Found: \(burmChar), replaced: \(avaChar)")
-                                 newString =
-                                 newString.stringByReplacingOccurrencesOfString(burmChar, withString: avaChar)
-                                 }*/
                             }
                             field.textField?.stringValue = newString as String
                         }

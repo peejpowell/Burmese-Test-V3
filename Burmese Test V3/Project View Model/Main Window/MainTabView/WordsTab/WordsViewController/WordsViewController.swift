@@ -14,7 +14,7 @@ class WordsViewController: NSViewController {
     var wordsTabViewModel : WordsTabViewModel = WordsTabViewModel()
     
     // MARK: Outlets
-    @IBOutlet var wordsTabViewController : WordsTabViewController!
+    @IBOutlet var wordsTabViewController : LessonsTabViewController!
     
     override func viewDidLoad() {
         super.viewDidLoad()

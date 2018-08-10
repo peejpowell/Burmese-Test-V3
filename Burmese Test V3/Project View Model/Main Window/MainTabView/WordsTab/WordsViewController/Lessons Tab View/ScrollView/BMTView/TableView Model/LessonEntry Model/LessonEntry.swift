@@ -115,16 +115,14 @@ class LessonEntry: NSObject, NSCoding {
                     NotificationCenter.default.post(name: .increaseLessonCount,
                                                     object: nil,
                                                     userInfo: [UserInfo.Keys.lesson : lesson])
-                    NotificationCenter.default.post(name: .startPopulateLessonsPopup, object: nil)
                 }
                 if oldValue != nil {
-                    if let lesson = self.lesson {
-                        NotificationCenter.default.post(name: .decreaseLessonCount,
+                    NotificationCenter.default.post(name: .decreaseLessonCount,
                                                         object: nil,
-                                                        userInfo: [UserInfo.Keys.lesson : lesson])
-                    }
-                    NotificationCenter.default.post(name: .startPopulateLessonsPopup, object: nil)
+                                                        userInfo: [UserInfo.Keys.lesson : oldValue!])
                 }
+                print("Posting start populate lessons in var")
+                NotificationCenter.default.post(name: .startPopulateLessonsPopup, object: nil)
             }
         }
     }
@@ -355,13 +353,11 @@ class LessonEntry: NSObject, NSCoding {
         }
     }
     
-    override convenience init()
-    {
+    override convenience init() {
         self.init(burmese: "", english: "", roman: "")
     }
     
-    init(burmese: String, english: String, roman: String)
-    {
+    init(burmese: String, english: String, roman: String) {
         self.burmese = burmese
         self.english = english
         self.roman = roman

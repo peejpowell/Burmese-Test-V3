@@ -13,7 +13,6 @@
 		380B922B2112D9C500F30B6B /* TestTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B922A2112D9C500F30B6B /* TestTabViewModel.swift */; };
 		380B922D2112DC3200F30B6B /* WordsTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */; };
 		380C3C2620EA76950077C2BE /* TextFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C3C2520EA76950077C2BE /* TextFinder.swift */; };
-		3815F2A6211C67AD0062652B /* Documentation in Resources */ = {isa = PBXBuildFile; fileRef = 3815F2A5211C67AD0062652B /* Documentation */; };
 		38160EAB20E3580000DA13F1 /* TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */; };
 		38160EAD20E3599E00DA13F1 /* SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */; };
 		38160EAF20E36F0200DA13F1 /* PJTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAE20E36F0200DA13F1 /* PJTextField.swift */; };
@@ -30,6 +29,7 @@
 		38221F3921168FE700A86E99 /* TableViewDataSourceViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38221F3821168FE700A86E99 /* TableViewDataSourceViewModel.swift */; };
 		3833873821143238008EE0B3 /* BMTViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3833873721143238008EE0B3 /* BMTViewModel.swift */; };
 		383797DD20EE4FF400125253 /* TableTextFinderClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 383797DC20EE4FF400125253 /* TableTextFinderClient.swift */; };
+		3843113E211DB54D00C692B6 /* LessonsTabViewControllerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3843113D211DB54D00C692B6 /* LessonsTabViewControllerObservers.swift */; };
 		384AB23C20E3B26800D7E5D7 /* PJTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384AB23B20E3B26800D7E5D7 /* PJTableView.swift */; };
 		384AB23E20E3E0BB00D7E5D7 /* MainMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384AB23D20E3E0BB00D7E5D7 /* MainMenuController.swift */; };
 		384AB24020E3E74400D7E5D7 /* PJFileManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 384AB23F20E3E74400D7E5D7 /* PJFileManager.swift */; };
@@ -64,7 +64,7 @@
 		38AEC06A20E224E500E6529F /* TestViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC06920E224E500E6529F /* TestViewController.xib */; };
 		38AEC06C20E22C4200E6529F /* ResultsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC06B20E22C4200E6529F /* ResultsViewController.xib */; };
 		38AEC07020E22C6F00E6529F /* ExportViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC06F20E22C6F00E6529F /* ExportViewController.xib */; };
-		38AEC07620E2354800E6529F /* WordsTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC07520E2354800E6529F /* WordsTabViewController.swift */; };
+		38AEC07620E2354800E6529F /* LessonsTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC07520E2354800E6529F /* LessonsTabViewController.swift */; };
 		38AEC07820E2391F00E6529F /* WordsViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07720E2391F00E6529F /* WordsViewController.xib */; };
 		38AEC07A20E23A3900E6529F /* BMTViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC07920E23A3900E6529F /* BMTViewController.swift */; };
 		38AEC07C20E23D6600E6529F /* BMTViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 38AEC07B20E23D6600E6529F /* BMTViewController.xib */; };
@@ -131,7 +131,6 @@
 		380B922A2112D9C500F30B6B /* TestTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestTabViewModel.swift; sourceTree = "<group>"; };
 		380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTabViewModel.swift; sourceTree = "<group>"; };
 		380C3C2520EA76950077C2BE /* TextFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinder.swift; sourceTree = "<group>"; };
-		3815F2A5211C67AD0062652B /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
 		38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDelegate.swift; sourceTree = "<group>"; };
 		38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDelegate.swift; sourceTree = "<group>"; };
 		38160EAE20E36F0200DA13F1 /* PJTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJTextField.swift; sourceTree = "<group>"; };
@@ -151,6 +150,7 @@
 		38221F3821168FE700A86E99 /* TableViewDataSourceViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSourceViewModel.swift; sourceTree = "<group>"; };
 		3833873721143238008EE0B3 /* BMTViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTViewModel.swift; sourceTree = "<group>"; };
 		383797DC20EE4FF400125253 /* TableTextFinderClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableTextFinderClient.swift; sourceTree = "<group>"; };
+		3843113D211DB54D00C692B6 /* LessonsTabViewControllerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsTabViewControllerObservers.swift; sourceTree = "<group>"; };
 		384AB23B20E3B26800D7E5D7 /* PJTableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJTableView.swift; sourceTree = "<group>"; };
 		384AB23D20E3E0BB00D7E5D7 /* MainMenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenuController.swift; sourceTree = "<group>"; };
 		384AB23F20E3E74400D7E5D7 /* PJFileManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJFileManager.swift; sourceTree = "<group>"; };
@@ -188,7 +188,7 @@
 		38AEC06920E224E500E6529F /* TestViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = TestViewController.xib; sourceTree = "<group>"; };
 		38AEC06B20E22C4200E6529F /* ResultsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultsViewController.xib; sourceTree = "<group>"; };
 		38AEC06F20E22C6F00E6529F /* ExportViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ExportViewController.xib; sourceTree = "<group>"; };
-		38AEC07520E2354800E6529F /* WordsTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTabViewController.swift; sourceTree = "<group>"; };
+		38AEC07520E2354800E6529F /* LessonsTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsTabViewController.swift; sourceTree = "<group>"; };
 		38AEC07720E2391F00E6529F /* WordsViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WordsViewController.xib; sourceTree = "<group>"; };
 		38AEC07920E23A3900E6529F /* BMTViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BMTViewController.swift; sourceTree = "<group>"; };
 		38AEC07B20E23D6600E6529F /* BMTViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = BMTViewController.xib; sourceTree = "<group>"; };
@@ -306,12 +306,24 @@
 		383387362114321E008EE0B3 /* BMTView */ = {
 			isa = PBXGroup;
 			children = (
+				38C39455211216CF0021C717 /* BMTFileManager */,
+				384AB24420E4754400D7E5D7 /* TableView Model */,
 				38AEC07920E23A3900E6529F /* BMTViewController.swift */,
 				38B0FC9D2115E59A00E89019 /* BMTViewControllerObservers.swift */,
 				38AEC07B20E23D6600E6529F /* BMTViewController.xib */,
 				3833873721143238008EE0B3 /* BMTViewModel.swift */,
 			);
 			path = BMTView;
+			sourceTree = "<group>";
+		};
+		38431138211DAC1800C692B6 /* Lessons Tab View */ = {
+			isa = PBXGroup;
+			children = (
+				38AEC07520E2354800E6529F /* LessonsTabViewController.swift */,
+				3843113D211DB54D00C692B6 /* LessonsTabViewControllerObservers.swift */,
+				38EFAFAE20E9D60400C71AE9 /* ScrollView */,
+			);
+			path = "Lessons Tab View";
 			sourceTree = "<group>";
 		};
 		384724DC211D724400C3729C /* Other */ = {
@@ -323,7 +335,6 @@
 				38EFAFA320E8C89200C71AE9 /* Swift Type Extensions */,
 				3821C84B20E242070045E5A8 /* Custom Functions */,
 				38AEC07D20E2417900E6529F /* Custom Controls */,
-				3815F2A5211C67AD0062652B /* Documentation */,
 			);
 			path = Other;
 			sourceTree = "<group>";
@@ -339,14 +350,15 @@
 			path = "Main Menu";
 			sourceTree = "<group>";
 		};
-		384AB24420E4754400D7E5D7 /* Table Model */ = {
+		384AB24420E4754400D7E5D7 /* TableView Model */ = {
 			isa = PBXGroup;
 			children = (
+				38846B7E20E2905600C0DB3C /* LessonEntry Model */,
 				384AB23B20E3B26800D7E5D7 /* PJTableView.swift */,
 				38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */,
 				38221F3821168FE700A86E99 /* TableViewDataSourceViewModel.swift */,
 			);
-			path = "Table Model";
+			path = "TableView Model";
 			sourceTree = "<group>";
 		};
 		3850BA2E20E4D59B00A7C7CF /* Burmese Test V3Tests */ = {
@@ -472,16 +484,12 @@
 		38AEC06020E223C800E6529F /* WordsTab */ = {
 			isa = PBXGroup;
 			children = (
-				38C39455211216CF0021C717 /* BMTFileManager */,
-				38EFAFAE20E9D60400C71AE9 /* ScrollView */,
+				38DA1C5A21197B4300971B7A /* WordsViewController */,
+				380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */,
 				38EFAFA620E9354700C71AE9 /* ClipboardController.swift */,
 				38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */,
-				380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */,
-				38DA1C5A21197B4300971B7A /* WordsViewController */,
 				380634672111ACE400798D03 /* Alerts.swift */,
 				380634692111B16D00798D03 /* Panels.swift */,
-				38AEC07520E2354800E6529F /* WordsTabViewController.swift */,
-				383387362114321E008EE0B3 /* BMTView */,
 				38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */,
 			);
 			path = WordsTab;
@@ -568,6 +576,7 @@
 				38AEC06520E2241E00E6529F /* WordsViewController.swift */,
 				38AEC07720E2391F00E6529F /* WordsViewController.xib */,
 				38DA1C5B21197B5F00971B7A /* WordsViewControllerObservers.swift */,
+				38431138211DAC1800C692B6 /* Lessons Tab View */,
 			);
 			path = WordsViewController;
 			sourceTree = "<group>";
@@ -591,8 +600,7 @@
 				38EFAFAA20E9CCE900C71AE9 /* TextFinderClient.swift */,
 				38CBB93220FA415800C7CAA6 /* TextFinderClientProtocols.swift */,
 				381F684F20EB3DD50085E330 /* FindMenuDelegate.swift */,
-				38846B7E20E2905600C0DB3C /* LessonEntry Model */,
-				384AB24420E4754400D7E5D7 /* Table Model */,
+				383387362114321E008EE0B3 /* BMTView */,
 			);
 			path = ScrollView;
 			sourceTree = "<group>";
@@ -714,7 +722,6 @@
 				38AEC07020E22C6F00E6529F /* ExportViewController.xib in Resources */,
 				38C71BC920E7D2FD00AC4B6E /* InfoPopupViewController.xib in Resources */,
 				381B8A1920E1DAC2008335E0 /* Assets.xcassets in Resources */,
-				3815F2A6211C67AD0062652B /* Documentation in Resources */,
 				38AEC07820E2391F00E6529F /* WordsViewController.xib in Resources */,
 				381B8A2C20E1F355008335E0 /* Images in Resources */,
 				386E340320F1B5AC00763618 /* PrefsWindowController.xib in Resources */,
@@ -750,7 +757,7 @@
 				38B0FC99211573A000E89019 /* TISInputSourceExtensions.swift in Sources */,
 				386E33FF20F1AE2300763618 /* PrefsWindowController.swift in Sources */,
 				38221F372116058200A86E99 /* MainWindowControllerObservers.swift in Sources */,
-				38AEC07620E2354800E6529F /* WordsTabViewController.swift in Sources */,
+				38AEC07620E2354800E6529F /* LessonsTabViewController.swift in Sources */,
 				38CBB93320FA415800C7CAA6 /* TextFinderClientProtocols.swift in Sources */,
 				3806346C2111BA6600798D03 /* BMTFileManager.swift in Sources */,
 				38EFAFAB20E9CCE900C71AE9 /* TextFinderClient.swift in Sources */,
@@ -766,6 +773,7 @@
 				380B922D2112DC3200F30B6B /* WordsTabViewModel.swift in Sources */,
 				38221F3921168FE700A86E99 /* TableViewDataSourceViewModel.swift in Sources */,
 				38B0FC952115732500E89019 /* NSTextViewExtensions.swift in Sources */,
+				3843113E211DB54D00C692B6 /* LessonsTabViewControllerObservers.swift in Sources */,
 				380634682111ACE400798D03 /* Alerts.swift in Sources */,
 				38EFAFA720E9354700C71AE9 /* ClipboardController.swift in Sources */,
 				38B0FC892115636F00E89019 /* SelectedWordTypes.swift in Sources */,

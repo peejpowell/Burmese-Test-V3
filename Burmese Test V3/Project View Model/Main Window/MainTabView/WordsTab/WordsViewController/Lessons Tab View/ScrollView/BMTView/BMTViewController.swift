@@ -67,6 +67,7 @@ class BMTViewController: NSViewController {
                 column.isHidden = false
             }
         }
+        print("Posting start populate lessons in viewdidAppear")
         NotificationCenter.default.post(name: .startPopulateLessonsPopup, object: nil, userInfo:[UserInfo.Keys.datasource : self.dataSource as Any])
     }
     

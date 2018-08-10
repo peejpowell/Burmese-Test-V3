@@ -48,11 +48,6 @@
         </customObject>
         <customObject id="QId-iA-S1L" customClass="ClipboardController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <customObject id="EEq-js-4AC" customClass="LanguageMenuController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
-        <customObject id="V2I-wv-bHC" customClass="WordTypeMenuController" customModule="Burmese_Test_V3" customModuleProvider="target">
-            <connections>
-                <outlet property="wordTypeMenu" destination="db1-O8-0hf" id="wwe-Gn-Jp5"/>
-            </connections>
-        </customObject>
         <customObject id="cZX-Hr-rWv" customClass="ToolbarController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
                 <outlet property="lessonsPopup" destination="jAe-l9-LXu" id="CuU-hh-bcH"/>
@@ -683,21 +678,12 @@
                             <menuItem isSeparatorItem="YES" title="Seperator" tag="1" id="5NW-O1-VTN"/>
                             <menuItem title="Burmese Only" tag="1" id="Pkx-oW-FWy">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="toggleCurrent:" target="V2I-wv-bHC" id="sFo-8j-DKv"/>
-                                </connections>
                             </menuItem>
                             <menuItem title="Roman Only" tag="1" id="slq-ND-9VR">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="toggleCurrent:" target="V2I-wv-bHC" id="C6G-eY-nnr"/>
-                                </connections>
                             </menuItem>
                             <menuItem title="English Only" tag="1" id="zQ6-Ka-5sy">
                                 <modifierMask key="keyEquivalentModifierMask"/>
-                                <connections>
-                                    <action selector="toggleCurrent:" target="V2I-wv-bHC" id="gAa-On-vDS"/>
-                                </connections>
                             </menuItem>
                             <menuItem isSeparatorItem="YES" title="Seperator" tag="1" id="ZzC-sg-Jxt"/>
                             <menuItem title="Burmese to Roman" tag="2" id="VYX-YA-Nae">
@@ -767,9 +753,6 @@
                                 <modifierMask key="keyEquivalentModifierMask"/>
                             </menuItem>
                         </items>
-                        <connections>
-                            <outlet property="delegate" destination="V2I-wv-bHC" id="Nmj-bR-fbi"/>
-                        </connections>
                     </menu>
                 </menuItem>
                 <menuItem title="View" id="H8h-7b-M4v">
@@ -850,7 +833,7 @@
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <windowPositionMask key="initialPositionMask" topStrut="YES" bottomStrut="YES"/>
             <rect key="contentRect" x="335" y="390" width="800" height="500"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="777"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1280" height="778"/>
             <view key="contentView" wantsLayer="YES" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="800" height="500"/>
                 <autoresizingMask key="autoresizingMask"/>

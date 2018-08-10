@@ -112,7 +112,7 @@ func getCurrentTableView()->NSTableView
     return nil
 }*/
 
-func getWordsTabViewDelegate()->WordsTabViewController
+func getWordsTabViewDelegate()->LessonsTabViewController
 {
     return getMainWindowController().mainTabViewController.wordsViewController.wordsTabViewController
 }

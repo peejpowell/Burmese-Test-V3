@@ -73,7 +73,8 @@ extension WordTypeMenuController {
     }
     
     func createObservers() {
-        
+        infoPrint("", #function, self.className)
+        NotificationCenter.default.removeObserver(self)
         NotificationCenter.default.addObserver(self, selector: #selector(buildWordTypeMenuForTab(_:)), name: .buildWordTypeMenuForTab, object: nil)
         
         NotificationCenter.default.addObserver(self, selector: #selector(startBuildWordTypeMenu(_:)), name: .startBuildWordTypeMenu, object: nil)

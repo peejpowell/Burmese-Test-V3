@@ -13,24 +13,28 @@ class WordTypeMenuController: MenuController {
     // MARK: Outlets
     @IBOutlet var wordTypeMenu : NSMenu!
     var selectedLessonTypes : [SelectedWordTypes] = []
-    
+    var buildingWordTypes : Bool = false
+    var observersExist : Bool = false
     //MARK: Functions
     override func awakeFromNib() {
         infoPrint("", #function, self.className)
         super.awakeFromNib()
-        self.createObservers()
+        if !observersExist {
+            self.createObservers()
+            observersExist = true
+        }
     }
     
     deinit {
         NotificationCenter.default.removeObserver(self)
+        observersExist = false
     }
 }
 
 extension WordTypeMenuController {
     
     func populateWordTypes(_ dataSource : TableViewDataSource) -> NSMenu {
-        Swift.print(#function)
-        
+        infoPrint("", #function, self.className)
         var lastLesson : String = ""
         let newMenu = NSMenu()
         newMenu.title = dataSource.sourceFile!.lastPathComponent

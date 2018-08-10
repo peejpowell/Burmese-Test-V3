@@ -279,7 +279,7 @@ extension BMTFileManager: BMTFileCreator {
         return false
     }
     
-    fileprivate func setupNewTab(in controller: WordsTabViewController) {
+    fileprivate func setupNewTab(in controller: LessonsTabViewController) {
         // Add a new tab and use that
         let BMTvc = BMTViewController()
         controller.tabViewItems.append(controller.createEmptyBMT(named: "Untitled", controlledBy: BMTvc))
@@ -290,7 +290,7 @@ extension BMTFileManager: BMTFileCreator {
         controller.editFirstColumnOf(BMTvc.tableView)
     }
     
-    fileprivate func useExistingTab(in controller: WordsTabViewController) {
+    fileprivate func useExistingTab(in controller: LessonsTabViewController) {
         // Use the existing tab
         if  let currentTabItem = controller.tabView.selectedTabViewItem,
             let bmtVC = currentTabItem.viewController as? BMTViewController {
@@ -665,6 +665,7 @@ extension BMTFileManager: BMTFileLoader {
                 /*if let menuController = getWordTypeMenuController() {
                     menuController.buildWordTypeMenu()
                 }*/
+                print("Posting populate lessons in openRecentFiles")
                 NotificationCenter.default.post(name: .populateLessonsPopup, object: nil)
                 return
             }
