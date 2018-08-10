@@ -93,7 +93,7 @@ class PreferencesViewModel: NSObject {
         }
         return false
     }
-    var controller : PreferencesViewController?
+    weak var controller : PreferencesViewController?
     
 }
 

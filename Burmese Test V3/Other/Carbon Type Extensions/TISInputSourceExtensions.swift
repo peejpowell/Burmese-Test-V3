@@ -15,6 +15,11 @@ extension TISInputSource {
         static let myanmar = "my"
     }
     
+    enum KeyboardName {
+        static let myanmar = "Myanmar"
+        static let british = "British"
+    }
+    
     var id: String {
         let unsafeID = TISGetInputSourceProperty(self, kTISPropertyInputSourceID).assumingMemoryBound(to: CFString.self)
         let name = Unmanaged<CFString>.fromOpaque(unsafeID).takeUnretainedValue()

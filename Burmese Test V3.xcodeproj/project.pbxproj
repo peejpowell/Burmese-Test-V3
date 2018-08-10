@@ -14,8 +14,6 @@
 		380B922D2112DC3200F30B6B /* WordsTabViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */; };
 		380C3C2620EA76950077C2BE /* TextFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 380C3C2520EA76950077C2BE /* TextFinder.swift */; };
 		3815F2A6211C67AD0062652B /* Documentation in Resources */ = {isa = PBXBuildFile; fileRef = 3815F2A5211C67AD0062652B /* Documentation */; };
-		3815F2AD211C944D0062652B /* Custom_Buttons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3815F2AC211C92D90062652B /* Custom_Buttons.framework */; };
-		3815F2AE211C944D0062652B /* Custom_Buttons.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 3815F2AC211C92D90062652B /* Custom_Buttons.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		38160EAB20E3580000DA13F1 /* TextFieldDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */; };
 		38160EAD20E3599E00DA13F1 /* SearchDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */; };
 		38160EAF20E36F0200DA13F1 /* PJTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38160EAE20E36F0200DA13F1 /* PJTextField.swift */; };
@@ -54,6 +52,9 @@
 		38846B8020E299C400C0DB3C /* TableViewDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */; };
 		3884FA8020F60E67006EDF11 /* FieldEditorTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3884FA7F20F60E67006EDF11 /* FieldEditorTextView.swift */; };
 		38983FB3211C2D0F0055CE1C /* NSTextFieldExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38983FB2211C2D0F0055CE1C /* NSTextFieldExtensions.swift */; };
+		38987751211D41CD0012CD91 /* CustomButtons.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 38987750211D41CD0012CD91 /* CustomButtons.framework */; };
+		38987752211D41CD0012CD91 /* CustomButtons.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 38987750211D41CD0012CD91 /* CustomButtons.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		38987755211D497C0012CD91 /* MainTabViewControllerObservers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38987754211D497C0012CD91 /* MainTabViewControllerObservers.swift */; };
 		38AEC05720E21F0100E6529F /* FindBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC05620E21F0100E6529F /* FindBarViewController.swift */; };
 		38AEC05C20E21F9B00E6529F /* MainTabViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC05B20E21F9B00E6529F /* MainTabViewController.swift */; };
 		38AEC06220E223ED00E6529F /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 38AEC06120E223ED00E6529F /* TestViewController.swift */; };
@@ -93,20 +94,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		3815F2AB211C92D90062652B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3815F2A7211C92D80062652B /* Custom Buttons.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 38CFD59B210E3A5B00A01E35;
-			remoteInfo = "Custom Buttons";
-		};
-		3815F2AF211C944D0062652B /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3815F2A7211C92D80062652B /* Custom Buttons.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 38CFD59A210E3A5B00A01E35;
-			remoteInfo = "Custom Buttons";
-		};
 		3850BA3220E4D59B00A7C7CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 381B8A0B20E1DAC0008335E0 /* Project object */;
@@ -124,13 +111,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		38295EAF210E3E2200854A1F /* Embed Frameworks */ = {
+		38987753211D41CD0012CD91 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				3815F2AE211C944D0062652B /* Custom_Buttons.framework in Embed Frameworks */,
+				38987752211D41CD0012CD91 /* CustomButtons.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -145,7 +132,6 @@
 		380B922C2112DC3200F30B6B /* WordsTabViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTabViewModel.swift; sourceTree = "<group>"; };
 		380C3C2520EA76950077C2BE /* TextFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFinder.swift; sourceTree = "<group>"; };
 		3815F2A5211C67AD0062652B /* Documentation */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Documentation; sourceTree = "<group>"; };
-		3815F2A7211C92D80062652B /* Custom Buttons.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = "Custom Buttons.xcodeproj"; path = "../Custom Buttons/Custom Buttons.xcodeproj"; sourceTree = "<group>"; };
 		38160EAA20E3580000DA13F1 /* TextFieldDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldDelegate.swift; sourceTree = "<group>"; };
 		38160EAC20E3599E00DA13F1 /* SearchDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDelegate.swift; sourceTree = "<group>"; };
 		38160EAE20E36F0200DA13F1 /* PJTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PJTextField.swift; sourceTree = "<group>"; };
@@ -191,6 +177,8 @@
 		38846B7F20E299C400C0DB3C /* TableViewDataSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewDataSource.swift; sourceTree = "<group>"; };
 		3884FA7F20F60E67006EDF11 /* FieldEditorTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldEditorTextView.swift; sourceTree = "<group>"; };
 		38983FB2211C2D0F0055CE1C /* NSTextFieldExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NSTextFieldExtensions.swift; sourceTree = "<group>"; };
+		38987750211D41CD0012CD91 /* CustomButtons.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = CustomButtons.framework; sourceTree = "<group>"; };
+		38987754211D497C0012CD91 /* MainTabViewControllerObservers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewControllerObservers.swift; sourceTree = "<group>"; };
 		38AEC05620E21F0100E6529F /* FindBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindBarViewController.swift; sourceTree = "<group>"; };
 		38AEC05B20E21F9B00E6529F /* MainTabViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainTabViewController.swift; sourceTree = "<group>"; };
 		38AEC06120E223ED00E6529F /* TestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
@@ -235,7 +223,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3815F2AD211C944D0062652B /* Custom_Buttons.framework in Frameworks */,
+				38987751211D41CD0012CD91 /* CustomButtons.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -256,18 +244,10 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		3815F2A8211C92D80062652B /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3815F2AC211C92D90062652B /* Custom_Buttons.framework */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		381B8A0A20E1DAC0008335E0 = {
 			isa = PBXGroup;
 			children = (
-				3815F2A7211C92D80062652B /* Custom Buttons.xcodeproj */,
+				38987750211D41CD0012CD91 /* CustomButtons.framework */,
 				381B8A1520E1DAC0008335E0 /* Burmese Test V3 */,
 				3850BA2E20E4D59B00A7C7CF /* Burmese Test V3Tests */,
 				3850BA3C20E5203300A7C7CF /* Burmese Test V3UITests */,
@@ -288,13 +268,7 @@
 		381B8A1520E1DAC0008335E0 /* Burmese Test V3 */ = {
 			isa = PBXGroup;
 			children = (
-				3815F2A5211C67AD0062652B /* Documentation */,
-				385EA19D211A849800364161 /* System Wide */,
-				38B0FC962115733D00E89019 /* Carbon Type Extensions */,
-				38B0FC91211572A200E89019 /* Cocoa Type Extensions */,
-				38EFAFA320E8C89200C71AE9 /* Swift Type Extensions */,
-				3821C84B20E242070045E5A8 /* Custom Functions */,
-				38AEC07D20E2417900E6529F /* Custom Controls */,
+				384724DC211D724400C3729C /* Other */,
 				381B8A1620E1DAC0008335E0 /* AppDelegate.swift */,
 				381B8A1A20E1DAC2008335E0 /* MainMenu.xib */,
 				38B0FC9C2115B13000E89019 /* Project View Model */,
@@ -338,6 +312,20 @@
 				3833873721143238008EE0B3 /* BMTViewModel.swift */,
 			);
 			path = BMTView;
+			sourceTree = "<group>";
+		};
+		384724DC211D724400C3729C /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				385EA19D211A849800364161 /* System Wide */,
+				38B0FC962115733D00E89019 /* Carbon Type Extensions */,
+				38B0FC91211572A200E89019 /* Cocoa Type Extensions */,
+				38EFAFA320E8C89200C71AE9 /* Swift Type Extensions */,
+				3821C84B20E242070045E5A8 /* Custom Functions */,
+				38AEC07D20E2417900E6529F /* Custom Controls */,
+				3815F2A5211C67AD0062652B /* Documentation */,
+			);
+			path = Other;
 			sourceTree = "<group>";
 		};
 		384AB24120E3E75500D7E5D7 /* Main Menu */ = {
@@ -441,6 +429,7 @@
 			isa = PBXGroup;
 			children = (
 				38AEC05B20E21F9B00E6529F /* MainTabViewController.swift */,
+				38987754211D497C0012CD91 /* MainTabViewControllerObservers.swift */,
 				38AEC05D20E2237D00E6529F /* TestTab */,
 				38AEC05E20E2239300E6529F /* ResultsTab */,
 				38AEC06020E223C800E6529F /* WordsTab */,
@@ -618,12 +607,11 @@
 				381B8A0F20E1DAC0008335E0 /* Sources */,
 				381B8A1020E1DAC0008335E0 /* Frameworks */,
 				381B8A1120E1DAC0008335E0 /* Resources */,
-				38295EAF210E3E2200854A1F /* Embed Frameworks */,
+				38987753211D41CD0012CD91 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				3815F2B0211C944D0062652B /* PBXTargetDependency */,
 			);
 			name = "Burmese Test V3";
 			productName = "Burmese Test V3";
@@ -705,12 +693,6 @@
 			mainGroup = 381B8A0A20E1DAC0008335E0;
 			productRefGroup = 381B8A1420E1DAC0008335E0 /* Products */;
 			projectDirPath = "";
-			projectReferences = (
-				{
-					ProductGroup = 3815F2A8211C92D80062652B /* Products */;
-					ProjectRef = 3815F2A7211C92D80062652B /* Custom Buttons.xcodeproj */;
-				},
-			);
 			projectRoot = "";
 			targets = (
 				381B8A1220E1DAC0008335E0 /* Burmese Test V3 */,
@@ -719,16 +701,6 @@
 			);
 		};
 /* End PBXProject section */
-
-/* Begin PBXReferenceProxy section */
-		3815F2AC211C92D90062652B /* Custom_Buttons.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = Custom_Buttons.framework;
-			remoteRef = 3815F2AB211C92D90062652B /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		381B8A1120E1DAC0008335E0 /* Resources */ = {
@@ -824,6 +796,7 @@
 				38B0FC9B211573D000E89019 /* FileManagerExtensions.swift in Sources */,
 				38B1DB96211AE5B6001A5A5E /* PreferencesViewModel.swift in Sources */,
 				38B0FC8B211568C900E89019 /* UserDefault Extensions.swift in Sources */,
+				38987755211D497C0012CD91 /* MainTabViewControllerObservers.swift in Sources */,
 				384AB24620E47EFF00D7E5D7 /* MenuController.swift in Sources */,
 				386E33F920F1A3E600763618 /* PreferencesViewController.swift in Sources */,
 				381F685020EB3DD50085E330 /* FindMenuDelegate.swift in Sources */,
@@ -860,11 +833,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		3815F2B0211C944D0062652B /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "Custom Buttons";
-			targetProxy = 3815F2AF211C944D0062652B /* PBXContainerItemProxy */;
-		};
 		3850BA3320E4D59B00A7C7CF /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 381B8A1220E1DAC0008335E0 /* Burmese Test V3 */;
@@ -1005,12 +973,15 @@
 		381B8A2220E1DAC2008335E0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5VYJ7F254M;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Burmese Test V3/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1027,12 +998,15 @@
 		381B8A2320E1DAC2008335E0 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Mac Developer";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				DEVELOPMENT_TEAM = 5VYJ7F254M;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "Burmese Test V3/Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

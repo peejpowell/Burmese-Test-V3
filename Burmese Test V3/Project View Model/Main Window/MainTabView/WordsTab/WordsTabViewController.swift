@@ -103,6 +103,7 @@ extension WordsTabViewController {
         getMainWindowController().window?.title = "Untitled"
         if let tableView = bmtVC.tableView {
             tableView.dataSource = dataSource
+            tableView.delegate = dataSource
         }
         return newTabItem
     }

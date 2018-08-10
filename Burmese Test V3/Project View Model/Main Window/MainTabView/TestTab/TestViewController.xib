@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <document type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="3.0" toolsVersion="14306.4" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" customObjectInstantitationMethod="direct">
     <dependencies>
+        <deployment identifier="macosx"/>
         <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="14306.4"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -17,13 +18,13 @@
             <rect key="frame" x="0.0" y="0.0" width="813" height="272"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
             <subviews>
-                <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="cEA-Lx-Y3G" customClass="PJPButton" customModule="Custom_Buttons">
+                <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="cEA-Lx-Y3G" customClass="PJPButton" customModule="CustomButtons">
                     <rect key="frame" x="20" y="201" width="773" height="52"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="50" id="Xvz-wK-TcD"/>
                         <constraint firstAttribute="height" relation="greaterThanOrEqual" constant="50" id="ghv-52-VK5"/>
                     </constraints>
-                    <buttonCell key="cell" type="smallSquare" title="Just some short text" bezelStyle="smallSquare" alignment="justified" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lkD-X5-yv0" customClass="PJPAutoWrapButtonCell" customModule="Custom_Buttons">
+                    <buttonCell key="cell" type="smallSquare" title="Just some short text" bezelStyle="smallSquare" alignment="justified" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="lkD-X5-yv0" customClass="PJPAutoWrapButtonCell" customModule="CustomButtons">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                         <userDefinedRuntimeAttributes>
@@ -43,9 +44,9 @@
                         <action selector="showNewVC:" target="-2" id="6t1-7H-XRC"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="Y95-2l-LcS" userLabel="Test Button 2" customClass="PJPButton" customModule="Custom_Buttons">
+                <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="Y95-2l-LcS" userLabel="Test Button 2" customClass="PJPButton" customModule="CustomButtons">
                     <rect key="frame" x="20" y="143" width="773" height="52"/>
-                    <buttonCell key="cell" type="smallSquare" title="Short text 2" bezelStyle="smallSquare" alignment="center" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AJX-rO-ZcL" customClass="PJPAutoWrapButtonCellCA" customModule="Custom_Buttons">
+                    <buttonCell key="cell" type="smallSquare" title="Short text 2" bezelStyle="smallSquare" alignment="center" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="AJX-rO-ZcL" customClass="PJPAutoWrapButtonCellCA" customModule="CustomButtons">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                         <userDefinedRuntimeAttributes>
@@ -67,9 +68,9 @@
                         <action selector="showNewVC:" target="-2" id="eIS-b7-ECI"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="KzF-Ue-DKj" userLabel="Test Button 3" customClass="PJPButton" customModule="Custom_Buttons">
+                <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="KzF-Ue-DKj" userLabel="Test Button 3" customClass="PJPButton" customModule="CustomButtons">
                     <rect key="frame" x="20" y="85" width="773" height="52"/>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="justified" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zb7-aq-wo3" customClass="PJPAutoWrapButtonCell" customModule="Custom_Buttons">
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="justified" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="Zb7-aq-wo3" customClass="PJPAutoWrapButtonCell" customModule="CustomButtons">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <string key="title">This is a very long title to demonstrate the ability and capabilities of the autowrap button. This is a very long title to demonstrate the ability and capabilities of the autowrap buttoncell. This is a very long title to demonstrate the ability and capabilities of the autowrap buttoncell.</string>
                         <font key="font" metaFont="system"/>
@@ -90,9 +91,9 @@
                         <action selector="showNewVC:" target="-2" id="FMT-Yq-GpP"/>
                     </connections>
                 </button>
-                <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="2pF-hr-Pwl" userLabel="Test Button 4" customClass="PJPButton" customModule="Custom_Buttons">
+                <button verticalHuggingPriority="750" horizontalCompressionResistancePriority="5" translatesAutoresizingMaskIntoConstraints="NO" id="2pF-hr-Pwl" userLabel="Test Button 4" customClass="PJPButton" customModule="CustomButtons">
                     <rect key="frame" x="20" y="26" width="773" height="52"/>
-                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Fs-At-LNc" customClass="PJPAutoWrapButtonCell" customModule="Custom_Buttons">
+                    <buttonCell key="cell" type="smallSquare" bezelStyle="smallSquare" alignment="center" truncatesLastVisibleLine="YES" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="1Fs-At-LNc" customClass="PJPAutoWrapButtonCell" customModule="CustomButtons">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <string key="title">This is a very long title to demonstrate the ability and capabilities of the autowrap button. This is a very long title to demonstrate the ability and capabilities of the autowrap buttoncell.</string>
                         <font key="font" metaFont="system"/>

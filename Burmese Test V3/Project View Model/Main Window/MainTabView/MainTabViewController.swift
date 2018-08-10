@@ -31,13 +31,16 @@ class MainTabViewController: NSTabViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do view setup here.
-        
         infoPrint("",#function,self.className)
+        createObservers()
         configureTabView(with: [[tabNames.test       : testViewController],
                                 [tabNames.results    : resultsViewController],
                                 [tabNames.lessons    : wordsViewController],
                                 [tabNames.export     : exportViewController]])
+    }
+    
+    deinit {
+        NotificationCenter.default.removeObserver(self)
     }
 }
 

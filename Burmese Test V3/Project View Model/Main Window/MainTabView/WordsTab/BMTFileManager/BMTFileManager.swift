@@ -279,32 +279,45 @@ extension BMTFileManager: BMTFileCreator {
         return false
     }
     
+    fileprivate func setupNewTab(in controller: WordsTabViewController) {
+        // Add a new tab and use that
+        let BMTvc = BMTViewController()
+        controller.tabViewItems.append(controller.createEmptyBMT(named: "Untitled", controlledBy: BMTvc))
+        controller.tabView.selectTabViewItem(controller.tabViewItems.last)
+        BMTvc.bmtViewModel.dataSource?.dataSourceViewModel.lessonEntries.append(LessonEntry())
+        BMTvc.tableView.reloadData()
+        BMTvc.tableView.becomeFirstResponder()
+        controller.editFirstColumnOf(BMTvc.tableView)
+    }
+    
+    fileprivate func useExistingTab(in controller: WordsTabViewController) {
+        // Use the existing tab
+        if  let currentTabItem = controller.tabView.selectedTabViewItem,
+            let bmtVC = currentTabItem.viewController as? BMTViewController {
+            bmtVC.view.isHidden = false
+            currentTabItem.label = "Untitled"
+            if let tableView = bmtVC.tableView {
+                tableView.dataSource = bmtVC.dataSource
+                tableView.delegate = bmtVC.dataSource
+                bmtVC.dataSource?.dataSourceViewModel.lessonEntries.append(LessonEntry())
+                tableView.reloadData()
+                controller.editFirstColumnOf(tableView)
+            }
+        }
+    }
+    
     @objc func createNewDocument(_ notification: Notification) {
         infoPrint("", #function, self.className)
         if  let controller = self.controller,
             let wordsTabVC = controller.wordsTabViewController {
-            if !fileIsLoaded() {
-                // Add a new tab and use that
-                let BMTvc = BMTViewController()
-                //wordsTabVC.tabViewControllersList.append(BMTvc)
-                wordsTabVC.tabViewItems.append(wordsTabVC.createEmptyBMT(named: "Untitled", controlledBy: BMTvc))
-                wordsTabVC.tabView.selectTabViewItem(wordsTabVC.tabViewItems.last)
-                wordsTabVC.editFirstColumnOf(BMTvc.tableView)
+            if  fileIsLoaded() {
+                setupNewTab(in: wordsTabVC)
             }
             else {
-                // Use the existing tab
-                if  let currentTabItem = wordsTabVC.tabView.selectedTabViewItem,
-                    let bmtVC = currentTabItem.viewController as? BMTViewController {
-                    bmtVC.view.isHidden = false
-                    currentTabItem.label = "Untitled"
-                    if let tableView = bmtVC.tableView {
-                        tableView.reloadData()
-                        wordsTabVC.editFirstColumnOf(tableView)
-                    }
-                    NotificationCenter.default.post(name: .dataSourceNeedsSaving, object: nil)
-                    NotificationCenter.default.post(name: .enableFileMenuItems, object: nil)
-                }
+                useExistingTab(in: wordsTabVC)
             }
+            NotificationCenter.default.post(name: .dataSourceNeedsSaving, object: nil)
+            NotificationCenter.default.post(name: .enableFileMenuItems, object: nil)
         }
     }
 }

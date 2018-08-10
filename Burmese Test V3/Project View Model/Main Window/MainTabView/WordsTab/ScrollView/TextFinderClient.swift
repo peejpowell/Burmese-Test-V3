@@ -650,21 +650,18 @@ extension TextFinderClient: TextFinderMenuFilterResults {
 
 extension TextFinderClient {
     
-    func performAction(_ tag: Int)
-    {
+    func performAction(_ tag: Int, show: Bool = false) {
         infoPrint("", #function, self.className)
-        
         if let scrollView = tableView.superview?.superview as? PJScrollView {
-            //self.foundWord = false
-            //self.foundWordLocation["row"] = -1
-            //self.foundWordLocation["col"] = -1
             infoPrint("Find tag: \(tag)", #function, self.className)
             switch tag {
             case  1:
-                // Hide find interface if showing
-                if scrollView.isFindBarVisible {
-                    scrollView.isFindBarVisible = false
-                    break
+                if !show {
+                    // Hide find interface if showing
+                    if scrollView.isFindBarVisible {
+                        scrollView.isFindBarVisible = false
+                        break
+                    }
                 }
                 // If find interface was not showing show it above
                 scrollView.findBarPosition = NSScrollView.FindBarPosition.aboveContent
@@ -688,11 +685,11 @@ extension TextFinderClient {
         }
     }
     
-    func performTextFinderAction(_ sender: Any?) {
+    func performTextFinderAction(_ sender: Any?, show: Bool = false) {
         infoPrint("", #function, self.className)
         //self.tabIndex = getCurrentIndex()
         if let sender = sender as? NSMenuItem {
-            self.performAction(sender.tag)
+            self.performAction(sender.tag, show: show)
         }
     }
     

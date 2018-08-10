@@ -94,7 +94,6 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         mainWindowController.mainTabViewController.wordsViewController?.wordsTabViewController.tabViewItems.removeAll()
         mainWindowController.mainTabViewController.tabViewItems.removeAll()
         mainWindowController.mainTabViewController = nil
-        mainWindowController.mainFileManager = nil
         mainWindowController.mainClipboardController = nil
         mainWindowController.prefsWindowController = nil
         

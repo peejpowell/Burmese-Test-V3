@@ -46,6 +46,11 @@ protocol LanguageMenuHandler {
     
 }
 
+protocol WindowDelegateHandler {
+    
+    func closeIsAllowed()->Bool
+}
+
 extension MainWindowViewModel: LanguageMenuHandler {
     
     func selectAllLanguages(_ notification: Notification) {
@@ -59,10 +64,31 @@ extension MainWindowViewModel: LanguageMenuHandler {
     
 }
 
+extension MainWindowViewModel: WindowDelegateHandler {
+    
+    func closeIsAllowed()->Bool {
+        if  let firstTabItem = controller?.mainTabViewController.wordsViewController.wordsTabViewController.tabView.selectedTabViewItem,
+            let bmtVC = firstTabItem.viewController as? BMTViewController,
+            let dataSource = bmtVC.dataSource,
+            let _ = dataSource.sourceFile {
+            NotificationCenter.default.post(name: .closeAllFiles, object: nil)
+            return false
+        }
+        return true
+    }
+    
+    func returnFieldEditor(for client: Any?)->Any? {
+       return nil
+    }
+}
+
 class MainWindowViewModel: NSObject {
     
     @IBOutlet private weak var toolbarController : ToolbarController!
     @IBOutlet private weak var mainMenuController : MainMenuController!
+    
+    // MARK: Properties
+    let fieldEditor = FieldEditorTextView()
     
     var windowTitleUrl : URL? {
         didSet {
@@ -86,7 +112,11 @@ class MainWindowViewModel: NSObject {
         return mainMenuController.closeWordsFileMenuItem.isEnabled
     }
     
-    var controller : MainWindowController?
+    weak var controller : MainWindowController?
+    
+    func disableFileMenuItems() {
+        NotificationCenter.default.post(name: .disableFileMenuItems, object: nil)
+    }
     
     func addUrlToRecentsMenu(_ url: URL) {
         mainMenuController.updateRecentsMenu(with: url)

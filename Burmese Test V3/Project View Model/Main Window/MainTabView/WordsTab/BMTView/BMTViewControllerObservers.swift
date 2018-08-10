@@ -31,6 +31,9 @@ extension Notification.Name {
     static var putTableRowOnPasteboard : Notification.Name {
         return .init(rawValue: "BMTViewController.putTableRowOnPasteboard")
     }
+    static var findClicked : Notification.Name {
+        return .init(rawValue: "BMTViewController.findClicked")
+    }
 }
 
 // MARK: Lessons Notifications
@@ -70,11 +73,12 @@ extension Notification.Name {
 extension BMTViewController {
     
     func createTableViewObservers() {
+        infoPrint("", #function, self.className)
         // Check if the observers already exist
         NotificationCenter.default.removeObserver(self)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable(_:)), name: .tableNeedsReloading, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableRows(_:)), name: .tableRowsNeedReloading, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.removeTableRow), name: .removeTableRow, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTable(_:)),name: .tableNeedsReloading, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.refreshTableRows(_:)),name: .tableRowsNeedReloading, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(self.removeTableRow),name: .removeTableRow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.toggleColumnsWithIds(_:)),name: .toggleColumn, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.cutRows(_:)),name: .cutRows, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.copyRows(_:)),name: .copyRows, object: nil)
@@ -83,13 +87,18 @@ extension BMTViewController {
         NotificationCenter.default.addObserver(self, selector: #selector(self.jumpToLesson(_:)),name: .jumpToLesson, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.jumpToFirst(_:)),name: .jumpToFirstRow, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(self.jumpToLast(_:)),name: .jumpToLastRow, object: nil)
-        
+        NotificationCenter.default.addObserver(self, selector: #selector(self.findClicked(_:)),name: .findClicked, object: nil)
     }
 }
 
 // MARK: TableView Notification Functions
 
 extension BMTViewController {
+
+    @objc func findClicked(_ notification : Notification) {
+        guard let sender = notification.userInfo?[UserInfo.Keys.any] else { return }
+        self.textFinderClient.performTextFinderAction(sender, show: true)
+    }
     
     @objc func refreshTableRows(_ notification: Notification) {
         infoPrint("", #function, self.className)

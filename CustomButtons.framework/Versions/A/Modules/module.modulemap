@@ -1,0 +1,4 @@
+framework module CustomButtons {
+  header "CustomButtons-Swift.h"
+  requires objc
+}

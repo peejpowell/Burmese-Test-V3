@@ -1331,13 +1331,6 @@
       "warning": "undocumented"
     },
     {
-      "file": "/Users/peejpowell/Documents/Programming/XCode Projects/Swift Projects/Burmese Test V3/Burmese Test V3/Project View Model/Main Window/MainTabView/WordsTab/Alerts.swift",
-      "line": 11,
-      "symbol": "Alerts",
-      "symbol_kind": "source.lang.swift.decl.class",
-      "warning": "undocumented"
-    },
-    {
       "file": "/Users/peejpowell/Documents/Programming/XCode Projects/Swift Projects/Burmese Test V3/Burmese Test V3/Project View Model/Main Window/MainTabView/WordsTab/BMTFileManager/BMTFileManager.swift",
       "line": null,
       "symbol": "BMTFileManager",

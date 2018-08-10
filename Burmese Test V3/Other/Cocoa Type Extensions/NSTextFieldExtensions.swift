@@ -14,6 +14,7 @@ extension NSTextField {
     enum IdentifierKeys {
         static let english = "english"
         static let avalaser = "avalaser"
+        static let burmese = "burmese"
         static let new = "new"
     }
 }

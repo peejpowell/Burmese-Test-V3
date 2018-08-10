@@ -68,12 +68,13 @@ extension MainWindowController {
         if  let userInfo = notification.userInfo,
             let id = userInfo[UserInfo.Keys.id] as? String {
             switch id {
-            case "burmese":
-                setKeyboardByName("Myanmar", type: .all)
-            case "avalaser":
-                setKeyboardByName("British", type: .ascii)
+            case NSTextField.IdentifierKeys.burmese:
+                setKeyboardByName(TISInputSource.KeyboardName.myanmar, type: .all)
+            case NSTextField.IdentifierKeys.avalaser:
+                setKeyboardByName(TISInputSource.KeyboardName.british, type: .ascii)
             default:
-                TISSelectInputSource(getWordsTabViewDelegate().originalInputLanguage)
+                guard let lessonTabViewController = mainTabViewController.wordsViewController.wordsTabViewController else { break }
+                TISSelectInputSource(lessonTabViewController.originalInputLanguage)
             }
         }
     }

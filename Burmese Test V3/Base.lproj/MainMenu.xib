@@ -22,7 +22,6 @@
         <customObject id="vod-uV-yc1" customClass="MainWindowController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
                 <outlet property="mainClipboardController" destination="QId-iA-S1L" id="YeX-Js-ZEl"/>
-                <outlet property="mainFileManager" destination="OqY-he-gAA" id="607-cQ-Atg"/>
                 <outlet property="mainTabViewController" destination="X2E-rt-W8L" id="yqD-P3-Mkc"/>
                 <outlet property="mainWindowViewModel" destination="GJ3-s7-Lev" id="XMZ-ml-dY3"/>
                 <outlet property="prefsWindowController" destination="PtB-I6-Doa" id="F8B-HC-wNU"/>
@@ -30,7 +29,6 @@
             </connections>
         </customObject>
         <customObject id="PtB-I6-Doa" customClass="PrefsWindowController" customModule="Burmese_Test_V3" customModuleProvider="target"/>
-        <customObject id="OqY-he-gAA" customClass="PJFileManager" customModule="Burmese_Test_V3" customModuleProvider="target"/>
         <customObject id="a1q-4L-Wmq" customClass="MainMenuController" customModule="Burmese_Test_V3" customModuleProvider="target">
             <connections>
                 <outlet property="closeWordsFileMenuItem" destination="DVo-aG-piG" id="lCY-rQ-Onz"/>

@@ -23,6 +23,8 @@ extension String {
         static let column       = "column"
         static let title        = "title"
         static let menuItem     = "menuItem"
+        static let any          = "any"
+        static let find         = "find"
     }
     
     func minus(_ upTo: Int)-> String {

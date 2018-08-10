@@ -11,15 +11,11 @@ import Cocoa
 class MainWindowController: NSWindowController {
     
     // MARK: Outlets
-    @IBOutlet weak var mainTabViewController : MainTabViewController!
-    @IBOutlet weak var mainFileManager : PJFileManager!
-    @IBOutlet weak var mainClipboardController : ClipboardController!
-    @IBOutlet weak var prefsWindowController : PrefsWindowController!
+    @IBOutlet weak var mainTabViewController    : MainTabViewController!
+    @IBOutlet weak var mainClipboardController  : ClipboardController!
+    @IBOutlet weak var prefsWindowController    : PrefsWindowController!
     
     @IBOutlet var mainWindowViewModel : MainWindowViewModel!
-    
-    // MARK: Properties
-    let fieldEditor = FieldEditorTextView()
     
     override func windowDidLoad() {
         infoPrint("",#function,self.className)
@@ -30,7 +26,7 @@ class MainWindowController: NSWindowController {
         infoPrint("",#function,self.className)
         mainWindowViewModel.controller = self
         self.window?.minSize = NSSize(width: 800, height: 500)
-        NotificationCenter.default.post(name: .disableFileMenuItems, object: nil)
+        mainWindowViewModel.disableFileMenuItems()
         createObservers()
     }
     
@@ -106,7 +102,6 @@ extension MainWindowController {
 extension MainWindowController: NSWindowDelegate {
     
     func windowWillReturnFieldEditor(_ sender: NSWindow, to client: Any?) -> Any? {
-        
         if let textField = client as? PJTextField {
             switch textField.identifier?.rawValue {
             case NSTextField.IdentifierKeys.english,
@@ -117,7 +112,7 @@ extension MainWindowController: NSWindowDelegate {
             }
         }
         
-        let fieldEditor = self.fieldEditor
+        let fieldEditor = mainWindowViewModel.fieldEditor
         fieldEditor.identifier = NSUserInterfaceItemIdentifier(rawValue: "test")
         
         if let id: String = (fieldEditor.identifier).map({ $0.rawValue }) {
@@ -128,20 +123,14 @@ extension MainWindowController: NSWindowDelegate {
             return fieldEditor
         }
         return nil
+        //return mainWindowViewModel.returnFieldEditor(for: client)
     }
     
     func windowShouldClose(_ sender: NSWindow) -> Bool {
         infoPrint("", #function, self.className)
-        // Make sure all files are closed first
-        // Check if the first tab's dataSource is empty
-        if  let firstTabItem = mainTabViewController.wordsViewController.wordsTabViewController.tabView.selectedTabViewItem,
-            let bmtVC = firstTabItem.viewController as? BMTViewController,
-            let dataSource = bmtVC.dataSource,
-            let _ = dataSource.sourceFile {
-            NotificationCenter.default.post(name: .closeAllFiles, object: nil)
+        if !mainWindowViewModel.closeIsAllowed() {
             return false
         }
-        
         return true
     }
 }

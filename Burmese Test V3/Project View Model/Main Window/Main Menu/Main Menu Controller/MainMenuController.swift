@@ -273,9 +273,6 @@ extension MainMenuController {
     
     @IBAction func performFindPanelAction(_ sender: Any?){
         infoPrint("", #function, self.className)
-        if  let currentTabItem = getWordsTabViewDelegate().tabView.selectedTabViewItem,
-            let bmtVC = currentTabItem.viewController as? BMTViewController {
-            bmtVC.textFinderClient.performTextFinderAction(sender)
-        }
+        NotificationCenter.default.post(name: .findClicked, object:nil, userInfo:[UserInfo.Keys.any:sender as Any])
     }
 }

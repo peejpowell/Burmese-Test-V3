@@ -7,7 +7,7 @@
 //
 
 import Cocoa
-import Custom_Buttons
+import CustomButtons
 
 class TestViewController: NSViewController {
     

@@ -15,6 +15,13 @@ class MainWindow: NSWindow, NSDraggingDestination {
         NotificationCenter.default.post(name: .closeDocument, object: nil)
     }
     
+    @IBAction override func performTextFinderAction(_ sender: Any?) {
+        infoPrint("", #function, self.className)
+        guard let sender = sender else { return }
+        // Sends message to select the Lessons Tab
+        NotificationCenter.default.post(name: .selectLessonsTab, object:nil, userInfo: [UserInfo.Keys.any:sender as Any])
+    }
+    
     override func awakeFromNib() {
         infoPrint("", #function, self.className)
         super.awakeFromNib()
